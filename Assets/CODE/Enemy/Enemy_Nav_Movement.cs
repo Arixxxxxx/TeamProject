@@ -8,11 +8,15 @@ public class Enemy_Nav_Movement : MonoBehaviour
     Camera cam;
     Vector2 navTargetVec;
     NavMeshAgent nav;
-    
+    SpriteRenderer sr;
+
     [SerializeField] bool TestClickMoveEnemy;
-    void Start()
+    [SerializeField] bool isEnemyDead;
+
+     void Start()
     {
-        cam= Camera.main;
+        sr = GetComponent<SpriteRenderer>();
+        cam = Camera.main;
         nav = GetComponent<NavMeshAgent>();
         nav.updateRotation = false;
         nav.updateUpAxis = false;
@@ -21,6 +25,19 @@ public class Enemy_Nav_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isEnemyDead) 
+        { 
+            if(nav.isStopped == false)
+            {
+                nav.isStopped = true;
+            }
+            return;
+        }
+
+
+        Sprite_FilpX_Changer();
+
+
         if (TestClickMoveEnemy == true)
         {
             if (Input.GetMouseButtonDown(0))
@@ -34,6 +51,21 @@ public class Enemy_Nav_Movement : MonoBehaviour
             navTargetVec = GameManager.Inst.F_Get_PlayerObj();
             nav.SetDestination(navTargetVec);
         }
+    }
 
+    private void Sprite_FilpX_Changer()
+    {
+        if(nav.velocity.x < 0)
+        {
+            sr.flipX = true;
+        }
+        else if(nav.velocity.x > 0)
+        {
+            sr.flipX = false;
+        }
+    }
+    public void F_Dead(bool value)
+    {
+        isEnemyDead = value;
     }
 }
