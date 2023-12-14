@@ -63,4 +63,18 @@ public class Player_Stats : MonoBehaviour
             }
         }
     }
+
+    float[] OutPutHP = new float[3];
+    /// <summary>
+    /// 1 현재 체력/ 2 총 체력 // 레벨
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public float F_GetPlayerInfo(int value)
+    {
+        OutPutHP[0] = Player_CurHP;
+        OutPutHP[1] = Player_MaxHP;
+        OutPutHP[2] = Player_Cur_Lv;
+        return OutPutHP[value];
+    }
 }

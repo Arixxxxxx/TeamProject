@@ -57,11 +57,11 @@ public class Enemy_Nav_Movement : MonoBehaviour
     {
         if(nav.velocity.x < 0)
         {
-            sr.flipX = true;
+            sr.flipX = false;
         }
         else if(nav.velocity.x > 0)
         {
-            sr.flipX = false;
+            sr.flipX = true;
         }
     }
     public void F_Dead(bool value)
