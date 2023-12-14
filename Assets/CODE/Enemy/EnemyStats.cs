@@ -22,12 +22,14 @@ public class EnemyStats : MonoBehaviour
     BoxCollider2D boxCollider;
     Enemy_Nav_Movement nav;
     Animator anim;
+    Animator Hp_Bar_anim;
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         nav = GetComponent<Enemy_Nav_Movement>();
         anim = GetComponent<Animator>();
+        Hp_Bar_anim = transform.Find("HPBar").GetComponent<Animator>();
     }
     void Start()
     {
@@ -46,6 +48,7 @@ public class EnemyStats : MonoBehaviour
         {
             CurHP -= DMG;
             anim.SetTrigger("hit");
+            Hp_Bar_anim.SetTrigger("hit");
 
             if (CurHP <= 0)
             {

@@ -99,4 +99,11 @@ public class GameManager : MonoBehaviour
     {
         return Player.GetComponent< Player_Stats >();
     }
+
+    public float F_Get_PlyerPos(Vector3 InputPos)
+    {
+        float dis;
+        dis = Vector3.Distance(Player.transform.position, InputPos);
+        return dis;
+    }
 }
