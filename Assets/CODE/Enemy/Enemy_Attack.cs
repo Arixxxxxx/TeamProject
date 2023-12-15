@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +11,7 @@ public class Enemy_Attack : MonoBehaviour
     private Animator anim;
     [SerializeField] bool isAttack;
     public bool IsAttack { get { return isAttack; } }
+
     NavMeshAgent nav;
 
     private void Awake()
@@ -31,10 +33,8 @@ public class Enemy_Attack : MonoBehaviour
     bool doAttack;
     private void Attack_Anim()
     {
-        if (isAttack && doAttack == false)
+        if(isAttack == true && anim.GetBool("Attack")== false) 
         {
-            doAttack = true;
-            StartCoroutine(AttackAnim());
 
         }
     }
@@ -43,17 +43,17 @@ public class Enemy_Attack : MonoBehaviour
 
         if (nav.remainingDistance < 1.6f)
         {
-            isAttack = true;
+            isAttack = true; 
         }
-        else if (isAttack == true && nav.remainingDistance > 1.6f)
+        else if (nav.remainingDistance > 1.6f)
         {
-            isAttack = false;
+            isAttack = false; 
         }
     }
 
     IEnumerator AttackAnim()
     {
-        anim.SetTrigger("Attack");
+        anim.SetBool("Attack", true);
         yield return null;
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false)
         {

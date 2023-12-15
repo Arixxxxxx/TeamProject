@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 41ea354a08bbee84086703fa3170b257
+guid: 5f9fd9bbdd1517742aa09709c171cede
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HP_End_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 155
+        width: 196
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0ac00c667a9d84784057fedf0b1f9b
+      internalID: 570373932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HP_End_3
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 103
+        width: 184
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9dbd5317254ae142b284270aa210c88
+      internalID: 441663565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HP_End_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 53
+        width: 184
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 232a313fd9ccda04ead04ba88fc92155
+      internalID: -745970119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HP_End_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 214
+        width: 196
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca03650f7d18646488aeb6bdaece65dd
+      internalID: -81865796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +203,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HP_End_0: -745970119
+      HP_End_1: -81865796
+      HP_End_2: 570373932
+      HP_End_3: 441663565
+      HP_End_4: 193152991
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
