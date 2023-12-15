@@ -9,12 +9,14 @@ public class Enemy_Nav_Movement : MonoBehaviour
     Vector2 navTargetVec;
     NavMeshAgent nav;
     SpriteRenderer sr;
-
+    Enemy_Attack attackSC;
     [SerializeField] bool TestClickMoveEnemy;
     [SerializeField] bool isEnemyDead;
+    [SerializeField] float Dis;
 
      void Start()
     {
+        attackSC = GetComponent<Enemy_Attack>();
         sr = GetComponent<SpriteRenderer>();
         cam = Camera.main;
         nav = GetComponent<NavMeshAgent>();
@@ -36,7 +38,7 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
 
         Sprite_FilpX_Changer();
-
+        
 
         if (TestClickMoveEnemy == true)
         {
@@ -46,7 +48,7 @@ public class Enemy_Nav_Movement : MonoBehaviour
                 nav.SetDestination(navTargetVec);
             }
         }
-        else
+        else if(TestClickMoveEnemy == false && attackSC.IsAttack == false)
         {
             navTargetVec = GameManager.Inst.F_Get_PlayerObj();
             nav.SetDestination(navTargetVec);
@@ -68,4 +70,6 @@ public class Enemy_Nav_Movement : MonoBehaviour
     {
         isEnemyDead = value;
     }
+
+    
 }
