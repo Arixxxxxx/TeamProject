@@ -6,18 +6,20 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
 
-    [Header("# Enemy Stats Info")]
+    [Header("# Enemy Stats Info  ==     # 예진 ")]
     [Space]
     [SerializeField] float CurHP;
     [SerializeField] float MaxHP;
     [SerializeField] float Exp;
-    [SerializeField] bool Enemy_Dead;
-    [Header("# Insert HpBar Obj")]
     [Space]
-    [SerializeField] GameObject Hp_Bar;
-    [SerializeField] Image Hp_Bar_Middle;
-    [SerializeField] Image Hp_Bar_Front;
+    [SerializeField] bool Enemy_Dead;
+    [Header("# Enemy HP_Bar Middle Image Speed Info  ==     # 예진 ")]
     [SerializeField] float FillAmountSpeed;
+
+    GameObject Hp_Bar;
+    Image Hp_Bar_Middle;
+     Image Hp_Bar_Front;
+    
 
     BoxCollider2D boxCollider;
     Enemy_Nav_Movement nav;
@@ -26,6 +28,9 @@ public class EnemyStats : MonoBehaviour
 
     private void Awake()
     {
+        Hp_Bar = transform.GetChild(0).gameObject;
+        Hp_Bar_Middle = Hp_Bar.transform.GetChild(1).GetComponent<Image>();
+        Hp_Bar_Front = Hp_Bar.transform.GetChild(2).GetComponent<Image>();
         boxCollider = GetComponent<BoxCollider2D>();
         nav = GetComponent<Enemy_Nav_Movement>();
         anim = GetComponent<Animator>();
@@ -52,6 +57,7 @@ public class EnemyStats : MonoBehaviour
 
             if (CurHP <= 0)
             {
+                anim.SetTrigger("Dead");
                 Enemy_Dead = true;
                 nav.F_Dead(true);
                 GameManager.Inst.F_Get_PlayerSc().F_GetExp_LevelupSystem(Exp);
@@ -85,7 +91,7 @@ public class EnemyStats : MonoBehaviour
         {
             Hp_Bar_Middle.fillAmount = Hp_Bar_Front.fillAmount;
         }
-
-
     }
+
+   
 }

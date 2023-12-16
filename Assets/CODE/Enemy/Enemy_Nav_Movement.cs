@@ -5,23 +5,29 @@ using UnityEngine.AI;
 
 public class Enemy_Nav_Movement : MonoBehaviour
 {
+    [SerializeField] bool TestClickMoveEnemy;
+    [SerializeField] bool isEnemyDead;
+    [SerializeField] float Dis;
+    [SerializeField] float AttackDis;
+    [SerializeField] float FilpxFloat;
     Camera cam;
     Vector2 navTargetVec;
     NavMeshAgent nav;
     SpriteRenderer sr;
     Enemy_Attack attackSC;
-    [SerializeField] bool TestClickMoveEnemy;
-    [SerializeField] bool isEnemyDead;
-    [SerializeField] float Dis;
+    GameManager gm;
+    Animator anim;
 
      void Start()
     {
+        anim  = GetComponent<Animator>();
         attackSC = GetComponent<Enemy_Attack>();
         sr = GetComponent<SpriteRenderer>();
         cam = Camera.main;
         nav = GetComponent<NavMeshAgent>();
         nav.updateRotation = false;
         nav.updateUpAxis = false;
+        gm = GameManager.Inst;
     }
 
     // Update is called once per frame
@@ -36,39 +42,67 @@ public class Enemy_Nav_Movement : MonoBehaviour
             return;
         }
 
-
+        PlayerAndMeDistance();
+        Attack();
         Sprite_FilpX_Changer();
-        
+        MoveEnemy();
 
-        if (TestClickMoveEnemy == true)
+
+    }
+
+
+    private void PlayerAndMeDistance()
+    {
+        FilpxFloat = gm.F_Get_Filpx_Value(transform.position);
+        Dis = gm.F_Get_PlyerPos(transform.position);
+    }
+
+    private void Attack()
+    {
+        if(Dis < AttackDis)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                navTargetVec = cam.ScreenToWorldPoint(Input.mousePosition);
-                nav.SetDestination(navTargetVec);
-            }
-        }
-        else if(TestClickMoveEnemy == false && attackSC.IsAttack == false)
-        {
-            navTargetVec = GameManager.Inst.F_Get_PlayerObj();
-            nav.SetDestination(navTargetVec);
+            attackSC.Set_Attack_Bool_Changer(true);
         }
     }
 
+
     private void Sprite_FilpX_Changer()
     {
-        if(nav.velocity.x < 0)
+      
+        if(FilpxFloat > 0 && sr.flipX == true)
         {
             sr.flipX = false;
         }
-        else if(nav.velocity.x > 0)
+        else if(FilpxFloat < 0 && sr.flipX == false)
         {
             sr.flipX = true;
         }
     }
+
+    private void MoveEnemy()
+    {
+        navTargetVec = GameManager.Inst.F_Get_PlayerObj();
+
+        if (anim.GetBool("Attack") == true)
+        {
+            nav.isStopped = true;
+        }
+        else if(anim.GetBool("Attack") == false)
+        {
+            if (nav.isStopped == true)
+            {
+                nav.isStopped = false;
+            }
+            
+            nav.SetDestination(navTargetVec);
+        }
+    }
+
+
     public void F_Dead(bool value)
     {
         isEnemyDead = value;
+        
     }
 
     

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: hit
+  m_Name: SkelAttack
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,15 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: f5aef3494fd8a114bb9b0ad895e2b302, type: 3}
+      value: {fileID: 21300000, guid: a58434b6be462544d80a3744ea163a97, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: a6c0213ff5946824e8678dc54f4496ab, type: 3}
+      value: {fileID: 21300000, guid: 454611bdf5b27544e95e0812f857c1d7, type: 3}
     - time: 0.41666666
-      value: {fileID: 21300000, guid: 17d8fc30623618842850978b2d0380b5, type: 3}
+      value: {fileID: 21300000, guid: 3d32cd46102907e4cb62bb5c1ae31115, type: 3}
     - time: 0.5833333
-      value: {fileID: 21300000, guid: 08b0cc0b3408aeb4cbf765d334e08b4d, type: 3}
-    - time: 0.6666667
-      value: {fileID: 21300000, guid: f5aef3494fd8a114bb9b0ad895e2b302, type: 3}
+      value: {fileID: 21300000, guid: a76d46cecfb9c464ca31af79039bf036, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -52,17 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: f5aef3494fd8a114bb9b0ad895e2b302, type: 3}
-    - {fileID: 21300000, guid: a6c0213ff5946824e8678dc54f4496ab, type: 3}
-    - {fileID: 21300000, guid: 17d8fc30623618842850978b2d0380b5, type: 3}
-    - {fileID: 21300000, guid: 08b0cc0b3408aeb4cbf765d334e08b4d, type: 3}
-    - {fileID: 21300000, guid: f5aef3494fd8a114bb9b0ad895e2b302, type: 3}
+    - {fileID: 21300000, guid: a58434b6be462544d80a3744ea163a97, type: 3}
+    - {fileID: 21300000, guid: 454611bdf5b27544e95e0812f857c1d7, type: 3}
+    - {fileID: 21300000, guid: 3d32cd46102907e4cb62bb5c1ae31115, type: 3}
+    - {fileID: 21300000, guid: a76d46cecfb9c464ca31af79039bf036, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.6666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -81,4 +78,25 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: A_attackCollider_ON
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: A_attackCollider_OFF
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: ArrowSpawn
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

@@ -1,6 +1,7 @@
 using NavMeshPlus.Components;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -106,4 +107,42 @@ public class GameManager : MonoBehaviour
         dis = Vector3.Distance(Player.transform.position, InputPos);
         return dis;
     }
+
+    /// <summary>
+    /// 플레이어와 에너미 위치 X값 계산
+    /// </summary>
+    /// <param name="InputPos"></param>
+    /// <returns></returns>
+
+    public float F_Get_Filpx_Value(Vector3 InputPos)
+    {
+        float dis;
+        dis = InputPos.x - Player.transform.position.x;
+        return dis;
+    }
+
+    /// <summary>
+    /// 투사체 플레이어방향 계산
+    /// </summary>
+    /// <param name="StartPos"></param>
+    /// <returns></returns>
+    public Vector2 F_Enemy_BulletTargetPos(Vector3 StartPos)
+    {
+        Vector2 Target = Player.transform.position - StartPos;
+        return Target;
+    }
+
+    /// <summary>
+    /// 투사체 각도계산
+    /// </summary>
+    /// <param name="StartPos"></param>
+    /// <returns></returns>
+    public float F_EnemyBulletRotation(Vector3 StartPos)
+    {
+        Vector3 Target = Player.transform.position - StartPos;
+        float angle = Mathf.Atan2(Target.y, Target.x) * Mathf.Rad2Deg;
+        return angle;
+    }
+
+   
 }

@@ -13,8 +13,8 @@ public class Player_Skill_System : MonoBehaviour
     [Space]
     [SerializeField] float Skill_one_distance;
     [SerializeField] float Skill_one_spinSpeed;
-        
-    
+
+    bool Alpha_1_Input;
     
     void Start()
     {
@@ -25,14 +25,35 @@ public class Player_Skill_System : MonoBehaviour
     void Update()
     {
         Active_Skill_Cheaker();
+        Input_Cheaker();
+        ActiveSKill_KeyDown();
         Play_Skill_01();
     }
+
+    private void Input_Cheaker()
+    {
+        Alpha_1_Input = Input.GetKeyDown(KeyCode.Alpha1);
+    }
+
+
+    private void ActiveSKill_KeyDown()
+    {
+        if (Alpha_1_Input)
+        {
+            Active_Skill_01 = !Active_Skill_01;
+        }
+    }
+
 
     private void Active_Skill_Cheaker()
     {
         if(Active_Skill_01 == true && skill_Obj[0].gameObject.activeSelf == false)
         {
             skill_Obj[0].gameObject.SetActive(true);
+        }
+        else if (Active_Skill_01 == false && skill_Obj[0].gameObject.activeSelf == true)
+        {
+            skill_Obj[0].gameObject.SetActive(false);
         }
     }
 
