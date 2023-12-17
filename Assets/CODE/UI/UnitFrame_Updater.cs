@@ -8,12 +8,18 @@ using Unity.VisualScripting;
 public class UnitFrame_Updater : MonoBehaviour
 {
     public static UnitFrame_Updater inst;
-
-    [Header("#  Insert Obj In Hiearchy")]
+    [Header("#  Insert UI In Hiearchy")]
+    [SerializeField] GameObject Ui_Canvas;
+    [Space]
+    [Space]
+    [Header("#  UnitFrame Setting")]
     [Space]
     [SerializeField] GameObject UnitFrame;
     [SerializeField] float HpBar_Down_Speed;
     [SerializeField] float Exp_Circle_Speen_Speed;
+    TMP_Text battle_Time_Text;
+    [SerializeField] float timecheck , min, sec;
+
 
     GameObject Hp_Bar;
     Image Middle_HP_Bar, Front_HP_Bar, ExpCicle;
@@ -22,6 +28,7 @@ public class UnitFrame_Updater : MonoBehaviour
     GameManager gm;
     TMP_Text Hp_Bar_Info_Text;
     TMP_Text Lv_text;
+    TMP_Text KillCount;
     private void Awake()
     {
         if(inst == null)
@@ -45,6 +52,9 @@ public class UnitFrame_Updater : MonoBehaviour
         
         Hp_Bar_Info_Text = Front_HP_Bar.GetComponentInChildren<TMP_Text>();
         Lv_text = UnitFrame.transform.Find("Lv/LvText").GetComponent<TMP_Text>();
+
+        battle_Time_Text = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").GetComponentInChildren<TMP_Text>();
+        KillCount = Ui_Canvas.transform.Find("Main_Canvas/Count_Info/Kill").GetComponentInChildren<TMP_Text>();
     }
 
     // Update is called once per frame
@@ -52,6 +62,8 @@ public class UnitFrame_Updater : MonoBehaviour
     {
         PlayerInfo_Updater();
         Image_FillAmount_Updater();
+        BattleTime_Updater();
+        KillCount_Updater();
     }
 
     private void PlayerInfo_Updater()
@@ -91,5 +103,34 @@ public class UnitFrame_Updater : MonoBehaviour
     public void F_ExpFillAmountReset()
     {
         ExpCicle.fillAmount = 0;
+    }
+
+
+    private void KillCount_Updater()
+    {
+        KillCount.text = GameManager.Inst.KillCount.ToString();
+    }
+    private void BattleTime_Updater()
+    {
+        if(gm.MainGameStart == false && timecheck != 0) 
+        {
+            timecheck = 0;
+            battle_Time_Text.text = string.Empty;
+            return; 
+        }
+        
+        else if(gm.MainGameStart == true)
+        {
+            if(GameManager.Inst.UiOpen_EveryObecjtStop == true) { return; }
+
+            timecheck +=Time.deltaTime;
+                                    
+            min = (int)timecheck / 60;
+            sec = (int)timecheck % 60;
+                        
+            battle_Time_Text.text = $"{min.ToString("00")} : {sec.ToString("00")}";
+        }
+
+
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EnemyStats : MonoBehaviour
 {
+    public enum expCoin_DropType { Small, Medium, Large };
+    public expCoin_DropType ExpCoin_DropType;
 
     [Header("# Enemy Stats Info  ==     # ¿¹Áø ")]
     [Space]
@@ -60,7 +62,13 @@ public class EnemyStats : MonoBehaviour
                 anim.SetTrigger("Dead");
                 Enemy_Dead = true;
                 nav.F_Dead(true);
-                GameManager.Inst.F_Get_PlayerSc().F_GetExp_LevelupSystem(Exp);
+                
+                GameManager.Inst.F_KillCountUp();
+                GameObject obj = PoolManager.Inst.F_GetObj(1);
+                obj.GetComponent<Exp_Coin>().F_SettingCoin((int)ExpCoin_DropType);
+                obj.transform.position = transform.position - new Vector3(0, 0.7f,0);
+                obj.gameObject.SetActive(true);
+
             }
         }
     }

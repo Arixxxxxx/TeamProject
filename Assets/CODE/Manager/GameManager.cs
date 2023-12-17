@@ -15,9 +15,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] Light2D globalLight;
     [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
+    [SerializeField] GameObject[] GameStop_Ui_Window;
 
     bool isPlayer_Dead;
+
+    [Header("# Ingame Cheak & Test Value")]
+    [Space]
+    [Space]
+    [SerializeField] bool mainGameStart;
+    [SerializeField] bool uiOpen_EveryObecjtStop;
+    [Header("# Battle Count")]
+    [Space]
+    [SerializeField] int killCount;
+    public bool MainGameStart { get { return mainGameStart; } set { mainGameStart = value; } }
+    public bool UiOpen_EveryObecjtStop { get { return uiOpen_EveryObecjtStop; } set { uiOpen_EveryObecjtStop = value; } }
     public bool IsPlayer_Dead { get { return isPlayer_Dead; } set { isPlayer_Dead = value; } }
+    public int KillCount { get { return killCount; } }
 
     private void Awake()
     {
@@ -39,7 +52,8 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        
+        uiOpen_EveryObecjtStopFuntion();
+        UiOpen_Cheaker();
     }
 
 
@@ -144,5 +158,36 @@ public class GameManager : MonoBehaviour
         return angle;
     }
 
-   
+    public void F_KillCountUp()
+    {
+        killCount++;
+    }
+
+    private void uiOpen_EveryObecjtStopFuntion()
+    {
+        if(uiOpen_EveryObecjtStop == true && Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else if (uiOpen_EveryObecjtStop == false && Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    private void UiOpen_Cheaker()
+    {
+        if (GameStop_Ui_Window[0].gameObject.activeSelf == true && uiOpen_EveryObecjtStop == false)
+         {
+            uiOpen_EveryObecjtStop = true;
+        }
+        else if(GameStop_Ui_Window[0].gameObject.activeSelf == false && uiOpen_EveryObecjtStop == true)
+        {
+            uiOpen_EveryObecjtStop = false;
+        }
+    }
+  
+
+
+
 }
