@@ -10,6 +10,8 @@ public class Enemy_Nav_Movement : MonoBehaviour
     [SerializeField] float Dis;
     [SerializeField] float AttackDis;
     [SerializeField] float FilpxFloat;
+
+    float OriginSpeed;
     Camera cam;
     Vector2 navTargetVec;
     NavMeshAgent nav;
@@ -28,6 +30,8 @@ public class Enemy_Nav_Movement : MonoBehaviour
         nav.updateRotation = false;
         nav.updateUpAxis = false;
         gm = GameManager.Inst;
+
+        OriginSpeed = nav.speed;
     }
 
     // Update is called once per frame
@@ -59,10 +63,11 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
     private void Attack()
     {
-        if(Dis < AttackDis)
+        if(Dis < AttackDis && attackSC.F_Get_Bool_isAttack_() == false)
         {
             attackSC.Set_Attack_Bool_Changer(true);
         }
+       
     }
 
 
@@ -85,13 +90,15 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
         if (anim.GetBool("Attack") == true)
         {
-            nav.isStopped = true;
+            nav.speed = 0;
+            //nav.isStopped = true;
         }
         else if(anim.GetBool("Attack") == false)
         {
-            if (nav.isStopped == true)
+            if (nav.speed == 0)
             {
-                nav.isStopped = false;
+                nav.speed = OriginSpeed;
+                //nav.isStopped = false;
             }
             
             nav.SetDestination(navTargetVec);

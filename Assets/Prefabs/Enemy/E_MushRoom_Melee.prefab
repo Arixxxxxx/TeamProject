@@ -202,7 +202,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
 --- !u!114 &5551453919967082598
 MonoBehaviour:
@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 6451101131598699070}
   - component: {fileID: 9032585305479146180}
   - component: {fileID: 7369337105800535441}
+  - component: {fileID: 2461004340407877011}
   m_Layer: 6
   m_Name: E_MushRoom_Melee
   m_TagString: Enemy
@@ -722,8 +723,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TestClickMoveEnemy: 0
   isEnemyDead: 0
-  Dis: 0.2
-  AttackDis: 1.65
+  Dis: 2
+  AttackDis: 3.5
   FilpxFloat: 0
 --- !u!114 &9032585305479146180
 MonoBehaviour:
@@ -737,9 +738,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240db2854772ab141ace4463ead52646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: 1
+  ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40
-  Exp: 50
+  Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
 --- !u!114 &7369337105800535441
@@ -754,7 +757,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7135bd1f53ab74985b18fb4192c854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   AttackDMG: 0
-  attackSpeed: 1
+  attackSpeed: 0.8
+  mushroomForce: 6
   isAttack: 0
+--- !u!50 &2461004340407877011
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128411203295138690}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

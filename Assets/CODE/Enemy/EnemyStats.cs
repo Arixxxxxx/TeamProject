@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
     public enum expCoin_DropType { Small, Medium, Large };
+    public enum EnemyName { Orc, Mushroom, SkeletonRanger };
+
+    public EnemyName enemyName;
     public expCoin_DropType ExpCoin_DropType;
 
     [Header("# Enemy Stats Info  ==     # ¿¹Áø ")]
@@ -69,6 +72,8 @@ public class EnemyStats : MonoBehaviour
                 obj.transform.position = transform.position - new Vector3(0, 0.7f,0);
                 obj.gameObject.SetActive(true);
 
+
+
             }
         }
     }
@@ -101,5 +106,29 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
+    private void A_ReturnObj()
+    {
+        switch (enemyName)
+        {
+            case EnemyName.Orc:
+                {
+                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 0);
+                }
+                break;
+
+            case EnemyName.Mushroom:
+                {
+                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 1);
+                }
+
+                break;
+
+            case EnemyName.SkeletonRanger:
+                {
+                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+                }
+                break;
+        }
+    }
    
 }

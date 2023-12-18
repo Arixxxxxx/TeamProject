@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,8 @@ public class OptionWindow_Controller : MonoBehaviour
 
     // 옵션창 버튼들
     [SerializeField] Button MainWindow_0_Btn_0;
+    [SerializeField] Button MainWindow_0_Btn_1;
+
 
 
     void Start()
@@ -31,7 +34,8 @@ public class OptionWindow_Controller : MonoBehaviour
 
         // 1번창 (인게임 햄버거모양 누르면 나오는 옵션창)
         Window_0 = SeletWindowList.transform.GetChild(0).gameObject;
-        MainWindow_0_Btn_0 = Window_0.transform.Find("Btn").GetComponent<Button>();
+        MainWindow_0_Btn_0 = Window_0.transform.Find("PlayBtn").GetComponent<Button>();
+        MainWindow_0_Btn_1 = Window_0.transform.Find("ExitBtn").GetComponent<Button>();
 
         Btn_Init();
     }
@@ -60,6 +64,19 @@ public class OptionWindow_Controller : MonoBehaviour
             {
                 Window_0.gameObject.SetActive(false);
             }
+        });
+
+        MainWindow_0_Btn_1.onClick.AddListener(() => {
+
+            if (Application.isEditor)
+            {
+                EditorApplication.ExitPlaymode();
+            }
+            else 
+            {
+                Application.Quit();
+            }
+
         });
     }
 }

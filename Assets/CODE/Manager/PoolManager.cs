@@ -6,8 +6,18 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager Inst;
 
+    [Header("# Insert Prefab Enemy Obj")]
+    [Space]
+    [SerializeField] GameObject[] EnemyObj; // 
+    [SerializeField] int Enemy_Obj_01_StartMakingEA;
+    [SerializeField] int Enemy_Obj_02_StartMakingEA;
+    [SerializeField] int Enemy_Obj_03_StartMakingEA;
+    Queue<GameObject> OrcQue = new Queue<GameObject>();
+    Queue<GameObject> MushRoomQue = new Queue<GameObject>();
+    Queue<GameObject> SkeletonQue = new Queue<GameObject>();
+    Transform OrcTrs, MushTrs, SkeletonTrs;
 
-    [Header("# Insert Prefab Obj")]
+    [Header("# Insert Prefab Bullet Obj")]
     [Space]
     [SerializeField] GameObject[] Bullet; // 에너미 화살
     [SerializeField] int ArrowStartMakingEa;
@@ -33,11 +43,39 @@ public class PoolManager : MonoBehaviour
         {
             Destroy(this);
         }
+        // 1. Enemy Obj 초기생성
+
 
         // 1. Enemy 화살 관련
-        ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
+        OrcTrs = transform.Find("Enemy/Orc").GetComponent<Transform>();
+        MushTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
+        SkeletonTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
 
-        for(int i = 0; i < ArrowStartMakingEa; i++)
+        for (int i = 0; i < Enemy_Obj_01_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[0], OrcTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            OrcQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < Enemy_Obj_02_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[1], MushTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            MushRoomQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < Enemy_Obj_03_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[2], SkeletonTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            SkeletonQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < ArrowStartMakingEa; i++)
         {
           GameObject Obj =  Instantiate(Bullet[0],ArrowTrs);
           Obj.transform.position = Vector3.zero;
@@ -69,7 +107,95 @@ public class PoolManager : MonoBehaviour
     }
 
     /// <summary>
-    /// [ Polling System ] 0 = Arrow / 1 = ExpCoin
+    /// 에너미 프리펩 Get 함수
+    /// </summary>
+    /// <param name="value">0오크/1버섯/2궁수</param>
+    /// <returns></returns>
+    public GameObject F_GetEnemyObj(int value)
+    {
+        GameObject obj;
+
+        switch(value)
+        {
+            case 0: // 오크
+
+                if(OrcQue.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[0], OrcTrs);
+                    return obj;
+                }
+
+                obj = OrcQue.Dequeue();
+
+                return obj;
+
+
+            case 1: // 버섯
+                if (MushRoomQue.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[1], MushTrs);
+                    return obj;
+                }
+                obj = MushRoomQue.Dequeue();
+                return obj;
+
+            case 2: //해골궁수
+                if (SkeletonQue.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[2], SkeletonTrs);
+                    return obj;
+                }
+                obj = SkeletonQue.Dequeue();
+                return obj;
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Enmey_return_Que
+    /// </summary>
+    /// <param name="obj"> GameObject </param>
+    /// <param name="value"> 0 Orc / 1 Mushroom / 2 SkeletonRanger</param>
+    public void F_Return_Enemy_Obj(GameObject obj, int value)
+    {
+        obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
+
+        switch (value)
+        {
+            case 0:
+                if (obj.transform.parent != OrcTrs)
+                {
+                    obj.transform.SetParent(OrcTrs);
+                }
+                OrcQue.Enqueue(obj);
+                break;
+
+                case 1:
+                if (obj.transform.parent != MushTrs)
+                {
+                    obj.transform.SetParent(OrcTrs);
+                }
+                MushRoomQue.Enqueue(obj);
+                break;
+
+                case 2:
+                if (obj.transform.parent != SkeletonTrs)
+                {
+                    obj.transform.SetParent(OrcTrs);
+                }
+                SkeletonQue.Enqueue(obj);   
+                break;
+
+        }
+
+    }
+
+
+    /// <summary>
+    /// [ Polling System ] 0 = Arrow / 1 = ExpCoin 
     /// </summary>
     /// <param name="value"> 0 화살 / 1 Exp 코인 </param>
     /// <returns></returns>

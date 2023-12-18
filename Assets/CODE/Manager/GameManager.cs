@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour
     [Space]
     [Space]
     [SerializeField] bool mainGameStart;
+    [Space]
     [SerializeField] bool uiOpen_EveryObecjtStop;
+    
+
     [Header("# Battle Count")]
     [Space]
     [SerializeField] int killCount;

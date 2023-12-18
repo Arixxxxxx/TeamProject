@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     [Header("# PlayerObj Insert stats    =>    (예진) ")]
     [Space]
     [SerializeField] float CharMove_Speed;
+    [SerializeField] float Sprint_Speed;
     [SerializeField] float Force;
 
 
@@ -14,7 +15,8 @@ public class Movement : MonoBehaviour
     SpriteRenderer sr;
     Vector2 moveVec;
     Animator anim;
-    bool InputSpaceBar;
+    [SerializeField] bool InputSpaceBar;
+    [SerializeField] bool InputLshift;
 
 
     private void Awake()
@@ -47,7 +49,8 @@ public class Movement : MonoBehaviour
     {
         moveVec.x = Input.GetAxisRaw("Horizontal");
         moveVec.y = Input.GetAxisRaw("Vertical");
-
+        InputLshift = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift);
+        InputSpaceBar = Input.GetKeyDown(KeyCode.Space);
     }
 
     private void Change_Sclae_Xvalue()
@@ -78,9 +81,23 @@ public class Movement : MonoBehaviour
             anim.SetBool("Run", false);
         }
     }
+
+    //[SerializeField] float MoveCheak; // 스프린트 작동 시간 제어
+    //private void Sprint_Time_Updater()
+    //{
+    //    if(InputLshift && )
+    //}
     private void Move_Character()
     {
         moveVec = moveVec.normalized;
-        rb.MovePosition(rb.position + moveVec * CharMove_Speed * Time.deltaTime);
+
+        if (InputLshift)
+        {
+            rb.MovePosition(rb.position + moveVec * (CharMove_Speed  + Sprint_Speed ) * Time.deltaTime);
+        }
+        else
+        {
+            rb.MovePosition(rb.position + moveVec * CharMove_Speed * Time.deltaTime);
+        }
     }
 }

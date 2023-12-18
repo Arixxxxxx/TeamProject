@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Enemy_Attack : MonoBehaviour
 {
-    public enum EnemyName { Melee, Range, Mushroom }
+    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom }
     public EnemyName type;
     private Animator anim;
     private GameObject attackCollider;
@@ -41,7 +41,7 @@ public class Enemy_Attack : MonoBehaviour
         switch (type)
         {
 
-            case EnemyName.Melee: case EnemyName.Mushroom:
+            case EnemyName.Orc: case EnemyName.Mushroom:
                 attackCollider = transform.Find("AttackCollider").gameObject;
                 attackCollider.GetComponent<AttackCollider>().F_SetAttackDMG(AttackDMG);
                 if (attackCollider.gameObject.activeSelf)
@@ -51,7 +51,7 @@ public class Enemy_Attack : MonoBehaviour
               break;
 
 
-            case EnemyName.Range:
+            case EnemyName.Skeleton_Ranger:
                 break;
         }
 
@@ -71,11 +71,16 @@ public class Enemy_Attack : MonoBehaviour
     {
         isAttack = value;
     }
+    public bool F_Get_Bool_isAttack_()
+    {
+        return isAttack;
+    }
 
-
+    bool MushroomAttakcDealy;
+    float CheakerDealy;
     private void Attack_Anim()
     {
-        if (isAttack == true && anim.GetBool("Attack") == false)
+        if (isAttack == true && anim.GetBool("Attack") == false && MushroomAttakcDealy == false)
         {
             anim.SetBool("Attack", true);
         }
@@ -84,10 +89,20 @@ public class Enemy_Attack : MonoBehaviour
             anim.SetBool("Attack", false);
         }
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run") && attackCollider.activeSelf == true)
+        if(MushroomAttakcDealy == true)
         {
-            attackCollider.gameObject.SetActive(false);
+            CheakerDealy += Time.deltaTime;
+
+            if(CheakerDealy > 0.1f)
+            {
+                MushroomAttakcDealy = false;
+                CheakerDealy = 0;
+            }
         }
+        //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run") && attackCollider.activeSelf == true)
+        //{
+        //    attackCollider.gameObject.SetActive(false);
+        //}
 
     }
     bool once;
@@ -96,7 +111,6 @@ public class Enemy_Attack : MonoBehaviour
         if(type == EnemyName.Mushroom && anim.GetBool("Attack") == true && once == false)
         {
             once= true;
-            Debug.Log("11");
             Vector2 AttackVec = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
             AttackVec = AttackVec.normalized;
             rb.AddForce(AttackVec * mushroomForce, ForceMode2D.Impulse);
@@ -107,7 +121,7 @@ public class Enemy_Attack : MonoBehaviour
     {
         switch (type)
         {
-            case EnemyName.Melee:
+            case EnemyName.Orc:
 
                 if (attackCollider.gameObject.activeSelf == false)
                 {
@@ -115,7 +129,7 @@ public class Enemy_Attack : MonoBehaviour
                 }
                 break;
 
-            case EnemyName.Range:
+            case EnemyName.Skeleton_Ranger:
 
 
                 break;
@@ -152,7 +166,7 @@ public class Enemy_Attack : MonoBehaviour
     {
         switch (type)
         {
-            case EnemyName.Melee:
+            case EnemyName.Orc:
 
                 if (attackCollider.gameObject.activeSelf == true)
                 {
@@ -161,7 +175,7 @@ public class Enemy_Attack : MonoBehaviour
                 isAttack = false;
                 break;
 
-            case EnemyName.Range:
+            case EnemyName.Skeleton_Ranger:
                 isAttack = false;
                 anim.SetBool("Attack", false);
                 break;
@@ -171,9 +185,14 @@ public class Enemy_Attack : MonoBehaviour
                 once = false;
                 rb.velocity = Vector2.zero;
                 anim.SetBool("Attack", false);
+                MushroomAttakcDealy = true;
+                Debug.Log("11");
                 break;
-
-              
         }
+    }
+
+    private void A_MushroomDead_VeloZero()
+    {
+        rb.velocity = Vector2.zero;
     }
 }

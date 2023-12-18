@@ -498,9 +498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240db2854772ab141ace4463ead52646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: 2
+  ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40
-  Exp: 0
+  Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
 --- !u!114 &9122064047882607623
@@ -518,6 +520,7 @@ MonoBehaviour:
   type: 1
   AttackDMG: 3
   attackSpeed: 1
+  mushroomForce: 0
   isAttack: 0
 --- !u!1 &5237617806331647013
 GameObject:
