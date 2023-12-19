@@ -79,7 +79,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
+  - time: 0.5
     functionName: A_attackCollider_ON
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -88,20 +88,6 @@ AnimationClip:
     messageOptions: 0
   - time: 0.5833333
     functionName: A_attackCollider_OFF
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
-    functionName: A_ReturnObj
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
-    functionName: 
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

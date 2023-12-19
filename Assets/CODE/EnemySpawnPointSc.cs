@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class EnemySpawnPointSc : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private bool noSpawn;
+    [SerializeField] int areaNumber;
+    public int AreaNumber {  get { return areaNumber; } }
+    public bool NoSpawn {  get { return noSpawn; } set { noSpawn = value; } }
     void Start()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void F_Input_Area_Value(int value)
     {
-        
+        areaNumber = value;
     }
+
+
 }

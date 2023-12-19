@@ -48,8 +48,12 @@ public class PoolManager : MonoBehaviour
 
         // 1. Enemy 화살 관련
         OrcTrs = transform.Find("Enemy/Orc").GetComponent<Transform>();
-        MushTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
-        SkeletonTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
+        MushTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
+        SkeletonTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
+       
+        CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
+        ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
+
 
         for (int i = 0; i < Enemy_Obj_01_StartMakingEA; i++)
         {
@@ -83,7 +87,7 @@ public class PoolManager : MonoBehaviour
           ArrowQue.Enqueue(Obj);
         }
 
-        CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
+        
 
         // 2. Exp_Coin 관련
 
@@ -107,7 +111,7 @@ public class PoolManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 에너미 프리펩 Get 함수
+    /// 에너미 프리펩 Get 함수 -> 0오크/1버섯/2궁수 
     /// </summary>
     /// <param name="value">0오크/1버섯/2궁수</param>
     /// <returns></returns>

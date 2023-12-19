@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
@@ -14,19 +15,24 @@ public class Movement : MonoBehaviour
     SpriteRenderer sr;
     Vector2 moveVec;
     Animator anim;
-    [SerializeField] bool InputSpaceBar;
-    [SerializeField] bool InputLshift;
+    bool InputSpaceBar;
+    bool InputLshift;
+    Image Sprint_Bar_Ui;
 
+    [SerializeField] float TeleportDealy;
+    WaitForSeconds TelePortDealys;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        Sprint_Bar_Ui = transform.Find("Character_Mini_Ui/Sprint_Bar").GetComponent<Image>();
     }
     void Start()
     {
         curSpintTime = maxSpintTime;
+        TelePortDealys = new WaitForSeconds(TeleportDealy);
     }
     private void FixedUpdate()
     {
@@ -95,6 +101,14 @@ public class Movement : MonoBehaviour
 
         if (InputLshift && CheakMoveFloat > 0) // 소모
         {
+
+            if(Sprint_Bar_Ui.gameObject.activeSelf == false)
+            {
+                Sprint_Bar_Ui.gameObject.SetActive(true);
+            }
+           
+            Sprint_Bar_Ui.fillAmount = curSpintTime / maxSpintTime;
+
             if (curSpintTime > 0)
             {
                 curSpintTime -= Time.deltaTime;
@@ -107,10 +121,16 @@ public class Movement : MonoBehaviour
         else // 회복
         {
             curSpintTime += Time.deltaTime;
+            Sprint_Bar_Ui.fillAmount = curSpintTime / maxSpintTime;
 
             if (curSpintTime > maxSpintTime)
             {
                 curSpintTime = maxSpintTime;
+
+                if(Sprint_Bar_Ui.gameObject.activeSelf == true)
+                {
+                    Sprint_Bar_Ui.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -131,7 +151,7 @@ public class Movement : MonoBehaviour
 
 
         if (isRun)
-        {
+        { 
             rb.MovePosition(rb.position + moveVec * (CharMove_Speed + Sprint_Speed) * Time.deltaTime);
         }
         else
@@ -149,9 +169,7 @@ public class Movement : MonoBehaviour
     {
         if (InputSpaceBar == true && doTeleport == false && CheakMoveFloat > 0)
         {
-            doTeleport = true;
-            anim.SetTrigger("Tel");
-            rb.position = rb.position + moveVec * TeleportDistance;
+            StartCoroutine(Player_Input_Spacebar_TelePort());
         }
 
         if (doTeleport)
@@ -172,5 +190,16 @@ public class Movement : MonoBehaviour
             }
 
         }
+    }
+ 
+   
+    IEnumerator Player_Input_Spacebar_TelePort()
+    {
+        doTeleport = true;
+        anim.SetTrigger("Tel");
+
+        yield return TelePortDealys;
+
+        rb.position = rb.position + moveVec * TeleportDistance;
     }
 }

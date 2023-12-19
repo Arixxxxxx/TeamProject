@@ -131,7 +131,7 @@ public class Enemy_Attack : MonoBehaviour
 
             case EnemyName.Skeleton_Ranger:
 
-
+                ArrowSpawn();
                 break;
 
             case EnemyName.Mushroom:
@@ -186,7 +186,7 @@ public class Enemy_Attack : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 anim.SetBool("Attack", false);
                 MushroomAttakcDealy = true;
-                Debug.Log("11");
+               
                 break;
         }
     }

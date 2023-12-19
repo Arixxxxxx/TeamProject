@@ -11,12 +11,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Inst;
 
     NavMeshSurface nav_Surface;
+    [Header("# Insert Object in Hiearachy")]
+    [Space]
     [SerializeField] GameObject Player;
     [SerializeField] Light2D globalLight;
     [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
     [SerializeField] GameObject[] GameStop_Ui_Window;
-
+    
     bool isPlayer_Dead;
 
     [Header("# Ingame Cheak & Test Value")]
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool mainGameStart;
     [Space]
     [SerializeField] bool uiOpen_EveryObecjtStop;
-    
+    [Space] int plyaer_Area_Value;
 
     [Header("# Battle Count")]
     [Space]
@@ -190,7 +192,7 @@ public class GameManager : MonoBehaviour
         }
     }
   
-
+  
 
 
 }

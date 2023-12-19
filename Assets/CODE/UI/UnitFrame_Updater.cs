@@ -130,7 +130,10 @@ public class UnitFrame_Updater : MonoBehaviour
                         
             battle_Time_Text.text = $"{min.ToString("00")} : {sec.ToString("00")}";
         }
+    }
 
-
+    public float F_Get_GameTime()
+    {
+        return timecheck;
     }
 }
