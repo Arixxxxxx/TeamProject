@@ -79,7 +79,7 @@ public class Player_Stats : MonoBehaviour
         {
             player_On_Hit = true;
             Player_CurHP -= DMG;
-
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG);
             Invoke("Player_OnHit_False", noDMG_Time);
 
             if (Player_CurHP <= 0)

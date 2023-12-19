@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class UnitFrame_Updater : MonoBehaviour
 {
     public static UnitFrame_Updater inst;
+
     [Header("#  Insert UI In Hiearchy")]
     [SerializeField] GameObject Ui_Canvas;
     [Space]
@@ -29,6 +30,8 @@ public class UnitFrame_Updater : MonoBehaviour
     TMP_Text Hp_Bar_Info_Text;
     TMP_Text Lv_text;
     TMP_Text KillCount;
+    TMP_Text Unitframe_Dmg_Font;
+    Animator Unitframe_Dmg_Anim;
     private void Awake()
     {
         if(inst == null)
@@ -55,6 +58,9 @@ public class UnitFrame_Updater : MonoBehaviour
 
         battle_Time_Text = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").GetComponentInChildren<TMP_Text>();
         KillCount = Ui_Canvas.transform.Find("Main_Canvas/Count_Info/Kill").GetComponentInChildren<TMP_Text>();
+
+        Unitframe_Dmg_Font = UnitFrame.transform.Find("Get_Dmg(Text)").GetComponent<TMP_Text>();
+        Unitframe_Dmg_Anim = Unitframe_Dmg_Font.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -132,6 +138,12 @@ public class UnitFrame_Updater : MonoBehaviour
         }
     }
 
+
+    public void F_Set_Unitframe_DMG(float DMG)
+    {
+        Unitframe_Dmg_Font.text = DMG.ToSafeString();
+        Unitframe_Dmg_Anim.SetTrigger("hit");
+    }
     public float F_Get_GameTime()
     {
         return timecheck;

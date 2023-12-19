@@ -505,7 +505,7 @@ MonoBehaviour:
   Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
-  dmgFontY_Add: 0
+  dmgFontY_Add: 0.8
 --- !u!114 &9122064047882607623
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -745,7 +745,7 @@ MonoBehaviour:
   Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
-  dmgFontY_Add: 0
+  dmgFontY_Add: 0.8
 --- !u!114 &7369337105800535441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  AttackDMG: 0
+  AttackDMG: 8
   attackSpeed: 0.8
   mushroomForce: 6
   isAttack: 0

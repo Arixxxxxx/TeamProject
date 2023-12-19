@@ -61,6 +61,7 @@ public class EnemyStats : MonoBehaviour
             if (Cri == true)
             {
                 Dmgs = DMG * 2;
+                anim.SetTrigger("hit");
             }
 
             GameObject obj_font = PoolManager.Inst.F_GetObj(2);
@@ -71,7 +72,7 @@ public class EnemyStats : MonoBehaviour
             StartCoroutine(DMG_Font_Animation(obj_font));
 
             CurHP -= Dmgs;
-            anim.SetTrigger("hit");
+
             Hp_Bar_anim.SetTrigger("hit");
 
             if (CurHP <= 0)

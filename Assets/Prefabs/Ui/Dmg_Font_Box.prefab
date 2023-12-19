@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2706649742521029260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,8 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc75e5e6d9fc7b34a82e1a8a54c1401b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorA_FadeOup_Speed: 10
-  CriticalFont: 10
+  ColorA_FadeOup_Speed: 20
+  CriticalFont: 20
   normalDMG_Color: {r: 0.96787643, g: 1, b: 0.25943398, a: 1}
   CriDMG_Color: {r: 1, g: 0.36604655, b: 0.19339621, a: 1}
   FadeOut: 0

@@ -67,7 +67,7 @@ public class SpawnManager : MonoBehaviour
 
         if (gm.MainGameStart == true)
         {
-             if(spawnData[Spawn_Level] == null ) { Debug.LogError("SpawnData 리스트 추가작성 필요"); return; }
+             if(spawnData[Spawn_Level] == null ) {  return; }
 
             //오크 스폰 여부
             if ( spawnData[Spawn_Level].isSpawn_Orc == true) //클래스에서 스폰여부 읽어옴

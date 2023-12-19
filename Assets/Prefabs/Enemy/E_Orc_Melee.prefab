@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  AttackDMG: 0
+  AttackDMG: 5
   attackSpeed: 1
   mushroomForce: 0
   isAttack: 0

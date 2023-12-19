@@ -33,6 +33,7 @@ public class Dmg_Font : MonoBehaviour
             Dmg_Text = GetComponentInChildren<TMP_Text>();
         }
 
+        Dmg_Text.text = string.Empty;
 
         FadeOut = false;
         Dmg_Text.color = Color.white;
@@ -41,12 +42,14 @@ public class Dmg_Font : MonoBehaviour
         {
             Dmg_Text.color = CriDMG_Color;
             Dmg_Text.fontSize += CriticalFont;
+            Dmg_Text.text = $"Cri! {Dmg.ToString()}";
         }
         else
         {
             Dmg_Text.color = normalDMG_Color;
+            Dmg_Text.text = Dmg.ToString();
         }
-        Dmg_Text.text = Dmg.ToString();
+      
     }
 
 
