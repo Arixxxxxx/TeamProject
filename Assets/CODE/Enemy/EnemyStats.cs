@@ -23,8 +23,8 @@ public class EnemyStats : MonoBehaviour
 
     GameObject Hp_Bar;
     Image Hp_Bar_Middle;
-     Image Hp_Bar_Front;
-    
+    Image Hp_Bar_Front;
+
 
     BoxCollider2D boxCollider;
     Enemy_Nav_Movement nav;
@@ -51,12 +51,26 @@ public class EnemyStats : MonoBehaviour
     {
         HpBar_Ui_Updater();
     }
-
-    public void F_Enemy_On_Hit(float DMG)
+    [SerializeField] float dmgFontY_Add;
+    public void F_Enemy_On_Hit(float DMG, bool Cri)
     {
         if (CurHP > 0)
         {
-            CurHP -= DMG;
+            float Dmgs = DMG;
+
+            if (Cri == true)
+            {
+                Dmgs = DMG * 2;
+            }
+
+            GameObject obj_font = PoolManager.Inst.F_GetObj(2);
+            Debug.Log(obj_font.name);
+            obj_font.GetComponent<Dmg_Font>().F_text_Init(Dmgs, Cri);
+            obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
+            obj_font.gameObject.SetActive(true);
+            StartCoroutine(DMG_Font_Animation(obj_font));
+
+            CurHP -= Dmgs;
             anim.SetTrigger("hit");
             Hp_Bar_anim.SetTrigger("hit");
 
@@ -65,17 +79,24 @@ public class EnemyStats : MonoBehaviour
                 anim.SetTrigger("Dead");
                 Enemy_Dead = true;
                 nav.F_Dead(true);
-                
+
                 GameManager.Inst.F_KillCountUp();
                 GameObject obj = PoolManager.Inst.F_GetObj(1);
                 obj.GetComponent<Exp_Coin>().F_SettingCoin((int)ExpCoin_DropType);
-                obj.transform.position = transform.position - new Vector3(0, 0.7f,0);
+                obj.transform.position = transform.position - new Vector3(0, 0.7f, 0);
                 obj.gameObject.SetActive(true);
 
 
 
             }
         }
+    }
+
+    WaitForSeconds DMG_Font_Dealy = new WaitForSeconds(0.15f);
+    IEnumerator DMG_Font_Animation(GameObject obj)
+    {
+        yield return DMG_Font_Dealy;
+        obj.GetComponent<Animator>().SetTrigger("hit"); 
     }
 
 
@@ -130,5 +151,5 @@ public class EnemyStats : MonoBehaviour
                 break;
         }
     }
-   
+
 }

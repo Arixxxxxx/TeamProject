@@ -725,7 +725,7 @@ MonoBehaviour:
   isEnemyDead: 0
   Dis: 2
   AttackDis: 3.5
-  FilpxFloat: 0
+  FilpxFloat: 0.2
 --- !u!114 &9032585305479146180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +745,7 @@ MonoBehaviour:
   Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
+  dmgFontY_Add: 0
 --- !u!114 &7369337105800535441
 MonoBehaviour:
   m_ObjectHideFlags: 0

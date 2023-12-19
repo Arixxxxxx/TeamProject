@@ -6,6 +6,7 @@ public class Player_Skill_System : MonoBehaviour
 {
     [Header("# Insert Skill Object in Hierarchy")]
     [Space]
+    [SerializeField] float critical_Value;
     [SerializeField] GameObject[] skill_Obj;
     [SerializeField] bool Active_Skill_01;
     [SerializeField] bool Active_Skill_02;
@@ -63,5 +64,10 @@ public class Player_Skill_System : MonoBehaviour
         {
             skill_Obj[0].transform.eulerAngles += Vector3.forward * Skill_one_spinSpeed * Time.deltaTime;
         }
+    }
+
+    public float F_Get_Player_Critical()
+    {
+        return critical_Value;
     }
 }

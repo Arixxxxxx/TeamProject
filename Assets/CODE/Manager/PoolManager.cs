@@ -27,11 +27,15 @@ public class PoolManager : MonoBehaviour
     [SerializeField] GameObject Exp_Coin; // 경험치 보석
     [SerializeField] int ExpCoin_StartMakingEa;
     Queue<GameObject> ExpCoinQue = new Queue<GameObject>();
-
+    [Space]
+    [Space]
+    [SerializeField] GameObject Dmg_Font_Box; // 경험치 폰트 프리펩
+    [SerializeField] int Dmg_Font_Box_StartMakingEa;
+    Queue<GameObject> Dmg_Font_BoxQue = new Queue<GameObject>();
 
 
     // Dyamic Tranform 변수
-    Transform ArrowTrs, CoinTrs;
+    Transform ArrowTrs, CoinTrs, FontTrs;
     
     private void Awake()
     {
@@ -53,6 +57,7 @@ public class PoolManager : MonoBehaviour
        
         CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
         ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
+        FontTrs = transform.Find("Font").GetComponent<Transform>();
 
 
         for (int i = 0; i < Enemy_Obj_01_StartMakingEA; i++)
@@ -97,6 +102,15 @@ public class PoolManager : MonoBehaviour
             Obj.transform.position = Vector3.zero;
             Obj.gameObject.SetActive(false);
             ExpCoinQue.Enqueue(Obj);
+        }
+
+        // 3. Dmg_Font  관련
+        for (int i = 0; i < Dmg_Font_Box_StartMakingEa; i++)
+        {
+            GameObject Obj = Instantiate(Dmg_Font_Box, FontTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Dmg_Font_BoxQue.Enqueue(Obj);
         }
 
     }
@@ -201,7 +215,7 @@ public class PoolManager : MonoBehaviour
     /// <summary>
     /// [ Polling System ] 0 = Arrow / 1 = ExpCoin 
     /// </summary>
-    /// <param name="value"> 0 화살 / 1 Exp 코인 </param>
+    /// <param name="value"> 0 화살 / 1 Exp 코인 / 2 데미지 폰트 </param>
     /// <returns></returns>
     public GameObject F_GetObj(int value)
     {
@@ -221,6 +235,7 @@ public class PoolManager : MonoBehaviour
                 return obj;
 
             case 1:
+
                 if (ExpCoinQue.Count <= 1)
                 {
                     GameObject Obj = Instantiate(Exp_Coin, CoinTrs);
@@ -231,14 +246,28 @@ public class PoolManager : MonoBehaviour
 
                 obj = ExpCoinQue.Dequeue();
                 return obj;
+
+            case 2:
+                if (Dmg_Font_BoxQue.Count <= 1)
+                {
+                
+                    GameObject Obj = Instantiate(Dmg_Font_Box, FontTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    return Obj;
+                }
+                
+                obj = Dmg_Font_BoxQue.Dequeue();
+                return obj;
         }
 
         return null;
     }
+
     /// <summary>
     /// [ Polling System ] Return Obj !! Gameobject + RoomNumber (0화살/1경험치보석)
     /// </summary>
-    /// <param name="value"> 0 화살 / 1 경험치 보석 / </param>
+    /// <param name="value"> 0 화살 / 1 경험치 보석 / 2 데미지폰트 </param>
     /// <returns></returns>
     public void F_ReturnObj(GameObject obj, int value)
     {
@@ -254,6 +283,10 @@ public class PoolManager : MonoBehaviour
 
             case 1:
                 ExpCoinQue.Enqueue(obj);
+                break;
+
+            case 2:
+                Dmg_Font_BoxQue.Enqueue(obj);
                 break;
 
         }

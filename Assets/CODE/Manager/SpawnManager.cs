@@ -89,14 +89,15 @@ public class SpawnManager : MonoBehaviour
                             obj.gameObject.SetActive(true);
                         }
                     }
+
+                    SpawnTrs0++;
                 }
-                SpawnTrs0++;
+              
             }
 
             //버섯 스폰 여부
             if (spawnData[Spawn_Level].isSpawn_Mushroom == true) 
             {
-                Debug.Log("11");
                 count[1] += Time.deltaTime;
 
                 if (count[1] > spawnData[Spawn_Level].spawn_1_Interval)
@@ -119,14 +120,14 @@ public class SpawnManager : MonoBehaviour
                         }
 
                     }
+                    SpawnTrs1++;
                 }
-                SpawnTrs1++;
+                
             }
 
             //궁수 스폰 여부
             if (spawnData[Spawn_Level].isSpanw_Skeleton == true)
             {
-                Debug.Log("22");
                 count[2] += Time.deltaTime;
 
                 if (count[2] > spawnData[Spawn_Level].spawn_2_Interval)
@@ -146,8 +147,9 @@ public class SpawnManager : MonoBehaviour
                         }
 
                     }
+                    SpawnTrs2++;
                 }
-                SpawnTrs2++;
+        
             }
 
            

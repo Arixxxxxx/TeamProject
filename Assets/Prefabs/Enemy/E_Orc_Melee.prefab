@@ -640,7 +640,7 @@ MonoBehaviour:
   isEnemyDead: 0
   Dis: 0.2
   AttackDis: 1.65
-  FilpxFloat: 0
+  FilpxFloat: 0.2
 --- !u!114 &2268990345011379221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,12 +654,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: 0
-  ExpCoin_DropType: 2
+  ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40
   Exp: 30
   Enemy_Dead: 0
   FillAmountSpeed: 0.8
+  dmgFontY_Add: 0
 --- !u!114 &2059503810461227462
 MonoBehaviour:
   m_ObjectHideFlags: 0
