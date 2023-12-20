@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
     public enum expCoin_DropType { Small, Medium, Large };
-    public enum EnemyName { Orc, Mushroom, SkeletonRanger };
+    public enum EnemyName { Orc, Mushroom, SkeletonRanger, Slime };
 
     public EnemyName enemyName;
     public expCoin_DropType ExpCoin_DropType;
@@ -65,7 +65,6 @@ public class EnemyStats : MonoBehaviour
             }
 
             GameObject obj_font = PoolManager.Inst.F_GetObj(2);
-            Debug.Log(obj_font.name);
             obj_font.GetComponent<Dmg_Font>().F_text_Init(Dmgs, Cri);
             obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
             obj_font.gameObject.SetActive(true);
@@ -150,6 +149,13 @@ public class EnemyStats : MonoBehaviour
                     PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
                 }
                 break;
+
+            case EnemyName.Slime:
+                {
+                    //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+                }
+                break;
+
         }
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TelePortZone : MonoBehaviour
 {
 
-    public enum TeleportNum { _0, _1, _2}
+    public enum TeleportNum { _0, _1}
     public TeleportNum type;
 
     [Header("# Cheak Enter Object")]

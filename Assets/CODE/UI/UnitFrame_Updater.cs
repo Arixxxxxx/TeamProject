@@ -60,7 +60,7 @@ public class UnitFrame_Updater : MonoBehaviour
         KillCount = Ui_Canvas.transform.Find("Main_Canvas/Count_Info/Kill").GetComponentInChildren<TMP_Text>();
 
         Unitframe_Dmg_Font = UnitFrame.transform.Find("Get_Dmg(Text)").GetComponent<TMP_Text>();
-        Unitframe_Dmg_Anim = Unitframe_Dmg_Font.GetComponent<Animator>();
+        Unitframe_Dmg_Anim = UnitFrame.GetComponent<Animator>();
     }
 
     // Update is called once per frame

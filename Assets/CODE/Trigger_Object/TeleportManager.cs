@@ -37,16 +37,21 @@ public class TeleportManager : MonoBehaviour
     /// <param name="Player"></param>
     public void F_Change_Ather_TeleportZone(TelePortZone.TeleportNum Value, GameObject Player)
     {
-        int RandomValue = Random.Range(0, zone.Length);
+        int RandomValue = (int)Value;
 
-        if (RandomValue == (int)Value)
+        if (RandomValue == 0)
         {
-            F_Change_Ather_TeleportZone(Value, Player);
-            return;
+            RandomValue = 1;
+            StartCoroutine(ColliderOnOff(1));
+        }
+        else
+        {
+            RandomValue = 0;
+            StartCoroutine(ColliderOnOff(0));
         }
 
 
-        StartCoroutine(ColliderOnOff(RandomValue));
+      
 
         Player.transform.position = zone[RandomValue].transform.position;
     }

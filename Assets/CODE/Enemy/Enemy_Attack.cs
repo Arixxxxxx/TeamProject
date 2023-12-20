@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Enemy_Attack : MonoBehaviour
 {
-    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom }
+    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom , Slime }
     public EnemyName type;
     private Animator anim;
     private GameObject attackCollider;
@@ -141,6 +141,10 @@ public class Enemy_Attack : MonoBehaviour
                     attackCollider.gameObject.SetActive(true);
                 }
                 break;
+
+            case EnemyName.Slime:
+                ArrowSpawn();
+                break;
         }
 
 
@@ -148,7 +152,22 @@ public class Enemy_Attack : MonoBehaviour
 
     private void ArrowSpawn()
     {
-        GameObject obj = PoolManager.Inst.F_GetObj(0);
+        int Number = 0;
+
+        switch (type)  // 투사체 풀링넘버 지정
+        {
+            case EnemyName.Skeleton_Ranger:
+                Number = 0;
+                break;
+
+            case EnemyName.Slime:
+                Number = 0;
+                break;
+
+        }
+
+        GameObject obj = PoolManager.Inst.F_GetObj(Number);
+
         obj.GetComponent<AttackCollider>().F_SetAttackDMG(AttackDMG);
         switch(sr.flipX)
         {
@@ -159,7 +178,9 @@ public class Enemy_Attack : MonoBehaviour
                 obj.transform.position = transform.Find("L").transform.position;
                 break;
         }
+
         obj.gameObject.SetActive(true);
+
     }
 
     private void A_attackCollider_OFF()
@@ -186,8 +207,13 @@ public class Enemy_Attack : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 anim.SetBool("Attack", false);
                 MushroomAttakcDealy = true;
-               
                 break;
+
+            case EnemyName.Slime:
+                isAttack = false;
+                anim.SetBool("Attack", false);
+                break;
+
         }
     }
 
