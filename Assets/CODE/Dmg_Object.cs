@@ -40,5 +40,19 @@ public class Dmg_Object : MonoBehaviour
                 collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, false);
             }
         }
+
+        if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null)
+        {
+            dice = Random.Range(0, 100);
+
+            if (dice < critical_Value)
+            {
+                collision.GetComponent<Boss_Status>().F_Enemy_On_Hit(DMG, true);
+            }
+            else
+            {
+                collision.GetComponent<Boss_Status>().F_Enemy_On_Hit(DMG, false);
+            }
+        }
     }
 }

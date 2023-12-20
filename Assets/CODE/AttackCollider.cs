@@ -6,7 +6,7 @@ public class AttackCollider : MonoBehaviour
 {
     public enum WhoAreYou
     {
-        Player, Enemy_Melee, Enemy_Range
+        Player, Enemy_Melee, Enemy_Range, PosionBadak
     }
     [SerializeField] float myDMG;
     [Header("# 꼭 체크 확인하세요")]
@@ -14,19 +14,15 @@ public class AttackCollider : MonoBehaviour
     public WhoAreYou type;
 
     EnemyStats enemySC;
-    
+    Animator anim;
 
 
     private void Start()
     {
         switch (type)
         {
-            case WhoAreYou.Player:
-
-                break;
-
-            case WhoAreYou.Enemy_Melee:
-
+            case WhoAreYou.PosionBadak:
+                   anim = GetComponent<Animator>();
                 break;
         }
     }
@@ -69,5 +65,9 @@ public class AttackCollider : MonoBehaviour
 
     }
 
+    public void A_PoisonBadak_return()
+    {
+        PoolManager.Inst.F_ReturnObj(gameObject, 4);
+    }
  
 }

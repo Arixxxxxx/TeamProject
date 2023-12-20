@@ -22,6 +22,13 @@ public class PoolManager : MonoBehaviour
     [SerializeField] GameObject[] Bullet; // 에너미 화살
     [SerializeField] int ArrowStartMakingEa;
     Queue<GameObject> ArrowQue = new Queue<GameObject>();
+
+    [SerializeField] int Silme_PoisonStartMakingEa;
+    Queue<GameObject> PoisonQue = new Queue<GameObject>();
+
+    [SerializeField] int Silme_PoisonBadak_StartMakingEa;
+    Queue<GameObject> PoisonBadakQue = new Queue<GameObject>();
+
     [Space]
     [Space]
     [SerializeField] GameObject Exp_Coin; // 경험치 보석
@@ -68,6 +75,7 @@ public class PoolManager : MonoBehaviour
             OrcQue.Enqueue(Obj);
         }
 
+
         for (int i = 0; i < Enemy_Obj_02_StartMakingEA; i++)
         {
             GameObject Obj = Instantiate(EnemyObj[1], MushTrs);
@@ -84,7 +92,7 @@ public class PoolManager : MonoBehaviour
             SkeletonQue.Enqueue(Obj);
         }
 
-        for (int i = 0; i < ArrowStartMakingEa; i++)
+        for (int i = 0; i < ArrowStartMakingEa; i++) // 해골궁수 화살
         {
           GameObject Obj =  Instantiate(Bullet[0],ArrowTrs);
           Obj.transform.position = Vector3.zero;
@@ -92,7 +100,21 @@ public class PoolManager : MonoBehaviour
           ArrowQue.Enqueue(Obj);
         }
 
-        
+        for (int i = 0; i < Silme_PoisonStartMakingEa; i++) // 슬라임 독액
+        {
+            GameObject Obj = Instantiate(Bullet[1], ArrowTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            PoisonQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < Silme_PoisonBadak_StartMakingEa; i++) // 슬라임 독액
+        {
+            GameObject Obj = Instantiate(Bullet[2], ArrowTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            PoisonBadakQue.Enqueue(Obj);
+        }
 
         // 2. Exp_Coin 관련
 
@@ -213,9 +235,9 @@ public class PoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// [ Polling System ] 0 = Arrow / 1 = ExpCoin 
+    /// [ Polling System ] 0 화살 / 1 Exp 코인 / 2 데미지 폰트 // 3 슬라임 독액
     /// </summary>
-    /// <param name="value"> 0 화살 / 1 Exp 코인 / 2 데미지 폰트 </param>
+    /// <param name="value"> 0 화살 / 1 Exp 코인 / 2 데미지 폰트 // 3 슬라임 독액 </param>
     /// <returns></returns>
     public GameObject F_GetObj(int value)
     {
@@ -247,8 +269,8 @@ public class PoolManager : MonoBehaviour
                 obj = ExpCoinQue.Dequeue();
                 return obj;
 
-            case 2:
-                if (Dmg_Font_BoxQue.Count <= 1)
+            case 2:  // 대미지폰트 박스
+                if (Dmg_Font_BoxQue.Count <= 1) 
                 {
                 
                     GameObject Obj = Instantiate(Dmg_Font_Box, FontTrs);
@@ -258,16 +280,41 @@ public class PoolManager : MonoBehaviour
                 }
                 
                 obj = Dmg_Font_BoxQue.Dequeue();
+                return obj;  
+            
+            case 3:  // 슬라임 독액
+                if (PoisonQue.Count <= 1) 
+                {
+                    GameObject Obj = Instantiate(Bullet[1], ArrowTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    return Obj;
+                }
+                
+                obj = PoisonQue.Dequeue();
                 return obj;
+
+            case 4:  // 슬라임 독액 바닥
+                if (PoisonBadakQue.Count <= 1)
+                {
+                    GameObject Obj = Instantiate(Bullet[2], ArrowTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    return Obj;
+                }
+
+                obj = PoisonBadakQue.Dequeue();
+                return obj;
+
         }
 
         return null;
     }
 
     /// <summary>
-    /// [ Polling System ] Return Obj !! Gameobject + RoomNumber (0화살/1경험치보석)
+    /// [ Polling System ]> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액
     /// </summary>
-    /// <param name="value"> 0 화살 / 1 경험치 보석 / 2 데미지폰트 </param>
+    /// <param name="value"> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액</param>
     /// <returns></returns>
     public void F_ReturnObj(GameObject obj, int value)
     {
@@ -287,6 +334,14 @@ public class PoolManager : MonoBehaviour
 
             case 2:
                 Dmg_Font_BoxQue.Enqueue(obj);
+                break;
+
+            case 3:
+                PoisonQue.Enqueue(obj);
+                break;
+
+            case 4:
+                PoisonBadakQue.Enqueue(obj);
                 break;
 
         }

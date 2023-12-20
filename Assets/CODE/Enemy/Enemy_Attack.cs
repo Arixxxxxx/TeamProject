@@ -161,7 +161,7 @@ public class Enemy_Attack : MonoBehaviour
                 break;
 
             case EnemyName.Slime:
-                Number = 0;
+                Number = 3;
                 break;
 
         }

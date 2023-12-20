@@ -21,6 +21,8 @@ public class UnitFrame_Updater : MonoBehaviour
     TMP_Text battle_Time_Text;
     [SerializeField] float timecheck , min, sec;
 
+    [SerializeField] GameObject bossHpBar_obj;
+    [SerializeField] GameObject BattleTime_obj;
 
     GameObject Hp_Bar;
     Image Middle_HP_Bar, Front_HP_Bar, ExpCicle;
@@ -61,8 +63,13 @@ public class UnitFrame_Updater : MonoBehaviour
 
         Unitframe_Dmg_Font = UnitFrame.transform.Find("Get_Dmg(Text)").GetComponent<TMP_Text>();
         Unitframe_Dmg_Anim = UnitFrame.GetComponent<Animator>();
+
+        bossHpBar_obj = Ui_Canvas.transform.Find("Main_Canvas/Boos_Hp_Bar").gameObject;
+        BattleTime_obj = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").gameObject;
     }
 
+
+   
     // Update is called once per frame
     void Update()
     {
@@ -70,6 +77,7 @@ public class UnitFrame_Updater : MonoBehaviour
         Image_FillAmount_Updater();
         BattleTime_Updater();
         KillCount_Updater();
+        BossHpbarPopup_BattleTime_Hide();
     }
 
     private void PlayerInfo_Updater()
@@ -80,6 +88,20 @@ public class UnitFrame_Updater : MonoBehaviour
         CurExp = gm.F_Get_PlayerSc().F_GetPlayerInfo(3);
         LevelupExp = gm.F_Get_PlayerSc().F_GetPlayerInfo(4);
 
+    }
+
+    private void BossHpbarPopup_BattleTime_Hide()
+    {
+        if (bossHpBar_obj.activeSelf == true && BattleTime_obj == true)
+        {
+            BattleTime_obj.gameObject.SetActive(false);
+
+        }
+
+        if (BattleTime_obj.activeSelf == false && bossHpBar_obj.activeSelf == false)
+        {
+            BattleTime_obj.gameObject.SetActive(true);
+        }
     }
 
     bool once;
@@ -149,9 +171,9 @@ public class UnitFrame_Updater : MonoBehaviour
         return timecheck;
     }
 
-    public GameObject F_Get_UnitFrane()
+    public Transform F_Get_UI_Tranfrom()
     {
-        return UnitFrame.gameObject;
+        return Ui_Canvas.transform;
     }
     
 }
