@@ -9,17 +9,17 @@ public class OptionWindow_Controller : MonoBehaviour
     [Header("# Insert Main UI GameOBJ")]
     [Space]
     [SerializeField] GameObject Ui_Parent_Obj;
-    [SerializeField] GameObject MainCanvas;
-    [SerializeField] GameObject SeletWindowList;
+    GameObject MainCanvas;
+    GameObject SeletWindowList;
 
-    [SerializeField] GameObject Window_0;
+    GameObject Window_0;
 
     //인게임 스크린UI 버튼들
-    [SerializeField] Button OptionOpenBtn;
+     Button OptionOpenBtn;
 
     // 옵션창 버튼들
-    [SerializeField] Button MainWindow_0_Btn_0;
-    [SerializeField] Button MainWindow_0_Btn_1;
+     Button MainWindow_0_Btn_0;
+     Button MainWindow_0_Btn_1;
 
 
 

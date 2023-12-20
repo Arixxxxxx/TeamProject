@@ -148,4 +148,10 @@ public class UnitFrame_Updater : MonoBehaviour
     {
         return timecheck;
     }
+
+    public GameObject F_Get_UnitFrane()
+    {
+        return UnitFrame.gameObject;
+    }
+    
 }

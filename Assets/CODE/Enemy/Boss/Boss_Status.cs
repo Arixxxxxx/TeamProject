@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Boss_Status : MonoBehaviour
 {
-    // Start is called before the first frame update
+    GameObject Boss_HP_Bar_UI;
+
+    
     void Start()
     {
-        
+        Boss_HP_Bar_UI = 
     }
 
     // Update is called once per frame
     void Update()
     {
         
+
     }
 }
