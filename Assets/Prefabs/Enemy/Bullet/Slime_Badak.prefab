@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5979583101662360607
+--- !u!1 &5478972136634111554
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5189808770804244862}
-  - component: {fileID: 320878897679585973}
-  - component: {fileID: 3441354184598705266}
-  - component: {fileID: 5497326755677542216}
-  - component: {fileID: 6358783529198799964}
+  - component: {fileID: 3911862457493735510}
+  - component: {fileID: 6400789229938676346}
+  - component: {fileID: 4019270328668611783}
+  - component: {fileID: 6736805297947811502}
+  - component: {fileID: 4387805947088759877}
   m_Layer: 0
   m_Name: Slime_Badak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5189808770804244862
+  m_IsActive: 0
+--- !u!4 &3911862457493735510
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979583101662360607}
+  m_GameObject: {fileID: 5478972136634111554}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -28.77, y: 1.02, z: 0}
@@ -35,13 +35,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &320878897679585973
+--- !u!212 &6400789229938676346
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979583101662360607}
+  m_GameObject: {fileID: 5478972136634111554}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -84,16 +84,16 @@ SpriteRenderer:
   m_Size: {x: 1.9692308, y: 1.9692308}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3441354184598705266
+--- !u!61 &4019270328668611783
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979583101662360607}
+  m_GameObject: {fileID: 5478972136634111554}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -132,13 +132,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.410317, y: 1.4150999}
   m_EdgeRadius: 0
---- !u!114 &5497326755677542216
+--- !u!114 &6736805297947811502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979583101662360607}
+  m_GameObject: {fileID: 5478972136634111554}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3255f5d90047fbe438eadb56d2313792, type: 3}
@@ -146,14 +146,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myDMG: 5
   type: 0
---- !u!95 &6358783529198799964
+--- !u!95 &4387805947088759877
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979583101662360607}
+  m_GameObject: {fileID: 5478972136634111554}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a3c880dde4491f94f8add86b050ee3f3, type: 2}

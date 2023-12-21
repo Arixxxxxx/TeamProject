@@ -7,7 +7,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Enemy_Arrow : MonoBehaviour
 {
-    public enum bulletType { Arrow, Slime_Poison}
+    public enum bulletType { Arrow, Slime_Poison , Orc_Stone}
     public bulletType type;
 
     [SerializeField] Vector2 Target;
@@ -21,7 +21,7 @@ public class Enemy_Arrow : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody2D>();
         gm = GameManager.Inst;
-        sr = gameObject.GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
         Arrow_Init();
     }
 
@@ -34,23 +34,11 @@ public class Enemy_Arrow : MonoBehaviour
         
         Arrow_Init();
     }
+
+    
     private void OnBecameInvisible()
     {
-        switch (type)
-        {
-            case bulletType.Arrow:
-
-                Target = Vector2.zero;
-                RotAngle = 0;
-                transform.rotation = Quaternion.identity;
-                PoolManager.Inst.F_ReturnObj(gameObject, 0);
-
-                break;
-
-                case bulletType.Slime_Poison:
-                Posion_Stop = false;
-                break;
-        }
+        F_Return_Obj();
     }
     private void FixedUpdate()
     {
@@ -65,16 +53,14 @@ public class Enemy_Arrow : MonoBehaviour
             case bulletType.Slime_Poison:
                 {
                    if(Posion_Stop == true) { return; }
-
-                   if (Target.x > 0)
-                    {
-                        sr.flipX = true;
-                    }
-                   else if(Target.x < 0)
-                    {
-                        sr.flipX = false; 
-                    }
-
+                   
+                    Rb.MovePosition(Rb.position + Target * Arrow_Speed * Time.deltaTime);
+                }
+            break; 
+            
+            case bulletType.Orc_Stone:
+                {
+                    transform.Rotate(Vector3.back * 200 * Time.deltaTime);
                     Rb.MovePosition(Rb.position + Target * Arrow_Speed * Time.deltaTime);
                 }
             break;
@@ -86,18 +72,29 @@ public class Enemy_Arrow : MonoBehaviour
 
     private void Arrow_Init()
     {
-        switch(type)
+        if (gm == null)
+        {
+            gm = GameManager.Inst;
+        }
+        Target = gm.F_Enemy_BulletTargetPos(transform.position);
+
+        switch (type)
         {
             case bulletType.Arrow:
-                Target = gm.F_Enemy_BulletTargetPos(transform.position);
+                
                 RotAngle = gm.F_EnemyBulletRotation(transform.position);
                 transform.rotation = Quaternion.AngleAxis(RotAngle * -1, Vector3.back);
                 break;
 
             case bulletType.Slime_Poison:
-                Target = gm.F_Enemy_BulletTargetPos(transform.position);
+                
                 anim = GetComponent<Animator>();
                 anim.SetTrigger("hit");
+                break;
+
+            case bulletType.Orc_Stone:
+               
+                
                 break;
         }
     }
@@ -120,5 +117,39 @@ public class Enemy_Arrow : MonoBehaviour
 
     }
 
-   
+    public void F_Set_Sprite_ArrowFilpX(bool value)
+    {
+        if(sr == null)
+        {
+            sr = GetComponent<SpriteRenderer>();
+        }
+        sr.flipX = value;
+    }
+
+    public void F_Return_Obj()
+    {
+        switch (type)
+        {
+            case bulletType.Arrow:
+                Target = Vector2.zero;
+                RotAngle = 0;
+                transform.rotation = Quaternion.identity;
+                PoolManager.Inst.F_ReturnObj(gameObject, 0);
+                break;
+
+            case bulletType.Orc_Stone:
+
+                Target = Vector2.zero;
+                RotAngle = 0;
+                transform.rotation = Quaternion.identity;
+                PoolManager.Inst.F_ReturnObj(gameObject, 5);
+
+                break;
+
+            case bulletType.Slime_Poison:
+                Posion_Stop = false;
+                break;
+        }
+    }
+
 }

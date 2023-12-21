@@ -23,11 +23,14 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int ArrowStartMakingEa;
     Queue<GameObject> ArrowQue = new Queue<GameObject>();
 
-    [SerializeField] int Silme_PoisonStartMakingEa;
+    [SerializeField] int Silme_PoisonStartMakingEa; //슬라임 독액
     Queue<GameObject> PoisonQue = new Queue<GameObject>();
-
-    [SerializeField] int Silme_PoisonBadak_StartMakingEa;
+     
+    [SerializeField] int Silme_PoisonBadak_StartMakingEa; //바닥
     Queue<GameObject> PoisonBadakQue = new Queue<GameObject>();
+
+    [SerializeField] int OrcStone_StartMakingEa;
+    Queue<GameObject> OrcStoneQue = new Queue<GameObject>();
 
     [Space]
     [Space]
@@ -114,6 +117,14 @@ public class PoolManager : MonoBehaviour
             Obj.transform.position = Vector3.zero;
             Obj.gameObject.SetActive(false);
             PoisonBadakQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < OrcStone_StartMakingEa; i++) // 돌맹이
+        {
+            GameObject Obj = Instantiate(Bullet[3], ArrowTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            OrcStoneQue.Enqueue(Obj);
         }
 
         // 2. Exp_Coin 관련
@@ -235,7 +246,7 @@ public class PoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// [ Polling System ] 0 화살 / 1 Exp 코인 / 2 데미지 폰트 // 3 슬라임 독액
+    /// [ Polling System ] 0 화살 / 1 Exp 코인 / 2 데미지 폰트 // 3 슬라임 독액 // 4독액 바닥 //  5 돌맹이
     /// </summary>
     /// <param name="value"> 0 화살 / 1 Exp 코인 / 2 데미지 폰트 // 3 슬라임 독액 </param>
     /// <returns></returns>
@@ -306,13 +317,24 @@ public class PoolManager : MonoBehaviour
                 obj = PoisonBadakQue.Dequeue();
                 return obj;
 
+            case 5:  // 돌맹이
+                if (OrcStoneQue.Count <= 1)
+                {
+                    GameObject Obj = Instantiate(Bullet[3], ArrowTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    return Obj;
+                }
+
+                obj = OrcStoneQue.Dequeue();
+                return obj;
         }
 
         return null;
     }
 
     /// <summary>
-    /// [ Polling System ]> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액
+    /// [ Polling System ]> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액 // 4바닥 // 5돌맹이
     /// </summary>
     /// <param name="value"> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액</param>
     /// <returns></returns>
@@ -343,6 +365,11 @@ public class PoolManager : MonoBehaviour
             case 4:
                 PoisonBadakQue.Enqueue(obj);
                 break;
+
+            case 5:
+                OrcStoneQue.Enqueue(obj);
+                break;
+
 
         }
     }

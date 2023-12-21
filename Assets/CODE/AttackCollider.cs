@@ -6,7 +6,7 @@ public class AttackCollider : MonoBehaviour
 {
     public enum WhoAreYou
     {
-        Player, Enemy_Melee, Enemy_Range, PosionBadak
+        Player, Enemy_Melee, Skel_Arrow, PosionBadak , Orc_Stone
     }
     [SerializeField] float myDMG;
     [Header("# 꼭 체크 확인하세요")]
@@ -15,6 +15,7 @@ public class AttackCollider : MonoBehaviour
 
     EnemyStats enemySC;
     Animator anim;
+    Enemy_Arrow enemy_Arrow;
 
 
     private void Start()
@@ -23,6 +24,11 @@ public class AttackCollider : MonoBehaviour
         {
             case WhoAreYou.PosionBadak:
                    anim = GetComponent<Animator>();
+                break;
+
+            case WhoAreYou.Skel_Arrow:
+            case WhoAreYou.Orc_Stone:
+                if (enemy_Arrow == null) { enemy_Arrow = GetComponent<Enemy_Arrow>(); }
                 break;
         }
     }
@@ -46,19 +52,29 @@ public class AttackCollider : MonoBehaviour
             switch
                 (type)
             {
-                case WhoAreYou.Enemy_Range:
-                    PoolManager.Inst.F_ReturnObj(gameObject, 0);
+                case WhoAreYou.Skel_Arrow:
+                case WhoAreYou.Orc_Stone:
+                    
+                    if (enemy_Arrow == null)  { enemy_Arrow = GetComponent<Enemy_Arrow>(); }
+                    enemy_Arrow.F_Return_Obj();
+
                     break;
             }
         }
+
+
         if (collision.CompareTag("Object"))
         {
             
             switch
                 (type)
             {
-                case WhoAreYou.Enemy_Range:
+                case WhoAreYou.Skel_Arrow:
                     PoolManager.Inst.F_ReturnObj(gameObject, 0);
+                    break;
+
+                case WhoAreYou.Orc_Stone:
+                    PoolManager.Inst.F_ReturnObj(gameObject, 5);
                     break;
             }
         }

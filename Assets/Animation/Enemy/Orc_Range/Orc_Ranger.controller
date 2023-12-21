@@ -101,7 +101,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d65994db2c4a960418f49c172e9b2154, type: 2}
+  m_Motion: {fileID: 7400000, guid: ba9ab79db71a87d409f37bb953808d8f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -174,7 +174,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 94b031ead69f68d42ae771dde2e3761a, type: 2}
+  m_Motion: {fileID: 7400000, guid: f5d5122917b661b42b7a3144f73779de, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -186,7 +186,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Skeleton
+  m_Name: Orc_Ranger
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: hit
@@ -332,7 +332,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cac3fffaca5da2548b4f6b5041ad2c1a, type: 2}
+  m_Motion: {fileID: 7400000, guid: caff5737e86b1134aae1cdcbfe5f42f0, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -406,7 +406,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 130f5807cbe59494b87f13c390d66809, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4c383d8c899794048b0467792504581c, type: 2}
   m_Tag: 
   m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 

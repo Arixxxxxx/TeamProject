@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Enemy_Attack : MonoBehaviour
 {
-    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom , Slime }
+    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom, Slime, Orc_Ranger }
     public EnemyName type;
     private Animator anim;
     private GameObject attackCollider;
@@ -26,7 +26,7 @@ public class Enemy_Attack : MonoBehaviour
 
     NavMeshAgent nav;
     Rigidbody2D rb;
-
+    Enemy_Arrow enemy_Arrow;
     private void Awake()
     {
 
@@ -41,17 +41,22 @@ public class Enemy_Attack : MonoBehaviour
         switch (type)
         {
 
-            case EnemyName.Orc: case EnemyName.Mushroom:
+            case EnemyName.Orc:
+            case EnemyName.Mushroom:
                 attackCollider = transform.Find("AttackCollider").gameObject;
                 attackCollider.GetComponent<AttackCollider>().F_SetAttackDMG(AttackDMG);
                 if (attackCollider.gameObject.activeSelf)
                 {
                     attackCollider.SetActive(false);
                 }
-              break;
+                break;
 
 
             case EnemyName.Skeleton_Ranger:
+                break;
+
+            case EnemyName.Slime:
+
                 break;
         }
 
@@ -64,7 +69,7 @@ public class Enemy_Attack : MonoBehaviour
         anim.SetFloat("AttackSpeed", attackSpeed);
 
 
-        
+
     }
 
     public void Set_Attack_Bool_Changer(bool value)
@@ -89,11 +94,11 @@ public class Enemy_Attack : MonoBehaviour
             anim.SetBool("Attack", false);
         }
 
-        if(MushroomAttakcDealy == true)
+        if (MushroomAttakcDealy == true)
         {
             CheakerDealy += Time.deltaTime;
 
-            if(CheakerDealy > 0.1f)
+            if (CheakerDealy > 0.1f)
             {
                 MushroomAttakcDealy = false;
                 CheakerDealy = 0;
@@ -108,9 +113,9 @@ public class Enemy_Attack : MonoBehaviour
     bool once;
     private void A_MushroomAttackMoving()
     {
-        if(type == EnemyName.Mushroom && anim.GetBool("Attack") == true && once == false)
+        if (type == EnemyName.Mushroom && anim.GetBool("Attack") == true && once == false)
         {
-            once= true;
+            once = true;
             Vector2 AttackVec = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
             AttackVec = AttackVec.normalized;
             rb.AddForce(AttackVec * mushroomForce, ForceMode2D.Impulse);
@@ -130,6 +135,8 @@ public class Enemy_Attack : MonoBehaviour
                 break;
 
             case EnemyName.Skeleton_Ranger:
+            case EnemyName.Slime:
+            case EnemyName.Orc_Ranger:
 
                 ArrowSpawn();
                 break;
@@ -142,9 +149,7 @@ public class Enemy_Attack : MonoBehaviour
                 }
                 break;
 
-            case EnemyName.Slime:
-                ArrowSpawn();
-                break;
+
         }
 
 
@@ -164,21 +169,31 @@ public class Enemy_Attack : MonoBehaviour
                 Number = 3;
                 break;
 
+            case EnemyName.Orc_Ranger:
+                Number = 5;
+                break;
+
         }
 
-        GameObject obj = PoolManager.Inst.F_GetObj(Number);
+        GameObject obj = PoolManager.Inst.F_GetObj(Number); //Ç®¸µ
 
         obj.GetComponent<AttackCollider>().F_SetAttackDMG(AttackDMG);
-        switch(sr.flipX)
+
+        switch (sr.flipX)
         {
             case true:
                 obj.transform.position = transform.Find("R").transform.position;
                 break;
-                case false:
+            case false:
                 obj.transform.position = transform.Find("L").transform.position;
                 break;
         }
 
+        if(type == EnemyName.Slime)
+        {
+            obj.GetComponent<Enemy_Arrow>().F_Set_Sprite_ArrowFilpX(sr.flipX);
+        }
+        
         obj.gameObject.SetActive(true);
 
     }
