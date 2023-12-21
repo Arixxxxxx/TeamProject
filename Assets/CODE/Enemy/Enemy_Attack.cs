@@ -212,6 +212,7 @@ public class Enemy_Attack : MonoBehaviour
                 break;
 
             case EnemyName.Skeleton_Ranger:
+            case EnemyName.Orc_Ranger:
                 isAttack = false;
                 anim.SetBool("Attack", false);
                 break;

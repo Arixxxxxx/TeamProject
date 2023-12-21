@@ -188,4 +188,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   Target: {x: 0, y: 0}
-  Arrow_Speed: 6
+  Arrow_Speed: 4
