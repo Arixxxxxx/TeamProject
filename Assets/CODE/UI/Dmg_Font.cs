@@ -23,6 +23,11 @@ public class Dmg_Font : MonoBehaviour
         if (FadeOut == true)
         {
             Dmg_Text.color -= new Color(0, 0, 0, 0.1f) * Time.deltaTime * ColorA_FadeOup_Speed;
+
+            if(Dmg_Text.color.a <= 0.1f)
+            {
+                 PoolManager.Inst.F_ReturnObj(gameObject,2);
+            }
         }
     }
 
@@ -32,7 +37,8 @@ public class Dmg_Font : MonoBehaviour
         {
             Dmg_Text = GetComponentInChildren<TMP_Text>();
         }
-
+        
+        Dmg_Text.fontSize = 65;
         Dmg_Text.text = string.Empty;
 
         FadeOut = false;
@@ -50,6 +56,23 @@ public class Dmg_Font : MonoBehaviour
             Dmg_Text.text = Dmg.ToString();
         }
       
+    }
+
+    public void F_text_Init(string text)
+    {
+        if (Dmg_Text == null)
+        {
+            Dmg_Text = GetComponentInChildren<TMP_Text>();
+        }
+
+        Dmg_Text.fontSize = 65;
+        Dmg_Text.text = string.Empty;
+
+        FadeOut = false;
+        Dmg_Text.color = Color.white;
+
+        Dmg_Text.text = text;
+
     }
 
 

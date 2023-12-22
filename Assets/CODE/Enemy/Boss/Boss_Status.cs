@@ -13,6 +13,7 @@ public class Boss_Status : MonoBehaviour
     [SerializeField] float boss_MaxHP;
     [SerializeField] bool isDead;
     [SerializeField] bool isShield;
+    GameObject Mujuk_Effect;
 
     [Header("# Input boss Status Value == ¿¹Áø")]
     [Space]
@@ -28,6 +29,7 @@ public class Boss_Status : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        Mujuk_Effect = transform.Find("Skill/Mujeok").gameObject;
     }
     void Start()
     {
@@ -35,18 +37,41 @@ public class Boss_Status : MonoBehaviour
         Boss_Front_IMG = Boss_HP_Bar_Object.transform.Find("HP_Front").GetComponent<Image>();
         Boss_Middle_IMG = Boss_HP_Bar_Object.transform.Find("HP_Middle").GetComponent<Image>();
         Hp_Bar_Text = Boss_Front_IMG.transform.Find("LvText").GetComponent<TMP_Text>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         Boss_Hp_UiBar_Updater();
+        Shiled_Cheaker();
 
     }
 
+    private void Shiled_Cheaker()
+    {
+        if(Mujuk_Effect.activeSelf == true)
+        {
+            isShield = true;
+        }
+        else
+        {
+            isShield = false;
+        }
+    }
     public void F_Enemy_On_Hit(float DMG, bool Cri)
     {
-        if(isShield == true) { return; }
+        if(isShield == true) 
+        {
+            GameObject obj_font = PoolManager.Inst.F_GetObj(2);
+            obj_font.GetComponent<Dmg_Font>().F_text_Init("Èí¼ö");
+            obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
+            obj_font.gameObject.SetActive(true);
+
+            StartCoroutine(DMG_Font_Animation(obj_font));
+            return; 
+        
+        }
 
         if (boss_CurHP > 0)
         {
@@ -62,6 +87,7 @@ public class Boss_Status : MonoBehaviour
             obj_font.GetComponent<Dmg_Font>().F_text_Init(Dmgs, Cri);
             obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
             obj_font.gameObject.SetActive(true);
+
             StartCoroutine(DMG_Font_Animation(obj_font));
 
             boss_CurHP -= Dmgs;

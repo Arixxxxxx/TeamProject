@@ -16,11 +16,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] List<int> LevelTable = new List<int>(); // 레벨당 시간
 
     // 현재 소환해야할 포인트
-    [SerializeField] int SpawnTrs0; 
-    [SerializeField] int SpawnTrs1; 
-    [SerializeField] int SpawnTrs2;
-    [SerializeField] int SpawnTrs3;
-    [SerializeField] int SpawnTrs4;
+     int SpawnTrs0; 
+     int SpawnTrs1; 
+     int SpawnTrs2;
+     int SpawnTrs3;
+     int SpawnTrs4;
 
     [SerializeField] Transform[] spawn_PointTrs; // 스폰포인트 리스트
 

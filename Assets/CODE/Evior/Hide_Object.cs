@@ -26,7 +26,7 @@ public class Hide_Object : MonoBehaviour
         if(Player != null || Enemy != null && sr.color.a == 1)
         {
             sr.color = inPlayer;
-            sr.sortingOrder = 2;
+            sr.sortingOrder = 10;
         }
       
        
