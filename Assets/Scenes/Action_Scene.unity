@@ -1591,7 +1591,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 4.25, y: 1.95}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2807,7 +2807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2896,7 +2896,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3479,7 +3479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4376,7 +4376,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -6374,6 +6374,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground Road 2 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -6815,7 +6819,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -8505,6 +8509,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &314444421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314444422}
+  m_Layer: 0
+  m_Name: Orc_Ranger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &314444422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314444421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1554351344}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &317082108
 GameObject:
   m_ObjectHideFlags: 0
@@ -9400,7 +9435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10656,7 +10691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &413058954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11146,7 +11181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12147,7 +12182,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -13254,7 +13289,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.4, y: 2.28, z: 0.0026550293}
+  m_LocalPosition: {x: 2.45, y: -1.3, z: 0.0026550293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14397,6 +14432,10 @@ PrefabInstance:
     - target: {fileID: 8664870064983802312, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_Name
       value: Ground Road 2 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
@@ -17281,7 +17320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19353,7 +19392,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -19700,11 +19739,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.81
+      value: 10.16
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.42
+      value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19748,7 +19787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21766,6 +21805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground Road 2 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -22536,6 +22579,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground Road 2 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -22599,7 +22646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 938290227}
   m_Layer: 0
-  m_Name: Orc
+  m_Name: Orc_Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24115,7 +24162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24502,6 +24549,10 @@ PrefabInstance:
     - target: {fileID: 8664870064983802312, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_Name
       value: Ground Road 2 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
@@ -24896,7 +24947,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -25076,11 +25127,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.94485
+      value: -7.29
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.76
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824974, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26006,7 +26057,7 @@ Transform:
   m_GameObject: {fileID: 1128671847}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.4, y: 2.28, z: 0}
+  m_LocalPosition: {x: 2.45, y: -1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26133,9 +26184,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player_Cur_Lv: 1
-  Player_Max_Lv: 99
+  Player_Max_Lv: 30
   Cur_Exp: 0
   NextLv_Need_Exp:
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
   - 100
   - 100
   - 100
@@ -30628,7 +30699,7 @@ Transform:
   m_GameObject: {fileID: 1355975985}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.4, y: 2.28, z: 0.0026550293}
+  m_LocalPosition: {x: 2.45, y: -1.3, z: 0.0026550293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30896,10 +30967,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spawn_Level: 0
-  LevelTable: 0f0000001e0000002d000000
+  LevelTable: 0a000000140000001e0000002800000032000000
   SpawnTrs0: 0
   SpawnTrs1: 0
   SpawnTrs2: 0
+  SpawnTrs3: 0
+  SpawnTrs4: 0
   spawn_PointTrs:
   - {fileID: 186341142}
   - {fileID: 1957244391}
@@ -30925,44 +30998,100 @@ MonoBehaviour:
   - {fileID: 2111536799}
   spawnData:
   - isSpawn_Orc: 1
-    spawn_0_Interval: 1
-    spawn_0_EnemyCount: 1
+    _0_Interval: 1
+    _0_EnemyCount: 1
     isSpawn_Mushroom: 0
-    spawn_1_Interval: 0
-    spawn_1_EnemyCount: 0
-    isSpanw_Skeleton: 0
-    spawn_2_Interval: 0
-    spawn_2_EnemyCount: 0
+    _1_Interval: 0
+    _1_EnemyCount: 0
+    isSpawn_Skeleton: 0
+    _2_Interval: 0
+    _2_EnemyCount: 0
+    isSpawn_Silme: 0
+    _3_Interval: 0
+    _3_EnemyCount: 0
+    isSpawn_OrcRanager: 0
+    _4_Interval: 0
+    _4_EnemyCount: 0
   - isSpawn_Orc: 0
-    spawn_0_Interval: 0
-    spawn_0_EnemyCount: 0
+    _0_Interval: 0
+    _0_EnemyCount: 0
     isSpawn_Mushroom: 1
-    spawn_1_Interval: 1
-    spawn_1_EnemyCount: 1
-    isSpanw_Skeleton: 0
-    spawn_2_Interval: 0
-    spawn_2_EnemyCount: 0
+    _1_Interval: 1
+    _1_EnemyCount: 1
+    isSpawn_Skeleton: 0
+    _2_Interval: 0
+    _2_EnemyCount: 0
+    isSpawn_Silme: 0
+    _3_Interval: 0
+    _3_EnemyCount: 0
+    isSpawn_OrcRanager: 0
+    _4_Interval: 0
+    _4_EnemyCount: 0
   - isSpawn_Orc: 0
-    spawn_0_Interval: 0
-    spawn_0_EnemyCount: 0
+    _0_Interval: 0
+    _0_EnemyCount: 0
     isSpawn_Mushroom: 0
-    spawn_1_Interval: 1
-    spawn_1_EnemyCount: 1
-    isSpanw_Skeleton: 1
-    spawn_2_Interval: 1
-    spawn_2_EnemyCount: 1
-  - isSpawn_Orc: 1
-    spawn_0_Interval: 1
-    spawn_0_EnemyCount: 1
-    isSpawn_Mushroom: 1
-    spawn_1_Interval: 1
-    spawn_1_EnemyCount: 1
-    isSpanw_Skeleton: 1
-    spawn_2_Interval: 1
-    spawn_2_EnemyCount: 1
+    _1_Interval: 0
+    _1_EnemyCount: 0
+    isSpawn_Skeleton: 1
+    _2_Interval: 1
+    _2_EnemyCount: 1
+    isSpawn_Silme: 0
+    _3_Interval: 0
+    _3_EnemyCount: 0
+    isSpawn_OrcRanager: 0
+    _4_Interval: 0
+    _4_EnemyCount: 0
+  - isSpawn_Orc: 0
+    _0_Interval: 0
+    _0_EnemyCount: 0
+    isSpawn_Mushroom: 0
+    _1_Interval: 0
+    _1_EnemyCount: 0
+    isSpawn_Skeleton: 0
+    _2_Interval: 0
+    _2_EnemyCount: 0
+    isSpawn_Silme: 1
+    _3_Interval: 1
+    _3_EnemyCount: 1
+    isSpawn_OrcRanager: 0
+    _4_Interval: 0
+    _4_EnemyCount: 0
+  - isSpawn_Orc: 0
+    _0_Interval: 0
+    _0_EnemyCount: 0
+    isSpawn_Mushroom: 0
+    _1_Interval: 0
+    _1_EnemyCount: 0
+    isSpawn_Skeleton: 0
+    _2_Interval: 0
+    _2_EnemyCount: 0
+    isSpawn_Silme: 0
+    _3_Interval: 0
+    _3_EnemyCount: 0
+    isSpawn_OrcRanager: 1
+    _4_Interval: 1
+    _4_EnemyCount: 1
+  - isSpawn_Orc: 0
+    _0_Interval: 0
+    _0_EnemyCount: 0
+    isSpawn_Mushroom: 0
+    _1_Interval: 0
+    _1_EnemyCount: 0
+    isSpawn_Skeleton: 0
+    _2_Interval: 0
+    _2_EnemyCount: 0
+    isSpawn_Silme: 0
+    _3_Interval: 0
+    _3_EnemyCount: 0
+    isSpawn_OrcRanager: 0
+    _4_Interval: 0
+    _4_EnemyCount: 0
   Player_Area_num: 0
   GameTime: 0
   count:
+  - 0
+  - 0
   - 0
   - 0
   - 0
@@ -31416,7 +31545,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -31721,7 +31850,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -34673,8 +34802,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 938290227}
+  - {fileID: 314444422}
   - {fileID: 751439662}
   - {fileID: 546137527}
+  - {fileID: 2056458174}
   m_Father: {fileID: 1759268124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561788173
@@ -36800,6 +36931,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground Road 2 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -37007,7 +37142,7 @@ MonoBehaviour:
   light_Change_Speed: 1
   GameStop_Ui_Window:
   - {fileID: 228565281}
-  mainGameStart: 0
+  mainGameStart: 1
   uiOpen_EveryObecjtStop: 0
   killCount: 0
 --- !u!114 &1715385038
@@ -37891,9 +38026,13 @@ MonoBehaviour:
   - {fileID: 4530291535755632586, guid: c36f0ef6716d50d47afbb8a765b43d06, type: 3}
   - {fileID: 8128411203295138690, guid: 292e3cd21c748dc4b8f54b4d232c43c5, type: 3}
   - {fileID: 5111239531394003525, guid: 3e74ac58cefaf4440af0cc75f3c6d638, type: 3}
-  Enemy_Obj_01_StartMakingEA: 10
-  Enemy_Obj_02_StartMakingEA: 10
-  Enemy_Obj_03_StartMakingEA: 10
+  - {fileID: 7770326579380720336, guid: 71144eeeb83a6d24aacbbda5ec3a04df, type: 3}
+  - {fileID: 5649467376332557155, guid: 0a8722dbaab31e840b17095a2d25ff05, type: 3}
+  Orc_melee_StartMakingEA: 5
+  Mushroom_StartMakingEA: 5
+  SkeletonRanager_StartMakingEA: 5
+  Slime_StartMakingEA: 5
+  OrcRanger_StartMakingEA: 5
   Bullet:
   - {fileID: 5383168593509800169, guid: 4dfc9d531e9bb884c93d2fbd6ab85a65, type: 3}
   - {fileID: 3557241258326652405, guid: 31ef443b4017bff42bf6a1d925007c1b, type: 3}
@@ -38652,7 +38791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345915935689824975, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38741,7 +38880,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -41283,7 +41422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1962777590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -42659,6 +42798,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5700186474196411624, guid: f3a2a384fd0ab4462a0cd173f1519917, type: 3}
   m_PrefabInstance: {fileID: 325044764}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2056458173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2056458174}
+  m_Layer: 0
+  m_Name: Slime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056458174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056458173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1554351344}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2069592941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7345915935689824968, guid: 0e80034a674b049eea17fb788bdd44ce, type: 3}
@@ -43379,6 +43549,10 @@ PrefabInstance:
     - target: {fileID: 8664870064983802312, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_Name
       value: Ground Road 2 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664870064983802313, guid: 59b12c2d208a647119eacef63accd769, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8664870064983802314, guid: 59b12c2d208a647119eacef63accd769, type: 3}
       propertyPath: m_LocalScale.x
@@ -44202,7 +44376,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 0.65}
+    oldSize: {x: 2.9714286, y: 0.65}
     newSize: {x: 2.95, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

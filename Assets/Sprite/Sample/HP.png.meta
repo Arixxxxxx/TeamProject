@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1acc6130cee445d4a9d7cf258851401d
+guid: 8b8b3441f5964134c9963e2b65d32275
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -108,49 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: "\uC815\uB839_1"
-      rect:
-        serializedVersion: 2
-        x: 516
-        y: 949
-        width: 57
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 663c83fb97c420643bd536281a754316
-      internalID: -1221172775
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uC815\uB839_4"
-      rect:
-        serializedVersion: 2
-        x: 417
-        y: 351
-        width: 329
-        height: 521
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f9d3292481bef794989d95ca1d49be85
-      internalID: 421922719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -161,12 +119,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      "\uC815\uB839_0": -449160678
-      "\uC815\uB839_1": -1221172775
-      "\uC815\uB839_2": 1866808931
-      "\uC815\uB839_3": 1542818767
-      "\uC815\uB839_4": 421922719
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

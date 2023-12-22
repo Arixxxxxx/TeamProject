@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Open_Cutton_SC : MonoBehaviour
 {
@@ -29,4 +30,9 @@ public class Open_Cutton_SC : MonoBehaviour
         Debug.Log(" 애니함수 시적");
     }
     
+
+    public void A_NextScene()
+    {
+        SceneManager.LoadScene(1);
+    }
 }

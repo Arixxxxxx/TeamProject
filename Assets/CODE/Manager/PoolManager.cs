@@ -9,13 +9,18 @@ public class PoolManager : MonoBehaviour
     [Header("# Insert Prefab Enemy Obj")]
     [Space]
     [SerializeField] GameObject[] EnemyObj; // 
-    [SerializeField] int Enemy_Obj_01_StartMakingEA;
-    [SerializeField] int Enemy_Obj_02_StartMakingEA;
-    [SerializeField] int Enemy_Obj_03_StartMakingEA;
+    [SerializeField] int Orc_melee_StartMakingEA;
+    [SerializeField] int Mushroom_StartMakingEA;
+    [SerializeField] int SkeletonRanager_StartMakingEA;
+    [SerializeField] int Slime_StartMakingEA;
+    [SerializeField] int OrcRanger_StartMakingEA;
     Queue<GameObject> OrcQue = new Queue<GameObject>();
     Queue<GameObject> MushRoomQue = new Queue<GameObject>();
     Queue<GameObject> SkeletonQue = new Queue<GameObject>();
-    Transform OrcTrs, MushTrs, SkeletonTrs;
+    Queue<GameObject> SlimeQue = new Queue<GameObject>();
+    Queue<GameObject> Orc_RangerQue = new Queue<GameObject>();
+
+    Transform OrcTrs, MushTrs, SkeletonTrs, SlimeTrs, OrcRangerTrs; // -> Transform
 
     [Header("# Insert Prefab Bullet Obj")]
     [Space]
@@ -25,7 +30,7 @@ public class PoolManager : MonoBehaviour
 
     [SerializeField] int Silme_PoisonStartMakingEa; //슬라임 독액
     Queue<GameObject> PoisonQue = new Queue<GameObject>();
-     
+
     [SerializeField] int Silme_PoisonBadak_StartMakingEa; //바닥
     Queue<GameObject> PoisonBadakQue = new Queue<GameObject>();
 
@@ -46,10 +51,10 @@ public class PoolManager : MonoBehaviour
 
     // Dyamic Tranform 변수
     Transform ArrowTrs, CoinTrs, FontTrs;
-    
+
     private void Awake()
     {
-        if(Inst == null)
+        if (Inst == null)
         {
             Inst = this;
         }
@@ -60,17 +65,24 @@ public class PoolManager : MonoBehaviour
         // 1. Enemy Obj 초기생성
 
 
-        // 1. Enemy 화살 관련
-        OrcTrs = transform.Find("Enemy/Orc").GetComponent<Transform>();
+        // 1. Enemy Transform 
+        OrcTrs = transform.Find("Enemy/Orc_Melee").GetComponent<Transform>();
+        OrcRangerTrs = transform.Find("Enemy/Orc_Ranger").GetComponent<Transform>();
         MushTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
         SkeletonTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
-       
+        SlimeTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
+
         CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
         ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
         FontTrs = transform.Find("Font").GetComponent<Transform>();
 
 
-        for (int i = 0; i < Enemy_Obj_01_StartMakingEA; i++)
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 풀링 초기생성 //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        for (int i = 0; i < Orc_melee_StartMakingEA; i++)
         {
             GameObject Obj = Instantiate(EnemyObj[0], OrcTrs);
             Obj.transform.position = Vector3.zero;
@@ -78,8 +90,7 @@ public class PoolManager : MonoBehaviour
             OrcQue.Enqueue(Obj);
         }
 
-
-        for (int i = 0; i < Enemy_Obj_02_StartMakingEA; i++)
+        for (int i = 0; i < Mushroom_StartMakingEA; i++)
         {
             GameObject Obj = Instantiate(EnemyObj[1], MushTrs);
             Obj.transform.position = Vector3.zero;
@@ -87,7 +98,7 @@ public class PoolManager : MonoBehaviour
             MushRoomQue.Enqueue(Obj);
         }
 
-        for (int i = 0; i < Enemy_Obj_03_StartMakingEA; i++)
+        for (int i = 0; i < SkeletonRanager_StartMakingEA; i++)
         {
             GameObject Obj = Instantiate(EnemyObj[2], SkeletonTrs);
             Obj.transform.position = Vector3.zero;
@@ -95,12 +106,32 @@ public class PoolManager : MonoBehaviour
             SkeletonQue.Enqueue(Obj);
         }
 
+        for (int i = 0; i < Slime_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[3], SlimeTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            SlimeQue.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < OrcRanger_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[4], OrcRangerTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Orc_RangerQue.Enqueue(Obj);
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// 오브젝트 초기생성
+
         for (int i = 0; i < ArrowStartMakingEa; i++) // 해골궁수 화살
         {
-          GameObject Obj =  Instantiate(Bullet[0],ArrowTrs);
-          Obj.transform.position = Vector3.zero;
-          Obj.gameObject.SetActive(false);
-          ArrowQue.Enqueue(Obj);
+            GameObject Obj = Instantiate(Bullet[0], ArrowTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            ArrowQue.Enqueue(Obj);
         }
 
         for (int i = 0; i < Silme_PoisonStartMakingEa; i++) // 슬라임 독액
@@ -127,6 +158,7 @@ public class PoolManager : MonoBehaviour
             OrcStoneQue.Enqueue(Obj);
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 2. Exp_Coin 관련
 
         for (int i = 0; i < ExpCoin_StartMakingEa; i++)
@@ -137,6 +169,7 @@ public class PoolManager : MonoBehaviour
             ExpCoinQue.Enqueue(Obj);
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 3. Dmg_Font  관련
         for (int i = 0; i < Dmg_Font_Box_StartMakingEa; i++)
         {
@@ -149,28 +182,28 @@ public class PoolManager : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
-       void Update()
+    void Update()
     {
-        
+
     }
 
     /// <summary>
-    /// 에너미 프리펩 Get 함수 -> 0오크/1버섯/2궁수 
+    /// 에너미 프리펩 Get 함수 -> 0오크/1버섯/2궁수 /3슬라임/4오크레인저
     /// </summary>
-    /// <param name="value">0오크/1버섯/2궁수</param>
+    /// <param name="value">0오크/1버섯/2궁수/3슬라임/4오크레인저</param>
     /// <returns></returns>
     public GameObject F_GetEnemyObj(int value)
     {
         GameObject obj;
 
-        switch(value)
+        switch (value)
         {
             case 0: // 오크
 
-                if(OrcQue.Count <= 1)
+                if (OrcQue.Count <= 1)
                 {
                     obj = Instantiate(EnemyObj[0], OrcTrs);
                     return obj;
@@ -198,6 +231,24 @@ public class PoolManager : MonoBehaviour
                 }
                 obj = SkeletonQue.Dequeue();
                 return obj;
+
+            case 3: // 슬라임
+                if (SlimeQue.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[3], SlimeTrs);
+                    return obj;
+                }
+                obj = SlimeQue.Dequeue();
+                return obj;
+
+            case 4: // 오크레인저
+                if (Orc_RangerQue.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[4], OrcRangerTrs);
+                    return obj;
+                }
+                obj = Orc_RangerQue.Dequeue();
+                return obj;
         }
 
         return null;
@@ -217,28 +268,25 @@ public class PoolManager : MonoBehaviour
         switch (value)
         {
             case 0:
-                if (obj.transform.parent != OrcTrs)
-                {
-                    obj.transform.SetParent(OrcTrs);
-                }
                 OrcQue.Enqueue(obj);
                 break;
 
-                case 1:
-                if (obj.transform.parent != MushTrs)
-                {
-                    obj.transform.SetParent(OrcTrs);
-                }
+            case 1:
                 MushRoomQue.Enqueue(obj);
                 break;
 
-                case 2:
-                if (obj.transform.parent != SkeletonTrs)
-                {
-                    obj.transform.SetParent(OrcTrs);
-                }
-                SkeletonQue.Enqueue(obj);   
+            case 2:
+                SkeletonQue.Enqueue(obj);
                 break;
+
+            case 3:
+                SlimeQue.Enqueue(obj);
+                break;
+
+            case 4:
+                Orc_RangerQue.Enqueue(obj);
+                break;
+
 
         }
 
@@ -257,7 +305,7 @@ public class PoolManager : MonoBehaviour
         switch (value)
         {
             case 0:
-                if(ArrowQue.Count <= 1)
+                if (ArrowQue.Count <= 1)
                 {
                     GameObject Obj = Instantiate(Bullet[0], ArrowTrs);
                     Obj.transform.position = Vector3.zero;
@@ -281,27 +329,27 @@ public class PoolManager : MonoBehaviour
                 return obj;
 
             case 2:  // 대미지폰트 박스
-                if (Dmg_Font_BoxQue.Count <= 1) 
+                if (Dmg_Font_BoxQue.Count <= 1)
                 {
-                
+
                     GameObject Obj = Instantiate(Dmg_Font_Box, FontTrs);
                     Obj.transform.position = Vector3.zero;
                     Obj.gameObject.SetActive(false);
                     return Obj;
                 }
-                
+
                 obj = Dmg_Font_BoxQue.Dequeue();
-                return obj;  
-            
+                return obj;
+
             case 3:  // 슬라임 독액
-                if (PoisonQue.Count <= 1) 
+                if (PoisonQue.Count <= 1)
                 {
                     GameObject Obj = Instantiate(Bullet[1], ArrowTrs);
                     Obj.transform.position = Vector3.zero;
                     Obj.gameObject.SetActive(false);
                     return Obj;
                 }
-                
+
                 obj = PoisonQue.Dequeue();
                 return obj;
 
@@ -342,7 +390,7 @@ public class PoolManager : MonoBehaviour
     {
         obj.SetActive(false);
         obj.transform.position = Vector3.zero;
-       
+
         switch (value)
         {
             case 0:

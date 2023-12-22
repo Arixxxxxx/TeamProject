@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class OpeningManager : MonoBehaviour
 {
@@ -41,6 +43,8 @@ public class OpeningManager : MonoBehaviour
 
     GameObject PressAnyKeyObj;
     Image MainLogo;
+    [SerializeField] Button StartBtn;
+    [SerializeField] Button ExitBtn;
 
     [SerializeField] bool Action_01_End;
     [SerializeField] bool Action_02_End;
@@ -72,6 +76,22 @@ public class OpeningManager : MonoBehaviour
         main_UI_anim = Ui_Canvas.GetComponent<Animator>();
         MainLogo = Ui_Canvas.transform.Find("Main_UI/Sample_2/Logo").GetComponent <Image>();
         PressAnyKeyObj = Ui_Canvas.transform.Find("Main_UI/Sample_2/PressAnyKey").gameObject;
+        StartBtn = Ui_Canvas.transform.Find("Main_UI/Start_Btn").GetComponent<Button>();
+        StartBtn.onClick.AddListener(() => { main_UI_anim.SetTrigger("End");  });
+        ExitBtn = Ui_Canvas.transform.Find("Main_UI/Exit_Btn").GetComponent<Button>();
+        ExitBtn.onClick.AddListener(()=> 
+        {
+            if (Application.isEditor)
+            {
+                EditorApplication.ExitPlaymode();
+            }
+            else
+            {
+                Application.Quit();
+            }
+
+        });
+
         StartCoroutine(Opening_Start());
 
     }
@@ -123,8 +143,10 @@ public class OpeningManager : MonoBehaviour
         if (Input.anyKey && Action_02_End == true)
         {
             PressAnyKeyObj.gameObject.SetActive(false);
+            StartBtn.gameObject.SetActive(true);
+            ExitBtn.gameObject.SetActive(true);
             main_UI_anim.SetTrigger("Action_2");
-            Debug.Log("ยง");
+           
         }
         
     }
@@ -145,7 +167,7 @@ public class OpeningManager : MonoBehaviour
 
     public void F_PressObjActiveTrue()
     {
-            Debug.Log(" ล๋ฐ๚วิ");
+            
             MainLogo.color = Color.white;
             PressAnyKeyObj.gameObject.SetActive(true);
             Action_02_End = true;
