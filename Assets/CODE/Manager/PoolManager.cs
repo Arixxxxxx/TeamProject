@@ -48,6 +48,13 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int Dmg_Font_Box_StartMakingEa;
     Queue<GameObject> Dmg_Font_BoxQue = new Queue<GameObject>();
 
+    [Header("# Insert Player Bullet Prefab Obj")]
+    [Space]
+    [SerializeField] GameObject[] PlayerBullet; 
+    [SerializeField] int Skill_0_StartMakingEa;
+    Queue<GameObject> Skill_0_Que = new Queue<GameObject>();
+    Transform Skill_0_Trs;
+
 
     // Dyamic Tranform 변수
     Transform ArrowTrs, CoinTrs, FontTrs;
@@ -62,10 +69,11 @@ public class PoolManager : MonoBehaviour
         {
             Destroy(this);
         }
-        // 1. Enemy Obj 초기생성
+        
 
 
         // 1. Enemy Transform 
+
         OrcTrs = transform.Find("Enemy/Orc_Melee").GetComponent<Transform>();
         OrcRangerTrs = transform.Find("Enemy/Orc_Ranger").GetComponent<Transform>();
         MushTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
@@ -76,10 +84,12 @@ public class PoolManager : MonoBehaviour
         ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
         FontTrs = transform.Find("Font").GetComponent<Transform>();
 
+        // 1. Player Transform 
+        Skill_0_Trs = transform.Find("Player/Skill_0").GetComponent<Transform>();
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 풀링 초기생성 //
+        // 풀링 초기생성 ////   Enemy
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         for (int i = 0; i < Orc_melee_StartMakingEA; i++)
@@ -178,6 +188,19 @@ public class PoolManager : MonoBehaviour
             Obj.gameObject.SetActive(false);
             Dmg_Font_BoxQue.Enqueue(Obj);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Player Bullet 
+
+        for (int i = 0; i < Skill_0_StartMakingEa; i++)
+        {
+            GameObject Obj = Instantiate(PlayerBullet[0], Skill_0_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Skill_0_Que.Enqueue(Obj);
+        }
+
+
 
     }
     void Start()

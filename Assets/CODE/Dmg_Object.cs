@@ -23,6 +23,11 @@ public class Dmg_Object : MonoBehaviour
         }
     }
 
+    public void F_SetSkill_DMG(float Dmg_value)
+    {
+        DMG = Dmg_value;
+    }
+
     float dice;
     
     private void OnTriggerEnter2D(Collider2D collision)

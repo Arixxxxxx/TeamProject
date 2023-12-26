@@ -22,4 +22,9 @@ public class Transform_Z_Rotaion : MonoBehaviour
 
         transform.eulerAngles = rot;
     }
+
+    public void F_Set_SpinSpeed(float Value)
+    {
+        SpinSpeed = Value;
+    }
 }
