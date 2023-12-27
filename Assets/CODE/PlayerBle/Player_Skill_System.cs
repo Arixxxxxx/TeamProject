@@ -17,15 +17,21 @@ public class Player_Skill_System : MonoBehaviour
     [Header("# Set Skill Value")]
     [SerializeField] int Skill_0_Level;
     [SerializeField] Skill[] Skill_0_Value;
-
-
+    [Space]
+    [SerializeField] int Skill_1_Level;
+    [SerializeField] Skill[] Skill_1_Value;
+    
+    Transform Skill_Start_Point;
+   
     Skill_Ui_UpdaterSystem _updaterSystem;
 
     bool Alpha_1_Input;
+    bool Alpha_2_Input;
 
     private void Awake()
     {
         _updaterSystem = GetComponent<Skill_Ui_UpdaterSystem>();
+        Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
     }
     void Start()
     {
@@ -39,6 +45,9 @@ public class Player_Skill_System : MonoBehaviour
         ActiveSKill_KeyDown();
         Play_Skill_01();
         Skill_0_LvelupSystem();
+
+
+        Skill2_Test();
     }
     bool once;
     private void Skill_0_LvelupSystem()
@@ -133,6 +142,7 @@ public class Player_Skill_System : MonoBehaviour
     private void Input_Cheaker()
     {
         Alpha_1_Input = Input.GetKeyDown(KeyCode.Alpha1);
+        Alpha_2_Input = Input.GetKeyDown(KeyCode.Alpha2);
     }
 
 
@@ -145,7 +155,14 @@ public class Player_Skill_System : MonoBehaviour
         }
     }
 
-
+    private void Skill2_Test()
+    {
+        if (Alpha_2_Input)
+        {
+            GameObject obj = Instantiate(skill_Obj[1], transform);
+            obj.transform.position = Skill_Start_Point.position;
+        }
+    }
 
 
     private void Play_Skill_01()
@@ -160,6 +177,21 @@ public class Player_Skill_System : MonoBehaviour
     {
         return critical_Value;
     }
+
+    public int F_Get_Skill_Lv(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                return Skill_0_Level;
+
+            case 1:
+                return Skill_1_Level;
+
+        }
+
+        return -1;
+    }
 }
 
 [System.Serializable]
@@ -172,4 +204,7 @@ public class Skill
     public float cooltime;
     public float duration;
 }
+
+
+
 

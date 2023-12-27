@@ -26,15 +26,9 @@ public class Player_Dragon : MonoBehaviour
     private void FixedUpdate()
     {
         playerPos.x = PosX_Value;
-        Debug.Log($"{PosX_Value} // {playerPos.x} // 플레이어 {PlayerTr.transform.position}");
-
-
         playerPos.y = Mathf.Sin(Time.time * WaveSpeed) * Waveheight;
         playerPos.y += Add_Y;
         rb.position = PlayerTr.transform.position + playerPos;
-
-        //rb.position = playerPos;
-
     }
     void Update()
     {
