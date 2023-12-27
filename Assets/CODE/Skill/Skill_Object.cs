@@ -35,7 +35,9 @@ public class Skill_Object : MonoBehaviour
         if (Target != null)
         {
             dis = Vector2.Distance(transform.position, Target);
-            rb.MovePosition(Vector3.Slerp(transform.position, Target,0.5f* bulletSpeed));
+            //rb.MovePosition(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
+            rb.MovePosition(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
+            //transform.Translate(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
 
             if (dis < 1f)
             {
@@ -77,14 +79,14 @@ public class Skill_Object : MonoBehaviour
         
         if (randomX == 0)
         {
-            RanX = Random.Range(-6.0f, -2.0f);
+            RanX = Random.Range(-6.0f, -2.5f);
         }
         else if (randomX == 1)
         {
-            RanX = Random.Range(2.0f, 6.0f);
+            RanX = Random.Range(2.5f, 6.0f);
         }
 
-        RanY = Random.Range(-6.0f, 6.0f);
+        RanY = -1.5f; /*Random.Range(-2.0f, 2.0f);*/
         
     }
 }

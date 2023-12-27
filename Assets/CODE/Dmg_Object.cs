@@ -8,10 +8,11 @@ public class Dmg_Object : MonoBehaviour
     [SerializeField] float DMG;
     [SerializeField] float critical_Value;
 
-    Player_Skill_System skill;
+    Player_Skill_System skill;  
     void Start()
     {
-        skill = GetComponentInParent<Player_Skill_System>();      
+        //skill = GetComponentInParent<Player_Skill_System>();      
+        skill = Hub.Inst.player_skill_system_sc;
     }
 
     // Update is called once per frame

@@ -45,6 +45,8 @@ public class AttackCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+
         if (collision.CompareTag("Player") && collision.GetComponent<Player_Stats>() != null)
         {
             collision.GetComponent<Player_Stats>().F_Player_On_Hit(myDMG);

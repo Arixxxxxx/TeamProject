@@ -51,9 +51,12 @@ public class PoolManager : MonoBehaviour
     [Header("# Insert Player Bullet Prefab Obj")]
     [Space]
     [SerializeField] GameObject[] PlayerBullet; 
-    [SerializeField] int Skill_0_StartMakingEa;
-    Queue<GameObject> Skill_0_Que = new Queue<GameObject>();
-    Transform Skill_0_Trs;
+    [SerializeField] int Skill_1_StartMakingEa;
+    Queue<GameObject> Skill_1_Que = new Queue<GameObject>();
+    Transform Skill_1_Trs;
+    [SerializeField] int Skill_1_2_StartMakingEa;
+    Queue<GameObject> Skill_1_2_Que = new Queue<GameObject>();
+    
 
 
     // Dyamic Tranform 변수
@@ -85,7 +88,7 @@ public class PoolManager : MonoBehaviour
         FontTrs = transform.Find("Font").GetComponent<Transform>();
 
         // 1. Player Transform 
-        Skill_0_Trs = transform.Find("Player/Skill_0").GetComponent<Transform>();
+        Skill_1_Trs = transform.Find("Player/Skill_1").GetComponent<Transform>();
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,14 +195,21 @@ public class PoolManager : MonoBehaviour
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // Player Bullet 
 
-        for (int i = 0; i < Skill_0_StartMakingEa; i++)
+        for (int i = 0; i < Skill_1_StartMakingEa; i++) // Skill_01_Bullet
         {
-            GameObject Obj = Instantiate(PlayerBullet[0], Skill_0_Trs);
+            GameObject Obj = Instantiate(PlayerBullet[0], Skill_1_Trs);
             Obj.transform.position = Vector3.zero;
             Obj.gameObject.SetActive(false);
-            Skill_0_Que.Enqueue(Obj);
+            Skill_1_Que.Enqueue(Obj);
         }
 
+        for (int i = 0; i < Skill_1_StartMakingEa; i++) // Skill_01.2_Bome
+        {
+            GameObject Obj = Instantiate(PlayerBullet[1], Skill_1_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Skill_1_2_Que.Enqueue(Obj);
+        }
 
 
     }
@@ -404,6 +414,19 @@ public class PoolManager : MonoBehaviour
         return null;
     }
 
+
+    /// <summary>
+    ///  0 = Skill01 Bullet // 1 = Skill01.2 Bome
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public GameObject F_GetPlayerBullet(int value)
+    {
+        GameObject OBJ = null;
+
+
+        return OBJ;
+    }
     /// <summary>
     /// [ Polling System ]> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액 // 4바닥 // 5돌맹이
     /// </summary>
