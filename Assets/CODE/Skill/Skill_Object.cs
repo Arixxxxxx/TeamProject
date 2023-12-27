@@ -30,19 +30,30 @@ public class Skill_Object : MonoBehaviour
         RandomPoint();
     }
 
+    private void OnEnable()
+    {
+        Debug.Log("11");
+            InIt();
+            RandomPoint();
+     
+    }
+
     private void FixedUpdate()
     {
         if (Target != null)
         {
             dis = Vector2.Distance(transform.position, Target);
-            //rb.MovePosition(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
+           
             rb.MovePosition(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
-            //transform.Translate(Vector3.Lerp(transform.position, Target, 0.5f * bulletSpeed));
+           
 
             if (dis < 1f)
             {
-                Debug.Log("»èÁ¦");
-                //gameObject.SetActive(false);
+                GameObject obj = PoolManager.Inst.F_GetPlayerBullet(1);
+                obj.SetActive(true);
+                obj.transform.position = transform.position;
+
+                PoolManager.Inst.F_Return_PlayerBullet(gameObject, 0);
             }
         }
 

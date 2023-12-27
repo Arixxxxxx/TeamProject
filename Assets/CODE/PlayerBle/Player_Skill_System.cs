@@ -159,8 +159,10 @@ public class Player_Skill_System : MonoBehaviour
     {
         if (Alpha_2_Input)
         {
-            GameObject obj = Instantiate(skill_Obj[1], transform);
+            GameObject obj = PoolManager.Inst.F_GetPlayerBullet(0);
             obj.transform.position = Skill_Start_Point.position;
+            obj.SetActive(true);
+            
         }
     }
 

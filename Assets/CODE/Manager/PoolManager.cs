@@ -50,13 +50,16 @@ public class PoolManager : MonoBehaviour
 
     [Header("# Insert Player Bullet Prefab Obj")]
     [Space]
-    [SerializeField] GameObject[] PlayerBullet; 
+    [SerializeField] GameObject[] PlayerBullet;
+
     [SerializeField] int Skill_1_StartMakingEa;
     Queue<GameObject> Skill_1_Que = new Queue<GameObject>();
+
     Transform Skill_1_Trs;
+
     [SerializeField] int Skill_1_2_StartMakingEa;
     Queue<GameObject> Skill_1_2_Que = new Queue<GameObject>();
-    
+
 
 
     // Dyamic Tranform 변수
@@ -72,7 +75,7 @@ public class PoolManager : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
 
 
         // 1. Enemy Transform 
@@ -203,7 +206,7 @@ public class PoolManager : MonoBehaviour
             Skill_1_Que.Enqueue(Obj);
         }
 
-        for (int i = 0; i < Skill_1_StartMakingEa; i++) // Skill_01.2_Bome
+        for (int i = 0; i < Skill_1_2_StartMakingEa; i++) // Skill_01.2_Bome
         {
             GameObject Obj = Instantiate(PlayerBullet[1], Skill_1_Trs);
             Obj.transform.position = Vector3.zero;
@@ -422,11 +425,64 @@ public class PoolManager : MonoBehaviour
     /// <returns></returns>
     public GameObject F_GetPlayerBullet(int value)
     {
-        GameObject OBJ = null;
+        GameObject obj = null;
+
+        switch (value)
+        {
+            case 0:
+                if (Skill_1_Que.Count <= 1)
+                {
+                    obj = Instantiate(PlayerBullet[0], Skill_1_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+
+                obj = Skill_1_Que.Dequeue();
+                return obj;
 
 
-        return OBJ;
+            case 1:
+                if (Skill_1_2_Que.Count <= 1)
+                {
+                    obj = Instantiate(PlayerBullet[1], Skill_1_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+
+                obj = Skill_1_2_Que.Dequeue();
+                return obj;
+
+        }
+        return null;
     }
+
+    /// <summary>
+    /// 0 = Skill01 Bullet // 1 = Skill01.2 Bome
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="value"></param>
+    public void F_Return_PlayerBullet(GameObject obj, int value)
+    {
+        obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
+
+        switch (value)
+        {
+            case 0:
+                Skill_1_Que.Enqueue(obj);
+                break;
+
+            case 1:
+                Skill_1_2_Que.Enqueue(obj);
+                break;
+
+        }
+
+    }
+
+
     /// <summary>
     /// [ Polling System ]> 0 화살 / 1 경험치 보석 / 2 데미지폰트 / 3슬라임 독액 // 4바닥 // 5돌맹이
     /// </summary>

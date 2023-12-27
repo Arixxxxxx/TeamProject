@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2243834532986686593}
   - component: {fileID: 6880310925185722127}
   - component: {fileID: 4454865076987545104}
+  - component: {fileID: 746657243499297424}
   m_Layer: 0
   m_Name: Bome
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 15
   m_Sprite: {fileID: 1935515703, guid: 5b196f15d0bcbab4fb597e6e29ba4fb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -137,13 +138,13 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2085228, y: -0.3185892}
+  m_Offset: {x: -0.1491338, y: 2.3750143}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.51400566, y: 0.1125116}
     oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
@@ -151,7 +152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.4897294, y: 3.5582094}
+  m_Size: {x: 4.8756504, y: 5.234726}
   m_EdgeRadius: 0
 --- !u!114 &4454865076987545104
 MonoBehaviour:
@@ -167,3 +168,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DMG: 5
   critical_Value: 0
+--- !u!114 &746657243499297424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699956439340475597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ea9d2e95bb41842a730654dd885544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
