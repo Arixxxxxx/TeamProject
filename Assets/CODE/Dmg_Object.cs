@@ -4,23 +4,36 @@ using UnityEngine;
 
 public class Dmg_Object : MonoBehaviour
 {
+    public enum SkillType { Skill_0, Skill_1, }
+    public SkillType type;
+
     [Header(" # Input Object DMG !! ")]
     [SerializeField] float DMG;
     [SerializeField] float critical_Value;
 
-    Player_Skill_System skill;  
+    Player_Skill_System skill;
     void Start()
     {
-        //skill = GetComponentInParent<Player_Skill_System>();      
         skill = Hub.Inst.player_skill_system_sc;
     }
 
+    private void OnEnable()
+    {
+      
+    }
     // Update is called once per frame
     void Update()
     {
-        if(skill != null)
+        if (skill != null)
         {
             critical_Value = skill.F_Get_Player_Critical();
+        }
+
+        switch (type)
+        {
+            case SkillType.Skill_1:
+                DMG = skill.F_GetSkillDMG();
+                break;
         }
     }
 
@@ -30,16 +43,17 @@ public class Dmg_Object : MonoBehaviour
     }
 
     float dice;
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // ÂÌ¸÷
         if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyStats>() != null)
         {
             dice = Random.Range(0, 100);
-            
-            if(dice < critical_Value)
+
+            if (dice < critical_Value)
             {
-                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG , true);
+                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, true);
             }
             else
             {
@@ -47,6 +61,7 @@ public class Dmg_Object : MonoBehaviour
             }
         }
 
+        //º¸½º
         if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null)
         {
             dice = Random.Range(0, 100);

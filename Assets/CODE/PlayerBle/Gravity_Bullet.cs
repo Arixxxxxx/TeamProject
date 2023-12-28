@@ -41,9 +41,11 @@ public class Gravity_Bullet : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         veloY = rb.velocity.y;
-        veloY += Random.Range(-2f, 2f);
+                
         yield return new WaitForSeconds(0.1f);
         veloY *= -1;
+        float RanYValue = Random.Range(-6f, 2f);
+        veloY = veloY + RanYValue;
 
         yield return null;
         CheakBullet = true;
@@ -56,7 +58,7 @@ public class Gravity_Bullet : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(rb.velocity.y);
+        
         transform.up = rb.velocity;
         //rb.MoveRotation(Quaternion.LookRotation(rb.velocity) * Quaternion.Euler(0, 0, -90));
         // 이동하는 방향으로회전 // 이동하는 방향 넣었던 // 화살의 이미지 자체가 잘못되어서 90도 꺽음
@@ -79,13 +81,13 @@ public class Gravity_Bullet : MonoBehaviour
 
         if (randomX == 0)
         {
-            RanX = Random.Range(-6.0f, -9.0f);
+            RanX = Random.Range(-4.0f, -7.0f);
         }
         else if (randomX == 1)
         {
-            RanX = Random.Range(6.0f, 9.0f);
+            RanX = Random.Range(4.0f, 7.0f);
         }
 
-        RanY = Random.Range(6.0f, 9.0f);
+        RanY = Random.Range(6.0f, 8.5f);
     }
 }

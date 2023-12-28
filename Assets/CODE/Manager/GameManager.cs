@@ -190,6 +190,14 @@ public class GameManager : MonoBehaviour
         {
             uiOpen_EveryObecjtStop = false;
         }
+        if (GameStop_Ui_Window[1].gameObject.activeSelf == true && uiOpen_EveryObecjtStop == false)
+        {
+            uiOpen_EveryObecjtStop = true;
+        }
+        else if (GameStop_Ui_Window[1].gameObject.activeSelf == false && uiOpen_EveryObecjtStop == true)
+        {
+            uiOpen_EveryObecjtStop = false;
+        }
     }
   
   

@@ -102,6 +102,7 @@ public class Player_Stats : MonoBehaviour
     {
         if (player_On_Hit == true && sr.color.a == 1)
         {
+            Debug.Log("11");
             sr.color = noDMG_Color;
         }
         else if (player_On_Hit == false && sr.color.a == noDMG_Color.a)

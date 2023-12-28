@@ -11,6 +11,7 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     [SerializeField] Transform passiveSkill_Ui_Trs;
     [SerializeField] GameObject UI_icon_Prefab;
     [SerializeField] Sprite[] icon_Img;
+    [SerializeField] Sprite[] Passive_icon_Img;
         
     void Start()
     {
@@ -25,44 +26,24 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
 
     public void F_Set_ActiveCheak(int value)
     {
-        GameObject obj = Instantiate(UI_icon_Prefab, transform);
-        Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>();
+        GameObject obj = Instantiate(UI_icon_Prefab, transform); // 프리펩생성
+        Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>(); // 아이콘 스크립트
+        obj.transform.SetParent(activeSkill_Ui_Trs); // 트랜스폼 지정
+        obj.transform.GetChild(0).GetComponent<Image>().sprite =  icon_Img[value]; // 내부 이미지 설정
+        obj.GetComponent<Animator>().SetTrigger("Jump"); // 스르륵 연출
 
         switch (value)
         {
             case 0:
-
-                for(int i = 0; i < activeSkill_Ui_Trs.transform.childCount; i++) // 예외처리
-                {
-                    if(activeSkill_Ui_Trs.transform.GetChild(i) != null && sc.type == Skill_UI_Icon.SkillType.Active_0)
-                    {
-                        Destroy(obj);
-                        Destroy(sc);
-                        return;
-                    }
-                    else
-                    {
-                        obj.transform.SetParent(activeSkill_Ui_Trs);
-                        sc.type = Skill_UI_Icon.SkillType.Active_0;
-                    }
-                }
-
-                if (activeSkill_Ui_Trs.transform.childCount == 0) // 만약 최초실행이라면
-                {
-                    obj.transform.SetParent(activeSkill_Ui_Trs);
-                    obj.transform.GetChild(0).GetComponent<Image>().sprite = icon_Img[0];
-                    obj.GetComponent<Animator>().SetTrigger("Jump");
-                    sc.type = Skill_UI_Icon.SkillType.Active_0;
-                    
-                }
+                sc.type = Skill_UI_Icon.SkillType.Active_0;
                 break;
 
             case 1:
-                
+                sc.type = Skill_UI_Icon.SkillType.Active_1;
                 break;
 
             case 2:
-                
+                sc.type = Skill_UI_Icon.SkillType.Active_2;
                 break;
 
             case 3:
@@ -84,7 +65,39 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     }
     public void F_Set_PassiveCheak(int value)
     {
-   
+        GameObject obj = Instantiate(UI_icon_Prefab, transform); // 프리펩생성
+        Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>(); // 아이콘 스크립트
+        obj.transform.SetParent(passiveSkill_Ui_Trs); // 트랜스폼 지정
+        obj.transform.GetChild(0).GetComponent<Image>().sprite = Passive_icon_Img[value]; // 내부 이미지 설정
+        obj.GetComponent<Animator>().SetTrigger("Jump"); // 스르륵 연출
+
+        switch (value)
+        {
+            case 0:
+                sc.type = Skill_UI_Icon.SkillType.Passive_0;
+                break;
+
+            case 1:
+                sc.type = Skill_UI_Icon.SkillType.Passive_1;
+                break;
+
+            case 2:
+                sc.type = Skill_UI_Icon.SkillType.Passive_2;
+                break;
+
+            case 3:
+                sc.type = Skill_UI_Icon.SkillType.Passive_3;
+                break;
+
+            case 4:
+                sc.type = Skill_UI_Icon.SkillType.Passive_4;
+                break;
+
+            case 5:
+
+                break;
+        }
+
     }
 }
 

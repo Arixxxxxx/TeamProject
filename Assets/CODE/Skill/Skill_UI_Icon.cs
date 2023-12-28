@@ -25,21 +25,39 @@ public class Skill_UI_Icon : MonoBehaviour
         switch(type)
         {
             case SkillType.Active_0:
-                if(Lv == sc.F_Get_Skill_Lv(0))
+                if(Lv == sc.F_Get_Attack_Skill_Lv(0))
                 {
                     return;
                 }
 
-                Lv = sc.F_Get_Skill_Lv(0);
+                Lv = sc.F_Get_Attack_Skill_Lv(0);
                 Lv_text.text = Lv.ToString();
                 break;
 
             case SkillType.Active_1:
-                if (Lv == sc.F_Get_Skill_Lv(1))
+                if (Lv == sc.F_Get_Attack_Skill_Lv(1))
                 {
                     return;
                 }
-                    Lv = sc.F_Get_Skill_Lv(1);
+                    Lv = sc.F_Get_Attack_Skill_Lv(1);
+                Lv_text.text = Lv.ToString();
+                break;
+
+            case SkillType.Active_2:
+                if (Lv == sc.F_Get_Attack_Skill_Lv(2))
+                {
+                    return;
+                }
+                Lv = sc.F_Get_Attack_Skill_Lv(2);
+                Lv_text.text = Lv.ToString();
+                break;
+
+            case SkillType.Passive_0:
+                if (Lv == sc.F_Get_Passive_Skill_Lv(0))
+                {
+                    return;
+                }
+                Lv = sc.F_Get_Passive_Skill_Lv(0);
                 Lv_text.text = Lv.ToString();
                 break;
         }    

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Movement : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class Movement : MonoBehaviour
     {
         curSpintTime = maxSpintTime;
         TelePortDealys = new WaitForSeconds(TeleportDealy);
+        OriginSpeed = CharMove_Speed;
     }
     private void FixedUpdate()
     {
@@ -191,7 +193,12 @@ public class Movement : MonoBehaviour
 
         }
     }
- 
+
+    float OriginSpeed;
+    public void F_SetMoveSpeedAdd(float Value)
+    {
+        CharMove_Speed = OriginSpeed * Value;
+    }
    
     IEnumerator Player_Input_Spacebar_TelePort()
     {
