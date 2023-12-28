@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class Player_Skill_System : MonoBehaviour
@@ -34,6 +35,9 @@ public class Player_Skill_System : MonoBehaviour
     Skill_Ui_UpdaterSystem _updaterSystem;
     Movement charMove_Sc;
 
+    int[] activeLv = new int[5];
+    int[] passiveLv = new int[5];
+    
     bool Alpha_1_Input;
     bool Alpha_2_Input;
     bool Alpha_3_Input;
@@ -56,6 +60,8 @@ public class Player_Skill_System : MonoBehaviour
         ActiveSKill_Test_KeyDown();
         Play_Skill_01();
         Skill_1_AutoFire();
+
+        SkillLv_Update();
     }
 
     private void Skill_0_Lvelup()
@@ -327,6 +333,31 @@ public class Player_Skill_System : MonoBehaviour
         return Skill_1_Value[Skill_1_Level - 1].dmg;
     }
 
+    private void SkillLv_Update()
+    {
+        
+        activeLv[0] = Skill_0_Level;
+        activeLv[1] = Skill_1_Level;
+        activeLv[2] = Skill_2_Level;
+
+        passiveLv[0] = Passive_0_Lv;
+    }
+
+
+    public int[] F_Get_CurSkillLv(int value)
+    {
+        if(value == 0)
+        {
+            return activeLv;
+        }
+        else if(value == 1)
+        {
+            return passiveLv;
+        }
+
+        return null; 
+
+    }
 }
 
 [System.Serializable]
