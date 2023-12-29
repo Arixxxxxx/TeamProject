@@ -27027,7 +27027,7 @@ MonoBehaviour:
   - {fileID: 882999902}
   Skill_Max_Lvl: 5
   critical_Value: 20
-  Skill_0_Level: 0
+  Skill_0_Level: 1
   Skill_0_Value:
   - dmg: 5
     count: 2
@@ -38969,6 +38969,7 @@ MonoBehaviour:
   Prefabs: {fileID: 425586139014241408, guid: 1fce78ebacbff774ca8f021cc9319604, type: 3}
   SkillLv: 
   SkillNumber: 
+  SkillValue: 
 --- !u!1 &1755564669
 GameObject:
   m_ObjectHideFlags: 0

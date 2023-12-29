@@ -1,10 +1,8 @@
 using NavMeshPlus.Components;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
