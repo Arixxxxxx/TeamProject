@@ -14,6 +14,8 @@ public class Player_Skill_System : MonoBehaviour
     [Header("# Input Skill Spec  ==>  # 예진 ")]
     [Space]
     [SerializeField] int Skill_Max_Lvl;
+    public int skill_Max_Lvl { get { return Skill_Max_Lvl; } }
+
     [SerializeField] float critical_Value;
     [Header("# Set Attack Skill Value")]
     [Space]
@@ -29,15 +31,15 @@ public class Player_Skill_System : MonoBehaviour
     [Header("# Set Passive Skill Value")]
     [Space]
     [SerializeField] int Passive_0_Lv;
-    [SerializeField] float[] Passive_0_UpValue; 
+    [SerializeField] float[] Passive_0_UpValue;
 
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
     Movement charMove_Sc;
 
-    int[] activeLv = new int[5];
-    int[] passiveLv = new int[5];
-    
+    int[] Skill_Lv = new int[10];
+
+
     bool Alpha_1_Input;
     bool Alpha_2_Input;
     bool Alpha_3_Input;
@@ -57,11 +59,13 @@ public class Player_Skill_System : MonoBehaviour
     void Update()
     {
         Input_Cheaker();
+        
+
         ActiveSKill_Test_KeyDown();
         Play_Skill_01();
         Skill_1_AutoFire();
+        
 
-        SkillLv_Update();
     }
 
     private void Skill_0_Lvelup()
@@ -201,9 +205,9 @@ public class Player_Skill_System : MonoBehaviour
                 }
             }
 
-            if(Skill_2_Level > 0)
+            if (Skill_2_Level > 0)
             {
-                skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level-1].dmg);
+                skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level - 1].dmg);
             }
         }
     }
@@ -213,30 +217,30 @@ public class Player_Skill_System : MonoBehaviour
     /////////////////////////////// Passive /////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 
-    
+
     private void Passive_0_LvUp() // 페시브 1번 이동속도증가
     {
-        if(Passive_0_Lv == Skill_Max_Lvl)
+        if (Passive_0_Lv == Skill_Max_Lvl)
         {
             return;
         }
-        else if(Passive_0_Lv < Skill_Max_Lvl)
+        else if (Passive_0_Lv < Skill_Max_Lvl)
         {
             Passive_0_Lv++;
-            
-            if(Passive_0_Lv == 1)
+
+            if (Passive_0_Lv == 1)
             {
                 _updaterSystem.F_Set_PassiveCheak(0);
             }
 
-            if(Passive_0_Lv > 0)
+            if (Passive_0_Lv > 0)
             {
                 charMove_Sc.F_SetMoveSpeedAdd(Passive_0_UpValue[Passive_0_Lv - 1]);
             }
         }
     }
 
-  
+
 
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -272,7 +276,7 @@ public class Player_Skill_System : MonoBehaviour
         {
             Passive_0_LvUp();
         }
-      
+
     }
 
 
@@ -333,30 +337,19 @@ public class Player_Skill_System : MonoBehaviour
         return Skill_1_Value[Skill_1_Level - 1].dmg;
     }
 
-    private void SkillLv_Update()
+    private void SkillLv_Updater()
     {
-        
-        activeLv[0] = Skill_0_Level;
-        activeLv[1] = Skill_1_Level;
-        activeLv[2] = Skill_2_Level;
-
-        passiveLv[0] = Passive_0_Lv;
+        Skill_Lv[0] = Skill_0_Level;
+        Skill_Lv[1] = Skill_1_Level;
+        Skill_Lv[2] = Skill_2_Level;
+        Skill_Lv[5] = Passive_0_Lv;
     }
 
-
-    public int[] F_Get_CurSkillLv(int value)
+    public int[] F_Get_CurSkillLv()
     {
-        if(value == 0)
-        {
-            return activeLv;
-        }
-        else if(value == 1)
-        {
-            return passiveLv;
-        }
+        SkillLv_Updater();
 
-        return null; 
-
+        return Skill_Lv;
     }
 }
 
