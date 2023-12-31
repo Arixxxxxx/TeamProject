@@ -49,7 +49,6 @@ public class LvUp_Ui_Manager : MonoBehaviour
         {
             if (SkillLv[i] < Skill_sc.skill_Max_Lvl)
             {
-                SkillLv[10] =2;
 
                 SkillNumber.Add(i);
                 SkillValue.Add(SkillLv[i]);

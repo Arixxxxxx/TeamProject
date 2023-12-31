@@ -47,11 +47,11 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
                 break;
 
             case 3:
-                
+                sc.type = Skill_UI_Icon.SkillType.Active_3;
                 break;
 
             case 4:
-                
+                sc.type = Skill_UI_Icon.SkillType.Active_4;
                 break;
 
             case 5:

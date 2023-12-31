@@ -22,6 +22,9 @@ public class PoolManager : MonoBehaviour
 
     Transform OrcTrs, MushTrs, SkeletonTrs, SlimeTrs, OrcRangerTrs; // -> Transform
 
+
+
+
     [Header("# Insert Prefab Bullet Obj")]
     [Space]
     [SerializeField] GameObject[] Bullet; // 에너미 화살
@@ -48,19 +51,31 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int Dmg_Font_Box_StartMakingEa;
     Queue<GameObject> Dmg_Font_BoxQue = new Queue<GameObject>();
 
+
+
+
     [Header("# Insert Player Bullet Prefab Obj")]
     [Space]
     [SerializeField] GameObject[] PlayerBullet;
 
-    [SerializeField] int Skill_1_StartMakingEa;
-    Queue<GameObject> Skill_1_Que = new Queue<GameObject>();
-
     Transform Skill_1_Trs;
-
+    
+    [SerializeField] int Skill_1_StartMakingEa;        
+    Queue<GameObject> Skill_1_Que = new Queue<GameObject>();
     [SerializeField] int Skill_1_2_StartMakingEa;
     Queue<GameObject> Skill_1_2_Que = new Queue<GameObject>();
 
+    Transform Skill_3_Trs;
 
+    [SerializeField] int Skill_3_StartMakingEa;
+    Queue<GameObject> Skill_3_Que = new Queue<GameObject>();
+    [SerializeField] int Skill_3_2_StartMakingEa;
+    Queue<GameObject> Skill_3_2_Que = new Queue<GameObject>();
+
+    Transform Skill_4_Trs;
+
+    [SerializeField] int Skill_4_StartMakingEa;
+    Queue<GameObject> Skill_4_Que = new Queue<GameObject>();
 
     // Dyamic Tranform 변수
     Transform ArrowTrs, CoinTrs, FontTrs;
@@ -92,7 +107,8 @@ public class PoolManager : MonoBehaviour
 
         // 1. Player Transform 
         Skill_1_Trs = transform.Find("Player/Skill_1").GetComponent<Transform>();
-
+        Skill_3_Trs = transform.Find("Player/Skill_3").GetComponent<Transform>();
+        Skill_4_Trs = transform.Find("Player/Skill_4").GetComponent<Transform>();
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 풀링 초기생성 ////   Enemy
@@ -214,6 +230,29 @@ public class PoolManager : MonoBehaviour
             Skill_1_2_Que.Enqueue(Obj);
         }
 
+        for (int i = 0; i < Skill_3_StartMakingEa; i++) // Skill_03_Bullet
+        {
+            GameObject Obj = Instantiate(PlayerBullet[2], Skill_3_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Skill_3_Que.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < Skill_3_2_StartMakingEa; i++) // Skill_03_2_Bome
+        {
+            GameObject Obj = Instantiate(PlayerBullet[3], Skill_3_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Skill_3_2_Que.Enqueue(Obj);
+        }
+
+        for (int i = 0; i < Skill_4_StartMakingEa; i++) // Skill_04_Bullet
+        {
+            GameObject Obj = Instantiate(PlayerBullet[4], Skill_4_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Skill_4_Que.Enqueue(Obj);
+        }
 
     }
     void Start()
@@ -419,7 +458,7 @@ public class PoolManager : MonoBehaviour
 
 
     /// <summary>
-    ///  0 = Skill01 Bullet // 1 = Skill01.2 Bome
+    ///  0 = Skill01 Bullet // 1 = Skill01.2 Bome // 2 = 3번스킬  // 3 = 3-2 스킬(바닥) // 4 화염폭풍
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
@@ -454,12 +493,52 @@ public class PoolManager : MonoBehaviour
                 obj = Skill_1_2_Que.Dequeue();
                 return obj;
 
+
+
+
+            case 2:
+                if (Skill_3_Que.Count <= 1)
+                {
+                    obj = Instantiate(PlayerBullet[2], Skill_3_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+
+                obj = Skill_3_Que.Dequeue();
+                return obj;
+
+
+            case 3:
+                if (Skill_3_2_Que.Count <= 1)
+                {
+                    obj = Instantiate(PlayerBullet[3], Skill_3_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+
+                obj = Skill_3_2_Que.Dequeue();
+                return obj;
+
+
+            case 4:
+                if (Skill_4_Que.Count <= 1)
+                {
+                    obj = Instantiate(PlayerBullet[4], Skill_4_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+
+                obj = Skill_4_Que.Dequeue();
+                return obj;
         }
         return null;
     }
 
     /// <summary>
-    /// 0 = Skill01 Bullet // 1 = Skill01.2 Bome
+    /// 0 = Skill01 Bullet // 1 = Skill01.2 Bome // 2 = 3번스킬  // 3 = 3-2 스킬(바닥)
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="value"></param>
@@ -476,6 +555,24 @@ public class PoolManager : MonoBehaviour
 
             case 1:
                 Skill_1_2_Que.Enqueue(obj);
+                break;
+
+            case 2:
+                obj.transform.localScale = Vector3.one;
+                Skill_3_Que.Enqueue(obj);
+                break;
+
+            case 3:
+                Skill_3_2_Que.Enqueue(obj);
+                break;  
+            
+            case 4:
+                Transform L = obj.transform.Find("L").GetComponent<Transform>();
+                Transform R = obj.transform.Find("R").GetComponent<Transform>();
+                L.transform.localScale = Vector3.one;
+                R.transform.localScale = Vector3.one;
+                
+                Skill_4_Que.Enqueue(obj);
                 break;
 
         }

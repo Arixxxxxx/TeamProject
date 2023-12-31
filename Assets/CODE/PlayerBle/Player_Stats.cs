@@ -31,7 +31,7 @@ public class Player_Stats : MonoBehaviour
     }
     void Start()
     {
-        
+        Origin_MaxHP = Player_MaxHP; ;
     }
 
     // Update is called once per frame
@@ -40,7 +40,12 @@ public class Player_Stats : MonoBehaviour
         Show_NoDMG_Alpah_A_Zero();
     }
 
-    
+    float Origin_MaxHP;
+    public void F_Set_Add_Hp_Passiveskill(float value)
+    {
+        
+        Player_MaxHP = Origin_MaxHP * value;
+    }
 
     public void F_GetExp_LevelupSystem(float EXP)
     {
@@ -57,6 +62,7 @@ public class Player_Stats : MonoBehaviour
                 CashEXP -= NextLv_Need_Exp[Player_Cur_Lv - 1];
                 Player_Cur_Lv++;
                 Player_MaxHP += LevelUp_Plus_Hp;
+                Origin_MaxHP = Player_MaxHP;
             }
 
             // 남은 경험치를 현재 경험치로 설정

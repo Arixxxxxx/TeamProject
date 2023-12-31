@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dmg_Object : MonoBehaviour
 {
-    public enum SkillType { Skill_0, Skill_1, }
+    public enum SkillType { Skill_0, Skill_1, Skill_3, Skill_4 }
     public SkillType type;
 
     [Header(" # Input Object DMG !! ")]
@@ -32,7 +32,15 @@ public class Dmg_Object : MonoBehaviour
         switch (type)
         {
             case SkillType.Skill_1:
-                DMG = skill.F_GetSkillDMG();
+                DMG = skill.F_GetSkillDMG(1);
+                break;
+
+            case SkillType.Skill_3:
+                DMG = skill.F_GetSkillDMG(3);
+                break;
+
+            case SkillType.Skill_4:
+                DMG = skill.F_GetSkillDMG(4);
                 break;
         }
     }
