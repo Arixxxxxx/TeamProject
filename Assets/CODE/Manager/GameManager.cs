@@ -190,6 +190,11 @@ public class GameManager : MonoBehaviour
         }
         if (GameStop_Ui_Window[1].gameObject.activeSelf == true && uiOpen_EveryObecjtStop == false)
         {
+            if (GameStop_Ui_Window[2].activeSelf == true)
+            {
+                GameStop_Ui_Window[2].SetActive(false);
+            }
+            
             uiOpen_EveryObecjtStop = true;
         }
         else if (GameStop_Ui_Window[1].gameObject.activeSelf == false && uiOpen_EveryObecjtStop == true)
@@ -198,7 +203,26 @@ public class GameManager : MonoBehaviour
         }
     }
   
-  
+    /// <summary>
+    /// 스킬선택 이후 프리펩 삭제
+    /// </summary>
+    public void F_Lvup_Slot_Reset()
+    {
+        Transform[] slotbox = GameStop_Ui_Window[1].transform.Find("Box/Slot_Box").GetComponentsInChildren<Transform>();
+        for (int i = 0; i < slotbox.Length; i++)
+        {
+            if(i > 0)
+            {
+                Destroy(slotbox[i].gameObject);
+            }
+        }
 
+
+    }
+  
+    public void F_MainUI_SetAcvite_True()
+    {
+        GameStop_Ui_Window[2].SetActive(true);
+    }
 
 }

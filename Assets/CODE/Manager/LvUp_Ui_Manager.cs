@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class LvUp_Ui_Manager : MonoBehaviour
@@ -12,12 +11,12 @@ public class LvUp_Ui_Manager : MonoBehaviour
     [SerializeField] GameObject Prefabs;
     [Header("# Cheak value")]
     [Space]
-    [SerializeField] int[] SkillLv = new int[10];
-    [SerializeField] List<int> SkillNumber = new List<int>();
-    [SerializeField] List<int> SkillValue = new List<int>();
+    [SerializeField] int[] Get_Skill_Value = new int[10];
+    [SerializeField] List<int> Skill_ID_List = new List<int>();
+    [SerializeField] List<int> Skill_Lv = new List<int>();
     Transform Slot;
     Player_Skill_System Skill_sc;
-
+    int SkillMaxLv;
 
     private void Awake()
     {
@@ -26,7 +25,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
     void Start()
     {
         Skill_sc = Hub.Inst.player_skill_system_sc;
-
+        SkillMaxLv = Skill_sc.skill_Max_Lvl;
     }
 
     // Update is called once per frame
@@ -40,41 +39,39 @@ public class LvUp_Ui_Manager : MonoBehaviour
 
     public void F_OpenWindow()
     {
-        //if(Skill_sc = null) { Skill_sc = Hub.Inst.player_skill_system_sc; }
-
-        SkillLv = Skill_sc.F_Get_CurSkillLv(); // 현재 레벨 초기화 함수
+        
+        Get_Skill_Value = Skill_sc.F_Get_CurSkillLv(); // 현재 레벨 초기화 함수
 
         // 이곳에서 로직
-        for(int i = 0; i < SkillLv.Length; i++)
+        for(int i = 0; i < Get_Skill_Value.Length; i++)
         {
-            if (SkillLv[i] < Skill_sc.skill_Max_Lvl)
+            if (Get_Skill_Value[i] < SkillMaxLv)
             {
-
-                SkillNumber.Add(i);
-                SkillValue.Add(SkillLv[i]);
+                Skill_ID_List.Add(i);
+                Skill_Lv.Add(Get_Skill_Value[i]);
             }
         }
 
         for (int i = 0; i < 3; i++)
         {
-            int RandomValue = Random.Range(0, SkillNumber.Count); // 랜덤카운트만듬
-            int Skill_ID = SkillNumber[RandomValue]; // 종류
-            int ID_Value = SkillValue[RandomValue]; //카운트에 들어잇는값
+            int RandomValue = Random.Range(0, Skill_ID_List.Count); // 랜덤카운트만듬
+            int Skill_ID = Skill_ID_List[RandomValue]; // 종류
+            int Lv_Value = Skill_Lv[RandomValue]; //스킬레벨
                         
-
-            //여기서 중요한건 스킬아이디 변수
+                       
 
             GameObject obj = Instantiate(Prefabs, Slot);
             Ui_Skill_Select_Btn sc = obj.GetComponent<Ui_Skill_Select_Btn>();
             sc.skilltype = (Ui_Skill_Select_Btn.SkillType)Skill_ID;
-            sc.F_Set_SelectCard(ID_Value);
+            sc.F_Set_SelectCard(Lv_Value);
 
             // 저장햇으니 지움
-            SkillNumber.Remove(SkillNumber[RandomValue]);
-            SkillValue.Remove(SkillValue[RandomValue]);
+            Skill_ID_List.Remove(Skill_ID_List[RandomValue]);
+            Skill_Lv.Remove(Skill_Lv[RandomValue]);
         }
 
-        SkillNumber.Clear();
+        Skill_ID_List.Clear();
+        Skill_Lv.Clear();
 
         //마지막에 켜줌
         if (LvupWindow.activeSelf == false)
@@ -82,17 +79,5 @@ public class LvUp_Ui_Manager : MonoBehaviour
             LvupWindow.SetActive(true);
         }
     }
-
-    private void ButtonInIt()
-    {
-
-        int[] 에진; 
-
-
-    }
-
-    
-
-    
 
 }

@@ -33,8 +33,11 @@ public class Movement : MonoBehaviour
     void Start()
     {
         curSpintTime = maxSpintTime;
+        Origin_maxSpintTime = maxSpintTime;
         TelePortDealys = new WaitForSeconds(TeleportDealy);
         OriginSpeed = CharMove_Speed;
+        Origin_TeleportCoolTim = TeleportCoolTime;
+        Origin_TeleportDistance = TeleportDistance;
     }
     private void FixedUpdate()
     {
@@ -94,6 +97,7 @@ public class Movement : MonoBehaviour
     float CheakMoveFloat; // 스프린트 작동 시간 제어
     [SerializeField] float curSpintTime;
     [SerializeField] float maxSpintTime;
+    float Origin_maxSpintTime;
     private void Sprint_Time_Updater()
     {
         MoveCheakX = Mathf.Abs(moveVec.x);
@@ -163,7 +167,9 @@ public class Movement : MonoBehaviour
     }
 
     [SerializeField] float TeleportDistance;
+    [SerializeField] float Origin_TeleportDistance;
     [SerializeField] float TeleportCoolTime;
+    float Origin_TeleportCoolTim;
     [SerializeField] float Count;
     bool doTeleport , once;
 
@@ -199,7 +205,12 @@ public class Movement : MonoBehaviour
     {
         CharMove_Speed = OriginSpeed * Value;
     }
-   
+
+    public void F_SetSprintTimeAdd(float Value)
+    {
+        maxSpintTime = Origin_maxSpintTime * Value;
+    }
+
     IEnumerator Player_Input_Spacebar_TelePort()
     {
         doTeleport = true;
@@ -209,4 +220,19 @@ public class Movement : MonoBehaviour
 
         rb.position = rb.position + moveVec * TeleportDistance;
     }
+
+    /// <summary>
+    /// 텔레포트 쿨타임 감소
+    /// </summary>
+    /// <param name="value"></param>
+    public void F_Set_TelePortDleayDown(float value)
+    {
+        TeleportCoolTime = Origin_TeleportCoolTim * value;
+    }
+
+    public void F_Set_Add_TelePortDistance(float value)
+    {
+        TeleportDistance = Origin_TeleportDistance * value;
+    }
+
 }

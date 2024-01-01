@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -39,7 +40,10 @@ public class S_4_Object : MonoBehaviour
     {
         Lrb.transform.localPosition = OriginL;
         Rrb.transform.localPosition = OriginR;
+        L.color = new Color(1, 1, 1, 0);
+        R.color = new Color(1, 1, 1, 0);
         isRun = true;
+        
     }
     // Update is called once per frame
 
@@ -57,6 +61,7 @@ public class S_4_Object : MonoBehaviour
     }
 
     float count;
+    float PingZ;
     void Update()
     {
         Value_Updater();
@@ -68,6 +73,12 @@ public class S_4_Object : MonoBehaviour
             count += Time.deltaTime * SacleSpeed;
             Lrb.gameObject.transform.localScale = new Vector3(1 + count * 0.35f, 1 + count, 1);
             Rrb.gameObject.transform.localScale = new Vector3(1 + count * 0.35f, 1 + count, 1);
+            L.color = new Color(1, 1, 1, count * 0.9f);
+            R.color = new Color(1, 1, 1, count * 0.9f);
+            PingZ = Mathf.PingPong(Time.time * 25, 6);
+            PingZ -= 3f; 
+            Lrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
+            Rrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
         }
         else
         {

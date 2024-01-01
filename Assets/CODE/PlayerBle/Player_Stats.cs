@@ -22,7 +22,10 @@ public class Player_Stats : MonoBehaviour
     [SerializeField] bool player_On_Hit;
     [SerializeField] float noDMG_Time;
     [SerializeField] Color noDMG_Color;
-
+    int Passive_2_Lv;
+    float ReceveryDealyTime;
+    float ReceveryHp;
+    float RecoveryCount;
     SpriteRenderer sr;
 
     private void Awake()
@@ -38,15 +41,42 @@ public class Player_Stats : MonoBehaviour
     void Update()
     {
         Show_NoDMG_Alpah_A_Zero();
+        HpRecoveryPassive();
     }
 
     float Origin_MaxHP;
+
+    // 페시브 체력증가 
     public void F_Set_Add_Hp_Passiveskill(float value)
     {
-        
         Player_MaxHP = Origin_MaxHP * value;
     }
 
+    // 페시브 체력회복시스템
+
+    public void F_HpRecoveryPassive_LvUp(float Time, float Hp)
+    {
+        Passive_2_Lv++;
+        ReceveryDealyTime =  Time;
+        ReceveryHp = Hp;
+    }
+
+    public void HpRecoveryPassive()
+    {
+        if (Passive_2_Lv == 0) { return; }
+
+        RecoveryCount += Time.deltaTime;
+
+        if (RecoveryCount > ReceveryDealyTime)
+        {
+            RecoveryCount = 0;
+            Player_CurHP += ReceveryHp;
+        }
+    }
+
+
+  
+ 
     public void F_GetExp_LevelupSystem(float EXP)
     {
         if(Player_Cur_Lv ==  Player_Max_Lv) { return; }

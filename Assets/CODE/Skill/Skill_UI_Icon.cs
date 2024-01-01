@@ -87,6 +87,33 @@ public class Skill_UI_Icon : MonoBehaviour
                 Lv = sc.F_Get_Passive_Skill_Lv(1);
                 Lv_text.text = Lv.ToString();
                 break;
+
+            case SkillType.Passive_2:
+                if (Lv == sc.F_Get_Passive_Skill_Lv(2))
+                {
+                    return;
+                }
+                Lv = sc.F_Get_Passive_Skill_Lv(2);
+                Lv_text.text = Lv.ToString();
+                break;
+
+            case SkillType.Passive_3:
+                if (Lv == sc.F_Get_Passive_Skill_Lv(3))
+                {
+                    return;
+                }
+                Lv = sc.F_Get_Passive_Skill_Lv(3);
+                Lv_text.text = Lv.ToString();
+                break;
+
+            case SkillType.Passive_4:
+                if (Lv == sc.F_Get_Passive_Skill_Lv(4))
+                {
+                    return;
+                }
+                Lv = sc.F_Get_Passive_Skill_Lv(4);
+                Lv_text.text = Lv.ToString();
+                break;
         }    
     }
 

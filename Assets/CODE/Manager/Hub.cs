@@ -18,6 +18,9 @@ public class Hub : MonoBehaviour
     Player_Stats status;
     public Player_Stats Player_Status_sc { get { return status; } }
 
+    Movement move;
+    public Movement Movement_sc { get { return move; } }
+
 
     private void Awake()
     {
@@ -30,16 +33,14 @@ public class Hub : MonoBehaviour
             Destroy(this);
         }
 
-        
-    }
-    void Start()
-    {
-
-        if (Player[0].gameObject.activeSelf == true) 
+        if (Player[0].gameObject.activeSelf == true)  // ¿©Ä³
         {
             status = Player[0].GetComponent<Player_Stats>();
             skill = Player[0].GetComponent<Player_Skill_System>();
+            move = Player[0].GetComponent<Movement>();
         }
+
     }
+   
 
 }

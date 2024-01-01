@@ -12,7 +12,7 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     [SerializeField] GameObject UI_icon_Prefab;
     [SerializeField] Sprite[] icon_Img;
     [SerializeField] Sprite[] Passive_icon_Img;
-        
+
     void Start()
     {
 
@@ -29,7 +29,7 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
         GameObject obj = Instantiate(UI_icon_Prefab, transform); // 프리펩생성
         Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>(); // 아이콘 스크립트
         obj.transform.SetParent(activeSkill_Ui_Trs); // 트랜스폼 지정
-        obj.transform.GetChild(0).GetComponent<Image>().sprite =  icon_Img[value]; // 내부 이미지 설정
+        obj.transform.GetChild(0).GetComponent<Image>().sprite = icon_Img[value]; // 내부 이미지 설정
         obj.GetComponent<Animator>().SetTrigger("Jump"); // 스르륵 연출
 
         switch (value)
@@ -55,10 +55,10 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
                 break;
 
             case 5:
-                
+
                 break;
         }
-        
+
 
 
 
@@ -91,10 +91,6 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
 
             case 4:
                 sc.type = Skill_UI_Icon.SkillType.Passive_4;
-                break;
-
-            case 5:
-
                 break;
         }
 

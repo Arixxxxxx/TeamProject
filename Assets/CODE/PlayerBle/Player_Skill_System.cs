@@ -43,13 +43,14 @@ public class Player_Skill_System : MonoBehaviour
     [SerializeField] float[] Passive_1_UpValue;
     [Space]
     [SerializeField] int Passive_2_Lv; // 체력자동회복
-    [SerializeField] float[] Passive_2_UpValue;
+    [SerializeField] float[] Passive_2_Time;
+    [SerializeField] float[] Passive_2_Hp;
     [Space]
     [SerializeField] int Passive_3_Lv; // 순간이동 
-    [SerializeField] float[] Passive_3_UpValue;
+    [SerializeField] float[] Passive_3_Tel_Distance_AddValue;
     [Space]
     [SerializeField] int Passive_4_Lv; // 스태미너
-    [SerializeField] float[] Passive_4_UpValue;
+    [SerializeField] float[] Passive_4_MaxSprintUpValue;
     
     
 
@@ -67,6 +68,9 @@ public class Player_Skill_System : MonoBehaviour
     bool Alpha_5_Input;
     bool Alpha_6_Input;
     bool Alpha_7_Input;
+    bool Alpha_8_Input;
+    bool Alpha_9_Input;
+    bool Alpha_10_Input;
 
     private void Awake()
     {
@@ -405,8 +409,75 @@ public class Player_Skill_System : MonoBehaviour
         }
     }
 
+    private void Passive_2_LvUp() // 페시브 1번 체력자동회복
+    {
+        if (Passive_2_Lv == Skill_Max_Lvl)
+        {
+            return;
+        }
+        else if (Passive_2_Lv < Skill_Max_Lvl)
+        {
+            Passive_2_Lv++;
+
+            if (Passive_2_Lv == 1)
+            {
+                _updaterSystem.F_Set_PassiveCheak(2);
+            }
+
+            if (Passive_2_Lv > 0)
+            {
+                Player_Stats sc = Hub.Inst.Player_Status_sc;
+                sc.F_HpRecoveryPassive_LvUp(Passive_2_Time[Passive_2_Lv-1], Passive_2_Hp[Passive_2_Lv-1]);
+            }
+        }
+    }
+
+    private void Passive_3_LvUp() // 페시브 1번 체력자동회복
+    {
+        if (Passive_3_Lv == Skill_Max_Lvl)
+        {
+            return;
+        }
+        else if (Passive_3_Lv < Skill_Max_Lvl)
+        {
+            Passive_3_Lv++;
+
+            if (Passive_3_Lv == 1)
+            {
+                _updaterSystem.F_Set_PassiveCheak(3);
+            }
+
+            if (Passive_3_Lv > 0)
+            {
+                Movement sc = Hub.Inst.Movement_sc;
+                sc.F_Set_Add_TelePortDistance(Passive_3_Tel_Distance_AddValue[Passive_3_Lv - 1]);
+            }
+        }
+    }
 
 
+    private void Passive_4_LvUp() // 페시브 1번 체력자동회복
+    {
+        if (Passive_4_Lv == Skill_Max_Lvl)
+        {
+            return;
+        }
+        else if (Passive_4_Lv < Skill_Max_Lvl)
+        {
+            Passive_4_Lv++;
+
+            if (Passive_4_Lv == 1)
+            {
+                _updaterSystem.F_Set_PassiveCheak(4);
+            }
+
+            if (Passive_4_Lv > 0)
+            {
+                Movement sc = Hub.Inst.Movement_sc;
+                sc.F_SetSprintTimeAdd(Passive_4_MaxSprintUpValue[Passive_4_Lv - 1]);
+            }
+        }
+    }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////// ETC /////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -420,6 +491,9 @@ public class Player_Skill_System : MonoBehaviour
         Alpha_5_Input = Input.GetKeyDown(KeyCode.Alpha5);
         Alpha_6_Input = Input.GetKeyDown(KeyCode.Alpha6);
         Alpha_7_Input = Input.GetKeyDown(KeyCode.Alpha7);
+        Alpha_8_Input = Input.GetKeyDown(KeyCode.Alpha8);
+        Alpha_9_Input = Input.GetKeyDown(KeyCode.Alpha9);
+        Alpha_10_Input = Input.GetKeyDown(KeyCode.Alpha0);
     }
 
 
@@ -459,9 +533,63 @@ public class Player_Skill_System : MonoBehaviour
             Passive_1_LvUp();
         }
 
+        if (Alpha_8_Input)
+        {
+            Passive_2_LvUp();
+        }
+
+
+        if (Alpha_9_Input)
+        {
+            Passive_3_LvUp();
+        }
+
+        if (Alpha_10_Input)
+        {
+            Passive_4_LvUp();
+        }
     }
+    /// <summary>
+    /// 레벨업Btn에서 받아다씀
+    /// </summary>
+    /// <param name="value">스킬 ID</param>
+    public void F_Skill_LvUp(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                Skill_0_Lvelup();
+                break;
+                case 1:
+                Skill_1_Lvelup();
+                break;
+                case 2:
+                Skill_2_Lvelup();
+                break;
+                case 3:
+                Skill_3_Lvelup();
+                break;
+                case 4:
+                Skill_4_Lvelup();
+                break;
+                case 5:
+                Passive_0_LvUp();
+                break;
+                case 6:
+                Passive_1_LvUp();
+                break;
+                case 7:
+                Passive_2_LvUp();
+                break;
+                case 8:
+                Passive_3_LvUp();
+                break;
+                case 9:
+                Passive_4_LvUp();
+                break;
 
-
+        }
+    }
 
 
     private void Play_Skill_01()
@@ -551,8 +679,14 @@ public class Player_Skill_System : MonoBehaviour
         Skill_Lv[0] = Skill_0_Level;
         Skill_Lv[1] = Skill_1_Level;
         Skill_Lv[2] = Skill_2_Level;
-        Skill_Lv[3] = Skill_2_Level;
+        Skill_Lv[3] = Skill_3_Level;
+        Skill_Lv[4] = Skill_4_Level;
         Skill_Lv[5] = Passive_0_Lv;
+        Skill_Lv[6] = Passive_1_Lv;
+        Skill_Lv[7] = Passive_2_Lv;
+        Skill_Lv[8] = Passive_3_Lv;
+        Skill_Lv[9] = Passive_4_Lv;
+        
     }
 
     public int[] F_Get_CurSkillLv()
