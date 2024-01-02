@@ -12,6 +12,7 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     [SerializeField] GameObject UI_icon_Prefab;
     [SerializeField] Sprite[] icon_Img;
     [SerializeField] Sprite[] Passive_icon_Img;
+    [SerializeField] Sprite[] Icon_Case;
 
     void Start()
     {
@@ -28,6 +29,8 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     {
         GameObject obj = Instantiate(UI_icon_Prefab, transform); // 프리펩생성
         Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>(); // 아이콘 스크립트
+        Image sr = obj.GetComponent<Image>();
+        sr.sprite = Icon_Case[0];
         obj.transform.SetParent(activeSkill_Ui_Trs); // 트랜스폼 지정
         obj.transform.GetChild(0).GetComponent<Image>().sprite = icon_Img[value]; // 내부 이미지 설정
         obj.GetComponent<Animator>().SetTrigger("Jump"); // 스르륵 연출
@@ -67,6 +70,8 @@ public class Skill_Ui_UpdaterSystem : MonoBehaviour
     {
         GameObject obj = Instantiate(UI_icon_Prefab, transform); // 프리펩생성
         Skill_UI_Icon sc = obj.GetComponent<Skill_UI_Icon>(); // 아이콘 스크립트
+        Image sr = obj.GetComponent<Image>();
+        sr.sprite = Icon_Case[1];
         obj.transform.SetParent(passiveSkill_Ui_Trs); // 트랜스폼 지정
         obj.transform.GetChild(0).GetComponent<Image>().sprite = Passive_icon_Img[value]; // 내부 이미지 설정
         obj.GetComponent<Animator>().SetTrigger("Jump"); // 스르륵 연출

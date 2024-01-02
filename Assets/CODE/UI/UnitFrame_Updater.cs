@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class UnitFrame_Updater : MonoBehaviour
 {
@@ -163,7 +162,7 @@ public class UnitFrame_Updater : MonoBehaviour
 
     public void F_Set_Unitframe_DMG(float DMG)
     {
-        Unitframe_Dmg_Font.text = DMG.ToSafeString();
+        Unitframe_Dmg_Font.text = DMG.ToString();
         Unitframe_Dmg_Anim.SetTrigger("hit");
     }
     public float F_Get_GameTime()

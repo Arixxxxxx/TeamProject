@@ -31,7 +31,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     TMP_Text skill_Text;
     Transform diamondGorupTrs;
     [SerializeField] Image[] start_IMG;
-
+    [SerializeField] int Get_Star;
     Image SelectLight;
     Animator lightAnim;
     Animator staranim;
@@ -123,7 +123,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
         }
         //Star_Count++ 첨부터1서응로 보여지는것 삭제 -> 애니메이션으로 변경
-        curStar = Star_Count;
+        Get_Star = Star_Count;
 
         for (int i = 0; i < 5; i++)
         {
@@ -138,7 +138,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         }
     }
 
-    int curStar;
+    
     private void SelectAction()
     {
         GameManager.Inst.F_Lvup_Btn_OnOff(0);
@@ -153,7 +153,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         }
         
         start_IMG[5].fillAmount = 0;
-        start_IMG[5].gameObject.transform.position = start_IMG[curStar].transform.position; // 애니메이션 위치이동
+        start_IMG[5].gameObject.transform.position = start_IMG[Get_Star].transform.position; // 애니메이션 위치이동
         staranim.gameObject.SetActive(true);
 
         StartCoroutine(Start_FillAount());
@@ -207,7 +207,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         staranim.gameObject.SetActive(false);
         GameManager.Inst.F_MainUI_SetAcvite_True();
         GameManager.Inst.F_Lvup_Slot_Reset();
-
+        lightAnim.SetBool("on", false);
         SkillWindow.gameObject.SetActive(false);
     }
     float lightcount;
@@ -233,13 +233,9 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
             lightAnim.Play("Right_UP", 0, lightcount * 1.7f);
         }
-        else
+        else if (SelectLight.gameObject.activeSelf == false)
         {
-            if (lightAnim.GetBool("on") == true)
-            {
-                lightAnim.SetBool("on", false);
-            }
-            
+           
             lightcount = 0;
         }
     }

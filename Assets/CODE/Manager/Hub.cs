@@ -41,6 +41,9 @@ public class Hub : MonoBehaviour
         }
 
     }
-   
+    private void Start()
+    {
+        
+    }
 
 }

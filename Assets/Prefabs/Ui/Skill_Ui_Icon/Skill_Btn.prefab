@@ -110,6 +110,7 @@ MonoBehaviour:
     Skill_Text: "\uC2A4\uD504\uB9B0\uD2B8\uC758 \uC9C0\uC18D\uC9C0\uAC04\uC774\n\uC99D\uAC00\uD569\uB2C8\uB2E4."
     Img: {fileID: -1468833428, guid: 0699608aa079a9e47905ec3afb5698d9, type: 3}
   start_IMG: []
+  Get_Star: 0
   SpinSpeed: 10
   animSpeed: 0
   animSpeed1: 0
