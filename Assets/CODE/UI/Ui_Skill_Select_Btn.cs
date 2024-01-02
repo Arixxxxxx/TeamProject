@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
+
 public class Ui_Skill_Select_Btn : MonoBehaviour
 {
     public enum SkillType
@@ -24,6 +25,9 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     [Header(" #  Input_Field => Skill Text")]
     [Space]
     [SerializeField] CardStringValue[] SkillNameAndText;
+    [Header(" #  Input_Field => Skill Text")]
+    [Space]
+    [SerializeField] float ExitTime;
 
     GameObject SkillWindow;
     TMP_Text skill_Name;
@@ -38,10 +42,14 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     Button Btn;
     Player_Skill_System skill;
     Animator anim;
+    Image NewLight;
+    Image Light2;
+    
     private void Awake()
     {
         InIt();
         anim = GetComponent<Animator>();
+        
     }
     void Start()
     {
@@ -49,10 +57,10 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
     }
     float count;
+    float animSpeed2;
     private void Update()
     {
-     
-        SpinLight();
+        //SpinLight();
     }
 
     private void InIt()
@@ -62,11 +70,10 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         skill_Text = transform.Find("Skill_Text").GetComponent<TMP_Text>();
         diamondGorupTrs = transform.Find("Dia_Group").GetComponent<Transform>();
         start_IMG = diamondGorupTrs.GetComponentsInChildren<Image>();
-        SelectLight = transform.parent.parent.transform.Find("Light ").GetComponent<Image>();
-        lightAnim = SelectLight.GetComponent<Animator>();
-        //SelectLight = transform.Find("Light").GetComponent<Image>();
         staranim = start_IMG[5].GetComponent<Animator>();
         Btn = transform.Find("Btn").GetComponent<Button>();
+        NewLight = transform.Find("Light").GetComponent<Image>();
+        Light2 = transform.Find("Light2").GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -86,7 +93,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     }
 
     
-
+    
 
 
     [SerializeField] float SpinSpeed;
@@ -137,63 +144,44 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
             }
         }
     }
-
+    bool cardUpDown;
     
+    //카드 선택 연출함수
     private void SelectAction()
     {
-        GameManager.Inst.F_Lvup_Btn_OnOff(0);
-        animSpeed1 = 0;
-        animSpeed = 0;
+        GameManager.Inst.F_Lvup_Btn_OnOff(0); // 모든 버튼 Interactable true
+        animSpeed1 = 0; // 애니메이션 float 변수 초기화
+        animSpeed = 0; // 애니메이션 float 변수 초기화
+        Light2.gameObject.SetActive(false);
 
-        if (SelectLight.gameObject.activeSelf == false)
+        if (NewLight.gameObject.activeSelf == false)  // 선택 후 배경 오라 켜줌
         {
-            SelectLight.transform.position = transform.position + new Vector3(-8,30);
-            SelectLight.color = new Color(1, 1, 1, 0);
-            SelectLight.gameObject.SetActive(true);       // 켜기
+            NewLight.gameObject.SetActive(true);       // 켜기
         }
-        
-        start_IMG[5].fillAmount = 0;
-        start_IMG[5].gameObject.transform.position = start_IMG[Get_Star].transform.position; // 애니메이션 위치이동
+        start_IMG[5].fillAmount = 0; // 별이미지 초기화
+        start_IMG[5].gameObject.transform.position = start_IMG[Get_Star].transform.position; // 별 이미지 위치이동
         staranim.gameObject.SetActive(true);
 
-        StartCoroutine(Start_FillAount());
+        StartCoroutine(Start_FillAount()); // 코루틴 연출
     }
     [SerializeField] float fillAmountSpeed;
     IEnumerator Start_FillAount()
     {
 
         anim.SetBool("on", true);
-        yield return null;
-        while (anim.GetCurrentAnimatorStateInfo(0).IsName("Up") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
-            if (anim == null)
-            {
-                anim = GetComponent<Animator>();
-            }
-            animSpeed1 += Time.unscaledDeltaTime * 1.5f;
-            anim.Play("Up", 0, animSpeed1);
-            yield return null;
-        }
 
-        while (start_IMG[5].fillAmount < 1)
+        yield return null;
+                 
+
+        while (start_IMG[5].fillAmount < 1)  // 보석 차는 연출 
         {
             start_IMG[5].fillAmount += Time.unscaledDeltaTime * fillAmountSpeed;
             yield return null;
         }
-
         staranim.SetTrigger("hit");
-        yield return null;
 
-        while(staranim.GetCurrentAnimatorStateInfo(0).IsName("Action") &&  staranim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
-            animSpeed += Time.unscaledDeltaTime * 1f;
-            staranim.Play("Action", 0, animSpeed);
-            yield return null;
-        }
+        yield return new WaitForSecondsRealtime(3f); // 모든 연출 후 해당 시간 이후 종료
 
-       
-
-        yield return new WaitForSecondsRealtime(1f);
         skill = Hub.Inst.player_skill_system_sc;
         skill.F_Skill_LvUp((int)skilltype);
 
@@ -203,41 +191,26 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
         yield return null;
 
-        SelectLight.gameObject.SetActive(false);
+        NewLight.gameObject.SetActive(false);
+        Light2.gameObject.SetActive(false);
         staranim.gameObject.SetActive(false);
         GameManager.Inst.F_MainUI_SetAcvite_True();
         GameManager.Inst.F_Lvup_Slot_Reset();
-        lightAnim.SetBool("on", false);
+        
+        cardUpDown = false;
         SkillWindow.gameObject.SetActive(false);
     }
-    float lightcount;
+    
+
     private void SpinLight()
     {
-        if(SelectLight.gameObject.activeSelf == true)
+        if(NewLight.gameObject.activeSelf == true)
         {
-            
-            if(SelectLight.color.a < 0.7f)
+            if(NewLight.color.a < 0.7f)
             {
-                SelectLight.color += new Color(0, 0, 0, 0.1f) * Time.unscaledDeltaTime * 2f ;
+                NewLight.color += new Color(0, 0, 0, 0.1f) * Time.unscaledDeltaTime * 2f ;
             }
-            
-            if(lightAnim.GetBool("on")== false)
-            {
-                lightAnim.SetBool("on", true);
-            }
-
-            if (lightcount <= 1)
-            {
-                lightcount += Time.unscaledDeltaTime;
-            }
-
-            lightAnim.Play("Right_UP", 0, lightcount * 1.7f);
-        }
-        else if (SelectLight.gameObject.activeSelf == false)
-        {
-           
-            lightcount = 0;
-        }
+          }
     }
 }
 

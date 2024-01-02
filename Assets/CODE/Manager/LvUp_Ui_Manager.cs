@@ -9,7 +9,6 @@ public class LvUp_Ui_Manager : MonoBehaviour
     [Header("# Insert Window Obj in Hierarchy")]
     [Space]
     [SerializeField] GameObject LvupWindow;
-    [SerializeField] GameObject Prefabs;
     [SerializeField] GameObject[] Btn;
     [Header("# 공격스킬만나올 레벨 제한선")]
     [Space]
@@ -52,6 +51,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
+            Debug.Log("11");
             F_LvUP_SelectSkill();
         }
     }
@@ -102,10 +102,10 @@ public class LvUp_Ui_Manager : MonoBehaviour
             // 저장햇으니 지움
             Skill_ID_List.RemoveAt(Skill_ID_List[RandomValue[i]]);
             Skill_Lv.RemoveAt(Skill_Lv[RandomValue[i]]);
-
-            Debug.Log(RandomValue[i]);
+            
         }
 
+        Debug.Log("11");
         //마지막에 켜줌
         if (LvupWindow.activeSelf == false)
         {
@@ -113,28 +113,32 @@ public class LvUp_Ui_Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 랜덤 인카운트 생성기
+    /// </summary>
+    /// <param name="Length">0~범위</param>
+    /// <returns></returns>
     private int[] MakeRandomValue(int Length)
     {
+        Cheak_List.Clear(); // 초기화
+        int[] result = new int[3]; // 기본적으로 3개 스킬등록
 
-        int[] result = new int[3];
-
-     
             for(int i = 0; i < 3; i++)
             {
-                if (i == 0) 
+                if (i == 0)  // 첫번째는 무조건 패스
                 {
                     result[i] = Random.Range(0, Length);
                     Cheak_List.Add(result[i]);
                 }
-                else if( i > 0)
+                else if( i > 0) // 2,3번은 리스트에 담아서 같은 랜덤값이 나오면 다시 굴림
                 {
                     int Ranvalue = Random.Range(0, Length);
 
                     while (Cheak_List.Contains(Ranvalue))
                     {
                         Ranvalue = Random.Range(0, Length);
-                        Debug.Log("재생성중");
                     }
+
                     result[i] = Ranvalue;
 
                     Cheak_List.Add(result[i]);
