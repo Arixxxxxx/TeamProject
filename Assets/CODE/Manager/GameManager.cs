@@ -2,12 +2,14 @@ using NavMeshPlus.Components;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Inst;
-
+    
     NavMeshSurface nav_Surface;
     [Header("# Insert Object in Hiearachy")]
     [Space]
@@ -16,13 +18,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
     [SerializeField] GameObject[] GameStop_Ui_Window;
-    
+    [SerializeField] Button[] Btn;
     bool isPlayer_Dead;
 
     [Header("# Ingame Cheak & Test Value")]
     [Space]
     [Space]
     [SerializeField] bool mainGameStart;
+    [SerializeField] float Start_GetSkill_WaitSec;
+    WaitForSeconds startWaitTime;
     [Space]
     [SerializeField] bool uiOpen_EveryObecjtStop;
     [Space] int plyaer_Area_Value;
@@ -35,6 +39,7 @@ public class GameManager : MonoBehaviour
     public bool IsPlayer_Dead { get { return isPlayer_Dead; } set { isPlayer_Dead = value; } }
     public int KillCount { get { return killCount; } }
 
+    int sceneNumber;
     private void Awake()
     {
         if(Inst == null)
@@ -45,11 +50,18 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+       
     }
 
     void Start()
     {
+        startWaitTime = new WaitForSeconds(Start_GetSkill_WaitSec);
+
         NavMapBake_init();
+        sceneNumber = SceneManager.GetActiveScene().buildIndex;
+       
+
     }
 
     
@@ -57,6 +69,23 @@ public class GameManager : MonoBehaviour
     {
         uiOpen_EveryObecjtStopFuntion();
         UiOpen_Cheaker();
+        StartGameGetLVUP();
+    }
+
+    bool start_once;
+    private void StartGameGetLVUP()
+    {
+        if (sceneNumber == 1 && mainGameStart == true && start_once == false)
+        {
+            start_once = true;
+            StartCoroutine(StartLvUP());
+        }
+    }
+    IEnumerator StartLvUP()
+    {
+        yield return startWaitTime;
+
+        LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill();
     }
 
 
@@ -208,16 +237,36 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void F_Lvup_Slot_Reset()
     {
-        Transform[] slotbox = GameStop_Ui_Window[1].transform.Find("Box/Slot_Box").GetComponentsInChildren<Transform>();
-        for (int i = 0; i < slotbox.Length; i++)
+        
+        for (int i = 0; i < Btn.Length; i++)
         {
             if(i > 0)
             {
-                Destroy(slotbox[i].gameObject);
+                Btn[i].transform.parent.gameObject.SetActive(false);
             }
         }
+    }
 
-
+    /// <summary>
+    /// 버튼 클릭시 0 : 잠궈다 / 1 : 풀엇다
+    /// </summary>
+    /// <param name="value"></param>
+    public void F_Lvup_Btn_OnOff(int value)
+    {
+        if(value == 0)
+        {
+            for(int i = 0;i < Btn.Length;i++)
+            {
+                Btn[i].interactable = false;
+            }
+        }
+        else if (value == 1)
+        {
+            for (int i = 0; i < Btn.Length; i++)
+            {
+                Btn[i].interactable = true;
+            }
+        }
     }
   
     public void F_MainUI_SetAcvite_True()

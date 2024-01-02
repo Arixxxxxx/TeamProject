@@ -100,6 +100,7 @@ public class Player_Stats : MonoBehaviour
             UnitFrame_Updater.inst.F_ExpFillAmountReset();
 
             Player_CurHP = Player_MaxHP; // 현재 체력 초기화
+            LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill();
         }
         else
         {
@@ -138,7 +139,6 @@ public class Player_Stats : MonoBehaviour
     {
         if (player_On_Hit == true && sr.color.a == 1)
         {
-            Debug.Log("11");
             sr.color = noDMG_Color;
         }
         else if (player_On_Hit == false && sr.color.a == noDMG_Color.a)
@@ -167,6 +167,10 @@ public class Player_Stats : MonoBehaviour
 
         return OutPut_PlayerInfo[value];
     }
-
+     
+    public int F_Get_Player_LV()
+    {
+        return Player_Cur_Lv;
+    }
  
 }

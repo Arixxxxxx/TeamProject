@@ -125,9 +125,10 @@ MonoBehaviour:
   - {fileID: 4775630859605534401, guid: d53fd8311c50642c28f2b79b5a9c57fc, type: 3}
   - {fileID: -8602326965400858886, guid: d53fd8311c50642c28f2b79b5a9c57fc, type: 3}
   Exp_Value:
-  - 10
-  - 20
-  - 30
+  - 35
+  - 35
+  - 35
+  Exp: 0
 --- !u!61 &7888328973866345740
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -77,6 +77,13 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int Skill_4_StartMakingEa;
     Queue<GameObject> Skill_4_Que = new Queue<GameObject>();
 
+    //[Header("# Insert ETC Prefab ")]
+    //[Space]
+    //[SerializeField] GameObject Skill_UI_Btn; // 레벨업 UI Btn
+    //[SerializeField] int Skill_UI_Btn_StartMakingEa;
+    //Queue<GameObject> Skill_UI_Btn_Que = new Queue<GameObject>();
+
+
     // Dyamic Tranform 변수
     Transform ArrowTrs, CoinTrs, FontTrs;
 
@@ -253,6 +260,10 @@ public class PoolManager : MonoBehaviour
             Obj.gameObject.SetActive(false);
             Skill_4_Que.Enqueue(Obj);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // UI  및 ETC 
+
 
     }
     void Start()

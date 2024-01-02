@@ -33,6 +33,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     [SerializeField] Image[] start_IMG;
 
     Image SelectLight;
+    Animator lightAnim;
     Animator staranim;
     Button Btn;
     Player_Skill_System skill;
@@ -50,11 +51,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     float count;
     private void Update()
     {
-        if (SelectLight.gameObject.activeSelf == true)
-        {
-            SelectLight.transform.Rotate(Vector3.back * Time.deltaTime * SpinSpeed);
-        }
-
+     
         SpinLight();
     }
 
@@ -66,6 +63,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         diamondGorupTrs = transform.Find("Dia_Group").GetComponent<Transform>();
         start_IMG = diamondGorupTrs.GetComponentsInChildren<Image>();
         SelectLight = transform.parent.parent.transform.Find("Light ").GetComponent<Image>();
+        lightAnim = SelectLight.GetComponent<Animator>();
         //SelectLight = transform.Find("Light").GetComponent<Image>();
         staranim = start_IMG[5].GetComponent<Animator>();
         Btn = transform.Find("Btn").GetComponent<Button>();
@@ -143,17 +141,21 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     int curStar;
     private void SelectAction()
     {
-      
+        GameManager.Inst.F_Lvup_Btn_OnOff(0);
+        animSpeed1 = 0;
+        animSpeed = 0;
+
         if (SelectLight.gameObject.activeSelf == false)
         {
             SelectLight.transform.position = transform.position + new Vector3(-8,30);
             SelectLight.color = new Color(1, 1, 1, 0);
             SelectLight.gameObject.SetActive(true);       // 켜기
         }
-
+        
         start_IMG[5].fillAmount = 0;
         start_IMG[5].gameObject.transform.position = start_IMG[curStar].transform.position; // 애니메이션 위치이동
-        
+        staranim.gameObject.SetActive(true);
+
         StartCoroutine(Start_FillAount());
     }
     [SerializeField] float fillAmountSpeed;
@@ -166,7 +168,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         {
             if (anim == null)
             {
-                anim.GetComponent<Animator>();
+                anim = GetComponent<Animator>();
             }
             animSpeed1 += Time.unscaledDeltaTime * 1.5f;
             anim.Play("Up", 0, animSpeed1);
@@ -191,31 +193,54 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
        
 
-        yield return new WaitForSecondsRealtime(1.2f);
+        yield return new WaitForSecondsRealtime(1f);
         skill = Hub.Inst.player_skill_system_sc;
         skill.F_Skill_LvUp((int)skilltype);
 
         SkillWindow = transform.parent.parent.parent.gameObject;
-        GameManager.Inst.F_Lvup_Slot_Reset();
+        
         anim.SetBool("on", false);
+
+        yield return null;
+
         SelectLight.gameObject.SetActive(false);
         staranim.gameObject.SetActive(false);
         GameManager.Inst.F_MainUI_SetAcvite_True();
+        GameManager.Inst.F_Lvup_Slot_Reset();
+
         SkillWindow.gameObject.SetActive(false);
     }
-
+    float lightcount;
     private void SpinLight()
     {
         if(SelectLight.gameObject.activeSelf == true)
         {
             
-            if(SelectLight.color.a < 1)
+            if(SelectLight.color.a < 0.7f)
             {
-            
-                SelectLight.color += new Color(0, 0, 0, 0.2f) * Time.unscaledDeltaTime * 0.5f ;
+                SelectLight.color += new Color(0, 0, 0, 0.1f) * Time.unscaledDeltaTime * 2f ;
             }
             
-            //SelectLight.transform.Rotate(Vector3.back , Time.unscaledDeltaTime * SpinSpeed);
+            if(lightAnim.GetBool("on")== false)
+            {
+                lightAnim.SetBool("on", true);
+            }
+
+            if (lightcount <= 1)
+            {
+                lightcount += Time.unscaledDeltaTime;
+            }
+
+            lightAnim.Play("Right_UP", 0, lightcount * 1.7f);
+        }
+        else
+        {
+            if (lightAnim.GetBool("on") == true)
+            {
+                lightAnim.SetBool("on", false);
+            }
+            
+            lightcount = 0;
         }
     }
 }

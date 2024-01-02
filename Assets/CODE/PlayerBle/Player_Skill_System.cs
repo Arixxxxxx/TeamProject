@@ -211,6 +211,35 @@ public class Player_Skill_System : MonoBehaviour
         }
     }
 
+
+    private void Skill_2_Lvelup()
+    {
+        if (Skill_2_Level == Skill_Max_Lvl)
+        {
+            return;
+        }
+        else if (Skill_2_Level < Skill_Max_Lvl) // 레벨업
+        {
+            Skill_2_Level++;
+
+            if (Skill_2_Level == 1)
+            {
+                _updaterSystem.F_Set_ActiveCheak(2); // UI 프리펩 넣어주기
+
+                if (skill_Obj[2].gameObject.activeSelf == false)
+                {
+                    skill_Obj[2].SetActive(true);
+                }
+            }
+
+            if (Skill_2_Level > 0)
+            {
+                skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level - 1].dmg);
+            }
+        }
+    }
+
+
     private void Skill_3_Lvelup()
     {
         if (Skill_3_Level < Skill_Max_Lvl) // 레벨업
@@ -286,32 +315,7 @@ public class Player_Skill_System : MonoBehaviour
         return Pos;
     }
 
-    private void Skill_2_Lvelup()
-    {
-        if (Skill_2_Level == Skill_Max_Lvl)
-        {
-            return;
-        }
-        else if (Skill_2_Level < Skill_Max_Lvl) // 레벨업
-        {
-            Skill_2_Level++;
-
-            if (Skill_2_Level == 1)
-            {
-                _updaterSystem.F_Set_ActiveCheak(2); // UI 프리펩 넣어주기
-
-                if (skill_Obj[2].gameObject.activeSelf == false)
-                {
-                    skill_Obj[2].SetActive(true);
-                }
-            }
-
-            if (Skill_2_Level > 0)
-            {
-                skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level - 1].dmg);
-            }
-        }
-    }
+    
 
     private void Skill_4_Lvelup()
     {
