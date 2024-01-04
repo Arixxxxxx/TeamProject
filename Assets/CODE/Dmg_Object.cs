@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dmg_Object : MonoBehaviour
 {
-    public enum SkillType { Skill_0, Skill_1, Skill_3, Skill_4 }
+    public enum SkillType { Skill_0, Skill_1, Skill_2, Skill_3, Skill_4 }
     public SkillType type;
 
     [Header(" # Input Object DMG !! ")]
@@ -29,10 +29,26 @@ public class Dmg_Object : MonoBehaviour
             critical_Value = skill.F_Get_Player_Critical();
         }
 
+        Dmg_Updater();
+
+
+    }
+
+    private void Dmg_Updater()
+    {
         switch (type)
         {
+            case SkillType.Skill_0:
+                DMG = skill.F_GetSkillDMG(0);
+                break;
+
+
             case SkillType.Skill_1:
                 DMG = skill.F_GetSkillDMG(1);
+                break;
+
+            case SkillType.Skill_2:
+                DMG = skill.F_GetSkillDMG(2);
                 break;
 
             case SkillType.Skill_3:
@@ -44,12 +60,7 @@ public class Dmg_Object : MonoBehaviour
                 break;
         }
     }
-
-    public void F_SetSkill_DMG(float Dmg_value)
-    {
-        DMG = Dmg_value;
-    }
-
+  
     float dice;
 
     private void OnTriggerEnter2D(Collider2D collision)

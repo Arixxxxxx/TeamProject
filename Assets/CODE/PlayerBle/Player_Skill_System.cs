@@ -19,19 +19,19 @@ public class Player_Skill_System : MonoBehaviour
     [SerializeField] float critical_Value;
     [Header("# Set Attack Skill Value")]
     [Space]
-    [SerializeField] int Skill_0_Level;
+    [SerializeField] int Skill_0_Level; // 파이어볼
     [SerializeField] Skill[] Skill_0_Value;
     [Space]
-    [SerializeField] int Skill_1_Level;
+    [SerializeField] int Skill_1_Level; // 화염분수
     [SerializeField] Skill[] Skill_1_Value;
     [Space]
-    [SerializeField] int Skill_2_Level;
+    [SerializeField] int Skill_2_Level; // 화염보호막
     [SerializeField] Skill[] Skill_2_Value;
     [Space]
-    [SerializeField] int Skill_3_Level;
+    [SerializeField] int Skill_3_Level; // 메테오
     [SerializeField] Skill[] Skill_3_Value;
     [Space]
-    [SerializeField] int Skill_4_Level;
+    [SerializeField] int Skill_4_Level; // 화염풍
     [SerializeField] Skill[] Skill_4_Value;
     [Space]
     [Header("# Set Passive Skill Value")]
@@ -49,10 +49,11 @@ public class Player_Skill_System : MonoBehaviour
     [SerializeField] int Passive_3_Lv; // 순간이동 
     [SerializeField] float[] Passive_3_Tel_Distance_AddValue;
     [Space]
-    [SerializeField] int Passive_4_Lv; // 스태미너
-    [SerializeField] float[] Passive_4_MaxSprintUpValue;
+    [SerializeField] int Passive_4_Lv; // 공격력증가 5%씩
+    [SerializeField] float[] Passive_4_AttackPowerAdd;
+
     
-    
+
 
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
@@ -152,10 +153,12 @@ public class Player_Skill_System : MonoBehaviour
                 GameObject obj = Instantiate(skill_Obj[0], skill_Slot[0]); // 생성
                 bullet = obj.transform;
             }
+
             bullet.transform.localPosition = Vector3.zero;
             bullet.transform.eulerAngles = Vector3.zero;
 
-            bullet.GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_0_Value[(int)Lv].dmg); // 대미지 수정
+            //bullet.GetComponent<Dmg_Object>().F_SetSkill_DMG
+            //(Skill_0_Value[(int)Lv].dmg); // 스킬파워 + 패시브파워
 
             Vector3 rotvec = Vector3.forward * 360 * i / Skill_0_Value[(int)Lv].count;
             bullet.transform.Rotate(rotvec); // 회전
@@ -232,10 +235,10 @@ public class Player_Skill_System : MonoBehaviour
                 }
             }
 
-            if (Skill_2_Level > 0)
-            {
-                skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level - 1].dmg);
-            }
+            //if (Skill_2_Level > 0)
+            //{
+            //    skill_Obj[2].GetComponent<Dmg_Object>().F_SetSkill_DMG(Skill_2_Value[Skill_2_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv]);
+            //}
         }
     }
 
@@ -279,7 +282,7 @@ public class Player_Skill_System : MonoBehaviour
         {
             skill_3_ShotCount = 0;
             GameObject obj = PoolManager.Inst.F_GetPlayerBullet(2);
-
+            //Passive_4_AttackPowerAdd[Passive_4_Lv]
             obj.transform.position = Set_RandomValue();
             obj.SetActive(true);
         }
@@ -460,7 +463,7 @@ public class Player_Skill_System : MonoBehaviour
     }
 
 
-    private void Passive_4_LvUp() // 페시브 1번 체력자동회복
+    private void Passive_4_LvUp() // 페시브 5번 스태미너량 증가 -> 모든공격력증가 변경
     {
         if (Passive_4_Lv == Skill_Max_Lvl)
         {
@@ -477,8 +480,10 @@ public class Player_Skill_System : MonoBehaviour
 
             if (Passive_4_Lv > 0)
             {
-                Movement sc = Hub.Inst.Movement_sc;
-                sc.F_SetSprintTimeAdd(Passive_4_MaxSprintUpValue[Passive_4_Lv - 1]);
+                //Movement sc = Hub.Inst.Movement_sc;
+                //sc.F_SetSprintTimeAdd(Passive_4_MaxSprintUpValue[Passive_4_Lv - 1]);
+
+
             }
         }
     }
@@ -661,17 +666,25 @@ public class Player_Skill_System : MonoBehaviour
     {
         switch (Skill_ID) 
         {
+            case 0:
+                if (Skill_0_Level == 0) { return 0; }
+                return Skill_0_Value[Skill_0_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv];
+
             case 1:
                 if (Skill_1_Level == 0) { return 0; }
-                return Skill_1_Value[Skill_1_Level - 1].dmg;
+                return Skill_1_Value[Skill_1_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv];
+
+            case 2:
+                if (Skill_2_Level == 0) { return 0; }
+                return Skill_2_Value[Skill_2_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv];
 
             case 3:
                 if (Skill_3_Level == 0) { return 0; }
-                return Skill_3_Value[Skill_3_Level - 1].dmg;
+                return Skill_3_Value[Skill_3_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv];
 
             case 4:
                 if (Skill_4_Level == 0) { return 0; }
-                return Skill_4_Value[Skill_4_Level - 1].dmg;
+                return Skill_4_Value[Skill_4_Level - 1].dmg * Passive_4_AttackPowerAdd[Passive_4_Lv];
 
         }
         return -1;

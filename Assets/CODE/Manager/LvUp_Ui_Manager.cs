@@ -81,6 +81,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
         if (PlayerLv < OnlyAttackSkillGet_Lv)
         {
             RandomValue = MakeRandomValue(3);
+            Debug.Log(RandomValue);
         }
         else if (PlayerLv >= OnlyAttackSkillGet_Lv)
         {

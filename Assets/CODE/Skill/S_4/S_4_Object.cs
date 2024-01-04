@@ -75,10 +75,10 @@ public class S_4_Object : MonoBehaviour
             Rrb.gameObject.transform.localScale = new Vector3(1 + count * 0.35f, 1 + count, 1);
             L.color = new Color(1, 1, 1, count * 0.9f);
             R.color = new Color(1, 1, 1, count * 0.9f);
-            PingZ = Mathf.PingPong(Time.time * 25, 6);
-            PingZ -= 3f; 
-            Lrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
-            Rrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
+            //PingZ = Mathf.PingPong(Time.time * 25, 6);
+            //PingZ -= 3f; 
+            //Lrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
+            //Rrb.transform.eulerAngles = new Vector3(0, 0, PingZ);
         }
         else
         {
