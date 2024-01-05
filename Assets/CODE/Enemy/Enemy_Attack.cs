@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Enemy_Attack : MonoBehaviour
 {
-    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom, Slime, Orc_Ranger }
+    public enum EnemyName { Orc, Skeleton_Ranger, Mushroom, Slime, Orc_Ranger, Tree }
     public EnemyName type;
     private Animator anim;
     private GameObject attackCollider;
@@ -27,6 +27,7 @@ public class Enemy_Attack : MonoBehaviour
     NavMeshAgent nav;
     Rigidbody2D rb;
     Enemy_Arrow enemy_Arrow;
+    Animator treeAttackAnim;
     private void Awake()
     {
 
@@ -57,6 +58,16 @@ public class Enemy_Attack : MonoBehaviour
 
             case EnemyName.Slime:
 
+                break;
+
+            case EnemyName.Tree:
+                treeAttackAnim = transform.Find("Tree_bullet").GetComponent<Animator>();
+                attackCollider = transform.Find("AttackCollider").gameObject;
+                attackCollider.GetComponent<AttackCollider>().F_SetAttackDMG(AttackDMG);
+                if (attackCollider.gameObject.activeSelf)
+                {
+                    attackCollider.SetActive(false);
+                }
                 break;
         }
 
@@ -149,6 +160,17 @@ public class Enemy_Attack : MonoBehaviour
                 }
                 break;
 
+            case EnemyName.Tree:
+
+                if (attackCollider.gameObject.activeSelf == false)
+                {
+                    attackCollider.gameObject.SetActive(true);
+                }
+
+                treeAttackAnim.gameObject.SetActive(true);
+                treeAttackAnim.SetTrigger("hit");
+                break;
+
 
         }
 
@@ -230,9 +252,23 @@ public class Enemy_Attack : MonoBehaviour
                 anim.SetBool("Attack", false);
                 break;
 
+            case EnemyName.Tree:
+
+                if (attackCollider.gameObject.activeSelf == true)
+                {
+                    attackCollider.gameObject.SetActive(false);
+                }
+                isAttack = false;
+                break;
+
         }
     }
 
+
+    private void A_TreeBulletOff()
+    {
+        treeAttackAnim.gameObject.SetActive(false);
+    }
     private void A_MushroomDead_VeloZero()
     {
         rb.velocity = Vector2.zero;

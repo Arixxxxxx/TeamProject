@@ -22,6 +22,10 @@ public class Movement : MonoBehaviour
 
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
+    [SerializeField] float TeleportLimitP_X;
+    [SerializeField] float TeleportLimitM_X;
+    [SerializeField] float TeleportLimitP_Y;
+    [SerializeField] float TeleportLimitM_Y;
 
     private void Awake()
     {
@@ -217,8 +221,29 @@ public class Movement : MonoBehaviour
         anim.SetTrigger("Tel");
 
         yield return TelePortDealys;
+        Vector2 cheakPos = rb.position + moveVec * TeleportDistance;
+        
+        //순간이동 제한 
+        if(cheakPos.x < TeleportLimitM_X) 
+        {
+            cheakPos.x = TeleportLimitM_X;
+        }
+        else if (cheakPos.x > TeleportLimitP_X)
+        {
+            cheakPos.x = TeleportLimitP_X;
+        }
 
-        rb.position = rb.position + moveVec * TeleportDistance;
+        if (cheakPos.y < TeleportLimitM_Y)
+        {
+            cheakPos.y = TeleportLimitM_Y;
+        }
+        else if (cheakPos.y > TeleportLimitP_Y)
+        {
+            cheakPos.y = TeleportLimitP_Y;
+        }
+
+
+        rb.position = cheakPos;
     }
 
     /// <summary>

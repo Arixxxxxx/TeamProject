@@ -58,8 +58,8 @@ public class UnitFrame_Updater : MonoBehaviour
         Hp_Bar_Info_Text = Front_HP_Bar.GetComponentInChildren<TMP_Text>();
         Lv_text = UnitFrame.transform.Find("Lv/LvText").GetComponent<TMP_Text>();
 
-        battle_Time_Text = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").GetComponentsInChildren<TMP_Text>()[0];
-        battle_Time_Text2 = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").GetComponentsInChildren<TMP_Text>()[1];
+        //battle_Time_Text = Ui_Canvas.transform.Find("Main_Canvas/BattleTime").GetComponentsInChildren<TMP_Text>()[0];
+        battle_Time_Text2 = Ui_Canvas.transform.Find("Main_Canvas/BattleTime/Box_2/Time").GetComponent<TMP_Text>();
         KillCount = Ui_Canvas.transform.Find("Main_Canvas/Count_Info/Kill").GetComponentInChildren<TMP_Text>();
 
         Unitframe_Dmg_Font = UnitFrame.transform.Find("Get_Dmg(Text)").GetComponent<TMP_Text>();
@@ -158,7 +158,7 @@ public class UnitFrame_Updater : MonoBehaviour
             min = (int)timecheck / 60;
             sec = (int)timecheck % 60;
                         
-            battle_Time_Text.text = $"{min.ToString("00")} : {sec.ToString("00")}";
+            //battle_Time_Text.text = $"{min.ToString("00")} : {sec.ToString("00")}"; UI박스 있는버전 
             battle_Time_Text2.text = $"{min.ToString("00")} : {sec.ToString("00")}";
 
         }
