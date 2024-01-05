@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
-    [SerializeField] float TeleportLimitP_X;
+    [SerializeField] float[] TeleportLimitP_X;
     [SerializeField] float TeleportLimitM_X;
     [SerializeField] float TeleportLimitP_Y;
     [SerializeField] float TeleportLimitM_Y;
@@ -50,6 +50,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        
+
         Input_Key_Funtion();
         Change_Sclae_Xvalue();
         Animator_Updater();
@@ -222,15 +224,15 @@ public class Movement : MonoBehaviour
 
         yield return TelePortDealys;
         Vector2 cheakPos = rb.position + moveVec * TeleportDistance;
-        
+
         //순간이동 제한 
-        if(cheakPos.x < TeleportLimitM_X) 
+        if (cheakPos.x < TeleportLimitM_X)
         {
             cheakPos.x = TeleportLimitM_X;
         }
-        else if (cheakPos.x > TeleportLimitP_X)
+        else if (cheakPos.x > TeleportLimitP_X[SpawnManager.inst.StageLv]) 
         {
-            cheakPos.x = TeleportLimitP_X;
+            cheakPos.x = TeleportLimitP_X[SpawnManager.inst.StageLv];
         }
 
         if (cheakPos.y < TeleportLimitM_Y)

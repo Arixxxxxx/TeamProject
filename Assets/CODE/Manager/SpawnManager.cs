@@ -14,6 +14,11 @@ public class SpawnManager : MonoBehaviour
     [Header("# 스폰레벨 오르는 시간(초) 적어야함  == >   # 예진")]
     [Space]
     [SerializeField] List<int> LevelTable = new List<int>(); // 레벨당 시간
+    [SerializeField] GameObject[] CloudeGroup;
+    [SerializeField] BoxCollider2D[] noEntryColl;
+
+    int stageLv;
+    public int StageLv { get { return stageLv; } } 
 
     // 현재 소환해야할 포인트
      int SpawnTrs0; 
@@ -47,10 +52,15 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(this);
         }
+        
+        
+
+
     }
 
     void Start()
     {
+        
         gm = GameManager.Inst;
         TimeSc = transform.parent.GetComponentInChildren<UnitFrame_Updater>();
     }
@@ -61,6 +71,14 @@ public class SpawnManager : MonoBehaviour
         GameTime = TimeSc.F_Get_GameTime();
         SpawnStart();
         Level_Updater();
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            F_BlockTriggerOn(0);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            F_BlockTriggerOn(1);
+        }
     }
     private void SpawnStart()
     {
@@ -234,12 +252,26 @@ public class SpawnManager : MonoBehaviour
             Spawn_Level++;
         }
     }
+
+    public void F_BlockTriggerOn(int value)
+    {
+        stageLv++; // 텔레포트 X축과 연관있음.
+        noEntryColl[value].isTrigger = true;
+    }
+
+    public void F_DeleteCloud(int value)
+    {
+        CloudeGroup[value].gameObject.SetActive(false);
+        // 추후에 애니메이션 페이드처리로 변경예정
+    }
+
+
 }
 
 [System.Serializable]
 public class SpawnData
 {
-    public bool isSpawn_Orc;
+    public bool isSpawn_Orc; //필요없음,  ID , 
     public float _0_Interval;
     public int _0_EnemyCount;
     [Space]
