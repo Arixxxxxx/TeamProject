@@ -207,17 +207,17 @@ public class Movement : MonoBehaviour
     }
 
     float OriginSpeed;
-    public void F_SetMoveSpeedAdd(float Value)
+    public void F_SetMoveSpeedAdd(float Value) // 이동속드증가 버프를 위한 함수
     {
         CharMove_Speed = OriginSpeed * Value;
     }
 
-    public void F_SetSprintTimeAdd(float Value)
+    public void F_SetSprintTimeAdd(float Value) // 이동 스태미너량 버프를 위한 함수
     {
         maxSpintTime = Origin_maxSpintTime * Value;
     }
 
-    IEnumerator Player_Input_Spacebar_TelePort()
+    IEnumerator Player_Input_Spacebar_TelePort() // 순간이동 로직 코루틴
     {
         doTeleport = true;
         anim.SetTrigger("Tel");
@@ -225,7 +225,7 @@ public class Movement : MonoBehaviour
         yield return TelePortDealys;
         Vector2 cheakPos = rb.position + moveVec * TeleportDistance;
 
-        //순간이동 제한 
+        //순간이동 좌표값 제한 
         if (cheakPos.x < TeleportLimitM_X)
         {
             cheakPos.x = TeleportLimitM_X;
@@ -244,7 +244,7 @@ public class Movement : MonoBehaviour
             cheakPos.y = TeleportLimitP_Y;
         }
 
-
+        // 이동
         rb.position = cheakPos;
     }
 

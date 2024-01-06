@@ -20,4 +20,6 @@ public class Animation_Funtion_Sc : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    
 }

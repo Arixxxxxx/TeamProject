@@ -14,13 +14,16 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int SkeletonRanager_StartMakingEA;
     [SerializeField] int Slime_StartMakingEA;
     [SerializeField] int OrcRanger_StartMakingEA;
+    [SerializeField] int Tree_StartMakingEA;
+
     Queue<GameObject> OrcQue = new Queue<GameObject>();
     Queue<GameObject> MushRoomQue = new Queue<GameObject>();
     Queue<GameObject> SkeletonQue = new Queue<GameObject>();
     Queue<GameObject> SlimeQue = new Queue<GameObject>();
     Queue<GameObject> Orc_RangerQue = new Queue<GameObject>();
+    Queue<GameObject> Tree_Que = new Queue<GameObject>();
 
-    Transform OrcTrs, MushTrs, SkeletonTrs, SlimeTrs, OrcRangerTrs; // -> Transform
+    Transform OrcTrs, MushTrs, SkeletonTrs, SlimeTrs, OrcRangerTrs, TreeTrs;  // -> Transform
 
 
 
@@ -107,6 +110,7 @@ public class PoolManager : MonoBehaviour
         MushTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
         SkeletonTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
         SlimeTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
+        TreeTrs = transform.Find("Enemy/Tree").GetComponent<Transform>();
 
         CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
         ArrowTrs = transform.Find("Arrow").GetComponent<Transform>();
@@ -159,6 +163,14 @@ public class PoolManager : MonoBehaviour
             Obj.transform.position = Vector3.zero;
             Obj.gameObject.SetActive(false);
             Orc_RangerQue.Enqueue(Obj);
+        }  
+        
+        for (int i = 0; i < Tree_StartMakingEA; i++)
+        {
+            GameObject Obj = Instantiate(EnemyObj[5], TreeTrs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Tree_Que.Enqueue(Obj);
         }
 
 
@@ -279,7 +291,7 @@ public class PoolManager : MonoBehaviour
     /// <summary>
     /// 에너미 프리펩 Get 함수 -> 0오크/1버섯/2궁수 /3슬라임/4오크레인저
     /// </summary>
-    /// <param name="value">0오크/1버섯/2궁수/3슬라임/4오크레인저</param>
+    /// <param name="value">0오크/1버섯/2궁수/3슬라임/4오크레인저/5나무</param>
     /// <returns></returns>
     public GameObject F_GetEnemyObj(int value)
     {
@@ -335,6 +347,15 @@ public class PoolManager : MonoBehaviour
                 }
                 obj = Orc_RangerQue.Dequeue();
                 return obj;
+
+            case 5: // 나무
+                if (Tree_Que.Count <= 1)
+                {
+                    obj = Instantiate(EnemyObj[5], TreeTrs);
+                    return obj;
+                }
+                obj = Tree_Que.Dequeue();
+                return obj;
         }
 
         return null;
@@ -371,6 +392,10 @@ public class PoolManager : MonoBehaviour
 
             case 4:
                 Orc_RangerQue.Enqueue(obj);
+                break;
+
+            case 5:
+               Tree_Que.Enqueue(obj);
                 break;
 
 

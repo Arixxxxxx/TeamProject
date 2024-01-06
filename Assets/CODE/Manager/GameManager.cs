@@ -1,5 +1,6 @@
 using NavMeshPlus.Components;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -64,9 +65,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+    bool once;
     void Update()
     {
+        if(MainGameStart && !once)
+        {
+            once = true;
+            GameUIManager.Inst.F_GameInfoOpen(-1);
+        }
+
         uiOpen_EveryObecjtStopFuntion();
         UiOpen_Cheaker();
         StartGameGetLVUP();
