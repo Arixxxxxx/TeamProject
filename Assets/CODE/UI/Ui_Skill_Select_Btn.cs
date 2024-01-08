@@ -100,6 +100,10 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     [SerializeField] float animSpeed;
     [SerializeField] float animSpeed1;
     
+    /// <summary>
+    ///  카드 내용 입력 / 매개변수 : 스킬레벨
+    /// </summary>
+    /// <param name="Star_Count"></param>
     public void F_Set_SelectCard(int Star_Count)
     {
         if (skill_Name == null) { InIt(); }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
+    
     [Header("# Player Input Stats Field  ==>   예진")]
     [Space]
     [Header("# Level Up Info")]
@@ -27,10 +28,12 @@ public class Player_Stats : MonoBehaviour
     float ReceveryHp;
     float RecoveryCount;
     SpriteRenderer sr;
+    ParticleSystem getItemPs;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        getItemPs = transform.Find("PS/GetEXP").GetComponent<ParticleSystem>(); 
     }
     void Start()
     {
@@ -80,9 +83,9 @@ public class Player_Stats : MonoBehaviour
     public void F_GetExp_LevelupSystem(float EXP)
     {
         if(Player_Cur_Lv ==  Player_Max_Lv) { return; }
-
+        Debug.Log("진입");
         float CashEXP = EXP + Cur_Exp;
-
+        getItemPs.Play();
         // 현재 레벨에 필요한 경험치보다 많이 획득했을 때
         if (CashEXP >= NextLv_Need_Exp[Player_Cur_Lv - 1])
         {
@@ -100,7 +103,7 @@ public class Player_Stats : MonoBehaviour
             UnitFrame_Updater.inst.F_ExpFillAmountReset();
 
             Player_CurHP = Player_MaxHP; // 현재 체력 초기화
-            LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill();
+            LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill(); // 레벨업 스킬포인트
         }
         else
         {

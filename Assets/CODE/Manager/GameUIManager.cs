@@ -38,6 +38,10 @@ public class GameUIManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    ///  게임안내 문구 소환
+    /// </summary>
+    /// <param name="value"></param>
     public void F_GameInfoOpen(int value)
     {
         string alramText = string.Empty;

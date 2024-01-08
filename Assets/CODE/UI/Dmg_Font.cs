@@ -48,12 +48,12 @@ public class Dmg_Font : MonoBehaviour
         {
             Dmg_Text.color = CriDMG_Color;
             Dmg_Text.fontSize += CriticalFont;
-            Dmg_Text.text = $"Cri! {Dmg.ToString()}";
+            Dmg_Text.text = $"Cri! {Dmg.ToString("F0")}"; // 소수점 첫번재자리까지만
         }
         else
         {
             Dmg_Text.color = normalDMG_Color;
-            Dmg_Text.text = Dmg.ToString();
+            Dmg_Text.text = Dmg.ToString("F0");
         }
       
     }

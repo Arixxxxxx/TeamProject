@@ -81,8 +81,8 @@ public class EnemyStats : MonoBehaviour
                 nav.F_Dead(true);
 
                 GameManager.Inst.F_KillCountUp();
-                GameObject obj = PoolManager.Inst.F_GetObj(1);
-                obj.GetComponent<Exp_Coin>().F_SettingCoin((int)ExpCoin_DropType);
+                GameObject obj = PoolManager.Inst.F_GetObj(1); // 코인앤성
+                obj.GetComponent<Exp_Coin>().F_SettingCoin((int)ExpCoin_DropType); // 경험치 셋팅
                 obj.transform.position = transform.position - new Vector3(0, 0.7f, 0);
                 obj.gameObject.SetActive(true);
 

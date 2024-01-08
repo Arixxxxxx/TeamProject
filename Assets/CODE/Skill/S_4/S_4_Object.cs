@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Threading;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class S_4_Object : MonoBehaviour
 {
@@ -43,20 +39,29 @@ public class S_4_Object : MonoBehaviour
         L.color = new Color(1, 1, 1, 0);
         R.color = new Color(1, 1, 1, 0);
         isRun = true;
+        Lcurvelo = Vector3.zero;
+        Rcurvelo = Vector3.zero;
         
+
+
     }
     // Update is called once per frame
 
+    Vector3 Lcurvelo = Vector3.zero;
+    Vector3 Rcurvelo = Vector3.zero;
     private void FixedUpdate()
     {
         if (isRun)
         {
+            //Lrb.transform.position = Vector3.SmoothDamp(Lrb.transform.position, Lrb.transform.position + new Vector3(Lrb.transform.position.x + -1,0,0), ref Lcurvelo, 1);
+            //Rrb.transform.position = Vector3.SmoothDamp(Rrb.transform.position, Rrb.transform.position + new Vector3(Rrb.transform.position.x + 1, 0, 0), ref Rcurvelo, 1);
+            //Rrb.transform.position = Vector3.SmoothDamp(Rrb.transform.position, Rrb.transform.position + Vector3.right * 5, ref curvelo, MoveSpeed);
             Lrb.MovePosition(Lrb.position + Vector2.left * MoveSpeed * Time.deltaTime);
             Rrb.MovePosition(Rrb.position + Vector2.right * MoveSpeed * Time.deltaTime);
         }
         else
         {
-
+            
         }
     }
 
@@ -96,7 +101,7 @@ public class S_4_Object : MonoBehaviour
             {
                 RunCount = 0;
                 isRun = false;
-                
+                //curvelo = Vector3.zero;
                 PoolManager.Inst.F_Return_PlayerBullet(gameObject, 4);
             }
         }

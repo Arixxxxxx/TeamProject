@@ -35,10 +35,14 @@ public class GameManager : MonoBehaviour
     [Header("# Battle Count")]
     [Space]
     [SerializeField] int killCount;
+    [SerializeField] int spawnCount;
     public bool MainGameStart { get { return mainGameStart; } set { mainGameStart = value; } }
     public bool UiOpen_EveryObecjtStop { get { return uiOpen_EveryObecjtStop; } set { uiOpen_EveryObecjtStop = value; } }
     public bool IsPlayer_Dead { get { return isPlayer_Dead; } set { isPlayer_Dead = value; } }
     public int KillCount { get { return killCount; } }
+    public int SpawnCount { get { return spawnCount; } set { spawnCount = value; } }
+
+    [SerializeField] int FieldEnemy;
 
     int sceneNumber;
     private void Awake()
@@ -77,6 +81,8 @@ public class GameManager : MonoBehaviour
         uiOpen_EveryObecjtStopFuntion();
         UiOpen_Cheaker();
         StartGameGetLVUP();
+
+        FieldEnemy = spawnCount - killCount;
     }
 
     bool start_once;

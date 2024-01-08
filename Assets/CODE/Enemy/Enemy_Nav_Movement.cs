@@ -98,7 +98,6 @@ public class Enemy_Nav_Movement : MonoBehaviour
             if (nav.speed == 0)
             {
                 nav.speed = OriginSpeed;
-                //nav.isStopped = false;
             }
             
             nav.SetDestination(navTargetVec);

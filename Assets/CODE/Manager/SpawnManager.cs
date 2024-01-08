@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -13,6 +13,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int Spawn_Level; // 레벨
     [SerializeField] int stageLv; // 레벨
     [SerializeField] int[] AddCount; // 스폰레벨 혹은 시간당 증가되는 몬스터량
+    [SerializeField] float startDealy;
     public int StageLv { get { return stageLv; } }
     [Header("# 스폰레벨 오르는 시간(초) 적어야함  == >   # 예진")]
     [Space]
@@ -24,9 +25,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int Player_Area_num;
     [SerializeField] float GameTime;
     [SerializeField] float[] count = new float[2];
-
-
-
+    float spawnTimeCounter;
+    bool spawnstart;
+    
 
     // 현재 소환해야할 포인트
     int EnemyA_SpawnTrs;
@@ -40,7 +41,9 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] EnemySpawnPointSc[] spawn_PointTrs; // 스폰포인트 리스트
 
+    // 지역에따른 몬스터 스폰유형, 간격, 카운트
     [SerializeField][Tooltip("오크,버섯,해골궁수,슬라임,오크레인저,나무")] SpawnData[] spawnData;
+    [SerializeField][Tooltip("바뀔시간 ,카운트증가량, 스폰간격 단축")] LvCountUp[] lvCounUpData;
 
 
 
@@ -71,17 +74,20 @@ public class SpawnManager : MonoBehaviour
         gm = GameManager.Inst;
         pm = PoolManager.Inst;
         TimeSc = transform.parent.GetComponentInChildren<UnitFrame_Updater>();
+        
     }
 
     
     void Update()
     {
+        SpawnStart_Dealy();
 
         //SpawnStart(); 구버전 시간단위
         New_SpawnStart();
-
+        SpawnLvUpdater();
 
         Level_Updater();
+
         if (Input.GetKeyDown(KeyCode.L)) // 0번 벽제거 테스트
         {
             F_BlockTriggerOn(0);
@@ -91,15 +97,27 @@ public class SpawnManager : MonoBehaviour
             F_BlockTriggerOn(1);
         }
     }
+    /// <summary>
+    /// 시간에 따른 카운트 증가량
+    /// </summary>
+    private void SpawnLvUpdater()
+    {
+        if(gm.MainGameStart == false) { return; }
+        if(Spawn_Level == lvCounUpData.Length) { return; } //최대 설정값보다 많아지면 리턴
 
+
+        spawnTimeCounter += Time.deltaTime;
+        if(spawnTimeCounter > lvCounUpData[Spawn_Level].nextSpawnLvtime)
+        {
+            Spawn_Level++;
+        }
+        
+    }
     private void Level_Updater()
     {
         // 스테이지 3레벨이 보스
         if (StageLv == 3) { return; }
-
-        {
-            
-        }
+       
         GameTime = TimeSc.F_Get_GameTime();
 
         if(GameTime > StageLevelupTime[stageLv])
@@ -122,42 +140,66 @@ public class SpawnManager : MonoBehaviour
         }
         
     }
-
+    int addCountA, addCountB;
     private void New_SpawnStart()
     {
-        if (gm.MainGameStart == false) { return; }
+        if (gm.MainGameStart == false || spawnstart == false) { return; }
 
+        //스폰 트랜스폼 순차적으로 돌게 작업
         EnemyA_SpawnTrs = (int)Mathf.Repeat(EnemyA_SpawnTrs, spawn_PointTrs.Length);
         EnemyB_SpawnTrs = (int)Mathf.Repeat(EnemyB_SpawnTrs, spawn_PointTrs.Length);
         
+        // 현재 스폰지역의 넘버확인
         int cheakValueA = spawn_PointTrs[EnemyA_SpawnTrs].AreaNumber;
         int cheakValueB = spawn_PointTrs[EnemyB_SpawnTrs].AreaNumber;
-        
-        if(cheakValueA > stageLv)
+
+        // A타입 스폰준비
+        // 현재 해금 안된지역이라면 다음 으로 넘어감
+        if (cheakValueA > stageLv)
         {
             EnemyA_SpawnTrs++;
         }
-        else if(cheakValueA <= stageLv)
+        else if(cheakValueA <= stageLv) // 해금지역이라면 스폰
         {
             count[0] += Time.deltaTime;
-
-            if (count[0] > spawnData[Player_Area_num].interval[0])
+            
+            //기존 스폰시간 - 스폰레벨당 단축시간
+            if (count[0] > spawnData[Player_Area_num].interval[0] - lvCounUpData[Spawn_Level].IntervalDown)
             {
                 count[0] = 0;
 
-                for (int i = 0; i < spawnData[Player_Area_num].count[0]; i++) // 플레이어 지정장소의 첫번째 카운트만큼
+                
+
+                if (Spawn_Level == lvCounUpData.Length) 
                 {
-                    GameObject obj =  pm.F_GetEnemyObj(spawnData[Player_Area_num].enemy_ID[0]);
-                    obj.transform.position = spawn_PointTrs[EnemyA_SpawnTrs].transform.position;
-                    obj.gameObject.SetActive(true);
+                    addCountA = 0;
+                }
+                else if (Spawn_Level < lvCounUpData.Length)
+                {
+                    addCountA = lvCounUpData[Spawn_Level].addCount;
                 }
 
-                Debug.Log(EnemyA_SpawnTrs);
+                    //기본스폰데이터 카운트량  + 스폰레벨에 따른 추가증가량
+                    for (int i = 0; i < spawnData[Player_Area_num].count[0] + addCountA; i++) 
+                {
+                                                                                           //스폰데이터의 넘버에 있는 몬스터 풀링
+                    GameObject obj =  pm.F_GetEnemyObj(spawnData[cheakValueA].enemy_ID[0]);
+                    obj.transform.position = spawn_PointTrs[EnemyA_SpawnTrs].transform.position 
+                                                               + new Vector3(Random.Range(0.5f,1f), Random.Range(0.5f, 1f));
+                                                               // A,B 타입이 겹쳐나오는것을 방지=> 랜덤카운트
+                          
+                    obj.gameObject.SetActive(true);
+                    gm.SpawnCount++;
+                }
+
                 EnemyA_SpawnTrs++;
+                addCountA = 0;
             }
             
         }
 
+        // B타입 스폰준비
+        //위와 동일
         if (cheakValueB > stageLv)
         {
             EnemyB_SpawnTrs++;
@@ -166,29 +208,45 @@ public class SpawnManager : MonoBehaviour
         {
             count[1] += Time.deltaTime;
 
-            if (count[1] > spawnData[Player_Area_num].interval[1])
+            if (count[1] > spawnData[Player_Area_num].interval[1] - lvCounUpData[Spawn_Level].IntervalDown)
             {
                 count[1] = 0;
 
-                for (int i = 0; i < spawnData[Player_Area_num].count[1]; i++) // 플레이어 지정장소의 첫번째 카운트만큼
+                if (Spawn_Level == lvCounUpData.Length)
                 {
-                    GameObject obj  =  pm.F_GetEnemyObj(spawnData[Player_Area_num].enemy_ID[1]);
-                    obj.transform.position = spawn_PointTrs[EnemyB_SpawnTrs].transform.position;
+                    addCountB = 0;
+                }
+                else if (Spawn_Level < lvCounUpData.Length)
+                {
+                    addCountB = lvCounUpData[Spawn_Level].addCount;
+                }
+
+                for (int i = 0; i < spawnData[Player_Area_num].count[1] + addCountB; i++) 
+                {
+                    GameObject obj  =  pm.F_GetEnemyObj(spawnData[cheakValueB].enemy_ID[1]);
+                    obj.transform.position = spawn_PointTrs[EnemyB_SpawnTrs].transform.position + new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)); ;
                     obj.gameObject.SetActive(true);
                 }
 
-                Debug.Log(EnemyB_SpawnTrs);
                 EnemyB_SpawnTrs++;
+                addCountB = 0;
+                gm.SpawnCount++;
             }
         
         }
-
-
-
-        
-        //spawn_PointTrs[EnemyA_SpawnTrs].transform.position;
     }
 
+    float dealycount;
+    private void SpawnStart_Dealy()
+    {
+        if (spawnstart) { return; }
+
+        dealycount += Time.deltaTime;
+        if( dealycount > startDealy)
+        {
+            spawnstart = true;
+        }
+    }
 
     private void SpawnStart() // 구형방식 시간별 스포너
     {
@@ -367,34 +425,18 @@ public class SpawnManager : MonoBehaviour
 [System.Serializable]
 public class SpawnData
 {
+    public string nameText;
     public int[] enemy_ID;
     public float[] interval;
     public int[] count;
-   
-
-
-    //구버전 내용  
-    //public bool isSpawn_Orc; //필요없음,  ID , 
-    //public float _0_Interval;
-    //public int _0_EnemyCount;
-    //[Space]
-    //[Space]
-    //public bool isSpawn_Mushroom;
-    //public float _1_Interval;
-    //public int _1_EnemyCount;
-    //[Space]
-    //[Space]
-    //public bool isSpawn_Skeleton;
-    //public float _2_Interval;
-    //public int _2_EnemyCount;
-    //[Space]
-    //[Space]
-    //public bool isSpawn_Silme;
-    //public float _3_Interval;
-    //public int _3_EnemyCount;
-    //[Space]
-    //[Space]
-    //public bool isSpawn_OrcRanager;
-    //public float _4_Interval;
-    //public int _4_EnemyCount;
 }
+
+[System.Serializable]
+public class LvCountUp
+{
+    public string nameText;
+    public float nextSpawnLvtime;
+    public int addCount;
+    public int IntervalDown;
+}
+
