@@ -45,9 +45,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField][Tooltip("오크,버섯,해골궁수,슬라임,오크레인저,나무")] SpawnData[] spawnData;
     [SerializeField][Tooltip("바뀔시간 ,카운트증가량, 스폰간격 단축")] LvCountUp[] lvCounUpData;
 
-
-
-
     PoolManager pm;
     GameManager gm;
     UnitFrame_Updater TimeSc;
@@ -63,9 +60,6 @@ public class SpawnManager : MonoBehaviour
             Destroy(this);
         }
         
-        
-
-
     }
 
     void Start()
