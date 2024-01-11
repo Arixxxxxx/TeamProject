@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hide_Object : MonoBehaviour
 {
-    [SerializeField] GameObject Player;
+    [SerializeField] List<GameObject> PlayerList = new List<GameObject>();
     [SerializeField] GameObject Enemy;
     [SerializeField] float hide_color_A;
     [SerializeField] Color inPlayer;
+    
     
     SpriteRenderer sr;
     
@@ -23,17 +23,17 @@ public class Hide_Object : MonoBehaviour
 
         void Update()
     {
-        if(Player != null || Enemy != null && sr.color.a == 1)
+        if(PlayerList.Count > 0 || Enemy != null && sr.color.a == 1)
         {
             sr.color = inPlayer;
             sr.sortingOrder = 10;
         }
       
        
-        if (Enemy == null && Player == null)
+        if (Enemy == null && PlayerList.Count == 0)
         {
             sr.color = Color.white;
-            sr.sortingOrder = 0;
+            sr.sortingOrder = 5;
         }
 
 
@@ -41,9 +41,9 @@ public class Hide_Object : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && Player == null)
+        if(collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false  && collision.transform.position.y >= transform.position.y)
         {
-            Player = collision.gameObject;
+                PlayerList.Add(collision.gameObject);
         }
         if (collision.CompareTag("Enemy") && Enemy == null)
         {
@@ -63,9 +63,9 @@ public class Hide_Object : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && Player != null)
+        if (collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject))
         {
-            Player = null;
+            PlayerList.Remove(collision.gameObject);
         }
         if (collision.CompareTag("Enemy") && Enemy != null)
         {
