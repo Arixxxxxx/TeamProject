@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager inst;
-    
+
 
     [Header("# Spawn Setting  == >   # 예진")]
     [Space]
@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] float[] count = new float[2];
     float spawnTimeCounter;
     bool spawnstart;
-    
+
 
     // 현재 소환해야할 포인트
     int EnemyA_SpawnTrs;
@@ -59,19 +59,19 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
     }
 
     void Start()
     {
-        
+
         gm = GameManager.Inst;
         pm = PoolManager.Inst;
         TimeSc = transform.parent.GetComponentInChildren<UnitFrame_Updater>();
-        
+
     }
 
-    
+
     void Update()
     {
         SpawnStart_Dealy();
@@ -96,25 +96,25 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     private void SpawnLvUpdater()
     {
-        if(gm.MainGameStart == false) { return; }
-        if(Spawn_Level == lvCounUpData.Length) { return; } //최대 설정값보다 많아지면 리턴
+        if (gm.MainGameStart == false) { return; }
+        if (Spawn_Level == lvCounUpData.Length) { return; } //최대 설정값보다 많아지면 리턴
 
 
         spawnTimeCounter += Time.deltaTime;
-        if(spawnTimeCounter > lvCounUpData[Spawn_Level].nextSpawnLvtime)
+        if (spawnTimeCounter > lvCounUpData[Spawn_Level].nextSpawnLvtime)
         {
             Spawn_Level++;
         }
-        
+
     }
     private void Level_Updater()
     {
         // 스테이지 3레벨이 보스
         if (StageLv == 3) { return; }
-       
+
         GameTime = TimeSc.F_Get_GameTime();
 
-        if(GameTime > StageLevelupTime[stageLv])
+        if (GameTime > StageLevelupTime[stageLv])
         {
             stageLv++;
             CameraManager.inst.F_CameraZoomOut(stageLv); // 카메라 줌아웃
@@ -123,16 +123,16 @@ public class SpawnManager : MonoBehaviour
             if (stageLv == 1) // 벽제거
             {
                 // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
-                
+
                 F_BlockTriggerOn(0);
             }
-            else if(stageLv == 2)
+            else if (stageLv == 2)
             {
                 // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
                 F_BlockTriggerOn(1);
             }
         }
-        
+
     }
     int addCountA, addCountB;
     private void New_SpawnStart()
@@ -142,7 +142,7 @@ public class SpawnManager : MonoBehaviour
         //스폰 트랜스폼 순차적으로 돌게 작업
         EnemyA_SpawnTrs = (int)Mathf.Repeat(EnemyA_SpawnTrs, spawn_PointTrs.Length);
         EnemyB_SpawnTrs = (int)Mathf.Repeat(EnemyB_SpawnTrs, spawn_PointTrs.Length);
-        
+
         // 현재 스폰지역의 넘버확인
         int cheakValueA = spawn_PointTrs[EnemyA_SpawnTrs].AreaNumber;
         int cheakValueB = spawn_PointTrs[EnemyB_SpawnTrs].AreaNumber;
@@ -153,18 +153,18 @@ public class SpawnManager : MonoBehaviour
         {
             EnemyA_SpawnTrs++;
         }
-        else if(cheakValueA <= stageLv) // 해금지역이라면 스폰
+        else if (cheakValueA <= stageLv) // 해금지역이라면 스폰
         {
             count[0] += Time.deltaTime;
-            
+
             //기존 스폰시간 - 스폰레벨당 단축시간
             if (count[0] > spawnData[Player_Area_num].interval[0] - lvCounUpData[Spawn_Level].IntervalDown)
             {
                 count[0] = 0;
 
-                
 
-                if (Spawn_Level == lvCounUpData.Length) 
+
+                if (Spawn_Level == lvCounUpData.Length)
                 {
                     addCountA = 0;
                 }
@@ -173,15 +173,15 @@ public class SpawnManager : MonoBehaviour
                     addCountA = lvCounUpData[Spawn_Level].addCount;
                 }
 
-                    //기본스폰데이터 카운트량  + 스폰레벨에 따른 추가증가량
-                    for (int i = 0; i < spawnData[Player_Area_num].count[0] + addCountA; i++) 
+                //기본스폰데이터 카운트량  + 스폰레벨에 따른 추가증가량
+                for (int i = 0; i < spawnData[Player_Area_num].count[0] + addCountA; i++)
                 {
-                                                                                           //스폰데이터의 넘버에 있는 몬스터 풀링
-                    GameObject obj =  pm.F_GetEnemyObj(spawnData[cheakValueA].enemy_ID[0]);
-                    obj.transform.position = spawn_PointTrs[EnemyA_SpawnTrs].transform.position 
-                                                               + new Vector3(Random.Range(0.5f,1f), Random.Range(0.5f, 1f));
-                                                               // A,B 타입이 겹쳐나오는것을 방지=> 랜덤카운트
-                          
+                    //스폰데이터의 넘버에 있는 몬스터 풀링
+                    GameObject obj = pm.F_GetEnemyObj(spawnData[cheakValueA].enemy_ID[0]);
+                    obj.transform.position = spawn_PointTrs[EnemyA_SpawnTrs].transform.position
+                                                               + new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f));
+                    // A,B 타입이 겹쳐나오는것을 방지=> 랜덤카운트
+
                     obj.gameObject.SetActive(true);
                     gm.SpawnCount++;
                 }
@@ -189,7 +189,7 @@ public class SpawnManager : MonoBehaviour
                 EnemyA_SpawnTrs++;
                 addCountA = 0;
             }
-            
+
         }
 
         // B타입 스폰준비
@@ -215,9 +215,9 @@ public class SpawnManager : MonoBehaviour
                     addCountB = lvCounUpData[Spawn_Level].addCount;
                 }
 
-                for (int i = 0; i < spawnData[Player_Area_num].count[1] + addCountB; i++) 
+                for (int i = 0; i < spawnData[Player_Area_num].count[1] + addCountB; i++)
                 {
-                    GameObject obj  =  pm.F_GetEnemyObj(spawnData[cheakValueB].enemy_ID[1]);
+                    GameObject obj = pm.F_GetEnemyObj(spawnData[cheakValueB].enemy_ID[1]);
                     obj.transform.position = spawn_PointTrs[EnemyB_SpawnTrs].transform.position + new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)); ;
                     obj.gameObject.SetActive(true);
                 }
@@ -226,7 +226,7 @@ public class SpawnManager : MonoBehaviour
                 addCountB = 0;
                 gm.SpawnCount++;
             }
-        
+
         }
     }
 
@@ -236,7 +236,7 @@ public class SpawnManager : MonoBehaviour
         if (spawnstart) { return; }
 
         dealycount += Time.deltaTime;
-        if( dealycount > startDealy)
+        if (dealycount > startDealy)
         {
             spawnstart = true;
         }
@@ -258,12 +258,12 @@ public class SpawnManager : MonoBehaviour
         //    if ( spawnData[Spawn_Level].isSpawn_Orc == true) //클래스에서 스폰여부 읽어옴
         //    {
         //        count[0] += Time.deltaTime;
-                
+
         //        if (count[0] > spawnData[Spawn_Level]._0_Interval)
         //        {
         //            EnemySpawnPointSc sc = spawn_PointTrs[SpawnTrs0].GetComponent<EnemySpawnPointSc>();
         //            int cheakAreaNumber = sc.AreaNumber; //포인트의 장소번호 가져옴
-             
+
         //            if (cheakAreaNumber == Player_Area_num) // 플레이어 장소와 스폰장소가 같을시만 스폰
         //            {
         //                count[0] = 0;
@@ -277,7 +277,7 @@ public class SpawnManager : MonoBehaviour
 
         //            SpawnTrs0++;
         //        }
-              
+
         //    }
 
         //    //버섯 스폰 여부
@@ -291,7 +291,7 @@ public class SpawnManager : MonoBehaviour
         //            EnemySpawnPointSc sc = spawn_PointTrs[SpawnTrs1].GetComponent<EnemySpawnPointSc>();
         //            int cheakAreaNumber = sc.AreaNumber;
 
-                    
+
 
         //            if (cheakAreaNumber == Player_Area_num) // 플레이어 장소와 스폰장소가 같을시만 스폰
         //            {
@@ -307,7 +307,7 @@ public class SpawnManager : MonoBehaviour
         //            }
         //            SpawnTrs1++;
         //        }
-                
+
         //    }
 
         //    //궁수 스폰 여부
@@ -334,7 +334,7 @@ public class SpawnManager : MonoBehaviour
         //            }
         //            SpawnTrs2++;
         //        }
-        
+
         //    }
 
         //    //슬라임 스폰 여부
@@ -400,7 +400,7 @@ public class SpawnManager : MonoBehaviour
         Player_Area_num = value;
     }
 
- 
+
 
     public void F_BlockTriggerOn(int value)
     {
@@ -409,8 +409,14 @@ public class SpawnManager : MonoBehaviour
 
     public void F_DeleteCloud(int value)
     {
-        CloudeGroup[value].gameObject.SetActive(false);
-        // 추후에 애니메이션 페이드처리로 변경예정
+        ParticleSystem[] firstDoorPs = CloudeGroup[value].GetComponentsInChildren<ParticleSystem>();
+
+        while (firstDoorPs[1].startColor.a > 0)
+        {
+            firstDoorPs[0].startColor += new Color(0, 0, 0, -0.1f) * Time.deltaTime * 2;
+            firstDoorPs[1].startColor += new Color(0, 0, 0, -0.1f) * Time.deltaTime * 2;
+        }
+        
     }
 
 
