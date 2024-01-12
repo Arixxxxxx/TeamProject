@@ -65,8 +65,8 @@ public class Gravity_Bullet : MonoBehaviour
 
         if (rb.velocity.y < veloY && CheakBullet == true)
         {
-            GameObject obj = PoolManager.Inst.F_GetPlayerBullet(1);
-            obj.transform.position = transform.position;
+            GameObject obj = PoolManager.Inst.F_GetPlayerBullet(3);
+            obj.transform.position = transform.position + new Vector3(0,-0.3f);
             obj.SetActive(true);
 
             PoolManager.Inst.F_Return_PlayerBullet(gameObject, 0);

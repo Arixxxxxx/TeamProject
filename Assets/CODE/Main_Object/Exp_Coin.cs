@@ -73,13 +73,13 @@ public class Exp_Coin : MonoBehaviour
 
     [SerializeField] float action0_Dur;
     float count;
-    float speed = 2;
+    float speed = 4;
     private void coinMoving()
     {
         if (action0) 
         {
             pos = (transform.position - target.transform.position).normalized ;
-            rb.AddForce(pos * 3f, ForceMode2D.Impulse);
+            rb.AddForce(pos * 5f, ForceMode2D.Impulse);
             
 
             count += Time.deltaTime;

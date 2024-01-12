@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
     bool InputSpaceBar;
     bool InputLshift;
     Image Sprint_Bar_Ui;
+    GameObject Sprint_Bar;
 
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
@@ -32,7 +33,8 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        Sprint_Bar_Ui = transform.Find("Character_Mini_Ui/Sprint_Bar").GetComponent<Image>();
+        Sprint_Bar_Ui = transform.Find("Character_Mini_Ui/Sprint_Bar/Front").GetComponent<Image>();
+        Sprint_Bar = transform.Find("Character_Mini_Ui/Sprint_Bar").gameObject;
     }
     void Start()
     {
@@ -114,9 +116,9 @@ public class Movement : MonoBehaviour
         if (InputLshift && CheakMoveFloat > 0) // ¼Ò¸ð
         {
 
-            if(Sprint_Bar_Ui.gameObject.activeSelf == false)
+            if(Sprint_Bar.gameObject.activeSelf == false)
             {
-                Sprint_Bar_Ui.gameObject.SetActive(true);
+                Sprint_Bar.gameObject.SetActive(true);
             }
            
             Sprint_Bar_Ui.fillAmount = curSpintTime / maxSpintTime;
@@ -139,9 +141,9 @@ public class Movement : MonoBehaviour
             {
                 curSpintTime = maxSpintTime;
 
-                if(Sprint_Bar_Ui.gameObject.activeSelf == true)
+                if(Sprint_Bar.gameObject.activeSelf == true)
                 {
-                    Sprint_Bar_Ui.gameObject.SetActive(false);
+                    Sprint_Bar.gameObject.SetActive(false);
                 }
             }
         }

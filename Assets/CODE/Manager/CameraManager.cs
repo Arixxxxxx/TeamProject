@@ -14,8 +14,17 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float pos_MinusY;
     [SerializeField] float pos_PlusY;
     [Header("Camera Zoom value = 4 value")]
+    [Space]
+    [SerializeField] float boss_Minusx;
+    [SerializeField] float boss_PlusX;
+    [SerializeField] float boss_MinusY;
+    [SerializeField] float booss_PlusY;
+    [Header("Camera Zoom value = 4 value")]
     [SerializeField] float[] camZoomValue;
     [SerializeField] float zoomOutSpeed;
+    GameManager gm;
+    int stageLv;
+    
     private void Awake()
     {
         mainCam = Camera.main;
@@ -30,13 +39,14 @@ public class CameraManager : MonoBehaviour
     }
     void Start()
     {
-        
+        gm = GameManager.Inst;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        stageLv = SpawnManager.inst.StageLv;
     }
 
     private void LateUpdate()
@@ -45,13 +55,27 @@ public class CameraManager : MonoBehaviour
     }
     private void playerCamsLimitPos()
     {
+      if(gm.EnterBossRoom == false)
+        {
+            Vector3 campos = playerCam.transform.position;
+            campos.x = Mathf.Clamp(campos.x, pos_Minusx, pos_PlusX);
+            campos.y = Mathf.Clamp(campos.y, pos_MinusY, pos_PlusY);
 
-        Vector3 campos = playerCam.transform.position;
-        campos.x = Mathf.Clamp(campos.x, pos_Minusx, pos_PlusX);
-        campos.y = Mathf.Clamp(campos.y, pos_MinusY, pos_PlusY);
+            mainCam.transform.position = campos;
+            playerCam.transform.position = campos;
+        }
+      else if(gm.EnterBossRoom == true) 
+        {
+            Vector3 campos = playerCam.transform.position;
+            campos.x = Mathf.Clamp(campos.x, boss_Minusx, boss_PlusX);
+            campos.y = Mathf.Clamp(campos.y, boss_MinusY, booss_PlusY);
 
-        mainCam.transform.position = campos;
-        playerCam.transform.position = campos;
+            mainCam.transform.position = campos;
+            playerCam.transform.position = campos;
+        }
+            
+       
+     
     }
 
     /// <summary>

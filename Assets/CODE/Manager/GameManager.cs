@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] int FieldEnemy;
 
     int sceneNumber;
+    [SerializeField]  bool enterBossRoom;
+    public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
+    bool bossMode;
+    public bool BossMode { get { return bossMode; } set { bossMode = value; } }
     private void Awake()
     {
         if(Inst == null)

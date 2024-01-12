@@ -52,9 +52,9 @@ public class Player_Skill_System : MonoBehaviour
     [SerializeField] int Passive_4_Lv; // 공격력증가 5%씩
     [SerializeField] float[] Passive_4_AttackPowerAdd;
 
-    
 
 
+    Transform S_3_StartPos;
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
     Movement charMove_Sc;
@@ -77,6 +77,7 @@ public class Player_Skill_System : MonoBehaviour
     {
         _updaterSystem = GetComponent<Skill_Ui_UpdaterSystem>();
         Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
+        S_3_StartPos = transform.Find("Skill_LIst/S_3").GetComponent<Transform>();
     }
     void Start()
     {
@@ -263,6 +264,7 @@ public class Player_Skill_System : MonoBehaviour
 
     float skill_3_ShotCount;
     float skill_3_ShotTimer;
+    [SerializeField] float s3_StartAddX, s3_StartAddY;
     private void Skill_3_AutoFire()
     {
         if (Skill_3_Level == 0)  // 레벨 0 리턴
@@ -282,8 +284,8 @@ public class Player_Skill_System : MonoBehaviour
         {
             skill_3_ShotCount = 0;
             GameObject obj = PoolManager.Inst.F_GetPlayerBullet(2);
-            //Passive_4_AttackPowerAdd[Passive_4_Lv]
-            obj.transform.position = Set_RandomValue();
+            Vector3 ransPos = Set_RandomValue();
+            obj.transform.position = ransPos + new Vector3(s3_StartAddX, s3_StartAddY);
             obj.SetActive(true);
         }
     }
@@ -300,12 +302,12 @@ public class Player_Skill_System : MonoBehaviour
         }
         else if (randomX == 1)
         {
-            RanX = Random.Range(1f, 8.0f);
+            RanX = Random.Range(1f, 10.0f);
         }
 
         if (randomY == 0)
         {
-            RanY = Random.Range(3f, -2f);
+            RanY = Random.Range(2f, -4f);
         }
         else if (randomY == 1)
         {

@@ -81,9 +81,9 @@ MonoBehaviour:
     Skill_Text: "\uCE90\uB9AD\uD130 \uC8FC\uC704\uB97C\n\uACF5\uC804\uD558\uB294
       \uD654\uC5FC\uAD6C \uC0DD\uC131"
     Img: {fileID: 1724552439, guid: 0699608aa079a9e47905ec3afb5698d9, type: 3}
-  - Skill_Name: "\uD654\uC5FC \uBD84\uC218"
-    Skill_Text: "\uCE90\uB9AD\uD130 \uC8FC\uC704 \uBB34\uC791\uC704\n\uC9C0\uC810\uC5D0
-      \uBD84\uC218\uB97C \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
+  - Skill_Name: "\uC6A9\uC554 \uBD84\uCD9C"
+    Skill_Text: "\uCE90\uB9AD\uD130 \uC8FC\uC704 \uBB34\uC791\uC704\n\uC9C0\uC810\uC73C\uB85C
+      \uC6A9\uC554\uC774 \uBD84\uCD9C\uB429\uB2C8."
     Img: {fileID: -918596666, guid: 0699608aa079a9e47905ec3afb5698d9, type: 3}
   - Skill_Name: "\uD654\uC5FC\uBCF4\uD638\uB9C9"
     Skill_Text: "\uCE90\uB9AD\uD130 \uC8FC\uC704\uB97C \uD654\uC5FC\uC758\n\uC5F4\uAE30\uB85C
