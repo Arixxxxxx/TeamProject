@@ -20,6 +20,7 @@ public class Exp_Coin : MonoBehaviour
     Rigidbody2D rb;
     Vector3 startPos;
     Vector2 currentVelocity = Vector2.zero;
+    [SerializeField] bool magnet;
     private void Awake()
     {
         boxColl = GetComponent<BoxCollider2D>();
@@ -47,6 +48,7 @@ public class Exp_Coin : MonoBehaviour
         pos = Vector3.zero;
         action0 = false;
         action1 = false;
+        magnet = false;
     }
 
     /// <summary>
@@ -73,10 +75,12 @@ public class Exp_Coin : MonoBehaviour
 
     [SerializeField] float action0_Dur;
     float count;
-    float speed = 4;
+    // 보석이 당겨지는 속도
+    [SerializeField] float inputSpeed;
+    [SerializeField] float magnetSpeed;
     private void coinMoving()
     {
-        if (action0) 
+        if (action0 && !magnet) 
         {
             pos = (transform.position - target.transform.position).normalized ;
             rb.AddForce(pos * 5f, ForceMode2D.Impulse);
@@ -93,23 +97,41 @@ public class Exp_Coin : MonoBehaviour
             }
         }
 
-        if (action1)
+        if (action1 && !magnet)
         {
             
             if (boxColl.enabled == false)
             {
                 boxColl.enabled = true;
             }
-            speed += Time.deltaTime;
+            magnetSpeed += Time.deltaTime;
+
+            Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
+            rb.MovePosition(rb.position +  ppos * Time.deltaTime * magnetSpeed);
+
+        }
+
+        if(magnet == true)
+        {
+            if (boxColl.enabled == false)
+            {
+                boxColl.enabled = true;
+            }
+            inputSpeed += Time.deltaTime;
 
             Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
             //pos = (target.transform.position - transform.position).normalized;
-            rb.MovePosition(rb.position +  ppos * Time.deltaTime * speed);
-
+            rb.MovePosition(rb.position + ppos * Time.deltaTime * inputSpeed);
         }
 
     }
 
+    public void F_magnetActive()
+    {
+        circleColl.enabled = false;
+        boxColl.enabled = true;
+        magnet = true;
+    }
 
     [Header("#체크")]
     [SerializeField] bool action0, action1;

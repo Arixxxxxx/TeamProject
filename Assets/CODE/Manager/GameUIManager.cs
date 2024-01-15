@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -11,8 +12,13 @@ public class GameUIManager : MonoBehaviour
 
     // InGame Info Bar
     [Header("# Info Window Close Time")]
+    GameObject InfoObj;
     Animator infoAnim;
+    Image infoBg;
     TMP_Text infoText;
+    Color aZeroColor = new Color(1, 1, 1, 0);
+    Color aColorUP = new Color(0, 0, 0, 0.3f);
+    WaitForSeconds infoBarColse;
     [SerializeField] float closeTime;
     private void Awake()
     {
@@ -28,8 +34,12 @@ public class GameUIManager : MonoBehaviour
     }
     void Start()
     {
-        infoAnim = UI.transform.Find("GameInfoMSG").GetComponent<Animator>();
-        infoText = infoAnim.GetComponentInChildren<TMP_Text>();
+        InfoObj = UI.transform.Find("GameInfoMSG").gameObject;
+        infoText = InfoObj.GetComponentInChildren<TMP_Text>();
+        infoAnim = infoText.GetComponent<Animator>();
+        infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
+        infoBarColse = new WaitForSeconds(closeTime);
+        
     }
 
     // Update is called once per frame
@@ -45,15 +55,15 @@ public class GameUIManager : MonoBehaviour
     public void F_GameInfoOpen(int value)
     {
         string alramText = string.Empty;
-
+        
         switch (value)
         {
             case 1:
-                alramText = "< 숲 > 의 지형이 해금되었습니다.";
+                alramText = "< 성당 > 으로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 break;
 
             case 2:
-                alramText = "< 성당 > 지형이 해금되었습니다.";
+                alramText = "< 성당 > 지형이 해금되었습니다. \n 맵 우측으로 이동하세요!";
                 break;
 
             case 3:
@@ -64,19 +74,49 @@ public class GameUIManager : MonoBehaviour
                 alramText = "게임이 시작되었습니다.";
                 break;
         }
-
+        
         infoText.text = alramText;
 
-        if (infoAnim.gameObject.activeSelf == false) 
+       
+
+        if (InfoObj.gameObject.activeSelf == false) 
         {
-            infoAnim.gameObject.SetActive(true);
+            InfoObj.gameObject.SetActive(true);
         }
 
-        Invoke("closeWindow", closeTime);
+        StopCoroutine(MsgInfoBar_Action());
+        StartCoroutine(MsgInfoBar_Action());
     }
 
-    private void closeWindow()
+    
+    IEnumerator MsgInfoBar_Action()
     {
-        infoAnim.SetTrigger("close");
+        
+        while(infoText.color.a < 0.95f)
+        {
+            infoBg.color += aColorUP * Time.deltaTime * 5;
+            infoText.color += aColorUP * Time.deltaTime * 5;
+            Debug.Log("1");
+            yield return null;
+        }
+
+        infoAnim.enabled = true;
+        yield return infoBarColse;
+        infoAnim.enabled = false;
+
+        while (infoText.color.a > 0.05f)
+        {
+            infoBg.color -= aColorUP * Time.deltaTime * 5;
+            infoText.color -= aColorUP * Time.deltaTime * 5;
+            Debug.Log("2");
+            yield return null;
+        }
+
+        if (InfoObj.gameObject.activeSelf == true)
+        {
+            InfoObj.gameObject.SetActive(false);
+        }
+
     }
+  
 }

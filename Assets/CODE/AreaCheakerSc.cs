@@ -6,7 +6,7 @@ public class AreaCheakerSc : MonoBehaviour
 {
     public enum AreaNumber
     {
-        Stage0, Stage1, Stage2, Boss
+        Stage0, Stage1, Stage2, Boss, Side=-1
     }
     [Header("# Only Read Cheak  in Area")]
     [SerializeField] GameObject Player;

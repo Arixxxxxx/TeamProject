@@ -149,7 +149,7 @@ public class SpawnManager : MonoBehaviour
 
         // A타입 스폰준비
         // 현재 해금 안된지역이라면 다음 으로 넘어감
-        if (cheakValueA > stageLv)
+        if (cheakValueA > stageLv || cheakValueA == -1)
         {
             EnemyA_SpawnTrs++;
         }
@@ -194,7 +194,7 @@ public class SpawnManager : MonoBehaviour
 
         // B타입 스폰준비
         //위와 동일
-        if (cheakValueB > stageLv)
+        if (cheakValueB > stageLv || cheakValueB == -1)
         {
             EnemyB_SpawnTrs++;
         }
