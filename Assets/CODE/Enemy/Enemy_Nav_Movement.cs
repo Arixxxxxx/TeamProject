@@ -99,7 +99,7 @@ public class Enemy_Nav_Movement : MonoBehaviour
             {
                 nav.speed = OriginSpeed;
             }
-            
+           
             nav.SetDestination(navTargetVec);
         }
     }

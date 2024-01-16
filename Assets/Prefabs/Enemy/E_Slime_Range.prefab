@@ -529,7 +529,7 @@ Transform:
   m_GameObject: {fileID: 7770326579380720336}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.521921, y: 2.7803354, z: 0}
+  m_LocalPosition: {x: -21.995789, y: -13.594192, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -601,7 +601,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -980574539, guid: cc96a46aeaa420645958fb9ab8a37570, type: 3}
+  m_Sprite: {fileID: 200839348, guid: e4252d115275abd42835e1a25c6a373b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -648,7 +648,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.9692308, y: 1.9711539}
+    oldSize: {x: 1.9697117, y: 1.9692308}
     newSize: {x: 1.9692308, y: 1.9692308}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -694,7 +694,7 @@ MonoBehaviour:
   TestClickMoveEnemy: 0
   isEnemyDead: 0
   Dis: 0.2
-  AttackDis: 5
+  AttackDis: 3.8
   FilpxFloat: 0.2
 --- !u!114 &438800963338139201
 MonoBehaviour:
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240db2854772ab141ace4463ead52646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 3
+  enemyName: 0
   ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40
