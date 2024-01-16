@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723929575661354573}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.99406004, w: -0.10883301}
+  m_LocalRotation: {x: 0, y: 0, z: 0.97993094, w: -0.1993373}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -87,6 +87,7 @@ MonoBehaviour:
   type: 0
   DMG: 5
   critical_Value: 0
+  EnemyList: []
 --- !u!212 &6182289148499057764
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -693,6 +693,11 @@ public class Player_Skill_System : MonoBehaviour
         
     }
 
+    public float F_Get_Skill2_CoolTime()
+    {
+        return Skill_2_Value[Skill_2_Level - 1].cooltime;
+    }
+
     private void SkillLv_Updater()
     {
         Skill_Lv[0] = Skill_0_Level;

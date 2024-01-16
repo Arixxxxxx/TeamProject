@@ -178,6 +178,7 @@ MonoBehaviour:
   type: 1
   DMG: 0
   critical_Value: 0
+  EnemyList: []
 --- !u!114 &6665542994861081695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +361,14 @@ PrefabInstance:
     - target: {fileID: 7747971090575014978, guid: dd1bb15d4b2a3d346a0290f23b128ef0, type: 3}
       propertyPath: ShapeModule.arc.value
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747971090575014978, guid: dd1bb15d4b2a3d346a0290f23b128ef0, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747971090575014978, guid: dd1bb15d4b2a3d346a0290f23b128ef0, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7747971090575014978, guid: dd1bb15d4b2a3d346a0290f23b128ef0, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
