@@ -20,6 +20,8 @@ public class GameUIManager : MonoBehaviour
     Color aColorUP = new Color(0, 0, 0, 0.3f);
     WaitForSeconds infoBarColse;
     [SerializeField] float closeTime;
+    bool playerInDarkCloud;
+    GameObject inDarkCloudWarrningWindow;
     private void Awake()
     {
         if(Inst == null)
@@ -39,7 +41,7 @@ public class GameUIManager : MonoBehaviour
         infoAnim = infoText.GetComponent<Animator>();
         infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
         infoBarColse = new WaitForSeconds(closeTime);
-        
+        inDarkCloudWarrningWindow = UI.transform.Find("WarningMSG").gameObject;
     }
 
     // Update is called once per frame
@@ -117,6 +119,18 @@ public class GameUIManager : MonoBehaviour
             InfoObj.gameObject.SetActive(false);
         }
 
+    }
+
+    public void F_SetDarkCloudWindow_OnOff(bool value)
+    {
+        if (value == true && inDarkCloudWarrningWindow.activeSelf == false) 
+        {
+            inDarkCloudWarrningWindow.SetActive(true);
+        }
+        else if(value == false && inDarkCloudWarrningWindow.activeSelf == true)
+        {
+            inDarkCloudWarrningWindow.SetActive(false);
+        }
     }
   
 }
