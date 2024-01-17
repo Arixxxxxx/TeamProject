@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] int killCount;
     [SerializeField] int spawnCount;
+    [Space]
+    [Header("# Dark Cloud Value Setting")]
+    [Space]
+    [SerializeField] ParticleSystem darkCloudeObj;
     public bool MainGameStart { get { return mainGameStart; } set { mainGameStart = value; } }
     public bool UiOpen_EveryObecjtStop { get { return uiOpen_EveryObecjtStop; } set { uiOpen_EveryObecjtStop = value; } }
     public bool IsPlayer_Dead { get { return isPlayer_Dead; } set { isPlayer_Dead = value; } }
@@ -45,6 +49,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int FieldEnemy;
 
     int sceneNumber;
+    [Header("# Boss Room Set Cheking")]
+    [Space]
     [SerializeField]  bool enterBossRoom;
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
     bool bossMode;
