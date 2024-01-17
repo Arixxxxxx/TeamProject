@@ -54,7 +54,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EmissionMultiply: 10
+    - _EmissionMultiply: 10.86
     m_Colors:
     - _HDRColor: {r: 0.7490197, g: 0.7490197, b: 0.7490197, a: 0}
   m_BuildTextureStacks: []
