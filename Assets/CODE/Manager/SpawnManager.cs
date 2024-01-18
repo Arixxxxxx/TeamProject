@@ -96,7 +96,8 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     private void SpawnLvUpdater()
     {
-        if (gm.MainGameStart == false) { return; }
+        if (gm.MainGameStart == false || Spawn_Level == 10) { return; }
+
         if (Spawn_Level == lvCounUpData.Length) { return; } //최대 설정값보다 많아지면 리턴
 
 
@@ -137,8 +138,8 @@ public class SpawnManager : MonoBehaviour
     int addCountA, addCountB;
     private void New_SpawnStart()
     {
-        if (gm.MainGameStart == false || spawnstart == false) { return; }
-
+        if (gm.MainGameStart == false || spawnstart == false || StageLv == 3 || Spawn_Level == 10) { return; }
+        
         //스폰 트랜스폼 순차적으로 돌게 작업
         EnemyA_SpawnTrs = (int)Mathf.Repeat(EnemyA_SpawnTrs, spawn_PointTrs.Length);
         EnemyB_SpawnTrs = (int)Mathf.Repeat(EnemyB_SpawnTrs, spawn_PointTrs.Length);
@@ -419,6 +420,10 @@ public class SpawnManager : MonoBehaviour
         
     }
 
+    public float F_Get_StageTime()
+    {
+        return StageLevelupTime[stageLv];
+    }
 
 }
 
@@ -437,6 +442,6 @@ public class LvCountUp
     public string nameText;
     public float nextSpawnLvtime;
     public int addCount;
-    public int IntervalDown;
+    public float IntervalDown;
 }
 

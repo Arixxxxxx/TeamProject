@@ -12,6 +12,17 @@ public class GameUIManager : MonoBehaviour
 
     // InGame Info Bar
     [Header("# Info Window Close Time")]
+    [Space]
+    [SerializeField] float closeTime;
+    [Header("#Next Map Arrow Setting")]
+    [Space]
+    [SerializeField] NextMapArrow MapArrow;
+    [Header("#Msg info")]
+    [Space]
+    [SerializeField] GameObject msgUI;
+    TMP_Text msgtext;
+
+
     GameObject InfoObj;
     Animator infoAnim;
     Image infoBg;
@@ -19,9 +30,11 @@ public class GameUIManager : MonoBehaviour
     Color aZeroColor = new Color(1, 1, 1, 0);
     Color aColorUP = new Color(0, 0, 0, 0.3f);
     WaitForSeconds infoBarColse;
-    [SerializeField] float closeTime;
+    
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
+
+   
     private void Awake()
     {
         if(Inst == null)
@@ -42,8 +55,8 @@ public class GameUIManager : MonoBehaviour
         infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
         infoBarColse = new WaitForSeconds(closeTime);
         inDarkCloudWarrningWindow = UI.transform.Find("WarningMSG").gameObject;
+        msgtext = msgUI.transform.GetComponentInChildren<TMP_Text>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -62,10 +75,12 @@ public class GameUIManager : MonoBehaviour
         {
             case 1:
                 alramText = "< 성당 > 으로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
+                F_SetNextMapArrow(1);
                 break;
 
             case 2:
-                alramText = "< 성당 > 지형이 해금되었습니다. \n 맵 우측으로 이동하세요!";
+                alramText = "< 숲 > 지형이 해금되었습니다. \n 맵 우측으로 이동하세요!";
+               
                 break;
 
             case 3:
@@ -74,6 +89,7 @@ public class GameUIManager : MonoBehaviour
 
             case -1:
                 alramText = "게임이 시작되었습니다.";
+                F_SetNextMapArrow(0);
                 break;
         }
         
@@ -98,7 +114,6 @@ public class GameUIManager : MonoBehaviour
         {
             infoBg.color += aColorUP * Time.deltaTime * 5;
             infoText.color += aColorUP * Time.deltaTime * 5;
-            Debug.Log("1");
             yield return null;
         }
 
@@ -110,7 +125,6 @@ public class GameUIManager : MonoBehaviour
         {
             infoBg.color -= aColorUP * Time.deltaTime * 5;
             infoText.color -= aColorUP * Time.deltaTime * 5;
-            Debug.Log("2");
             yield return null;
         }
 
@@ -132,5 +146,11 @@ public class GameUIManager : MonoBehaviour
             inDarkCloudWarrningWindow.SetActive(false);
         }
     }
-  
+     
+    public void F_SetNextMapArrow(int value)
+    {
+        MapArrow.F_SetTarget(value);
+        MapArrow.gameObject.SetActive(true);    
+    }
+    
 }

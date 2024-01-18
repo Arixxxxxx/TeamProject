@@ -83,7 +83,6 @@ public class Player_Stats : MonoBehaviour
     public void F_GetExp_LevelupSystem(float EXP)
     {
         if(Player_Cur_Lv ==  Player_Max_Lv) { return; }
-        Debug.Log("진입");
         float CashEXP = EXP + Cur_Exp;
         getItemPs.Play();
         // 현재 레벨에 필요한 경험치보다 많이 획득했을 때

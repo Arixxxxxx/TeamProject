@@ -31,7 +31,7 @@ public class AreaCheakerSc : MonoBehaviour
             sc.F_Input_Area_Value((int)areaNumber);
         }
 
-        if (collision.CompareTag("Player") && Player == null)
+        if (collision.CompareTag("Player") && Player == null && areaNumber != AreaNumber.Side)
         {
             SpawnManager.inst.F_PlayerAreaValue_Changer((int)areaNumber);
         }
@@ -45,7 +45,7 @@ public class AreaCheakerSc : MonoBehaviour
             spawnPointInArea.Remove(collision.gameObject);
         }
 
-        if (collision.CompareTag("Player") && Player != null)
+        if (collision.CompareTag("Player") && Player != null && areaNumber != AreaNumber.Side)
         {
             Player = null;
         }
