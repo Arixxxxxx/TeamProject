@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Exp_Coin : MonoBehaviour
 {
-    
+    public enum ItemType
+    {
+        ExpCoin, HP_Potion
+    }
+    public ItemType type;
+
     [SerializeField] Sprite[] CoinImage;
     [Header("# 스몰, 미디움, 라지 순으로 경험치 입력")]
     [SerializeField] float[] Exp_Value;
     [Header("# Drop Exp (Cheak!!)")]
     [SerializeField] float Exp;
     [SerializeField] float action0_Dis;
+
     [SerializeField] GameObject target;
     SpriteRenderer sr;
     BoxCollider2D boxColl;
@@ -152,9 +156,19 @@ public class Exp_Coin : MonoBehaviour
          //획득
         if (boxColl.enabled == true && collision.CompareTag("Player") && once == false && collision.GetComponent<Player_Stats>() != null)
         {
+            if (type == ItemType.ExpCoin)
+            {
                 boxColl.enabled = false;
                 collision.GetComponent<Player_Stats>().F_GetExp_LevelupSystem(Exp);
                 PoolManager.Inst.F_ReturnObj(gameObject, 1);
+            }
+             else if(type == ItemType.HP_Potion)
+            {
+                boxColl.enabled = false;
+                
+
+                PoolManager.Inst.F_ReturnObj(gameObject, 1);
+            }
         }
         
     }

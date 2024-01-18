@@ -19,7 +19,10 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] NextMapArrow MapArrow;
     [Header("#Msg info")]
     [Space]
-    [SerializeField] GameObject msgUI;
+    [SerializeField] Animator msgUI;
+    Image msgUI_Bg;
+    Image Img_0;
+    Image Img_1;
     TMP_Text msgtext;
 
 
@@ -55,12 +58,19 @@ public class GameUIManager : MonoBehaviour
         infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
         infoBarColse = new WaitForSeconds(closeTime);
         inDarkCloudWarrningWindow = UI.transform.Find("WarningMSG").gameObject;
+
+        msgUI_Bg = msgUI.transform.GetChild(0).GetComponent<Image>();
+        Img_0 = msgUI_Bg.transform.GetChild(0).GetComponent<Image>();
+        Img_1 = msgUI_Bg.transform.GetChild(1).GetComponent<Image>();
         msgtext = msgUI.transform.GetComponentInChildren<TMP_Text>();
     }
     // Update is called once per frame
     void Update()
     {
-        
+      if(Input.GetKeyDown(KeyCode.O)) 
+        {
+            F_SetMSGUI(0);
+        }
     }
 
     /// <summary>
@@ -153,4 +163,29 @@ public class GameUIManager : MonoBehaviour
         MapArrow.gameObject.SetActive(true);    
     }
     
+    public void F_SetMSGUI(int value)
+    {
+
+        Debug.Log("11");
+        string textValue = string.Empty;
+
+        switch (value)
+        {
+            case 0:
+                textValue = "서쪽에서부터 어둠의 기운이 몰려옵니다. 마녀를 찾아 무찔러야 합니다.";
+                break;
+
+            case 1:
+                textValue = "작성 및 사용 대기";
+                break;
+
+        }
+
+        msgtext.text = textValue;
+        msgUI_Bg.gameObject.SetActive(true);
+        Debug.Log("12");
+
+        msgUI.SetTrigger("On");
+        Debug.Log("13");
+    }
 }

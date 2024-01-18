@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
         {
             once = true;
             GameUIManager.Inst.F_GameInfoOpen(-1);
+            Invoke("OpeningMSG", 6);
         }
 
         uiOpen_EveryObecjtStopFuntion();
@@ -94,7 +95,11 @@ public class GameManager : MonoBehaviour
 
         FieldEnemy = spawnCount - killCount;
     }
-
+    
+    private void OpeningMSG()
+    {
+        GameUIManager.Inst.F_SetMSGUI(0);
+    }
     bool start_once;
     private void StartGameGetLVUP()
     {

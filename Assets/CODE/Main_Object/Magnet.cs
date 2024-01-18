@@ -40,7 +40,10 @@ public class Magnet : MonoBehaviour
         {
             for(int i  = 0; i < exp.Length; i++)
             {
-                exp[i].F_magnetActive();
+                if (exp[i].type == Exp_Coin.ItemType.ExpCoin)
+                {
+                    exp[i].F_magnetActive();
+                }
             }
 
             gameObject.SetActive(false);
