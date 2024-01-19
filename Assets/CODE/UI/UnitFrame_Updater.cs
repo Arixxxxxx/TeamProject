@@ -164,11 +164,27 @@ public class UnitFrame_Updater : MonoBehaviour
         }
     }
 
-
-    public void F_Set_Unitframe_DMG(float DMG)
+    /// <summary>
+    /// 유닛프레임 숫자출력
+    /// </summary>
+    /// <param name="DMG"> 값 </param>
+    /// <param name="value"> 0 피격 / 1회복</param>
+    public void F_Set_Unitframe_DMG(float DMG, int value)
     {
-        Unitframe_Dmg_Font.text = DMG.ToString();
-        Unitframe_Dmg_Anim.SetTrigger("hit");
+        if(value == 0)
+        {
+            Unitframe_Dmg_Font.color = new Color(1, 1, 0.3f);
+            Unitframe_Dmg_Font.text = DMG.ToString();
+            Unitframe_Dmg_Anim.SetTrigger("hit");
+        }
+        else if(value == 1)
+        {
+            Unitframe_Dmg_Font.color = new Color(0.3f, 1, 0);
+            Unitframe_Dmg_Font.text = DMG.ToString();
+            Unitframe_Dmg_Anim.SetTrigger("Heal");
+
+        }
+        
     }
     public float F_Get_GameTime()
     {

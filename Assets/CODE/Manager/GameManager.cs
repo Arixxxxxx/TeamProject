@@ -56,7 +56,8 @@ public class GameManager : MonoBehaviour
     // 보스이동시 필요한 변수들
     [SerializeField] SpriteRenderer[] playerAndDragon;
     [SerializeField] ParticleSystem telePortPs;
-
+    [SerializeField] float Action0_Dleay;
+    [SerializeField] Transform[] tellPoint;
     
 
     [SerializeField]  bool enterBossRoom;
@@ -96,6 +97,9 @@ public class GameManager : MonoBehaviour
         telePortPs = playerAndDragon[0].transform.Find("PS/Teleport").GetComponent<ParticleSystem>();
 
         teleportDelay = new WaitForSeconds(telDelay);
+        bossMapAction0_Delay = new WaitForSeconds(Action0_Dleay);
+
+        
     }
 
     bool once;
@@ -111,14 +115,11 @@ public class GameManager : MonoBehaviour
         uiOpen_EveryObecjtStopFuntion();
         UiOpen_Cheaker();
         StartGameGetLVUP();
-        moveStop_Funtion();
+        
 
         FieldEnemy = spawnCount - killCount;
 
-        if(Input.GetKeyDown(KeyCode.F)) 
-        {
-            TelePort();
-        }
+     
     }
     
     private void OpeningMSG()
@@ -327,38 +328,64 @@ public class GameManager : MonoBehaviour
         GameStop_Ui_Window[2].SetActive(true);
     }
 
-    private void moveStop_Funtion()
-    {
-        if (moveStop_Ui_Windows[0].activeSelf)
-        {
-            MoveStop = true;
-        }
-        else
-        {
-            MoveStop = false;
-        }
-    }
+  
 
     bool waitCorutine;
-    public void TelePort()
+    public void TelePort(int value)
     {
         if(waitCorutine == true) { return; }
 
         waitCorutine = true;
 
-        StartCoroutine(tell());
+        StartCoroutine(tell(value));
     }
 
     WaitForSeconds teleportDelay;
+    WaitForSeconds bossMapAction0_Delay;
     [SerializeField] float telDelay;
-    IEnumerator tell()
+    IEnumerator tell(int value)
     {
+        telePortPs.gameObject.SetActive(true);
+        yield return null;
+
         playerAndDragon[0].enabled = false;
         playerAndDragon[1].gameObject.SetActive(false);
-        telePortPs.gameObject.SetActive(true);
-        yield return teleportDelay;
-        playerAndDragon[0].enabled = true;
-        playerAndDragon[1].gameObject.SetActive(true);
+
+        switch (value) 
+        {
+            case 0: // 스킬 텔레포트용
+        
+                yield return teleportDelay;
+                playerAndDragon[0].enabled = true;
+                playerAndDragon[1].gameObject.SetActive(true);
+                break;
+
+            case 1:
+
+                MoveStop = true;
+                playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(false);
+                yield return new WaitForSeconds(0.3f);
+                Cutton_Controller.inst.F_FadeCuttonActive(1.8f);
+                yield return new WaitForSeconds(1f);
+
+                // 플레이어 위치이동
+                EnterBossRoom = true;
+                PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
+                
+
+                // 이동
+
+                yield return new WaitForSeconds(2.1f);
+                telePortPs.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+                playerAndDragon[0].enabled = true;
+                playerAndDragon[1].gameObject.SetActive(true);
+                playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(true);
+                MoveStop = false;
+                break;
+        }
+
+
 
        
         waitCorutine = false;

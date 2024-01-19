@@ -12,8 +12,11 @@ public class Dmg_Object : MonoBehaviour
     [SerializeField] float critical_Value;
     [SerializeField] List<GameObject> EnemyList = new List<GameObject>();
     float s2_SkillCoolTime;
-    
+
     Player_Skill_System skill;
+
+    [SerializeField] GameObject bossObj;
+    Boss_Status boss_stat_sc;
     void Start()
     {
         skill = Hub.Inst.player_skill_system_sc;
@@ -21,14 +24,14 @@ public class Dmg_Object : MonoBehaviour
 
     private void OnEnable()
     {
-      
+
     }
     // Update is called once per frame
     void Update()
     {
         //if (skill != null)
         //{
-            critical_Value = skill.F_Get_Player_Critical();
+        critical_Value = skill.F_Get_Player_Critical();
         //}
 
         Dmg_Updater();
@@ -38,30 +41,30 @@ public class Dmg_Object : MonoBehaviour
 
     }
 
-    float count;
+    float count, count1;
+    float dice1;
 
     // È­¿°º¸È£¸· Æ½ ´ë¹ÌÁö
-    private void S2_Attack_Function() 
+    private void S2_Attack_Function()
     {
         count += Time.deltaTime;
+        count1 += Time.deltaTime;
 
+        //ÂÌ¸÷ °ø°Ý
         if (type == SkillType.Skill_2 && EnemyList.Count != 0)
         {
-            
             if (s2_SkillCoolTime != skill.F_Get_Skill2_CoolTime()) // ½ºÅ³·¹º§º° ÄðÅ¸ÀÓ°¡Á®¿È
             {
                 s2_SkillCoolTime = skill.F_Get_Skill2_CoolTime();
             }
 
-            
-            
-            if(count > s2_SkillCoolTime )
+            if (count > s2_SkillCoolTime)
             {
                 count = 0;
-                 
-                for( int i = 0; i < EnemyList.Count; i++ )
+
+                for (int i = 0; i < EnemyList.Count; i++)
                 {
-                    EnemyStats sc =  EnemyList[i].GetComponent<EnemyStats>();
+                    EnemyStats sc = EnemyList[i].GetComponent<EnemyStats>();
 
                     dice = Random.Range(0, 100);
 
@@ -75,9 +78,37 @@ public class Dmg_Object : MonoBehaviour
                     }
                 }
             }
-
         }
+
+
+            // º¸½º°ø°Ý
+            if (type == SkillType.Skill_2 && bossObj != null)
+            {
+                if (s2_SkillCoolTime != skill.F_Get_Skill2_CoolTime()) // ½ºÅ³·¹º§º° ÄðÅ¸ÀÓ°¡Á®¿È
+                {
+                    s2_SkillCoolTime = skill.F_Get_Skill2_CoolTime();
+                }
+
+                if (count1 > s2_SkillCoolTime)
+                {
+                    count1 = 0;
+                    dice1 = Random.Range(0, 100);
+
+                    if (dice1 < critical_Value)
+                    {
+                        boss_stat_sc.F_Enemy_On_Hit(DMG, true);
+                    }
+                    else
+                    {
+                        boss_stat_sc.F_Enemy_On_Hit(DMG, false);
+
+                    }
+                }
+
+            }
     }
+
+
     private void Dmg_Updater()
     {
         switch (type)
@@ -104,14 +135,24 @@ public class Dmg_Object : MonoBehaviour
                 break;
         }
     }
-  
+
     float dice;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (type == SkillType.Skill_2 && EnemyList.Contains(collision.gameObject) == false && collision.CompareTag("Enemy")) 
+        if (type == SkillType.Skill_2 && EnemyList.Contains(collision.gameObject) == false && collision.CompareTag("Enemy") && collision.gameObject.name != "Boss")
         {
             EnemyList.Add(collision.gameObject);
+        }
+
+        if (type == SkillType.Skill_2 && bossObj == null && collision.CompareTag("Enemy") && collision.gameObject.name == "Boss")
+        {
+            if (boss_stat_sc == null)
+            {
+                boss_stat_sc = collision.GetComponent<Boss_Status>();
+            }
+
+            bossObj = collision.gameObject;
         }
 
 
@@ -131,8 +172,9 @@ public class Dmg_Object : MonoBehaviour
         }
 
         //º¸½º
-        if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null  && type != SkillType.Skill_2)
+        if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null && type != SkillType.Skill_2)
         {
+
             dice = Random.Range(0, 100);
 
             if (dice < critical_Value)
@@ -151,6 +193,11 @@ public class Dmg_Object : MonoBehaviour
         if (type == SkillType.Skill_2 && EnemyList.Contains(collision.gameObject) == true)
         {
             EnemyList.Remove(collision.gameObject);
+        }
+
+        if (type == SkillType.Skill_2 && bossObj != null && collision.CompareTag("Enemy") && collision.gameObject.name == "Boss")
+        {
+            bossObj = null;
         }
     }
 

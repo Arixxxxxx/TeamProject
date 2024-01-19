@@ -100,7 +100,9 @@ public class GameUIManager : MonoBehaviour
 
             case -1:
                 alramText = "게임이 시작되었습니다.";
-                F_SetNextMapArrow(0);
+
+                F_SetNextMapArrow(0); // 화살표 팝업
+
                 break;
         }
         
@@ -198,5 +200,6 @@ public class GameUIManager : MonoBehaviour
     public void F_OpenSelectWindow(int value)
     {
         optionWindow_Con.F_SetSelectWindowUI_Open(value);
+        GameManager.Inst.MoveStop = true;
     }
 }

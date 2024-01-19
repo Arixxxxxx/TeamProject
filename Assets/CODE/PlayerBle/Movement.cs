@@ -29,6 +29,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float TeleportLimitM_X;
     [SerializeField] float TeleportLimitP_Y;
     [SerializeField] float TeleportLimitM_Y;
+    [Header("BossRoom Limit Telleport")]
+    [Space]
+    [SerializeField][Tooltip("X,-X,Y,-Y")] float[] TeleportLimit;
 
     private void Awake()
     {
@@ -230,29 +233,53 @@ public class Movement : MonoBehaviour
     IEnumerator Player_Input_Spacebar_TelePort() // 순간이동 로직 코루틴
     {
         doTeleport = true;
-        //anim.SetTrigger("Tel");
-        GameManager.Inst.TelePort();
+        //anim.SetTrigger("Tel"); // 애니메이션
+        GameManager.Inst.TelePort(0); // 파티클로 변경 24/01/19
         yield return TelePortDealys;
         Vector2 cheakPos = rb.position + moveVec * TeleportDistance;
 
-        //순간이동 좌표값 제한 
-        if (cheakPos.x < TeleportLimitM_X)
+        if(gm.EnterBossRoom == false)
         {
-            cheakPos.x = TeleportLimitM_X;
-        }
-        else if (cheakPos.x > TeleportLimitP_X[SpawnManager.inst.StageLv]) 
-        {
-            cheakPos.x = TeleportLimitP_X[SpawnManager.inst.StageLv];
-        }
+            if (cheakPos.x < TeleportLimitM_X)
+            {
+                cheakPos.x = TeleportLimitM_X;
+            }
+            else if (cheakPos.x > TeleportLimitP_X[SpawnManager.inst.StageLv])
+            {
+                cheakPos.x = TeleportLimitP_X[SpawnManager.inst.StageLv];
+            }
 
-        if (cheakPos.y < TeleportLimitM_Y)
-        {
-            cheakPos.y = TeleportLimitM_Y;
+            if (cheakPos.y < TeleportLimitM_Y)
+            {
+                cheakPos.y = TeleportLimitM_Y;
+            }
+            else if (cheakPos.y > TeleportLimitP_Y)
+            {
+                cheakPos.y = TeleportLimitP_Y;
+            }
         }
-        else if (cheakPos.y > TeleportLimitP_Y)
+        else // 보스방일시
         {
-            cheakPos.y = TeleportLimitP_Y;
+            if (cheakPos.x < TeleportLimit[1])
+            {
+                cheakPos.x = TeleportLimit[1];
+            }
+            else if (cheakPos.x > TeleportLimit[0])
+            {
+                cheakPos.x = TeleportLimit[0];
+            }
+
+            if (cheakPos.y < TeleportLimit[3])
+            {
+                cheakPos.y = TeleportLimit[3];
+            }
+            else if (cheakPos.y > TeleportLimit[2])
+            {
+                cheakPos.y = TeleportLimit[2];
+            }
         }
+        //순간이동 좌표값 제한 
+      
 
         // 이동
         rb.position = cheakPos;

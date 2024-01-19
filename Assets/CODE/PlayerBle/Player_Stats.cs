@@ -123,7 +123,7 @@ public class Player_Stats : MonoBehaviour
         {
             player_On_Hit = true;
             Player_CurHP -= DMG;
-            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG);
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG,0);
             Invoke("Player_OnHit_False", noDMG_Time);
 
             if (Player_CurHP <= 0)
@@ -186,13 +186,16 @@ public class Player_Stats : MonoBehaviour
         if(HPRecovery > CanRecoveryHP) // 회복해야할 양보다 포션양이 더 크다면
         {
             Player_CurHP = Player_MaxHP; // 풀피만들어줌
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(CanRecoveryHP, 1);
         }
         else if (HPRecovery < CanRecoveryHP) // 그게 아니라면 
         {
             Player_CurHP += HPRecovery; // 회복 포션만큼만
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(HPRecovery, 1);
         }
 
         useHpPoition.gameObject.SetActive(true);
+        
         // 파티클 재생
     }
     public int F_Get_Player_LV()

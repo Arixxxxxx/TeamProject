@@ -27,6 +27,7 @@ public class OptionWindow_Controller : MonoBehaviour
     TMP_Text optionText;
     Button yesBtn;
     Button noBtn;
+    GameObject backLight;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class OptionWindow_Controller : MonoBehaviour
         optionText = selectWindow.transform.Find("Bg/Text").GetComponent<TMP_Text>();
         yesBtn = selectWindow.transform.Find("Bg/Yes").GetComponent <Button>();
         noBtn = selectWindow.transform.Find("Bg/No").GetComponent <Button>();
+        backLight = selectWindow.transform.Find("Bg/Light2").gameObject;
 
         Btn_Init();
     }
@@ -66,17 +68,22 @@ public class OptionWindow_Controller : MonoBehaviour
         {
             case 0:
                 optionText.text = "마녀방 (보스) 으로 이동하시겠습니까?";
-                yesBtn.onClick.AddListener(() => 
+
+                yesBtn.onClick.AddListener(() =>  //Yes 버튼
                 {
-                    Debug.Log("순간이동");
+                    backLight.SetActive(false);
+                    GameManager.Inst.TelePort(1);
                     // 연출
 
                     //창닫기
                     selectWindow.gameObject.SetActive(false);
                 });
-                noBtn.onClick.AddListener(() => 
+
+                noBtn.onClick.AddListener(() =>  // No 버튼
                 {
+                    backLight.SetActive(false);
                     selectWindow.gameObject.SetActive(false);
+                    GameManager.Inst.MoveStop = false;
                   //창닫기
 
                 });

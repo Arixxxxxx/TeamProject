@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class Btn_IPointer_Enter_Sc : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public enum BtnType
+    {
+        SkillBtn, SelectWindow
+    }
+    public BtnType type;
 
     Button Btn;
     Image Light;
@@ -17,9 +22,25 @@ public class Btn_IPointer_Enter_Sc : MonoBehaviour, IPointerEnterHandler, IPoint
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Light.gameObject.activeSelf == false && Btn.interactable == true)
+     
+        switch (type)
         {
-            Light.gameObject.SetActive(true);  
+            case BtnType.SkillBtn:
+
+                if (Light.gameObject.activeSelf == false && Btn.interactable == true)
+                {
+                    Light.gameObject.SetActive(true);
+                }
+
+                break;
+
+            case BtnType.SelectWindow:
+                if (Light.gameObject.activeSelf == false)
+                {
+                    Light.transform.position = Btn.transform.position;
+                    Light.gameObject.SetActive(true);
+                }
+                break;
         }
     }
 
@@ -34,15 +55,38 @@ public class Btn_IPointer_Enter_Sc : MonoBehaviour, IPointerEnterHandler, IPoint
     // Start is called before the first frame update
     void Start()
     {
-        Light = transform.parent.Find("Light2").GetComponent<Image>();
+        switch (type) 
+        {
+          case BtnType.SkillBtn:
+                Light = transform.parent.Find("Light2").GetComponent<Image>();
+                break;
+
+                case BtnType.SelectWindow:
+                Light = transform.parent.Find("Light2").GetComponent<Image>();
+                break;
+        }
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-         if(Btn.interactable == false)
+        switch (type)
         {
-            Light.gameObject.SetActive(false);
+            case BtnType.SkillBtn:
+
+                if (Btn.interactable == false)
+                {
+                    Light.gameObject.SetActive(false);
+                }
+
+                break;
+
+            case BtnType.SelectWindow:
+              
+                break;
         }
+       
     }
 }
