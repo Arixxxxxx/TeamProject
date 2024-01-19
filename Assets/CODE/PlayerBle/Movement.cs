@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+
 
 public class Movement : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class Movement : MonoBehaviour
     bool InputLshift;
     Image Sprint_Bar_Ui;
     GameObject Sprint_Bar;
+    GameManager gm;
+
 
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
@@ -44,9 +46,11 @@ public class Movement : MonoBehaviour
         OriginSpeed = CharMove_Speed;
         Origin_TeleportCoolTim = TeleportCoolTime;
         Origin_TeleportDistance = TeleportDistance;
+        gm = GameManager.Inst;
     }
     private void FixedUpdate()
     {
+        if(gm.MoveStop == true) { return; }
         Move_Character();
     }
 
@@ -73,6 +77,8 @@ public class Movement : MonoBehaviour
 
     private void Change_Sclae_Xvalue()
     {
+        if (gm.MoveStop == true) { return; }
+
         if (moveVec.x < 0)
         {
             sr.flipX = true;
@@ -86,6 +92,8 @@ public class Movement : MonoBehaviour
     float animMoveCeahkFloat;
     private void Animator_Updater()
     {
+        if (gm.MoveStop == true) { anim.SetBool("Run", false); return; }
+
         float horizontalCheck = Mathf.Abs(moveVec.x);
         float verticalCheck = Mathf.Abs(moveVec.y);
         animMoveCeahkFloat = horizontalCheck + verticalCheck;

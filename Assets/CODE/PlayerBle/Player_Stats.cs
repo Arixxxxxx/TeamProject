@@ -16,7 +16,7 @@ public class Player_Stats : MonoBehaviour
     [Header("# Hp Info")]
     [Space]
     [SerializeField] float Player_CurHP;
-    [SerializeField] float Player_MaxHP;
+    [SerializeField] float Player_MaxHP; 
     [SerializeField] float LevelUp_Plus_Hp;
     [Header("# Hp Info")]
     [Space]
@@ -29,15 +29,18 @@ public class Player_Stats : MonoBehaviour
     float RecoveryCount;
     SpriteRenderer sr;
     ParticleSystem getItemPs;
-
+    ParticleSystem useHpPoition;
+    
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        getItemPs = transform.Find("PS/GetEXP").GetComponent<ParticleSystem>(); 
+        getItemPs = transform.Find("PS/GetEXP").GetComponent<ParticleSystem>();
+        useHpPoition = transform.Find("PS/HP_Potion_Particle").GetComponent<ParticleSystem>();
     }
     void Start()
     {
-        Origin_MaxHP = Player_MaxHP; ;
+        Origin_MaxHP = Player_MaxHP;
+        
     }
 
     // Update is called once per frame
@@ -170,6 +173,28 @@ public class Player_Stats : MonoBehaviour
         return OutPut_PlayerInfo[value];
     }
      
+    /// <summary>
+    /// HP 회복포션 사용 함수
+    /// </summary>
+    /// <param name="value"> 회복하고자 하는 생명력% 입력</param>
+    public void F_Use_HP_Potion(float value)
+    {
+        float mathfPercentValue = value * 0.01f; // 30으로 들어왔으면 0.3처럼 소수점 단위로 으로 변환 
+        float HPRecovery = Player_MaxHP * mathfPercentValue; // 회복템으로 회복가능한 양 먼저 산출
+        float CanRecoveryHP = Player_MaxHP - Player_CurHP; // 현재 회복가능한 양도 체크
+
+        if(HPRecovery > CanRecoveryHP) // 회복해야할 양보다 포션양이 더 크다면
+        {
+            Player_CurHP = Player_MaxHP; // 풀피만들어줌
+        }
+        else if (HPRecovery < CanRecoveryHP) // 그게 아니라면 
+        {
+            Player_CurHP += HPRecovery; // 회복 포션만큼만
+        }
+
+        useHpPoition.gameObject.SetActive(true);
+        // 파티클 재생
+    }
     public int F_Get_Player_LV()
     {
         return Player_Cur_Lv;

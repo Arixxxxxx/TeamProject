@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +10,9 @@ public class OptionWindow_Controller : MonoBehaviour
     [Header("# Insert Main UI GameOBJ")]
     [Space]
     [SerializeField] GameObject Ui_Parent_Obj;
+        
     GameObject MainCanvas;
     GameObject SeletWindowList;
-
     GameObject Window_0;
 
     //인게임 스크린UI 버튼들
@@ -21,7 +22,11 @@ public class OptionWindow_Controller : MonoBehaviour
      Button MainWindow_0_Btn_0;
      Button MainWindow_0_Btn_1;
 
-
+    /// Yes or No 버튼 
+    GameObject selectWindow;
+    TMP_Text optionText;
+    Button yesBtn;
+    Button noBtn;
 
     void Start()
     {
@@ -37,9 +42,50 @@ public class OptionWindow_Controller : MonoBehaviour
         MainWindow_0_Btn_0 = Window_0.transform.Find("PlayBtn").GetComponent<Button>();
         MainWindow_0_Btn_1 = Window_0.transform.Find("ExitBtn").GetComponent<Button>();
 
+        //선택창 초기화
+        selectWindow = MainCanvas.transform.Find("SelectBtn").gameObject;
+        optionText = selectWindow.transform.Find("Bg/Text").GetComponent<TMP_Text>();
+        yesBtn = selectWindow.transform.Find("Bg/Yes").GetComponent <Button>();
+        noBtn = selectWindow.transform.Find("Bg/No").GetComponent <Button>();
+
         Btn_Init();
     }
 
+    /// <summary>
+    /// 선택창 초기화 함수
+    /// </summary>
+    /// <param name="value">0 보스방 출입 / </param>
+    public void F_SetSelectWindowUI_Open(int value)
+    {
+        yesBtn.onClick.RemoveAllListeners();
+        noBtn.onClick.RemoveAllListeners();
+        optionText.text = string.Empty;
+
+
+        switch (value)
+        {
+            case 0:
+                optionText.text = "마녀방 (보스) 으로 이동하시겠습니까?";
+                yesBtn.onClick.AddListener(() => 
+                {
+                    Debug.Log("순간이동");
+                    // 연출
+
+                    //창닫기
+                    selectWindow.gameObject.SetActive(false);
+                });
+                noBtn.onClick.AddListener(() => 
+                {
+                    selectWindow.gameObject.SetActive(false);
+                  //창닫기
+
+                });
+                break;
+        }
+
+        selectWindow.gameObject.SetActive(true);
+
+    }
     // Update is called once per frame
     void Update()
     {

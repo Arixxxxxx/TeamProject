@@ -36,7 +36,7 @@ public class GameUIManager : MonoBehaviour
     
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
-
+    OptionWindow_Controller optionWindow_Con;
    
     private void Awake()
     {
@@ -48,7 +48,8 @@ public class GameUIManager : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
+        optionWindow_Con = GetComponent<OptionWindow_Controller>();
     }
     void Start()
     {
@@ -183,9 +184,19 @@ public class GameUIManager : MonoBehaviour
 
         msgtext.text = textValue;
         msgUI_Bg.gameObject.SetActive(true);
-        Debug.Log("12");
+      
 
         msgUI.SetTrigger("On");
-        Debug.Log("13");
+       
+    }
+
+
+    /// <summary>
+    /// 셀렉트 옵션 활성화
+    /// </summary>
+    /// <param name="value"> 0 보스방 / 대기 </param>
+    public void F_OpenSelectWindow(int value)
+    {
+        optionWindow_Con.F_SetSelectWindowUI_Open(value);
     }
 }

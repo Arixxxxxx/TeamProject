@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
     [SerializeField] GameObject[] GameStop_Ui_Window;
+    [SerializeField] GameObject[] moveStop_Ui_Windows;
     [SerializeField] Button[] Btn;
     bool isPlayer_Dead;
 
@@ -51,10 +52,22 @@ public class GameManager : MonoBehaviour
     int sceneNumber;
     [Header("# Boss Room Set Cheking")]
     [Space]
+    [SerializeField]  GameObject PlayerGroup;
+    // 보스이동시 필요한 변수들
+    SpriteRenderer[] playerAndDragon;
+    ParticleSystem telePortPs;
+
+    
+
     [SerializeField]  bool enterBossRoom;
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
     bool bossMode;
     public bool BossMode { get { return bossMode; } set { bossMode = value; } }
+
+    [Header("# For MoveStop")]
+    [Space]
+    [SerializeField] bool moveStop;
+    public bool MoveStop { get { return moveStop; } set { moveStop = value; } }
     private void Awake()
     {
         if(Inst == null)
@@ -75,8 +88,11 @@ public class GameManager : MonoBehaviour
 
         NavMapBake_init();
         sceneNumber = SceneManager.GetActiveScene().buildIndex;
-       
 
+        //순간이동 변수들
+        playerAndDragon[0] = PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>();
+        playerAndDragon[1] = playerAndDragon[0].transform.Find("Dragon").GetComponent<SpriteRenderer>();
+        telePortPs = playerAndDragon[0].transform.Find("PS/Teleport").GetComponent<ParticleSystem>();
     }
 
     bool once;
@@ -92,6 +108,7 @@ public class GameManager : MonoBehaviour
         uiOpen_EveryObecjtStopFuntion();
         UiOpen_Cheaker();
         StartGameGetLVUP();
+        moveStop_Funtion();
 
         FieldEnemy = spawnCount - killCount;
     }
@@ -302,4 +319,30 @@ public class GameManager : MonoBehaviour
         GameStop_Ui_Window[2].SetActive(true);
     }
 
+    private void moveStop_Funtion()
+    {
+        if (moveStop_Ui_Windows[0].activeSelf)
+        {
+            MoveStop = true;
+        }
+        else
+        {
+            MoveStop = false;
+        }
+    }
+
+    bool waitCorutine;
+    public void BossRoomMove()
+    {
+        if(waitCorutine == true) { return; }
+
+        waitCorutine = true;
+
+        StartCoroutine(tell());
+    }
+
+    IEnumerator tell()
+    {
+        yield return null;
+    }
 }

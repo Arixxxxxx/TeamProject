@@ -24,6 +24,7 @@ public class Exp_Coin : MonoBehaviour
     Rigidbody2D rb;
     Vector3 startPos;
     Vector2 currentVelocity = Vector2.zero;
+    Player_Stats player_stats_sc;
     [SerializeField] bool magnet;
     private void Awake()
     {
@@ -159,15 +160,18 @@ public class Exp_Coin : MonoBehaviour
             if (type == ItemType.ExpCoin)
             {
                 boxColl.enabled = false;
-                collision.GetComponent<Player_Stats>().F_GetExp_LevelupSystem(Exp);
+                if(player_stats_sc == null)
+                {
+                    player_stats_sc = collision.GetComponent<Player_Stats>();
+                }
+                
+                player_stats_sc.F_GetExp_LevelupSystem(Exp);
                 PoolManager.Inst.F_ReturnObj(gameObject, 1);
             }
              else if(type == ItemType.HP_Potion)
             {
-                boxColl.enabled = false;
-                
-
-                PoolManager.Inst.F_ReturnObj(gameObject, 1);
+               
+                //PoolManager.Inst.F_ReturnObj(gameObject, 1);
             }
         }
         

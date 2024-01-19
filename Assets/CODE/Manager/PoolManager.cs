@@ -54,16 +54,20 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int Dmg_Font_Box_StartMakingEa;
     Queue<GameObject> Dmg_Font_BoxQue = new Queue<GameObject>();
 
-
-
+    [Header("# Insert Player Item Prefab Obj")]
+    [Space]
+    [SerializeField] GameObject[] Items;
+    Queue<GameObject> Items_1_Que = new Queue<GameObject>();
+    Queue<GameObject> Items_2_Que = new Queue<GameObject>();
+    Transform Item_Trs;
 
     [Header("# Insert Player Bullet Prefab Obj")]
     [Space]
     [SerializeField] GameObject[] PlayerBullet;
 
     Transform Skill_1_Trs;
-    
-    [SerializeField] int Skill_1_StartMakingEa;        
+
+    [SerializeField] int Skill_1_StartMakingEa;
     Queue<GameObject> Skill_1_Que = new Queue<GameObject>();
     [SerializeField] int Skill_1_2_StartMakingEa;
     Queue<GameObject> Skill_1_2_Que = new Queue<GameObject>();
@@ -121,6 +125,10 @@ public class PoolManager : MonoBehaviour
         Skill_3_Trs = transform.Find("Player/Skill_3").GetComponent<Transform>();
         Skill_4_Trs = transform.Find("Player/Skill_4").GetComponent<Transform>();
 
+        // 아이템
+        Item_Trs = transform.Find("Items").GetComponent<Transform>();
+
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 풀링 초기생성 ////   Enemy
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,8 +171,8 @@ public class PoolManager : MonoBehaviour
             Obj.transform.position = Vector3.zero;
             Obj.gameObject.SetActive(false);
             Orc_RangerQue.Enqueue(Obj);
-        }  
-        
+        }
+
         for (int i = 0; i < Tree_StartMakingEA; i++)
         {
             GameObject Obj = Instantiate(EnemyObj[5], TreeTrs);
@@ -275,7 +283,18 @@ public class PoolManager : MonoBehaviour
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI  및 ETC 
+        for (int i = 0; i < 2; i++) // 자석 및 물약
+        {
+            GameObject Obj = Instantiate(Items[0], Item_Trs);
+            Obj.transform.position = Vector3.zero;
+            Obj.gameObject.SetActive(false);
+            Items_1_Que.Enqueue(Obj);
 
+            GameObject Obj_HP = Instantiate(Items[1], Item_Trs);
+            Obj_HP.transform.position = Vector3.zero;
+            Obj_HP.gameObject.SetActive(false);
+            Items_2_Que.Enqueue(Obj_HP);
+        }
 
     }
     void Start()
@@ -395,7 +414,7 @@ public class PoolManager : MonoBehaviour
                 break;
 
             case 5:
-               Tree_Que.Enqueue(obj);
+                Tree_Que.Enqueue(obj);
                 break;
 
 
@@ -572,6 +591,66 @@ public class PoolManager : MonoBehaviour
         }
         return null;
     }
+    /// <summary>
+    /// 게임아이템 
+    /// </summary>
+    /// <param name="value"> 자석 / HP포션 </param>
+    /// <returns></returns>
+    public GameObject F_GetItem(int value)
+    {
+        GameObject obj = null;
+
+        switch (value)
+        {
+            case 0:
+                if (Items_1_Que.Count <= 1)
+                {
+                    obj = Instantiate(Items[0], Item_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+                obj = Items_1_Que.Dequeue();
+                return obj;
+
+            case 1:
+                if (Items_2_Que.Count <= 1)
+                {
+                    obj = Instantiate(Items[1], Item_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+                obj = Items_2_Que.Dequeue();
+                return obj;
+        }
+
+        return default;
+    }
+
+    /// <summary>
+    /// Return Item
+    /// </summary>
+    /// <param name="obj"> 자기자신 오브젝트</param>
+    /// <param name="value"> 자석 / HP포션</param>
+    public void F_ReturnItem(GameObject obj, int value)
+    {
+        obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
+
+        switch (value)
+        {
+            case 0:
+                Items_1_Que.Enqueue(obj);
+                break;
+
+            case 1:
+                Items_2_Que.Enqueue(obj);
+                break;
+
+
+        }
+    }
 
     /// <summary>
     /// 0 = Skill01 Bullet // 1 = Skill01.2 Bome // 2 = 3번스킬  // 3 = 3-2 스킬(바닥)
@@ -600,14 +679,14 @@ public class PoolManager : MonoBehaviour
 
             case 3:
                 Skill_3_2_Que.Enqueue(obj);
-                break;  
-            
+                break;
+
             case 4:
                 Transform L = obj.transform.Find("L").GetComponent<Transform>();
                 Transform R = obj.transform.Find("R").GetComponent<Transform>();
                 L.transform.localScale = Vector3.one;
                 R.transform.localScale = Vector3.one;
-                
+
                 Skill_4_Que.Enqueue(obj);
                 break;
 
