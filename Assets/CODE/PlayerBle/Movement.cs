@@ -230,8 +230,8 @@ public class Movement : MonoBehaviour
     IEnumerator Player_Input_Spacebar_TelePort() // 순간이동 로직 코루틴
     {
         doTeleport = true;
-        anim.SetTrigger("Tel");
-
+        //anim.SetTrigger("Tel");
+        GameManager.Inst.TelePort();
         yield return TelePortDealys;
         Vector2 cheakPos = rb.position + moveVec * TeleportDistance;
 

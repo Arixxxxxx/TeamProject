@@ -54,8 +54,8 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField]  GameObject PlayerGroup;
     // 보스이동시 필요한 변수들
-    SpriteRenderer[] playerAndDragon;
-    ParticleSystem telePortPs;
+    [SerializeField] SpriteRenderer[] playerAndDragon;
+    [SerializeField] ParticleSystem telePortPs;
 
     
 
@@ -90,9 +90,12 @@ public class GameManager : MonoBehaviour
         sceneNumber = SceneManager.GetActiveScene().buildIndex;
 
         //순간이동 변수들
+        playerAndDragon = new SpriteRenderer[2];
         playerAndDragon[0] = PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>();
         playerAndDragon[1] = playerAndDragon[0].transform.Find("Dragon").GetComponent<SpriteRenderer>();
         telePortPs = playerAndDragon[0].transform.Find("PS/Teleport").GetComponent<ParticleSystem>();
+
+        teleportDelay = new WaitForSeconds(telDelay);
     }
 
     bool once;
@@ -111,6 +114,11 @@ public class GameManager : MonoBehaviour
         moveStop_Funtion();
 
         FieldEnemy = spawnCount - killCount;
+
+        if(Input.GetKeyDown(KeyCode.F)) 
+        {
+            TelePort();
+        }
     }
     
     private void OpeningMSG()
@@ -172,7 +180,7 @@ public class GameManager : MonoBehaviour
                 globalLight.intensity = 1;
 
              
-
+                 
                 break;
 
                 case false:
@@ -332,7 +340,7 @@ public class GameManager : MonoBehaviour
     }
 
     bool waitCorutine;
-    public void BossRoomMove()
+    public void TelePort()
     {
         if(waitCorutine == true) { return; }
 
@@ -341,8 +349,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(tell());
     }
 
+    WaitForSeconds teleportDelay;
+    [SerializeField] float telDelay;
     IEnumerator tell()
     {
-        yield return null;
+        playerAndDragon[0].enabled = false;
+        playerAndDragon[1].gameObject.SetActive(false);
+        telePortPs.gameObject.SetActive(true);
+        yield return teleportDelay;
+        playerAndDragon[0].enabled = true;
+        playerAndDragon[1].gameObject.SetActive(true);
+
+       
+        waitCorutine = false;
     }
 }
