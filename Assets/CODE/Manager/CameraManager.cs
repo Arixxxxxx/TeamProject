@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class CameraManager : MonoBehaviour
 
     Camera mainCam;
     [SerializeField] CinemachineVirtualCamera playerCam;
+    public CinemachineVirtualCamera PlayerCam { get { return playerCam; } }
+
     [SerializeField] float pos_Minusx;
     [SerializeField] float pos_PlusX;
     [SerializeField] float pos_MinusY;
@@ -47,6 +50,11 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         stageLv = SpawnManager.inst.StageLv;
+
+        if(Input.GetKeyDown(KeyCode.F)) 
+        {
+            playerCam.m_Lens.OrthographicSize = 34;  // 다보여줌
+        }
     }
 
     private void LateUpdate()
@@ -97,5 +105,83 @@ public class CameraManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void F_CameraZoomIn(float value)
+    {
+        StartCoroutine(ZoomIn(value));
+    }
+
+    float zoomInLerpValue;
+    float elapsedTime;
+    float duration = 300f;
+    IEnumerator ZoomIn(float sumValue)
+    {
+        while (playerCam.m_Lens.OrthographicSize> sumValue)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0에서 1 사이로 정규화
+
+            // Lerp 함수를 사용하여 부드럽게 값을 변경
+            zoomInLerpValue = Mathf.Lerp(playerCam.m_Lens.OrthographicSize, sumValue - 0.1f, t);
+            playerCam.m_Lens.OrthographicSize = zoomInLerpValue;
+            //playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 8;
+
+            yield return null;
+        }
+    }
+
+
+    /// <summary>
+    /// 액션씬 오프닝 연출용 함수 
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="Zoomvalue"></param>
+    /// <param name="value"> true 줌인, false 줌아웃</param>
+    /// <param name="camPositon"></param>
+    public void F_OP_CamTargetSetting(Transform target, float Zoomvalue, bool value, Transform camPositon)
+    {
+        if(value == true)
+        {
+            StartCoroutine(MoveCam(target, Zoomvalue));
+        }
+        else
+        {
+            playerCam.Follow = null;  //카메라 해제
+            playerCam.transform.position = camPositon.position; // 옴기고
+            playerCam.m_Lens.OrthographicSize = Zoomvalue;  // 다보여줌
+        }
+
+    }
+
+    [SerializeField] float dis;
+    Vector3 targetPos;
+    IEnumerator MoveCam(Transform target, float Zoomvalue)
+    {
+        dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
+        targetPos = target.transform.position - playerCam.transform.position;
+        targetPos.Normalize();
+
+        while (dis > 0.05f)
+        {
+            dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
+
+            playerCam.transform.position += new Vector3(targetPos.x, targetPos.y, 0) * Time.deltaTime * 7;
+
+            if (playerCam.m_Lens.OrthographicSize >= Zoomvalue)
+            {
+                playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 4.5f;
+            }
+
+            yield return null;
+
+            //F_CameraZoomIn(Zoomvalue);
+        }
+
+        playerCam.Follow = target;
+        playerCam.m_Lens.OrthographicSize = Zoomvalue;
+
+        Opening_Manager.inst.F_Action2Start(); // 액션 2 시작 (조작 설명)
+
     }
 }
