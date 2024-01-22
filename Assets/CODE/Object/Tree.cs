@@ -18,8 +18,7 @@ public class Tree : MonoBehaviour
     {
 
     }
-
-    bool waitPs;
+    [SerializeField] bool waitPs;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && collision.transform.position.y >= transform.position.y + 1.5f && !waitPs)
@@ -33,7 +32,7 @@ public class Tree : MonoBehaviour
         {
             waitPs = true;
             anim.SetTrigger("Touch");
-            Invoke("LeafPs", 0.2f);
+            Invoke("LeafPs", 0.05f);
         }
     }
 
