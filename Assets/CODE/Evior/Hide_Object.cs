@@ -7,6 +7,7 @@ public class Hide_Object : MonoBehaviour
     [SerializeField] List<GameObject> PlayerList = new List<GameObject>();
     [SerializeField] List<GameObject> EnemyList = new List<GameObject>();
     [SerializeField] float hide_color_A;
+    [SerializeField] float hideAddY;
     [SerializeField] Color inPlayer;
     
     
@@ -41,16 +42,27 @@ public class Hide_Object : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false  && collision.transform.position.y >= transform.position.y)
+        if(collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false  && collision.transform.position.y >= transform.position.y + hideAddY)
         {
                 PlayerList.Add(collision.gameObject);
         }
-        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y)
+        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
         {
             EnemyList.Add(collision.gameObject);
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
+        {
+            PlayerList.Add(collision.gameObject);
+        }
+        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
+        {
+            EnemyList.Add(collision.gameObject);
+        }
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {

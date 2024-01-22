@@ -125,10 +125,7 @@ public class Opening_Manager : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // 잠깐 쉬엇다가
         maintext.F_HideText(); // 텍스트 페이드아웃
         
-        for (int i = 0; i< backgroundPs.Length; i++)
-        {
-            backgroundPs[i].gameObject.SetActive(false);
-        }
+      
         Action0 = false; // 다음 연출 시작
     }
 
@@ -143,7 +140,10 @@ public class Opening_Manager : MonoBehaviour
 
         yield return new WaitForSeconds(CuttonFadeOffTime);
         bgAnim.SetTrigger("Off"); // 검은화면 제거
-
+        for (int i = 0; i < backgroundPs.Length; i++)
+        {
+            backgroundPs[i].gameObject.SetActive(false);
+        }
         yield return new WaitForSeconds(Action1_0_DelayTime);
         bgAnim.transform.parent.gameObject.SetActive(false);  //  검은화면 Enable false
 

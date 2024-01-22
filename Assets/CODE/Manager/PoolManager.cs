@@ -383,7 +383,7 @@ public class PoolManager : MonoBehaviour
 
     /// <summary>
     /// Enmey_return_Que
-    /// </summary>
+    /// </summary> 오크/버섯/스켈/슬라임/오그레인저/트리
     /// <param name="obj"> GameObject </param>
     /// <param name="value"> 0 Orc / 1 Mushroom / 2 SkeletonRanger</param>
     public void F_Return_Enemy_Obj(GameObject obj, int value)

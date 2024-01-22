@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240db2854772ab141ace4463ead52646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 0
+  for_ReturnOBJ_enemyName: 1
   ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7135bd1f53ab74985b18fb4192c854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   AttackDMG: 8
   attackSpeed: 0.8
   mushroomForce: 6

@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240db2854772ab141ace4463ead52646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 0
+  for_ReturnOBJ_enemyName: 4
   ExpCoin_DropType: 0
   CurHP: 40
   MaxHP: 40

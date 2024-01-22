@@ -232,6 +232,12 @@ public class GameManager : MonoBehaviour
         return Target;
     }
 
+
+    public float F_PlayerAndMeDistance(Vector2 StartPos)
+    {
+        float Dis = Vector2.Distance(Player.transform.position, StartPos);
+        return Dis;
+    }
     /// <summary>
     /// 투사체 각도계산
     /// </summary>

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
     public enum expCoin_DropType { Small, Medium, Large };
-    public enum EnemyName { Orc, Mushroom, SkeletonRanger, Slime };
+    public enum EnemyName { Orc, Mushroom, SkeletonRanger, Slime,  Orc_Ranger, Tree };
 
-    public EnemyName enemyName;
+    public EnemyName for_ReturnOBJ_enemyName;
     public expCoin_DropType ExpCoin_DropType;
 
     [Header("# Enemy Stats Info  ==     # ¿¹Áø ")]
@@ -129,34 +129,48 @@ public class EnemyStats : MonoBehaviour
 
     private void A_ReturnObj()
     {
-        switch (enemyName)
-        {
-            case EnemyName.Orc:
-                {
-                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 0);
-                }
-                break;
+        PoolManager.Inst.F_Return_Enemy_Obj(gameObject, (int)for_ReturnOBJ_enemyName);
 
-            case EnemyName.Mushroom:
-                {
-                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 1);
-                }
+        //switch (for_ReturnOBJ_enemyName)
+        //{
+        //    case EnemyName.Orc:
+        //        {
+        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 0);
+        //        }
+        //        break;
 
-                break;
+        //    case EnemyName.Mushroom:
+        //        {
+        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 1);
+        //        }
 
-            case EnemyName.SkeletonRanger:
-                {
-                    PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-                }
-                break;
+        //        break;
 
-            case EnemyName.Slime:
-                {
-                    //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-                }
-                break;
+        //    case EnemyName.SkeletonRanger:
+        //        {
+        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+        //        }
+        //        break;
 
-        }
+        //    case EnemyName.Slime:
+        //        {
+        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+        //        }
+        //        break;
+
+        //    case EnemyName.Orc_Ranger:
+        //        {
+        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+        //        }
+        //        break;
+
+        //    case EnemyName.Slime:
+        //        {
+        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
+        //        }
+        //        break;
+
+        //}
     }
 
 }

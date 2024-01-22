@@ -26,9 +26,10 @@ public class Magnet : MonoBehaviour
     Exp_Coin[] exp;
     Rigidbody2D rb;
     [SerializeField] float stopRigidbodyDelay;
+    [SerializeField] bool stopRigidbody;
     float count;
 
-    bool stopRigidbody;
+    
     private void Awake()
     {
         boxColl = GetComponent<BoxCollider2D>();
@@ -59,6 +60,7 @@ public class Magnet : MonoBehaviour
     private void FixedUpdate()
     {
         ActionMoving(); 
+
     }
     // Update is called once per frame
     void Update()
@@ -75,7 +77,7 @@ public class Magnet : MonoBehaviour
         action1 = false;
     }
 
-
+    bool firstTouch;
     private void ActionOpen()
     {
         if (!stopRigidbody)
@@ -90,13 +92,16 @@ public class Magnet : MonoBehaviour
 
         if (stopRigidbody)
         {
-            //rb.bodyType = RigidbodyType2D.Kinematic;
-            rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
             circleColl.enabled = true;
+            Invoke("firstTouchOn", 0.2f);
         }
     }
-
+    private void firstTouchOn()
+    {
+        firstTouch = true;
+    }
     private void ManetTrue()
     {
         exp = FindObjectsOfType<Exp_Coin>();
@@ -155,13 +160,20 @@ public class Magnet : MonoBehaviour
 
             Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
             rb.MovePosition(rb.position + ppos * Time.deltaTime * magnetSpeed);
-
+            
+            float dis = GameManager.Inst.F_PlayerAndMeDistance(transform.position);
+            if(dis < 0.2f)
+            {
+                canEat = true;
+            }
+            
         }
     }
 
+    bool canEat;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (circleColl.enabled == true && collision.CompareTag("Player"))
+        if (circleColl.enabled == true && collision.CompareTag("Player") && firstTouch == true)
         {
             target = collision.gameObject;
             action0 = true;
@@ -169,8 +181,13 @@ public class Magnet : MonoBehaviour
             circleColl.enabled = false;
         }
 
-        if (boxColl.enabled == true && collision.CompareTag("Player"))
+        if (boxColl.enabled == true && collision.CompareTag("Player") && canEat == true)
         {
+            if (player_stats_sc == null)
+            {
+                player_stats_sc = collision.GetComponent<Player_Stats>();
+            }
+
             boxColl.enabled = false;
             switch (type)
             {
@@ -180,18 +197,22 @@ public class Magnet : MonoBehaviour
 
                 case ItemType.HP_Potion:
                     boxColl.enabled = false;
-                    if (player_stats_sc == null)
-                    {
-                        player_stats_sc = collision.GetComponent<Player_Stats>();
-                    }
+                   
                     player_stats_sc.F_Use_HP_Potion(25);
                     PoolManager.Inst.F_ReturnItem(gameObject, 1);
                     break;
             }
         }
+    }
 
-
-     
-
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (circleColl.enabled == true && collision.CompareTag("Player") && firstTouch == true)
+        {
+            target = collision.gameObject;
+            action0 = true;
+            action1 = false;
+            circleColl.enabled = false;
+        }
     }
 }
