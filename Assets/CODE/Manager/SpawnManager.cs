@@ -12,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     [Space]
     [SerializeField] int Spawn_Level; // 레벨
     [SerializeField] int stageLv; // 레벨
+    public int StageRv { get { return stageLv; } }
     [SerializeField] int[] AddCount; // 스폰레벨 혹은 시간당 증가되는 몬스터량
     [SerializeField] float startDealy;
     public int StageLv { get { return stageLv; } }
