@@ -21,19 +21,27 @@ public class Hide_Object : MonoBehaviour
     {
         
     }
-
+    [SerializeField] float colorChangeSpeed;
         void Update()
     {
         if(PlayerList.Count > 0 || EnemyList.Count >0 && sr.color.a == 1)
         {
-            sr.color = inPlayer;
+            if(sr.color.a > inPlayer.a)
+            {
+                sr.color += new Color(0, 0, 0, -0.1f) * Time.deltaTime * colorChangeSpeed;
+            }
+         
             sr.sortingOrder = 10;
         }
       
        
         if (EnemyList.Count == 0 && PlayerList.Count == 0)
         {
-            sr.color = Color.white;
+            if (sr.color.a < 1)
+            {
+                sr.color += new Color(0, 0, 0, 0.1f) * Time.deltaTime * colorChangeSpeed;
+            }
+            
             sr.sortingOrder = 5;
         }
 
