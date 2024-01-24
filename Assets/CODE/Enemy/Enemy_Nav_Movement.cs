@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy_Nav_Movement : MonoBehaviour
 {
@@ -15,16 +16,17 @@ public class Enemy_Nav_Movement : MonoBehaviour
     Camera cam;
     Vector2 navTargetVec;
     NavMeshAgent nav;
-    SpriteRenderer sr;
+
     Enemy_Attack attackSC;
     GameManager gm;
     Animator anim;
 
-     void Start()
+    SpriteRenderer sr;
+    private void Awake()
     {
-        anim  = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         attackSC = GetComponent<Enemy_Attack>();
-        sr = GetComponent<SpriteRenderer>();
+         sr = GetComponent<SpriteRenderer>();
         cam = Camera.main;
         nav = GetComponent<NavMeshAgent>();
         nav.updateRotation = false;
@@ -33,12 +35,22 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
         OriginSpeed = nav.speed;
     }
+ 
 
+    private void OnEnable()
+    {
+        if (isEnemyDead)
+        {
+            isEnemyDead = false;
+            nav.isStopped = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if(isEnemyDead) 
-        { 
+        {
+            
             if(nav.isStopped == false)
             {
                 nav.isStopped = true;
@@ -63,6 +75,8 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
     private void Attack()
     {
+        if(isEnemyDead) { return; }
+
         if(Dis < AttackDis && attackSC.F_Get_Bool_isAttack_() == false)
         {
             attackSC.Set_Attack_Bool_Changer(true);

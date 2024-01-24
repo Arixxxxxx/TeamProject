@@ -211,7 +211,7 @@ BoxCollider2D:
   m_Offset: {x: -0.011964798, y: 0.36}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.01642774}
     oldSize: {x: 3.9384615, y: 3.9384615}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
@@ -236,7 +236,9 @@ MonoBehaviour:
   PlayerList: []
   EnemyList: []
   hide_color_A: 0
+  hideAddY: 0
   inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
+  colorChangeSpeed: 0
 --- !u!50 &7853529897781504439
 Rigidbody2D:
   serializedVersion: 4

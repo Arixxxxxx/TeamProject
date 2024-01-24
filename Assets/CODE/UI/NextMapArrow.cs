@@ -7,7 +7,7 @@ public class NextMapArrow : MonoBehaviour
 {
     [SerializeField] Transform[] targetList;
     [SerializeField] float enableDistance;
-    float dis;
+    [SerializeField] float dis;
     Transform target;
 
     void Start()

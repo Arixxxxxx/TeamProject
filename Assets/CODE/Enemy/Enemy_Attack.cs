@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,15 +23,16 @@ public class Enemy_Attack : MonoBehaviour
     [Space]
     [SerializeField] bool isAttack;
     SpriteRenderer sr;
-
+    bool enemyDead;
 
     NavMeshAgent nav;
     Rigidbody2D rb;
     Enemy_Arrow enemy_Arrow;
     Animator treeAttackAnim;
+    EnemyStats stats;
     private void Awake()
     {
-
+        stats = GetComponent<EnemyStats>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         sr = GetComponent<SpriteRenderer>();
@@ -96,6 +98,8 @@ public class Enemy_Attack : MonoBehaviour
     float CheakerDealy;
     private void Attack_Anim()
     {
+        if(stats.Enemy_Dead == true) { anim.SetBool("Attack", false); return; }
+
         if (isAttack == true && anim.GetBool("Attack") == false && MushroomAttakcDealy == false)
         {
             anim.SetBool("Attack", true);

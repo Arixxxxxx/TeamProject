@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6006927747806213190}
   - component: {fileID: 7181757349175705986}
-  - component: {fileID: 1793685745289247728}
   - component: {fileID: 2372125748438407426}
   - component: {fileID: 2817121242456013753}
   - component: {fileID: 7888328973866345740}
@@ -90,27 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1793685745289247728
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6109714778736220428}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a1c13b332e4cd5e4999966947c25bb11, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2372125748438407426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe9da73d23be7f44bb3df33dee35298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   CoinImage:
   - {fileID: 21300000, guid: fad98e730d2797c40bdb36f8fb6ab96b, type: 3}
   - {fileID: 4775630859605534401, guid: d53fd8311c50642c28f2b79b5a9c57fc, type: 3}

@@ -17,7 +17,8 @@ public class EnemyStats : MonoBehaviour
     [SerializeField] float MaxHP;
     [SerializeField] float Exp;
     [Space]
-    [SerializeField] bool Enemy_Dead;
+    [SerializeField] bool enemy_Dead;
+    public bool Enemy_Dead { get { return enemy_Dead; } }
     [Header("# Enemy HP_Bar Middle Image Speed Info  ==     # ¿¹Áø ")]
     [SerializeField] float FillAmountSpeed;
 
@@ -25,14 +26,19 @@ public class EnemyStats : MonoBehaviour
     Image Hp_Bar_Middle;
     Image Hp_Bar_Front;
 
-
+    SpriteRenderer sr;
+    SpriteRenderer shadowSr;
     BoxCollider2D boxCollider;
     Enemy_Nav_Movement nav;
     Animator anim;
     Animator Hp_Bar_anim;
 
+
+
     private void Awake()
     {
+        sr = GetComponent<SpriteRenderer>();
+        shadowSr = transform.Find("Shadow").GetComponent<SpriteRenderer>();
         Hp_Bar = transform.GetChild(0).gameObject;
         Hp_Bar_Middle = Hp_Bar.transform.GetChild(1).GetComponent<Image>();
         Hp_Bar_Front = Hp_Bar.transform.GetChild(2).GetComponent<Image>();
@@ -43,9 +49,12 @@ public class EnemyStats : MonoBehaviour
     }
     void Start()
     {
+       
+    }
+    private void OnEnable()
+    {
         ReSponeEnemy_Init();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -77,7 +86,8 @@ public class EnemyStats : MonoBehaviour
             if (CurHP <= 0)
             {
                 anim.SetTrigger("Dead");
-                Enemy_Dead = true;
+                enemy_Dead = true;
+                anim.SetBool("Attack", false);
                 nav.F_Dead(true);
 
                 GameManager.Inst.F_KillCountUp();
@@ -102,10 +112,11 @@ public class EnemyStats : MonoBehaviour
 
     private void ReSponeEnemy_Init()
     {
+        
         Hp_Bar.SetActive(true);
         boxCollider.enabled = true;
         CurHP = MaxHP;
-        Enemy_Dead = false;
+        enemy_Dead = false;
     }
 
     private void HpBar_Ui_Updater()
@@ -129,48 +140,10 @@ public class EnemyStats : MonoBehaviour
 
     private void A_ReturnObj()
     {
+        sr.color = Color.white;
+        shadowSr.color = Color.white;
         PoolManager.Inst.F_Return_Enemy_Obj(gameObject, (int)for_ReturnOBJ_enemyName);
 
-        //switch (for_ReturnOBJ_enemyName)
-        //{
-        //    case EnemyName.Orc:
-        //        {
-        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 0);
-        //        }
-        //        break;
-
-        //    case EnemyName.Mushroom:
-        //        {
-        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 1);
-        //        }
-
-        //        break;
-
-        //    case EnemyName.SkeletonRanger:
-        //        {
-        //            PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-        //        }
-        //        break;
-
-        //    case EnemyName.Slime:
-        //        {
-        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-        //        }
-        //        break;
-
-        //    case EnemyName.Orc_Ranger:
-        //        {
-        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-        //        }
-        //        break;
-
-        //    case EnemyName.Slime:
-        //        {
-        //            //PoolManager.Inst.F_Return_Enemy_Obj(gameObject, 2);
-        //        }
-        //        break;
-
-        //}
     }
 
 }

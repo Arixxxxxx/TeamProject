@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stage_Trigger : MonoBehaviour
 {
-    public enum DoorNumber { First, Sec }
+    public enum DoorNumber { First, Sec, Boss }
     public DoorNumber number;
 
     BoxCollider2D boxColl;
@@ -31,6 +31,10 @@ public class Stage_Trigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && boxColl.isTrigger == true)
         {
             SpawnManager.inst.F_DeleteCloud((int)number);
+            if(number == DoorNumber.Boss)
+            {
+                CameraManager.inst.F_CameraZoomIn(8);
+            }
         }
     }
 }

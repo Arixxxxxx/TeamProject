@@ -333,9 +333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerList: []
-  Enemy: {fileID: 0}
+  EnemyList: []
   hide_color_A: 0
+  hideAddY: 0
   inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
+  colorChangeSpeed: 25
 --- !u!61 &7240992638017338535
 BoxCollider2D:
   m_ObjectHideFlags: 0

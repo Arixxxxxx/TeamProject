@@ -113,7 +113,7 @@ public class PoolManager : MonoBehaviour
         OrcRangerTrs = transform.Find("Enemy/Orc_Ranger").GetComponent<Transform>();
         MushTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
         SkeletonTrs = transform.Find("Enemy/Skeleton").GetComponent<Transform>();
-        SlimeTrs = transform.Find("Enemy/Mushroom").GetComponent<Transform>();
+        SlimeTrs = transform.Find("Enemy/Slime").GetComponent<Transform>();
         TreeTrs = transform.Find("Enemy/Tree").GetComponent<Transform>();
 
         CoinTrs = transform.Find("ExpCoin").GetComponent<Transform>();
@@ -153,6 +153,7 @@ public class PoolManager : MonoBehaviour
         {
             GameObject Obj = Instantiate(EnemyObj[2], SkeletonTrs);
             Obj.transform.position = Vector3.zero;
+            Debug.Log(Obj.transform.position);
             Obj.gameObject.SetActive(false);
             SkeletonQue.Enqueue(Obj);
         }
@@ -403,10 +404,12 @@ public class PoolManager : MonoBehaviour
 
             case 2:
                 SkeletonQue.Enqueue(obj);
+                Debug.Log("«ÿ∞Ò");
                 break;
 
             case 3:
                 SlimeQue.Enqueue(obj);
+                Debug.Log("ΩΩ∂Û¿”");
                 break;
 
             case 4:

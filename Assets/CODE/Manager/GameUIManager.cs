@@ -63,15 +63,12 @@ public class GameUIManager : MonoBehaviour
         msgUI_Bg = msgUI.transform.GetChild(0).GetComponent<Image>();
         Img_0 = msgUI_Bg.transform.GetChild(0).GetComponent<Image>();
         Img_1 = msgUI_Bg.transform.GetChild(1).GetComponent<Image>();
-        msgtext = msgUI.transform.GetComponentInChildren<TMP_Text>();
+        msgtext = msgUI.transform.Find("Bg/Text").GetComponent<TMP_Text>();
     }
     // Update is called once per frame
     void Update()
     {
-      if(Input.GetKeyDown(KeyCode.O)) 
-        {
-            F_SetMSGUI(0);
-        }
+  
     }
 
     /// <summary>
@@ -85,17 +82,22 @@ public class GameUIManager : MonoBehaviour
         switch (value)
         {
             case 1:
-                alramText = "< 성당 > 으로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
+                alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 F_SetNextMapArrow(1);
                 break;
 
             case 2:
-                alramText = "< 숲 > 지형이 해금되었습니다. \n 맵 우측으로 이동하세요!";
+                alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                
                 break;
 
             case 3:
-                alramText = "< 어두운 숲 > 으로 향하는 포탈이 생성되었습니다.";
+                alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
+                F_SetNextMapArrow(2); // 화살표 팝업
+                break;
+
+            case 4:
+                alramText = "";
                 break;
 
             case -1:
@@ -160,17 +162,31 @@ public class GameUIManager : MonoBehaviour
         }
     }
      
+    /// <summary>
+    /// 이동화살표
+    /// </summary>
+    /// <param name="value"></param>
     public void F_SetNextMapArrow(int value)
     {
         MapArrow.F_SetTarget(value);
         MapArrow.gameObject.SetActive(true);    
     }
     
-    public void F_SetMSGUI(int value)
+    public void F_SetMSGUI(int value, bool BValue)
     {
-
-        Debug.Log("11");
         string textValue = string.Empty;
+
+        // 해골마커 표시유무
+        if (BValue)
+        {
+            Img_0.gameObject.SetActive(true);
+            Img_1.gameObject.SetActive(true);
+        }
+        else
+        {
+            Img_0.gameObject.SetActive(false);
+            Img_1.gameObject.SetActive(false);
+        }
 
         switch (value)
         {
@@ -179,7 +195,7 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case 1:
-                textValue = "작성 및 사용 대기";
+                textValue = "감히 여기까지 쫓아오다니.. 너를 처단해주겠다..";
                 break;
 
         }

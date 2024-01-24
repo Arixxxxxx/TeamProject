@@ -362,7 +362,7 @@ public class Player_Skill_System : MonoBehaviour
             skill_4_ShotCount = 0;
             GameObject obj = PoolManager.Inst.F_GetPlayerBullet(4);
 
-            obj.transform.position = transform.position;
+            obj.transform.position = S_3_StartPos.transform.position;
             obj.SetActive(true);
         }
     }

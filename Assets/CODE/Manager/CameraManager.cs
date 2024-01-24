@@ -51,16 +51,14 @@ public class CameraManager : MonoBehaviour
     {
         stageLv = SpawnManager.inst.StageLv;
 
-        if(Input.GetKeyDown(KeyCode.F)) 
-        {
-            playerCam.m_Lens.OrthographicSize = 34;  // 다보여줌
-        }
     }
 
     private void LateUpdate()
     {
         playerCamsLimitPos(); 
     }
+
+    //카메라 포지션 제한
     private void playerCamsLimitPos()
     {
       if(gm.EnterBossRoom == false)
@@ -96,12 +94,17 @@ public class CameraManager : MonoBehaviour
 
        StartCoroutine(ZoomOut(sumValue));
     }
-    
+
+    public void F_CameraDirectZoomOut(float Value)
+    {
+        StartCoroutine(ZoomOut(Value));
+    }
+
     IEnumerator ZoomOut(float sumValue)
     {
         while (playerCam.m_Lens.OrthographicSize < sumValue)
         {
-            playerCam.m_Lens.OrthographicSize += Time.deltaTime * zoomOutSpeed;
+            playerCam.m_Lens.OrthographicSize += Time.deltaTime * 2.5f;
 
             yield return null;
         }

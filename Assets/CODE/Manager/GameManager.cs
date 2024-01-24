@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
     
     private void OpeningMSG()
     {
-        GameUIManager.Inst.F_SetMSGUI(0);
+        GameUIManager.Inst.F_SetMSGUI(0,true);
     }
     bool start_once;
     private void StartGameGetLVUP()
@@ -377,7 +377,8 @@ public class GameManager : MonoBehaviour
                 // 플레이어 위치이동
                 EnterBossRoom = true;
                 PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
-                
+                PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
+
 
                 // 이동
 
@@ -387,7 +388,11 @@ public class GameManager : MonoBehaviour
                 playerAndDragon[0].enabled = true;
                 playerAndDragon[1].gameObject.SetActive(true);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(true);
+                
+                GameUIManager.Inst.F_SetMSGUI(1, false);
+                yield return new WaitForSeconds(3f);
                 MoveStop = false;
+                CameraManager.inst.F_CameraDirectZoomOut(11);
                 break;
         }
 
