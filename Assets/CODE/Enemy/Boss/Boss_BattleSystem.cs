@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Boss_BattleSystem : MonoBehaviour
 {
-    [SerializeField] Transform[] TelPoint;
+    [Header("# Cheak Value")]
+
+    [SerializeField] bool bossBattleStart;
 
     void Start()
     {
@@ -14,6 +16,24 @@ public class Boss_BattleSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        returnUpdate();
+
+
+    }
+
+
+
+
+
+
+
+    private void returnUpdate() //전투시작 체크 및 알림
+    {
+        if (bossBattleStart == false)
+        {
+            bossBattleStart = GameManager.Inst.BossBattleStart;
+        }
+
+        if (!bossBattleStart) { return; }
     }
 }

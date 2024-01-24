@@ -7,7 +7,7 @@ public class Magnet : MonoBehaviour
 {
     public enum ItemType
     {
-        Magnet, HP_Potion
+        Magnet, HP_Potion, Bomb
     }
     public ItemType type;
 
@@ -27,6 +27,9 @@ public class Magnet : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] float stopRigidbodyDelay;
     [SerializeField] bool stopRigidbody;
+    
+ 
+
     float count;
 
     
@@ -159,6 +162,7 @@ public class Magnet : MonoBehaviour
             magnetSpeed += Time.deltaTime;
 
             Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
+            ppos.y += 0.5f;
             rb.MovePosition(rb.position + ppos * Time.deltaTime * magnetSpeed);
             
             float dis = GameManager.Inst.F_PlayerAndMeDistance(transform.position);
@@ -169,6 +173,17 @@ public class Magnet : MonoBehaviour
             
         }
     }
+
+    
+    // ÆË¾÷½Ã Æ¨±â´Â ¿¬Ãâ ¾ø¾Ú
+    //public void F_NoRigidBody()
+    //{
+    //    stopRigidbody = true;
+    //    rb.velocity = Vector2.zero;
+    //    rb.gravityScale = 0;
+    //    circleColl.enabled = true;
+    //    Invoke("firstTouchOn", 0.2f);
+    //}
 
     bool canEat;
     private void OnTriggerEnter2D(Collider2D collision)
@@ -200,6 +215,11 @@ public class Magnet : MonoBehaviour
                    
                     player_stats_sc.F_Use_HP_Potion(25);
                     PoolManager.Inst.F_ReturnItem(gameObject, 1);
+                    break;
+
+                case ItemType.Bomb:
+                    GameManager.Inst.F_ActiveBomb();
+                    PoolManager.Inst.F_ReturnItem(gameObject, 2);
                     break;
             }
         }

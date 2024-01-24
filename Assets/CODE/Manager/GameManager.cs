@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] GameStop_Ui_Window;
     [SerializeField] GameObject[] moveStop_Ui_Windows;
     [SerializeField] Button[] Btn;
+    [SerializeField] GameObject enemyList;
     bool isPlayer_Dead;
 
     [Header("# Ingame Cheak & Test Value")]
@@ -61,6 +62,8 @@ public class GameManager : MonoBehaviour
     
 
     [SerializeField]  bool enterBossRoom;
+    [SerializeField]  bool boosBattleStart;
+    public bool BossBattleStart { get { return boosBattleStart; } set { boosBattleStart = value; } }
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
     bool bossMode;
     public bool BossMode { get { return bossMode; } set { bossMode = value; } }
@@ -328,7 +331,22 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-  
+
+    /// <summary>
+    /// 몬스터 전체 삭제
+    /// </summary>
+    public void F_ActiveBomb()
+    {
+        EnemyStats[] group = enemyList.GetComponentsInChildren<EnemyStats>();
+        // 터지는 효과 주기
+        for (int i = 0; i < group.Length; i++)
+        {
+            if (group[i].gameObject.activeSelf == true)
+            {
+                group[i].F_Enemy_On_Hit(1000, true);
+            }
+        }
+    }
     public void F_MainUI_SetAcvite_True()
     {
         GameStop_Ui_Window[2].SetActive(true);
@@ -369,6 +387,7 @@ public class GameManager : MonoBehaviour
             case 1:
 
                 MoveStop = true;
+                GameUIManager.Inst.F_GameUIActive(false);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(false);
                 yield return new WaitForSeconds(0.3f);
                 Cutton_Controller.inst.F_FadeCuttonActive(1.8f);
@@ -385,14 +404,23 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(2.1f);
                 telePortPs.gameObject.SetActive(true);
                 yield return new WaitForSeconds(0.2f);
+                
                 playerAndDragon[0].enabled = true;
                 playerAndDragon[1].gameObject.SetActive(true);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(true);
                 
                 GameUIManager.Inst.F_SetMSGUI(1, false);
                 yield return new WaitForSeconds(3f);
-                MoveStop = false;
-                CameraManager.inst.F_CameraDirectZoomOut(11);
+                
+                MoveStop = false; // 스타트
+                // 보스팝업에 필요한 함수들 호출
+                GameUIManager.Inst.F_GameUIActive(true);
+                CameraManager.inst.F_CameraDirectZoomOut(11); // 카메라 줌아웃
+                GameUIManager.Inst.F_BossHpBarActive(true); // 보스 에이치바
+                BossBattleStart = true;
+                //보스전투시작 호출
+                //보호막 켜지고
+                //전체 UI 꺼졋다가 켜지는거 ㅇ
                 break;
         }
 

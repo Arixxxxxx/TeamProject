@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static EnemyStats;
+
 
 public class Boss_Status : MonoBehaviour
 {

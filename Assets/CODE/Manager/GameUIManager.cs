@@ -24,7 +24,7 @@ public class GameUIManager : MonoBehaviour
     Image Img_0;
     Image Img_1;
     TMP_Text msgtext;
-
+    GameObject bossHpUI;
 
     GameObject InfoObj;
     Animator infoAnim;
@@ -37,7 +37,10 @@ public class GameUIManager : MonoBehaviour
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
     OptionWindow_Controller optionWindow_Con;
-   
+
+    GameObject HideObj0, HideObj1, HideObj2;
+
+
     private void Awake()
     {
         if(Inst == null)
@@ -64,6 +67,12 @@ public class GameUIManager : MonoBehaviour
         Img_0 = msgUI_Bg.transform.GetChild(0).GetComponent<Image>();
         Img_1 = msgUI_Bg.transform.GetChild(1).GetComponent<Image>();
         msgtext = msgUI.transform.Find("Bg/Text").GetComponent<TMP_Text>();
+
+        bossHpUI = UI.transform.Find("Boos_Hp_Bar").gameObject;
+
+        HideObj0 = UI.transform.Find("BattleTime").gameObject;
+        HideObj1 = UI.transform.Find("Count_Info").gameObject;
+        HideObj2 = UI.transform.Find("UnitFrame").gameObject;
     }
     // Update is called once per frame
     void Update()
@@ -217,5 +226,16 @@ public class GameUIManager : MonoBehaviour
     {
         optionWindow_Con.F_SetSelectWindowUI_Open(value);
         GameManager.Inst.MoveStop = true;
+    }
+
+    public void F_BossHpBarActive(bool value)
+    {
+        bossHpUI.gameObject.SetActive(value);
+    }
+    public void F_GameUIActive(bool value)
+    {
+        HideObj0.gameObject.SetActive(value);
+        HideObj1.gameObject.SetActive(value);
+        HideObj2.gameObject.SetActive(value);
     }
 }

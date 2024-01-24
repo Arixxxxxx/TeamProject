@@ -24,7 +24,7 @@ public class PoolManager : MonoBehaviour
     Queue<GameObject> Tree_Que = new Queue<GameObject>();
 
     Transform OrcTrs, MushTrs, SkeletonTrs, SlimeTrs, OrcRangerTrs, TreeTrs;  // -> Transform
-
+    Transform enemyList;
 
 
 
@@ -56,10 +56,11 @@ public class PoolManager : MonoBehaviour
 
     [Header("# Insert Player Item Prefab Obj")]
     [Space]
-    [SerializeField] GameObject[] Items;
-    Queue<GameObject> Items_1_Que = new Queue<GameObject>();
-    Queue<GameObject> Items_2_Que = new Queue<GameObject>();
-    Transform Item_Trs;
+    [SerializeField] GameObject[] Items; //아이템류
+    Queue<GameObject> Items_1_Que = new Queue<GameObject>(); // 자석
+    Queue<GameObject> Items_2_Que = new Queue<GameObject>(); // 회복물약
+    Queue<GameObject> Items_3_Que = new Queue<GameObject>(); // 폭탄
+    Transform Item_Trs; 
 
     [Header("# Insert Player Bullet Prefab Obj")]
     [Space]
@@ -84,6 +85,8 @@ public class PoolManager : MonoBehaviour
     [SerializeField] int Skill_4_StartMakingEa;
     Queue<GameObject> Skill_4_Que = new Queue<GameObject>();
 
+
+    
     //[Header("# Insert ETC Prefab ")]
     //[Space]
     //[SerializeField] GameObject Skill_UI_Btn; // 레벨업 UI Btn
@@ -106,7 +109,7 @@ public class PoolManager : MonoBehaviour
         }
 
 
-
+        enemyList = transform.Find("Enemy").GetComponent<Transform>();
         // 1. Enemy Transform 
 
         OrcTrs = transform.Find("Enemy/Orc_Melee").GetComponent<Transform>();
@@ -295,6 +298,11 @@ public class PoolManager : MonoBehaviour
             Obj_HP.transform.position = Vector3.zero;
             Obj_HP.gameObject.SetActive(false);
             Items_2_Que.Enqueue(Obj_HP);
+
+            GameObject Bomb = Instantiate(Items[2], Item_Trs);
+            Bomb.transform.position = Vector3.zero;
+            Bomb.gameObject.SetActive(false);
+            Items_3_Que.Enqueue(Bomb);
         }
 
     }
@@ -597,7 +605,7 @@ public class PoolManager : MonoBehaviour
     /// <summary>
     /// 게임아이템 
     /// </summary>
-    /// <param name="value"> 자석 / HP포션 </param>
+    /// <param name="value"> 자석 / HP포션 / 폭탄 </param>
     /// <returns></returns>
     public GameObject F_GetItem(int value)
     {
@@ -626,6 +634,17 @@ public class PoolManager : MonoBehaviour
                 }
                 obj = Items_2_Que.Dequeue();
                 return obj;
+
+            case 2:
+                if (Items_3_Que.Count <= 1)
+                {
+                    obj = Instantiate(Items[2], Item_Trs);
+                    obj.transform.position = Vector3.zero;
+                    obj.gameObject.SetActive(false);
+                    return obj;
+                }
+                obj = Items_3_Que.Dequeue();
+                return obj;
         }
 
         return default;
@@ -649,6 +668,10 @@ public class PoolManager : MonoBehaviour
 
             case 1:
                 Items_2_Que.Enqueue(obj);
+                break;
+
+            case 2:
+                Items_3_Que.Enqueue(obj);
                 break;
 
 
@@ -696,6 +719,8 @@ public class PoolManager : MonoBehaviour
         }
 
     }
+
+
 
 
     /// <summary>

@@ -98,6 +98,21 @@ public class EnemyStats : MonoBehaviour
 
 
 
+                // 5% 犬伏肺  气藕积己
+                float spawnBombChans = 5;
+                float dice = Random.Range(0f, 100f);
+                
+                if (spawnBombChans > dice)
+                {
+                    GameObject obj2 = PoolManager.Inst.F_GetItem(2); // 气藕
+                    obj2.transform.position = transform.position - new Vector3(0, 0.7f, 0);
+                    obj2.gameObject.SetActive(true);
+                    //obj2.GetComponent<Magnet>().F_NoRigidBody();
+                }
+                
+
+
+
             }
         }
     }
