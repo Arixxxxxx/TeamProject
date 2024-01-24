@@ -52,6 +52,10 @@ public class Magnet : MonoBehaviour
                 rb.AddForce(new Vector2(-2f, 4), ForceMode2D.Impulse);
                 break;
 
+            case ItemType.Bomb:
+                stopRigidbody = true;
+                break;
+
         }
         
         Init();
@@ -132,6 +136,7 @@ public class Magnet : MonoBehaviour
     // 당겨지는 속도
     [SerializeField] float inputSpeed;
     [SerializeField] float magnetSpeed;
+    [SerializeField]  float dis;
     float count1;
     private void ActionMoving()
     {
@@ -162,11 +167,11 @@ public class Magnet : MonoBehaviour
             magnetSpeed += Time.deltaTime;
 
             Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
-            ppos.y += 0.5f;
+            //ppos.y += 0.9f;
             rb.MovePosition(rb.position + ppos * Time.deltaTime * magnetSpeed);
             
-            float dis = GameManager.Inst.F_PlayerAndMeDistance(transform.position);
-            if(dis < 0.2f)
+             dis = GameManager.Inst.F_PlayerAndMeDistance(transform.position);
+            if(dis < 0.4f)
             {
                 canEat = true;
             }
@@ -174,18 +179,8 @@ public class Magnet : MonoBehaviour
         }
     }
 
-    
-    // 팝업시 튕기는 연출 없앰
-    //public void F_NoRigidBody()
-    //{
-    //    stopRigidbody = true;
-    //    rb.velocity = Vector2.zero;
-    //    rb.gravityScale = 0;
-    //    circleColl.enabled = true;
-    //    Invoke("firstTouchOn", 0.2f);
-    //}
 
-    bool canEat;
+    [SerializeField]  bool canEat;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (circleColl.enabled == true && collision.CompareTag("Player") && firstTouch == true)
@@ -220,6 +215,7 @@ public class Magnet : MonoBehaviour
                 case ItemType.Bomb:
                     GameManager.Inst.F_ActiveBomb();
                     PoolManager.Inst.F_ReturnItem(gameObject, 2);
+                    GameUIManager.Inst.F_BombEffectOn();
                     break;
             }
         }

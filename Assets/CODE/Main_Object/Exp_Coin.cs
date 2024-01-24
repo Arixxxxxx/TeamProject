@@ -44,6 +44,34 @@ public class Exp_Coin : MonoBehaviour
     {
         
     }
+
+    private void Update()
+    {
+        if(type == ItemType.ExpCoin)
+        {
+            ReturnObjTime();
+        }
+        
+    }
+
+    float returnCount;
+    [SerializeField] float returnTime;
+
+    /// <summary>
+    /// 최적화때문에 리턴시킴
+    /// </summary>
+    private void ReturnObjTime()
+    {
+        returnCount += Time.deltaTime;
+        if(returnCount > returnTime)
+        {
+            returnCount = 0;
+            PoolManager.Inst.F_ReturnObj(gameObject, 1);
+        }
+        
+    }
+
+
     private void Init()
     {
         boxColl.enabled = false;
@@ -55,6 +83,9 @@ public class Exp_Coin : MonoBehaviour
         action1 = false;
         magnet = false;
     }
+
+
+
 
     /// <summary>
     /// 코인생성시 여러가지 타입 셋팅

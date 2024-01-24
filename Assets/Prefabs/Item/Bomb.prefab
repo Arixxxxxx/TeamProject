@@ -108,6 +108,8 @@ MonoBehaviour:
   action0_Dur: 0.275
   inputSpeed: 3
   magnetSpeed: 7
+  dis: 0
+  canEat: 0
 --- !u!61 &8522250221560170744
 BoxCollider2D:
   m_ObjectHideFlags: 0

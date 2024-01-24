@@ -98,8 +98,8 @@ public class EnemyStats : MonoBehaviour
 
 
 
-                // 5% 犬伏肺  气藕积己
-                float spawnBombChans = 5;
+                // 0.5% 犬伏肺  气藕积己
+                float spawnBombChans = 0.5f;
                 float dice = Random.Range(0f, 100f);
                 
                 if (spawnBombChans > dice)

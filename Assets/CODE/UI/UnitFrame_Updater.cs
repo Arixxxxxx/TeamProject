@@ -83,8 +83,8 @@ public class UnitFrame_Updater : MonoBehaviour
 
     private void PlayerInfo_Updater()
     {
-        CurHP = gm.F_Get_PlayerSc().F_GetPlayerInfo(0);
-        MaxHp = gm.F_Get_PlayerSc().F_GetPlayerInfo(1);
+        CurHP = Mathf.Floor(gm.F_Get_PlayerSc().F_GetPlayerInfo(0));
+        MaxHp = Mathf.Floor(gm.F_Get_PlayerSc().F_GetPlayerInfo(1));
         Lv_text.text = gm.F_Get_PlayerSc().F_GetPlayerInfo(2).ToString();
         CurExp = gm.F_Get_PlayerSc().F_GetPlayerInfo(3);
         LevelupExp = gm.F_Get_PlayerSc().F_GetPlayerInfo(4);

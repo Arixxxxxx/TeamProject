@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("# Insert Object in Hiearachy")]
     [Space]
     [SerializeField] GameObject Player;
+    [SerializeField] Player_Stats player_stats_sc;
     [SerializeField] Light2D globalLight;
     [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
@@ -201,7 +202,7 @@ public class GameManager : MonoBehaviour
 
     public Player_Stats F_Get_PlayerSc()
     {
-        return Player.GetComponent< Player_Stats >();
+        return player_stats_sc;
     }
 
     public float F_Get_PlyerPos(Vector3 InputPos)

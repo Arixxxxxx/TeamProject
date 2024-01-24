@@ -48,7 +48,7 @@ public class DarkCloud_Controller : MonoBehaviour
     // 어둠구름 속도 계산 함수
     private void Set_SpeedValue()
     {
-        //if (gm.MainGameStart == false) { return; }
+        if (gm.MainGameStart == false) { return; }
 
         stageTime = sm.F_Get_StageTime();
 
@@ -76,6 +76,7 @@ public class DarkCloud_Controller : MonoBehaviour
         float movetime = stageTime - curruentTime; // 스테이지시간 -게임진행시간
 
         cloudSpeed = dis / movetime; // 나눔
+        cloudSpeed *= 0.8f;
     }
 
 

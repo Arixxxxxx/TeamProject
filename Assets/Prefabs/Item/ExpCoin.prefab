@@ -114,6 +114,7 @@ MonoBehaviour:
   action0_Dis: 0
   target: {fileID: 0}
   magnet: 0
+  returnTime: 20
   action0_Dur: 0.275
   inputSpeed: 5
   magnetSpeed: 7

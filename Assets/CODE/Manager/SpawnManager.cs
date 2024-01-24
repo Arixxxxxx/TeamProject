@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     [Space]
     [SerializeField] int Spawn_Level; // 레벨
     [SerializeField] int stageLv; // 레벨
-    public int StageRv { get { return stageLv; } }
+    
     [SerializeField] int[] AddCount; // 스폰레벨 혹은 시간당 증가되는 몬스터량
     [SerializeField] float startDealy;
     public int StageLv { get { return stageLv; } }
@@ -72,13 +72,15 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
+        GameTime = TimeSc.F_Get_GameTime(); // 게임시간 체크
+
         SpawnStart_Dealy();
 
         //SpawnStart(); 구버전 시간단위
         New_SpawnStart();
         SpawnLvUpdater();
-
         Level_Updater();
+        MapInfoArrowActiveUpdater();
 
         if (Input.GetKeyDown(KeyCode.L)) // 2번 벽제거 테스트
         {
@@ -106,37 +108,100 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
+
+    bool arrowPopup0, arrowPopup1;
+
+    /// <summary>
+    /// 게임시간 체크해서 화살표 켜주는 함수
+    /// </summary>
+    private void MapInfoArrowActiveUpdater()
+    {
+        if(GameTime > StageLevelupTime[0] - 20 && arrowPopup0 == false)
+        {
+            arrowPopup0 = true;
+            GameUIManager.Inst.F_SetNextMapArrow(0);
+        }
+
+        if (GameTime > StageLevelupTime[1] - 20 && arrowPopup1 == false)
+        {
+            arrowPopup1 = true;
+            GameUIManager.Inst.F_SetNextMapArrow(1);
+        }
+    }
+
+    public void F_StageLvUp()
+    {
+        stageLv++;
+        CameraManager.inst.F_CameraZoomOut(stageLv);
+       
+    }
+
+    int timeListValue = 0;
     private void Level_Updater()
     {
         // 스테이지 3레벨이 보스
-        if (StageLv == 3) { return; }
+        if (timeListValue == 3) { return; }
 
-        GameTime = TimeSc.F_Get_GameTime();
-
-        if (GameTime > StageLevelupTime[stageLv])
+        if (GameTime > StageLevelupTime[timeListValue])
         {
-            stageLv++;
-            CameraManager.inst.F_CameraZoomOut(stageLv); // 카메라 줌아웃
-            GameUIManager.Inst.F_GameInfoOpen(stageLv);
-
-            if (stageLv == 1) // 벽제거
+        
+            if (timeListValue == 0) // 벽 트리거 true (뚫고 지나갈수잇게)
             {
-                // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
-
-                F_BlockTriggerOn(0);
+                
+                GameUIManager.Inst.F_GameInfoOpen(timeListValue); // 해금안내문구
+                F_BlockTriggerOn(0); // 트리거 작동
+                timeListValue++;
             }
-            else if (stageLv == 2)
+            else if (timeListValue == 1)
             {
                 // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
+                GameUIManager.Inst.F_GameInfoOpen(timeListValue);
                 F_BlockTriggerOn(1);
+                timeListValue++;
             }
-            else if(stageLv == 3)
+            else if (timeListValue == 2)
             {
+                stageLv++;
+                GameUIManager.Inst.F_GameInfoOpen(timeListValue);
                 F_BlockTriggerOn(2);
+                
+                
+                timeListValue++;
             }
         }
-
     }
+
+    // 구버전 (시간대비 레벨업 => 발동 트리거 변경 24.01.24)
+    //private void Level_Updater() 
+    //{
+    //    // 스테이지 3레벨이 보스
+    //    if (StageLv == 3) { return; }
+
+    //    GameTime = TimeSc.F_Get_GameTime();
+
+    //    if (GameTime > StageLevelupTime[stageLv])
+    //    {
+    //        stageLv++;
+    //        CameraManager.inst.F_CameraZoomOut(stageLv); // 카메라 줌아웃
+    //        GameUIManager.Inst.F_GameInfoOpen(stageLv);
+
+    //        if (stageLv == 1) // 벽제거
+    //        {
+    //            // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
+
+    //            F_BlockTriggerOn(0);
+    //        }
+    //        else if (stageLv == 2)
+    //        {
+    //            // 여기서 UI 해금되었다는 Text만들어서 연출해줘야함
+    //            F_BlockTriggerOn(1);
+    //        }
+    //        else if(stageLv == 3)
+    //        {
+    //            F_BlockTriggerOn(2);
+    //        }
+    //    }
+    //}
     int addCountA, addCountB;
     [SerializeField] float spawnTImeA, spawnTImeB;
     [SerializeField] int spawnEnemyA, spawnEnemyB;
@@ -164,13 +229,13 @@ public class SpawnManager : MonoBehaviour
         // A타입 스폰준비
         // 현재 해금 안된지역이라면 다음 으로 넘어감
 
-        while (cheakEnemyAreaNumA > stageLv || cheakEnemyAreaNumA == -1) // 계속 다시굴림
+        while (cheakEnemyAreaNumA > stageLv || cheakEnemyAreaNumA < stageLv || cheakEnemyAreaNumA == -1) // 계속 다시굴림
         {
             EnemyA_SpawnTrs = Random.Range(0, spawn_PointTrs.Length); // 위치선정
             cheakEnemyAreaNumA = spawn_PointTrs[EnemyA_SpawnTrs].AreaNumber; //위치 정보확인
         }
         
-        if (cheakEnemyAreaNumA <= stageLv) // 해금지역이라면 스폰
+        if (cheakEnemyAreaNumA == stageLv) // 해금지역이라면 스폰
         {
             count[0] += Time.deltaTime;
 
@@ -197,11 +262,10 @@ public class SpawnManager : MonoBehaviour
                 {
                     //스폰데이터의 넘버에 있는 몬스터 풀링
                     int PoolNum = spawnData[cheakEnemyAreaNumA].enemy_ID[0];
-                    Debug.Log($"{PoolNum} 소환");
                     GameObject obj = pm.F_GetEnemyObj(PoolNum);
                     obj.transform.position = Vector3.zero;
                     obj.transform.position = spawn_PointTrs[EnemyA_SpawnTrs].transform.position
-                                                               + new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f));
+                                                               + new Vector3(Random.Range(0f, 0.1f), Random.Range(0f, 0.1f));
                     // A,B 타입이 겹쳐나오는것을 방지=> 랜덤카운트
 
                     obj.gameObject.SetActive(true);
@@ -216,18 +280,14 @@ public class SpawnManager : MonoBehaviour
 
         // B타입 스폰준비
         //위와 동일
-        //if (cheakEnemyAreaNumB > stageLv || cheakEnemyAreaNumB == -1)
-        //{
-        //    EnemyB_SpawnTrs++;
-        //}
-
-        while (cheakEnemyAreaNumB > stageLv || cheakEnemyAreaNumB == -1) // 계속 다시굴림
+              
+        while (cheakEnemyAreaNumB > stageLv || cheakEnemyAreaNumB < stageLv || cheakEnemyAreaNumB == -1) // 계속 다시굴림
         {
             EnemyB_SpawnTrs = Random.Range(0, spawn_PointTrs.Length);
             cheakEnemyAreaNumB = spawn_PointTrs[EnemyB_SpawnTrs].AreaNumber;
         }
 
-        if (cheakEnemyAreaNumB <= stageLv)
+        if (cheakEnemyAreaNumB == stageLv)
         {
             count[1] += Time.deltaTime;
 
@@ -237,7 +297,7 @@ public class SpawnManager : MonoBehaviour
             {
                 count[1] = 0;
 
-                if (Spawn_Level == lvCounUpData.Length)
+                if (Spawn_Level == lvCounUpData.Length) // 추가로 풀링하는 갯수가 있는지  데이터에서 확인
                 {
                     addCountB = 0;
                 }
@@ -246,15 +306,14 @@ public class SpawnManager : MonoBehaviour
                     addCountB = lvCounUpData[Spawn_Level].addCount;
                 }
 
-                spawnEnemyB = spawnData[playerAreaNum].count[1] + addCountB;
+                spawnEnemyB = spawnData[playerAreaNum].count[1] + addCountB;  // 기존 횟수와 더해줌
 
                 for (int i = 0; i < spawnEnemyB; i++)
                 {
                     int poolID = spawnData[cheakEnemyAreaNumB].enemy_ID[1];
-                    Debug.Log($"{poolID} 소환");
                     GameObject obj = pm.F_GetEnemyObj(poolID);
                     obj.transform.position = Vector3.zero;
-                    obj.transform.position = spawn_PointTrs[EnemyB_SpawnTrs].transform.position + new Vector3(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f)); ;
+                    obj.transform.position = spawn_PointTrs[EnemyB_SpawnTrs].transform.position + new Vector3(Random.Range(0f, 0.1f), Random.Range(0f, 0.1f));
                     obj.gameObject.SetActive(true);
                 }
 

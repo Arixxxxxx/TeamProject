@@ -37,7 +37,7 @@ public class GameUIManager : MonoBehaviour
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
     OptionWindow_Controller optionWindow_Con;
-
+    Animator bombEffectAnim;
     GameObject HideObj0, HideObj1, HideObj2;
 
 
@@ -73,6 +73,8 @@ public class GameUIManager : MonoBehaviour
         HideObj0 = UI.transform.Find("BattleTime").gameObject;
         HideObj1 = UI.transform.Find("Count_Info").gameObject;
         HideObj2 = UI.transform.Find("UnitFrame").gameObject;
+
+        bombEffectAnim = UI.transform.Find("BombEffect").GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -90,17 +92,17 @@ public class GameUIManager : MonoBehaviour
         
         switch (value)
         {
-            case 1:
+            case 0:
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
-                F_SetNextMapArrow(1);
+                //F_SetNextMapArrow(1);
                 break;
 
-            case 2:
+            case 1:
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                
                 break;
 
-            case 3:
+            case 2:
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
                 F_SetNextMapArrow(2); // 화살표 팝업
                 break;
@@ -112,7 +114,7 @@ public class GameUIManager : MonoBehaviour
             case -1:
                 alramText = "게임이 시작되었습니다.";
 
-                F_SetNextMapArrow(0); // 화살표 팝업
+               
 
                 break;
         }
@@ -237,5 +239,10 @@ public class GameUIManager : MonoBehaviour
         HideObj0.gameObject.SetActive(value);
         HideObj1.gameObject.SetActive(value);
         HideObj2.gameObject.SetActive(value);
+    }
+
+    public void F_BombEffectOn()
+    {
+        bombEffectAnim.SetTrigger("Bomb");
     }
 }
