@@ -11,6 +11,7 @@ public class Dmg_Object : MonoBehaviour
     [SerializeField] float DMG;
     [SerializeField] float critical_Value;
     [SerializeField] List<GameObject> EnemyList = new List<GameObject>();
+    
     float s2_SkillCoolTime;
 
     Player_Skill_System skill;
@@ -19,26 +20,33 @@ public class Dmg_Object : MonoBehaviour
     Boss_Status boss_stat_sc;
     void Start()
     {
-        skill = Hub.Inst.player_skill_system_sc;
+        
+
     }
 
     private void OnEnable()
     {
 
+        if(skill == null)
+        {
+            skill = Player_Skill_System.Inst;
+        }
+        critical_Value = skill.F_Get_Player_Critical();
+
     }
     // Update is called once per frame
     void Update()
     {
-        //if (skill != null)
-        //{
-        critical_Value = skill.F_Get_Player_Critical();
-        //}
 
+        
         Dmg_Updater();
-        S2_Attack_Function();
 
 
-
+        if (type == SkillType.Skill_2)
+        {
+            S2_Attack_Function();
+        }
+        
     }
 
     float count, count1;
@@ -159,6 +167,7 @@ public class Dmg_Object : MonoBehaviour
         // ÂÌ¸÷
         if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyStats>() != null && type != SkillType.Skill_2)
         {
+            
             dice = Random.Range(0, 100);
 
             if (dice < critical_Value)
@@ -174,7 +183,7 @@ public class Dmg_Object : MonoBehaviour
         //º¸½º
         if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null && type != SkillType.Skill_2)
         {
-
+            
             dice = Random.Range(0, 100);
 
             if (dice < critical_Value)

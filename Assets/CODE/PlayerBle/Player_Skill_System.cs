@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player_Skill_System : MonoBehaviour
 {
+    public static Player_Skill_System Inst;
+
     [Header("# Insert Skill Object in Hierarchy")]
     [Space]
     [SerializeField] Transform[] skill_Slot;
@@ -76,6 +78,15 @@ public class Player_Skill_System : MonoBehaviour
 
     private void Awake()
     {
+        if(Inst == null)
+        {
+            Inst = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
         _updaterSystem = GetComponent<Skill_Ui_UpdaterSystem>();
         Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
         S_3_StartPos = transform.Find("Skill_LIst/S_3").GetComponent<Transform>();

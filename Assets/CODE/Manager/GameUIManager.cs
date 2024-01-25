@@ -98,16 +98,19 @@ public class GameUIManager : MonoBehaviour
             case 0:
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(5);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
                 break;
 
             case 1:
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(5);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
                 break;
 
             case 2:
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
                 F_NextMapArrowActiveSec(5);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
                 //F_SetNextMapArrow(2); // 화살표 팝업
                 break;
 
@@ -200,7 +203,7 @@ public class GameUIManager : MonoBehaviour
         MapArrow.F_SetTargetNull();
         MapArrow.gameObject.SetActive(true);
         yield return new WaitForSeconds(Timevalue);
-        MapArrow.gameObject.SetActive(true);
+        MapArrow.gameObject.SetActive(false);
     }
     public void F_SetMSGUI(int value, bool BValue)
     {

@@ -261,7 +261,7 @@ public class Movement : MonoBehaviour
                     cheakPos.y = TeleportLimitP_Y;
                 }
             }
-            else if(SpawnManager.inst.StageLv == 3) // 통로
+            else if(SpawnManager.inst.StageLv == 4) // 통로
             {
                 if (cheakPos.x > bossPortalWayTelePortLimit[0])
                 {

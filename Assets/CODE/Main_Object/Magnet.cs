@@ -102,7 +102,20 @@ public class Magnet : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             circleColl.enabled = true;
-            Invoke("firstTouchOn", 0.2f);
+
+            switch (type)
+            {
+                case ItemType.Magnet:
+                case ItemType.HP_Potion:
+                    Invoke("firstTouchOn", 0.3f);
+                    break;
+
+                case ItemType.Bomb:
+                    Invoke("firstTouchOn", 1.5f);
+                    break;
+
+            }
+          
         }
     }
     private void firstTouchOn()
@@ -140,7 +153,7 @@ public class Magnet : MonoBehaviour
     float count1;
     private void ActionMoving()
     {
-        if (action0)
+        if (action0) // ¹Ý´ë·Î °¬´Ù°¡
         {
             pos = (transform.position - target.transform.position).normalized;
             rb.AddForce(pos * 8f, ForceMode2D.Impulse);
@@ -157,17 +170,19 @@ public class Magnet : MonoBehaviour
             }
         }
 
-        if (action1)
+        if (action1) // ¶¯°ÜÁö±â
         {
 
             if (boxColl.enabled == false)
             {
                 boxColl.enabled = true;
             }
+            
             magnetSpeed += Time.deltaTime;
 
             Vector2 ppos = GameManager.Inst.F_Enemy_BulletTargetPos(transform.position);
-            //ppos.y += 0.9f;
+
+            ppos.Normalize();
             rb.MovePosition(rb.position + ppos * Time.deltaTime * magnetSpeed);
             
              dis = GameManager.Inst.F_PlayerAndMeDistance(transform.position);
@@ -207,7 +222,7 @@ public class Magnet : MonoBehaviour
 
                 case ItemType.HP_Potion:
                     boxColl.enabled = false;
-                   
+                    Debug.Log("11");
                     player_stats_sc.F_Use_HP_Potion(25);
                     PoolManager.Inst.F_ReturnItem(gameObject, 1);
                     break;

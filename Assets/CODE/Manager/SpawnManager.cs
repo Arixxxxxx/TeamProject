@@ -132,8 +132,11 @@ public class SpawnManager : MonoBehaviour
     public void F_StageLvUp()
     {
         stageLv++;
-        CameraManager.inst.F_CameraZoomOut(stageLv);
-       
+
+        if(stageLv < 2)
+        {
+            CameraManager.inst.F_CameraZoomOut(stageLv);
+        }
     }
 
     int timeListValue = 0;

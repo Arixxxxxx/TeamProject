@@ -117,7 +117,7 @@ MonoBehaviour:
   returnTime: 20
   action0_Dur: 0.275
   inputSpeed: 5
-  magnetSpeed: 7
+  magnetSpeed: 8
   action0: 0
   action1: 0
   pos: {x: 0, y: 0, z: 0}
@@ -188,7 +188,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01, y: -0.01}
+  m_Offset: {x: -0.023437858, y: 0.008813143}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -199,7 +199,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51, y: 0.8}
+  m_Size: {x: 0.8593857, y: 1.0311322}
   m_EdgeRadius: 0
 --- !u!50 &2111338070053307622
 Rigidbody2D:

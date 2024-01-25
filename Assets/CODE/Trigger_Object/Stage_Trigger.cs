@@ -32,17 +32,19 @@ public class Stage_Trigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && boxColl.isTrigger == true && !once)
         {
             once = true;
-            
-            if(number == DoorNumber.Boss) // 보스방전용
+            SpawnManager.inst.F_StageLvUp();
+
+            if (number == DoorNumber.Boss) // 보스방전용
             {
                 CameraManager.inst.F_CameraZoomIn(8);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(1,2.4f);
                 SpawnManager.inst.F_DeleteCloud((int)number);
                
             }
             else if(number != DoorNumber.Boss) // 스테이지 1~2구간
             {
                 SpawnManager.inst.F_DeleteCloud((int)number);
-                SpawnManager.inst.F_StageLvUp();
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(1,2.4f);
                 GlobalLightController.Inst.F_LightControl((int)number+1);
             }
         }
