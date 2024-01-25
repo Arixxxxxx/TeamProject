@@ -386,7 +386,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 1:
-
+                GameUIManager.Inst.SkillEffectStop = true;
                 MoveStop = true;
                 GameUIManager.Inst.F_GameUIActive(false);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(false);
@@ -398,7 +398,7 @@ public class GameManager : MonoBehaviour
                 EnterBossRoom = true;
                 PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
                 PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
-
+                GlobalLightController.Inst.F_LightControl(4);
 
                 // 이동
 
@@ -414,6 +414,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(3f);
                 
                 MoveStop = false; // 스타트
+                GameUIManager.Inst.SkillEffectStop = false;
                 // 보스팝업에 필요한 함수들 호출
                 GameUIManager.Inst.F_GameUIActive(true);
                 CameraManager.inst.F_CameraDirectZoomOut(11); // 카메라 줌아웃

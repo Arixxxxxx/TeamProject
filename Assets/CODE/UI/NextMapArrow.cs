@@ -18,10 +18,6 @@ public class NextMapArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {  
-        if(Input.GetKeyDown(KeyCode.H)) 
-        {
-            target = targetList[0];
-        }
 
         if(target == null) { return; }
         
@@ -48,5 +44,10 @@ public class NextMapArrow : MonoBehaviour
     public void F_SetTarget(int value)
     {
         target = targetList[value];
+    }
+
+    public void F_SetTargetNull()
+    {
+        target = null;
     }
 }

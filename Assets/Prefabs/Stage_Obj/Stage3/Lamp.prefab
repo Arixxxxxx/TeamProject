@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6472048765738511660}
   - component: {fileID: 6522397885045572401}
   - component: {fileID: 7986249574359333719}
-  - component: {fileID: 4359743175472322811}
   - component: {fileID: 9058916237220575088}
   m_Layer: 0
   m_Name: Noway (3)
@@ -103,24 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4359743175472322811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185856295980856219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5a73fdbb41cb441a0fb515695bcb0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerList: []
-  EnemyList: []
-  hide_color_A: 0
-  hideAddY: 1.5
-  inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
-  colorChangeSpeed: 0
 --- !u!61 &9058916237220575088
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -398,7 +379,7 @@ MonoBehaviour:
   hide_color_A: 0
   hideAddY: 0
   inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
-  colorChangeSpeed: 25
+  inObj: 0
 --- !u!61 &6905527902803804938
 BoxCollider2D:
   m_ObjectHideFlags: 0

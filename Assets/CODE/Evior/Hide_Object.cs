@@ -9,52 +9,63 @@ public class Hide_Object : MonoBehaviour
     [SerializeField] float hide_color_A;
     [SerializeField] float hideAddY;
     [SerializeField] Color inPlayer;
-    
-    
+    float colorChangeSpeed = 25;
+
     SpriteRenderer sr;
-    
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
     }
     void Start()
     {
-        
+
     }
-    [SerializeField] float colorChangeSpeed;
-        void Update()
+    [SerializeField] int inObj;
+    void Update()
     {
-        if(PlayerList.Count > 0 || EnemyList.Count >0 && sr.color.a == 1)
+        inObj = PlayerList.Count + EnemyList.Count;
+        if(inObj == 0 && sr.color.a == 1) { return; }
+
+            if (inObj > 0)
         {
-            if(sr.color.a > inPlayer.a)
+            if (sr.color.a > inPlayer.a)
             {
                 sr.color += new Color(0, 0, 0, -0.1f) * Time.deltaTime * colorChangeSpeed;
             }
-         
+
             sr.sortingOrder = 10;
         }
-      
-       
-        if (EnemyList.Count == 0 && PlayerList.Count == 0)
+        else if (inObj <= 0) 
         {
             if (sr.color.a < 1)
             {
                 sr.color += new Color(0, 0, 0, 0.1f) * Time.deltaTime * colorChangeSpeed;
             }
-            
+
             sr.sortingOrder = 5;
         }
+
+        //if (EnemyList.Count == 0 && PlayerList.Count == 0)
+        //{
+        //    if (sr.color.a < 1)
+        //    {
+        //        sr.color += new Color(0, 0, 0, 0.1f) * Time.deltaTime * colorChangeSpeed;
+        //    }
+
+        //    sr.sortingOrder = 5;
+        //}
 
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false  && collision.transform.position.y >= transform.position.y + hideAddY)
+        if (collision.CompareTag("Player") && PlayerList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
         {
-                PlayerList.Add(collision.gameObject);
+            PlayerList.Add(collision.gameObject);
         }
-        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
+        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y)
         {
             EnemyList.Add(collision.gameObject);
         }
@@ -66,7 +77,7 @@ public class Hide_Object : MonoBehaviour
         {
             PlayerList.Add(collision.gameObject);
         }
-        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y + hideAddY)
+        if (collision.CompareTag("Enemy") && EnemyList.Contains(collision.gameObject) == false && collision.transform.position.y >= transform.position.y)
         {
             EnemyList.Add(collision.gameObject);
         }

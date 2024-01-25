@@ -219,7 +219,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 594742a5ed029b645a07dfa205c7aa77, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   hide_color_A: 0
   hideAddY: 1.35
   inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
-  colorChangeSpeed: 25
+  inObj: 0
 --- !u!50 &2761445194054806785
 Rigidbody2D:
   serializedVersion: 4
@@ -602,7 +602,7 @@ Transform:
   m_GameObject: {fileID: 9179841917177243943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.31005, y: 12.113678, z: 0.11576212}
+  m_LocalPosition: {x: -46.31005, y: 12.113678, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

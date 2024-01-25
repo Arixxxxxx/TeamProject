@@ -39,6 +39,9 @@ public class GameUIManager : MonoBehaviour
     OptionWindow_Controller optionWindow_Con;
     Animator bombEffectAnim;
     GameObject HideObj0, HideObj1, HideObj2;
+    [SerializeField] GameObject[] HideObj;
+    bool skillEffectStop;
+    public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
 
 
     private void Awake()
@@ -94,17 +97,18 @@ public class GameUIManager : MonoBehaviour
         {
             case 0:
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
-                //F_SetNextMapArrow(1);
+                F_NextMapArrowActiveSec(5);
                 break;
 
             case 1:
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
-               
+                F_NextMapArrowActiveSec(5);
                 break;
 
             case 2:
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
-                F_SetNextMapArrow(2); // 화살표 팝업
+                F_NextMapArrowActiveSec(5);
+                //F_SetNextMapArrow(2); // 화살표 팝업
                 break;
 
             case 4:
@@ -182,7 +186,22 @@ public class GameUIManager : MonoBehaviour
         MapArrow.F_SetTarget(value);
         MapArrow.gameObject.SetActive(true);    
     }
-    
+
+    /// <summary>
+    ///  이동화살표
+    /// </summary>
+    /// <param name="Timevalue"></param>
+    public void F_NextMapArrowActiveSec(float Timevalue)
+    {
+        StartCoroutine(ActiveArrow(Timevalue));
+    }
+    IEnumerator ActiveArrow(float Timevalue)
+    {
+        MapArrow.F_SetTargetNull();
+        MapArrow.gameObject.SetActive(true);
+        yield return new WaitForSeconds(Timevalue);
+        MapArrow.gameObject.SetActive(true);
+    }
     public void F_SetMSGUI(int value, bool BValue)
     {
         string textValue = string.Empty;
@@ -239,6 +258,8 @@ public class GameUIManager : MonoBehaviour
         HideObj0.gameObject.SetActive(value);
         HideObj1.gameObject.SetActive(value);
         HideObj2.gameObject.SetActive(value);
+        HideObj[0].gameObject.SetActive(value); // 스킬 버프창
+        HideObj[1].gameObject.SetActive(value);
     }
 
     public void F_BombEffectOn()

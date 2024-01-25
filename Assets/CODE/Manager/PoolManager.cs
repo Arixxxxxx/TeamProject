@@ -412,12 +412,10 @@ public class PoolManager : MonoBehaviour
 
             case 2:
                 SkeletonQue.Enqueue(obj);
-                Debug.Log("«ÿ∞Ò");
                 break;
 
             case 3:
                 SlimeQue.Enqueue(obj);
-                Debug.Log("ΩΩ∂Û¿”");
                 break;
 
             case 4:

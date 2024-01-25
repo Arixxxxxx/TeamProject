@@ -80,7 +80,7 @@ public class SpawnManager : MonoBehaviour
         New_SpawnStart();
         SpawnLvUpdater();
         Level_Updater();
-        MapInfoArrowActiveUpdater();
+        //MapInfoArrowActiveUpdater();
 
         if (Input.GetKeyDown(KeyCode.L)) // 2번 벽제거 테스트
         {

@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
     [SerializeField] float[] TeleportLimitP_X;
+    [SerializeField][Tooltip("PXY, MXY")] float[] bossPortalWayTelePortLimit;
     [SerializeField] float TeleportLimitM_X;
     [SerializeField] float TeleportLimitP_Y;
     [SerializeField] float TeleportLimitM_Y;
@@ -240,23 +241,47 @@ public class Movement : MonoBehaviour
 
         if(gm.EnterBossRoom == false)
         {
-            if (cheakPos.x < TeleportLimitM_X)
+            if(SpawnManager.inst.StageLv < 3)
             {
-                cheakPos.x = TeleportLimitM_X;
-            }
-            else if (cheakPos.x > TeleportLimitP_X[SpawnManager.inst.StageLv])
-            {
-                cheakPos.x = TeleportLimitP_X[SpawnManager.inst.StageLv];
-            }
+                if (cheakPos.x < TeleportLimitM_X)
+                {
+                    cheakPos.x = TeleportLimitM_X;
+                }
+                else if (cheakPos.x > TeleportLimitP_X[SpawnManager.inst.StageLv])
+                {
+                    cheakPos.x = TeleportLimitP_X[SpawnManager.inst.StageLv];
+                }
 
-            if (cheakPos.y < TeleportLimitM_Y)
-            {
-                cheakPos.y = TeleportLimitM_Y;
+                if (cheakPos.y < TeleportLimitM_Y)
+                {
+                    cheakPos.y = TeleportLimitM_Y;
+                }
+                else if (cheakPos.y > TeleportLimitP_Y)
+                {
+                    cheakPos.y = TeleportLimitP_Y;
+                }
             }
-            else if (cheakPos.y > TeleportLimitP_Y)
+            else if(SpawnManager.inst.StageLv == 3) // 통로
             {
-                cheakPos.y = TeleportLimitP_Y;
+                if (cheakPos.x > bossPortalWayTelePortLimit[0])
+                {
+                    cheakPos.x = bossPortalWayTelePortLimit[0];
+                }
+                else if (cheakPos.x < bossPortalWayTelePortLimit[2])
+                {
+                    cheakPos.x = bossPortalWayTelePortLimit[2];
+                }
+
+                if (cheakPos.y > bossPortalWayTelePortLimit[1])
+                {
+                    cheakPos.y = bossPortalWayTelePortLimit[1];
+                }
+                else if (cheakPos.y < bossPortalWayTelePortLimit[3])
+                {
+                    cheakPos.y = bossPortalWayTelePortLimit[3];
+                }
             }
+            
         }
         else // 보스방일시
         {

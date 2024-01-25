@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float pos_PlusX;
     [SerializeField] float pos_MinusY;
     [SerializeField] float pos_PlusY;
-    [Header("Camera Zoom value = 4 value")]
+    [Header("Boss Room Camera Limit")]
     [Space]
     [SerializeField] float boss_Minusx;
     [SerializeField] float boss_PlusX;

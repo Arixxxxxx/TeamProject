@@ -9826,7 +9826,6 @@ GameObject:
   - component: {fileID: 8238734518894543396}
   - component: {fileID: 5112969368420088343}
   - component: {fileID: 6071899627943142468}
-  - component: {fileID: 8260046090914969894}
   - component: {fileID: 4330572706598455725}
   m_Layer: 0
   m_Name: Noway (2)
@@ -9918,24 +9917,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8260046090914969894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4418839481851947863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5a73fdbb41cb441a0fb515695bcb0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerList: []
-  EnemyList: []
-  hide_color_A: 0
-  hideAddY: 1.5
-  inPlayer: {r: 1, g: 1, b: 1, a: 0.3529412}
-  colorChangeSpeed: 0
 --- !u!61 &4330572706598455725
 BoxCollider2D:
   m_ObjectHideFlags: 0

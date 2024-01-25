@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
@@ -53,7 +54,7 @@ public class Player_Skill_System : MonoBehaviour
     [SerializeField] float[] Passive_4_AttackPowerAdd;
 
 
-
+    GameObject skillGroup;
     Transform S_3_StartPos;
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
@@ -78,6 +79,7 @@ public class Player_Skill_System : MonoBehaviour
         _updaterSystem = GetComponent<Skill_Ui_UpdaterSystem>();
         Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
         S_3_StartPos = transform.Find("Skill_LIst/S_3").GetComponent<Transform>();
+        skillGroup = transform.Find("Skill_LIst").gameObject;
     }
     void Start()
     {
@@ -92,9 +94,26 @@ public class Player_Skill_System : MonoBehaviour
 
         ActiveSKill_Test_KeyDown();
         Play_Skill_01();
-        Skill_1_AutoFire();
-        Skill_3_AutoFire();
-        Skill_4_AutoFire();
+
+        if(GameUIManager.Inst.SkillEffectStop == false) // 스킬 잠시 중단
+        {
+            Skill_1_AutoFire();
+            Skill_3_AutoFire();
+            Skill_4_AutoFire();
+
+            if (skillGroup.activeSelf == false)
+            {
+                skillGroup.SetActive(true);
+            }
+        }
+        else if(GameUIManager.Inst.SkillEffectStop == true)
+        {
+            if(skillGroup.activeSelf == true)
+            {
+                skillGroup.SetActive(false);
+            }
+            
+        }
     }
 
     private void Skill_0_Lvelup()
