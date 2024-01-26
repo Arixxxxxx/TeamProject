@@ -8,7 +8,7 @@ public class Text_Tyiping : MonoBehaviour
     TMP_Text mainText;
     [SerializeField] float Speed;
     [SerializeField] int index;
-
+    [SerializeField] Color textColor;
     private void Awake()
     {
         mainText = GetComponent<TMP_Text>();
@@ -19,7 +19,9 @@ public class Text_Tyiping : MonoBehaviour
    
     public void F_Set_TalkBox_Main_Text(string value)
     {
+
         GetText = value;
+        mainText.color = textColor;
         mainText.text = string.Empty;
         Insert_Word();
     }
@@ -36,9 +38,6 @@ public class Text_Tyiping : MonoBehaviour
         mainText.text += GetText[index];
         index++;
 
-
-
-
         Invoke("Insert_Word", 1 / Speed);
     }
 
@@ -53,16 +52,16 @@ public class Text_Tyiping : MonoBehaviour
         mainText.text = string.Empty;
     }
 
-    public void F_HideText()
+    public void F_HideText(float FadeValue)
     {
-        StartCoroutine(HIdeText());
+        StartCoroutine(HIdeText(FadeValue));
     }
 
-    IEnumerator HIdeText()
+    IEnumerator HIdeText(float FadeValue)
     {
         while(mainText.color.a > 0)
         {
-            mainText.color -= new Color(0, 0, 0, 0.2f) * Time.deltaTime * 1.2f;
+            mainText.color -= new Color(0, 0, 0, 0.2f) * Time.deltaTime * FadeValue;
             yield return null;
 
             if(mainText.color.a == 0)

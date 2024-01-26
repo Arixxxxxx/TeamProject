@@ -28,6 +28,7 @@ public class OptionWindow_Controller : MonoBehaviour
     Button yesBtn;
     Button noBtn;
     GameObject backLight;
+    GameObject OptionWindow;
 
     void Start()
     {
@@ -36,7 +37,8 @@ public class OptionWindow_Controller : MonoBehaviour
         SeletWindowList = Ui_Parent_Obj.transform.Find("IngameSelectWindow").gameObject;
 
         //메인스크린 버튼 초기화
-        OptionOpenBtn = MainCanvas.transform.Find("Option_OpenBtn").GetComponent<Button>(); 
+        OptionOpenBtn = MainCanvas.transform.Find("Option_OpenBtn").GetComponent<Button>();
+        OptionWindow = SeletWindowList.transform.Find("OptionWindow").gameObject;
 
         // 1번창 (인게임 햄버거모양 누르면 나오는 옵션창)
         Window_0 = SeletWindowList.transform.GetChild(0).gameObject;
@@ -96,9 +98,23 @@ public class OptionWindow_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        ActiveEscKeyOption();
     }
 
+    private void ActiveEscKeyOption()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (OptionWindow.gameObject.activeSelf == false)
+            {
+                OptionWindow.gameObject.SetActive(true);
+            }
+            else
+            {
+                OptionWindow.gameObject.SetActive(false);
+            }
+        }
+    }
     private void Btn_Init()
     {
         //인게임 일시정지 버튼
@@ -120,15 +136,18 @@ public class OptionWindow_Controller : MonoBehaviour
         });
 
         MainWindow_0_Btn_1.onClick.AddListener(() => {
-
+#if UNITY_EDITOR
             if (Application.isEditor)
             {
                 EditorApplication.ExitPlaymode();
             }
+
             else 
             {
                 Application.Quit();
             }
+#endif
+            Application.Quit();
 
         });
     }

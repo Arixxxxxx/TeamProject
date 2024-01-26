@@ -84,17 +84,7 @@ public class PoolManager : MonoBehaviour
 
     [SerializeField] int Skill_4_StartMakingEa;
     Queue<GameObject> Skill_4_Que = new Queue<GameObject>();
-
-
-    
-    //[Header("# Insert ETC Prefab ")]
-    //[Space]
-    //[SerializeField] GameObject Skill_UI_Btn; // 레벨업 UI Btn
-    //[SerializeField] int Skill_UI_Btn_StartMakingEa;
-    //Queue<GameObject> Skill_UI_Btn_Que = new Queue<GameObject>();
-
-
-    // Dyamic Tranform 변수
+            
     Transform ArrowTrs, CoinTrs, FontTrs;
 
     private void Awake()
@@ -156,7 +146,6 @@ public class PoolManager : MonoBehaviour
         {
             GameObject Obj = Instantiate(EnemyObj[2], SkeletonTrs);
             Obj.transform.position = Vector3.zero;
-            Debug.Log(Obj.transform.position);
             Obj.gameObject.SetActive(false);
             SkeletonQue.Enqueue(Obj);
         }
@@ -169,7 +158,7 @@ public class PoolManager : MonoBehaviour
             SlimeQue.Enqueue(Obj);
         }
 
-        for (int i = 0; i < OrcRanger_StartMakingEA; i++)
+        for (int i = 0; i < OrcRanger_StartMakingEA; i++) // 오크레인저
         {
             GameObject Obj = Instantiate(EnemyObj[4], OrcRangerTrs);
             Obj.transform.position = Vector3.zero;
@@ -177,7 +166,7 @@ public class PoolManager : MonoBehaviour
             Orc_RangerQue.Enqueue(Obj);
         }
 
-        for (int i = 0; i < Tree_StartMakingEA; i++)
+        for (int i = 0; i < Tree_StartMakingEA; i++) // 나무
         {
             GameObject Obj = Instantiate(EnemyObj[5], TreeTrs);
             Obj.transform.position = Vector3.zero;
@@ -331,9 +320,11 @@ public class PoolManager : MonoBehaviour
 
                 if (OrcQue.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[0], OrcTrs);
-                    return obj;
-                }
+                    GameObject Obj = Instantiate(EnemyObj[0], OrcTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    OrcQue.Enqueue(Obj);
+                 }
 
                 obj = OrcQue.Dequeue();
 
@@ -343,17 +334,22 @@ public class PoolManager : MonoBehaviour
             case 1: // 버섯
                 if (MushRoomQue.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[1], MushTrs);
-                    return obj;
+                    GameObject Obj = Instantiate(EnemyObj[1], MushTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    MushRoomQue.Enqueue(Obj);
                 }
+
                 obj = MushRoomQue.Dequeue();
                 return obj;
 
             case 2: //해골궁수
                 if (SkeletonQue.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[2], SkeletonTrs);
-                    return obj;
+                    GameObject Obj = Instantiate(EnemyObj[2], SkeletonTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    SkeletonQue.Enqueue(Obj);
                 }
                 obj = SkeletonQue.Dequeue();
                 return obj;
@@ -361,8 +357,10 @@ public class PoolManager : MonoBehaviour
             case 3: // 슬라임
                 if (SlimeQue.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[3], SlimeTrs);
-                    return obj;
+                    GameObject Obj = Instantiate(EnemyObj[3], SlimeTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    SlimeQue.Enqueue(Obj);
                 }
                 obj = SlimeQue.Dequeue();
                 return obj;
@@ -370,8 +368,10 @@ public class PoolManager : MonoBehaviour
             case 4: // 오크레인저
                 if (Orc_RangerQue.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[4], OrcRangerTrs);
-                    return obj;
+                    GameObject Obj = Instantiate(EnemyObj[4], OrcRangerTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    Orc_RangerQue.Enqueue(Obj);
                 }
                 obj = Orc_RangerQue.Dequeue();
                 return obj;
@@ -379,8 +379,10 @@ public class PoolManager : MonoBehaviour
             case 5: // 나무
                 if (Tree_Que.Count <= 1)
                 {
-                    obj = Instantiate(EnemyObj[5], TreeTrs);
-                    return obj;
+                    GameObject Obj = Instantiate(EnemyObj[5], TreeTrs);
+                    Obj.transform.position = Vector3.zero;
+                    Obj.gameObject.SetActive(false);
+                    Tree_Que.Enqueue(Obj);
                 }
                 obj = Tree_Que.Dequeue();
                 return obj;

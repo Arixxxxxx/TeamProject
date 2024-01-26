@@ -42,7 +42,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] GameObject[] HideObj;
     bool skillEffectStop;
     public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
-
+    
 
     private void Awake()
     {
@@ -56,6 +56,9 @@ public class GameUIManager : MonoBehaviour
         }
 
         optionWindow_Con = GetComponent<OptionWindow_Controller>();
+        HideObj0 = UI.transform.Find("BattleTime").gameObject;
+        HideObj1 = UI.transform.Find("Count_Info").gameObject;
+        HideObj2 = UI.transform.Find("UnitFrame").gameObject;
     }
     void Start()
     {
@@ -63,19 +66,14 @@ public class GameUIManager : MonoBehaviour
         infoText = InfoObj.GetComponentInChildren<TMP_Text>();
         infoAnim = infoText.GetComponent<Animator>();
         infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
-        infoBarColse = new WaitForSeconds(closeTime);
+        
         inDarkCloudWarrningWindow = UI.transform.Find("WarningMSG").gameObject;
 
         msgUI_Bg = msgUI.transform.GetChild(0).GetComponent<Image>();
         Img_0 = msgUI_Bg.transform.GetChild(0).GetComponent<Image>();
         Img_1 = msgUI_Bg.transform.GetChild(1).GetComponent<Image>();
         msgtext = msgUI.transform.Find("Bg/Text").GetComponent<TMP_Text>();
-
         bossHpUI = UI.transform.Find("Boos_Hp_Bar").gameObject;
-
-        HideObj0 = UI.transform.Find("BattleTime").gameObject;
-        HideObj1 = UI.transform.Find("Count_Info").gameObject;
-        HideObj2 = UI.transform.Find("UnitFrame").gameObject;
 
         bombEffectAnim = UI.transform.Find("BombEffect").GetComponent<Animator>();
     }
@@ -96,22 +94,26 @@ public class GameUIManager : MonoBehaviour
         switch (value)
         {
             case 0:
+                infoText.fontSize = 30;
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
-                F_NextMapArrowActiveSec(5);
+                F_NextMapArrowActiveSec(true);
                 DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
                 break;
 
             case 1:
+                infoText.fontSize = 30;
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
-                F_NextMapArrowActiveSec(5);
+                F_NextMapArrowActiveSec(true);
                 DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
                 break;
 
             case 2:
+                infoText.fontSize = 30;
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
-                F_NextMapArrowActiveSec(5);
+                DarkCloud_Controller.inst.F_Pattern2Active(true); // 어둠구름 이동
                 DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
-                //F_SetNextMapArrow(2); // 화살표 팝업
+                F_NextMapArrowActiveSec(true);
+                SpawnManager.inst.F_spawnstartActiveOff();
                 break;
 
             case 4:
@@ -119,6 +121,7 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case -1:
+                infoText.fontSize = 38;
                 alramText = "게임이 시작되었습니다.";
 
                
@@ -143,15 +146,17 @@ public class GameUIManager : MonoBehaviour
     IEnumerator MsgInfoBar_Action()
     {
         
-        while(infoText.color.a < 0.95f)
+
+        while (infoText.color.a < 0.95f)
         {
             infoBg.color += aColorUP * Time.deltaTime * 5;
             infoText.color += aColorUP * Time.deltaTime * 5;
             yield return null;
         }
+        
 
         infoAnim.enabled = true;
-        yield return infoBarColse;
+        yield return new WaitForSeconds(5);
         infoAnim.enabled = false;
 
         while (infoText.color.a > 0.05f)
@@ -160,6 +165,7 @@ public class GameUIManager : MonoBehaviour
             infoText.color -= aColorUP * Time.deltaTime * 5;
             yield return null;
         }
+                
 
         if (InfoObj.gameObject.activeSelf == true)
         {
@@ -190,21 +196,27 @@ public class GameUIManager : MonoBehaviour
         MapArrow.gameObject.SetActive(true);    
     }
 
+    public void F_NextMapArrowActiveSec(bool value)
+    {
+        MapArrow.gameObject.SetActive(value);
+    }
+
+
     /// <summary>
     ///  이동화살표
     /// </summary>
     /// <param name="Timevalue"></param>
-    public void F_NextMapArrowActiveSec(float Timevalue)
-    {
-        StartCoroutine(ActiveArrow(Timevalue));
-    }
-    IEnumerator ActiveArrow(float Timevalue)
-    {
-        MapArrow.F_SetTargetNull();
-        MapArrow.gameObject.SetActive(true);
-        yield return new WaitForSeconds(Timevalue);
-        MapArrow.gameObject.SetActive(false);
-    }
+    //public void F_NextMapArrowActiveSec(float Timevalue)
+    //{
+    //    StartCoroutine(ActiveArrow(Timevalue));
+    //}
+    //IEnumerator ActiveArrow(float Timevalue)
+    //{
+    //    MapArrow.F_SetTargetNull();
+    //    MapArrow.gameObject.SetActive(true);
+    //    yield return new WaitForSeconds(Timevalue);
+    //    MapArrow.gameObject.SetActive(false);
+    //}
     public void F_SetMSGUI(int value, bool BValue)
     {
         string textValue = string.Empty;
@@ -258,11 +270,13 @@ public class GameUIManager : MonoBehaviour
     }
     public void F_GameUIActive(bool value)
     {
-        HideObj0.gameObject.SetActive(value);
+        
         HideObj1.gameObject.SetActive(value);
         HideObj2.gameObject.SetActive(value);
         HideObj[0].gameObject.SetActive(value); // 스킬 버프창
         HideObj[1].gameObject.SetActive(value);
+        HideObj[2].gameObject.SetActive(value);
+        
     }
 
     public void F_BombEffectOn()

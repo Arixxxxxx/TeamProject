@@ -33,17 +33,17 @@ public class Stage_Trigger : MonoBehaviour
         {
             once = true;
             SpawnManager.inst.F_StageLvUp();
+            GameUIManager.Inst.F_NextMapArrowActiveSec(false);
+            SpawnManager.inst.F_DeleteCloud((int)number); // 구름제거
 
             if (number == DoorNumber.Boss) // 보스방전용
             {
-                CameraManager.inst.F_CameraZoomIn(8);
+                CameraManager.inst.F_CameraZoomIn(10);
                 DarkCloud_Controller.inst.F_darkCloudeSpeedUp(1,2.4f);
-                SpawnManager.inst.F_DeleteCloud((int)number);
-               
             }
             else if(number != DoorNumber.Boss) // 스테이지 1~2구간
             {
-                SpawnManager.inst.F_DeleteCloud((int)number);
+              
                 DarkCloud_Controller.inst.F_darkCloudeSpeedUp(1,2.4f);
                 GlobalLightController.Inst.F_LightControl((int)number+1);
             }

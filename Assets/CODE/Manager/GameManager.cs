@@ -1,6 +1,5 @@
 using NavMeshPlus.Components;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -133,7 +132,7 @@ public class GameManager : MonoBehaviour
     bool start_once;
     private void StartGameGetLVUP()
     {
-        if (sceneNumber == 1 && mainGameStart == true && start_once == false)
+        if (mainGameStart == true && start_once == false)
         {
             start_once = true;
             StartCoroutine(StartLvUP());
@@ -398,7 +397,7 @@ public class GameManager : MonoBehaviour
                 EnterBossRoom = true;
                 PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
                 PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
-                GlobalLightController.Inst.F_LightControl(4);
+                GlobalLightController.Inst.F_LightControl(4); // 조명 컨트롤
 
                 // 이동
 

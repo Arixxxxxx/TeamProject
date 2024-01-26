@@ -12,6 +12,7 @@ public class AreaCheakerSc : MonoBehaviour
     [SerializeField] GameObject Player;
     public AreaNumber areaNumber;
     [SerializeField] List<GameObject> spawnPointInArea = new List<GameObject>();
+    EnemySpawnPointSc sc;
     void Start()
     {
         
@@ -27,7 +28,7 @@ public class AreaCheakerSc : MonoBehaviour
         if (collision.CompareTag("SpawnPoint") && spawnPointInArea.Contains(collision.gameObject) == false)
         {
             spawnPointInArea.Add(collision.gameObject);
-            EnemySpawnPointSc sc = collision.GetComponent<EnemySpawnPointSc>();
+            sc = collision.GetComponent<EnemySpawnPointSc>();
             sc.F_Input_Area_Value((int)areaNumber);
         }
 

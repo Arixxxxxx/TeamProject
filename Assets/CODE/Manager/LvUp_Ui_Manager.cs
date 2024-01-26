@@ -59,8 +59,6 @@ public class LvUp_Ui_Manager : MonoBehaviour
     public void F_LvUP_SelectSkill()
     {
         skill_ID_Value.Clear(); // 딕셔러니 초기화
-        //Skill_ID_List.Clear();  //리스트에서 딕셔너리로 옴김
-        //Skill_Lv.Clear();
         Cheak_List.Clear();
         SkillCount = 0;
 
@@ -75,8 +73,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
             if (Get_Skill_Value[i] < SkillMaxLv)
             {
                 skill_ID_Value.Add(i, Get_Skill_Value[i]);
-                //Skill_ID_List.Add(i);
-                //Skill_Lv.Add(Get_Skill_Value[i]);
+
             }
         }
 
@@ -94,7 +91,6 @@ public class LvUp_Ui_Manager : MonoBehaviour
         }
         else if (skill_ID_Value.Count == 0)
         {
-            Debug.Log("만렙");
             return;
         }
 
@@ -112,23 +108,13 @@ public class LvUp_Ui_Manager : MonoBehaviour
         // 생성
         for (int i = 0; i < SkillCount; i++)
         {
-         
-            //int Skill_ID = Skill_ID_List[RandomValue[i]]; // 종류
-            //int Lv_Value = Skill_Lv[RandomValue[i]]; //스킬레벨
-            
             Ui_Skill_Select_Btn sc = Btn[i].GetComponent<Ui_Skill_Select_Btn>();
             sc.skilltype = (Ui_Skill_Select_Btn.SkillType)RandomValue[i];
-            //sc.skilltype = (Ui_Skill_Select_Btn.SkillType)Skill_ID;
+         
 
             sc.F_Set_SelectCard(skill_ID_Value[RandomValue[i]]);
             //sc.F_Set_SelectCard(Lv_Value);
             Btn[i].gameObject.SetActive(true);
-
-            // 저장햇으니 지움
-            //skill_ID_Value.Remove(RandomValue[i]);
-            //Skill_ID_List.RemoveAt(Skill_ID_List[RandomValue[i]]);
-            //Skill_Lv.RemoveAt(Skill_Lv[RandomValue[i]]);
-
         }
 
         if (LvupWindow.activeSelf == false)

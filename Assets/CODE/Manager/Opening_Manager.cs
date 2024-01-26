@@ -15,6 +15,7 @@ public class Opening_Manager : MonoBehaviour
     [SerializeField] bool fadeOffSkip;
     [SerializeField] Animator Action2_0;
     [SerializeField] Animator Action2_1;
+    [SerializeField] GameObject testBtn;
     
 
     [Header("# Insert Obj for Opening")]
@@ -22,14 +23,13 @@ public class Opening_Manager : MonoBehaviour
     [SerializeField] GameObject cameraTarget;
     [SerializeField] Transform camtransform; // 카메라 시작위치
     [SerializeField] GameObject mainUiCanvas;
-    [SerializeField] Animator photoFrameAnim;
     [SerializeField] ParticleSystem[] backgroundPs;
     Image cutton;
     [Header("# Intro Story Telling (Action0)")]
     [Space]
     [SerializeField] Text_Tyiping maintext;
-    [SerializeField] Animator mask;
-    [SerializeField] Image maskIMG;
+    [SerializeField] Animator photoFrameAnim;
+    [SerializeField] Image frameIMG;
     [SerializeField][Multiline] string[] textBox;
     [SerializeField] Sprite[] introSprite;
     [Header("# Action Time Value Setting")]
@@ -51,12 +51,14 @@ public class Opening_Manager : MonoBehaviour
         {
             Destroy(this);
         }
-
-        mainUiCanvas.gameObject.SetActive(false);
+       
+        //mainUiCanvas.gameObject.SetActive(false);
 
     }
     void Start()
     {
+
+        testBtn.SetActive(false);
         gm = GameManager.Inst;
         cm = CameraManager.inst;
 
@@ -68,7 +70,7 @@ public class Opening_Manager : MonoBehaviour
 
 
         StartOpening();
-
+        GameUIManager.Inst.F_GameUIActive(false);
     }
 
     bool Action0, Action1, Action2;
@@ -89,12 +91,13 @@ public class Opening_Manager : MonoBehaviour
     public bool nextOk;
     IEnumerator IntroStoryAction0()
     {
-        photoFrameAnim.SetTrigger("FadeIn");
+        //photoFrameAnim.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1f); // 그림설명 애니메이션 작동될때까지 기다리기
-        mask.SetTrigger("FadeOn"); // 박스 스프라이트 연출
-        backgroundPs[0].gameObject.SetActive(true);
-        backgroundPs[1].gameObject.SetActive(true);
+        photoFrameAnim.SetTrigger("FadeOn"); // 박스 스프라이트 연출
         nextOk = true;
+        yield return new WaitForSeconds(1.5f);
+        //backgroundPs[0].gameObject.SetActive(true); // 파티클 취소(24/01.26)
+        //backgroundPs[1].gameObject.SetActive(true);// 파티클 취소(24/01.26)
         maintext.F_Set_TalkBox_Main_Text(textBox[0]); // 첫번째 오프닝스토리 문구 넣어주기
         yield return null;
 
@@ -102,16 +105,19 @@ public class Opening_Manager : MonoBehaviour
         {
             yield return null; 
         }
-        mask.SetTrigger("FadeOff"); // 첫번째 그림 페이드 아웃
-        yield return new WaitForSeconds(0.5f); 
-        maintext.F_TextEmpty(); // 대화창 한번지우고
+        yield return new WaitForSeconds(2f); // 글 다나왓으면 2초 대기
+        photoFrameAnim.SetTrigger("FadeOff"); // 첫번째 그림 페이드 아웃
+        yield return new WaitForSeconds(0.5f);
+        //maintext.F_TextEmpty(); // 대화창 한번지우고
+        maintext.F_HideText(5.5f);
 
-        yield return new WaitForSeconds(2f); // 잠깐쉬고
+        yield return new WaitForSeconds(0.7f); // 잠깐쉬고
         
-        maskIMG.sprite = introSprite[0]; // 두번쨰 사진으로 변경
-        mask.SetTrigger("FadeOn2"); // 애니메이션 재생
+        frameIMG.sprite = introSprite[0]; // 두번쨰 사진으로 변경
+        photoFrameAnim.SetTrigger("FadeOn2"); // 애니메이션 재생
 
         nextOk = true; // 메세지 출력 끝났다면
+        yield return new WaitForSeconds(1f);
         maintext.F_Set_TalkBox_Main_Text(textBox[1]); // 두번쨰 오프닝스토리 문구 넣어주기
       
         yield return null;
@@ -120,13 +126,14 @@ public class Opening_Manager : MonoBehaviour
         {
             yield return null;
         }
-        mask.SetTrigger("FadeOff2"); // 이미지 페이드아웃
-        photoFrameAnim.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(0.5f); // 잠깐 쉬엇다가
-        maintext.F_HideText(); // 텍스트 페이드아웃
+        yield return new WaitForSeconds(2f);// 글 다나왓으면 2초 대기
+        photoFrameAnim.SetTrigger("FadeOff2"); // 이미지 페이드아웃
         
-      
-        Action0 = false; // 다음 연출 시작
+        yield return new WaitForSeconds(0.5f); // 잠깐 쉬엇다가
+        maintext.F_HideText(1.2f); // 텍스트 페이드아웃
+
+       
+          Action0 = false; // 다음 연출 시작
     }
 
     IEnumerator CuttonFade()
@@ -164,7 +171,8 @@ public class Opening_Manager : MonoBehaviour
     IEnumerator Action2_Start()
     {
         GameManager.Inst.MoveStop = false; // 캐릭터 움직이게 해줌
-        mainUiCanvas.gameObject.SetActive(true); // 게임 UI 켜줌
+        /*mainUiCanvas.gameObject.SetActive(true);*/ // 게임 UI 켜줌
+        
 
         yield return new WaitForSeconds(Action2_DelayTime);
 
@@ -186,9 +194,10 @@ public class Opening_Manager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         Action2_1.gameObject.SetActive(false); // 꺼줌
+        GameUIManager.Inst.F_GameUIActive(true);
 
-
-
+        yield return new WaitForSeconds(1f);
+        GameManager.Inst.MainGameStart = true;
     }
 
 }

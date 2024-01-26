@@ -169,22 +169,23 @@ public class DarkCloud_Controller : MonoBehaviour
             }
         }
     
-
-        if (stageLv == 3 && checkDistance2 < -1 && cloudMoveStart == true)
+        // 4분 끝 이동시작
+        if(Pattern2 == true)
         {
-            darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed * Time.deltaTime));
-        }
-        else if (stageLv == 3 && checkDistance2 > -1 && cloudMoveStart == true)
-        {
-            cloudMoveStart = false; // 딜레이 시간
-            timeOutSpeed = 0;
-            addSpeed = 0;
+            if (checkDistance2 < -1 && cloudMoveStart == true)
+            {
+                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed * Time.deltaTime));
+            }
+            else if (stageLv == 3 && checkDistance2 > -1 && cloudMoveStart == true)
+            {
+                cloudMoveStart = false; // 딜레이 시간
+            }
         }
     }
 
-    private void Pattern1Active()
+    public void F_Pattern2Active(bool value)
     {
-        Pattern1 = true;
+        Pattern2 = value;
     }
 
 }

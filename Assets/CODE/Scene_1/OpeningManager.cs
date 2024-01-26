@@ -81,15 +81,7 @@ public class OpeningManager : MonoBehaviour
         ExitBtn = Ui_Canvas.transform.Find("Main_UI/Exit_Btn").GetComponent<Button>();
         ExitBtn.onClick.AddListener(()=> 
         {
-            if (Application.isEditor)
-            {
-                EditorApplication.ExitPlaymode();
-            }
-            else
-            {
                 Application.Quit();
-            }
-
         });
 
         StartCoroutine(Opening_Start());
