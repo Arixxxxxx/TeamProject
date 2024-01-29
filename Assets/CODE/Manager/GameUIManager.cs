@@ -37,12 +37,16 @@ public class GameUIManager : MonoBehaviour
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
     OptionWindow_Controller optionWindow_Con;
+    Dead_Counter_Contoller deadCon;
     Animator bombEffectAnim;
     GameObject HideObj0, HideObj1, HideObj2;
     [SerializeField] GameObject[] HideObj;
     bool skillEffectStop;
     public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
-    
+
+    bool respawning; // 리스폰중 체크용
+    public bool Respawning { get { return respawning; } set { respawning = value; } }
+
 
     private void Awake()
     {
@@ -59,6 +63,8 @@ public class GameUIManager : MonoBehaviour
         HideObj0 = UI.transform.Find("BattleTime").gameObject;
         HideObj1 = UI.transform.Find("Count_Info").gameObject;
         HideObj2 = UI.transform.Find("UnitFrame").gameObject;
+
+        deadCon = GetComponent<Dead_Counter_Contoller>();
     }
     void Start()
     {
@@ -97,21 +103,21 @@ public class GameUIManager : MonoBehaviour
                 infoText.fontSize = 30;
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
-                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 0,2.5f);
                 break;
 
             case 1:
                 infoText.fontSize = 30;
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
-                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0,1, 2.5f);
                 break;
 
             case 2:
                 infoText.fontSize = 30;
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
                 DarkCloud_Controller.inst.F_Pattern2Active(true); // 어둠구름 이동
-                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1.5f);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 2, 2.5f);
                 F_NextMapArrowActiveSec(true);
                 SpawnManager.inst.F_spawnstartActiveOff();
                 break;
@@ -201,22 +207,7 @@ public class GameUIManager : MonoBehaviour
         MapArrow.gameObject.SetActive(value);
     }
 
-
-    /// <summary>
-    ///  이동화살표
-    /// </summary>
-    /// <param name="Timevalue"></param>
-    //public void F_NextMapArrowActiveSec(float Timevalue)
-    //{
-    //    StartCoroutine(ActiveArrow(Timevalue));
-    //}
-    //IEnumerator ActiveArrow(float Timevalue)
-    //{
-    //    MapArrow.F_SetTargetNull();
-    //    MapArrow.gameObject.SetActive(true);
-    //    yield return new WaitForSeconds(Timevalue);
-    //    MapArrow.gameObject.SetActive(false);
-    //}
+      
     public void F_SetMSGUI(int value, bool BValue)
     {
         string textValue = string.Empty;
@@ -282,5 +273,11 @@ public class GameUIManager : MonoBehaviour
     public void F_BombEffectOn()
     {
         bombEffectAnim.SetTrigger("Bomb");
+    }
+
+    
+    public void F_CallRespawn_Counter_UI()
+    {
+        deadCon.F_ActiveDeadCounter();
     }
 }

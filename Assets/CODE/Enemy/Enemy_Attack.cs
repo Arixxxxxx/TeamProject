@@ -78,6 +78,8 @@ public class Enemy_Attack : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Inst.IsPlayer_Dead) { return; }
+
         Attack_Anim();
         anim.SetFloat("AttackSpeed", attackSpeed);
 

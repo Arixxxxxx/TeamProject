@@ -34,6 +34,10 @@ public class Movement : MonoBehaviour
     [Space]
     [SerializeField][Tooltip("X,-X,Y,-Y")] float[] TeleportLimit;
 
+    // 텔레포트 쿨타임 UI 변수
+    GameObject telePortCoolTimeBar;
+    Image teleFrontIMG;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +45,8 @@ public class Movement : MonoBehaviour
         anim = GetComponent<Animator>();
         Sprint_Bar_Ui = transform.Find("Character_Mini_Ui/Sprint_Bar/Front").GetComponent<Image>();
         Sprint_Bar = transform.Find("Character_Mini_Ui/Sprint_Bar").gameObject;
+        telePortCoolTimeBar = transform.Find("Character_Mini_Ui/TelePort_CoolTimeBar").gameObject;
+        teleFrontIMG = telePortCoolTimeBar.transform.Find("Front").GetComponent<Image>();
     }
     void Start()
     {
@@ -67,6 +73,7 @@ public class Movement : MonoBehaviour
         Animator_Updater();
 
         Sprint_Time_Updater();
+        TelePortCoolTimeBar_Updater();
         FrontTeleport();
     }
 
@@ -190,8 +197,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float Origin_TeleportDistance;
     [SerializeField] float TeleportCoolTime;
     float Origin_TeleportCoolTim;
-    [SerializeField] float Count;
-    bool doTeleport , once;
+    [SerializeField] float teleportCount;
+    bool doTeleport;
 
     private void FrontTeleport()
     {
@@ -202,21 +209,38 @@ public class Movement : MonoBehaviour
 
         if (doTeleport)
         {
-            if (Count != TeleportCoolTime && once == false)
-            {
-                once = true;
-                Count = TeleportCoolTime;
-            }
 
-            Count -= Time.deltaTime;
+            teleportCount += Time.deltaTime;
 
-            if (Count <= 0)
+            if (teleportCount > TeleportCoolTime)
             {
+                teleportCount = 0;
                 doTeleport = false;
-                once = false;
 
             }
 
+        }
+    }
+
+    private void TelePortCoolTimeBar_Updater()
+    {
+        if (doTeleport)
+        {
+            if(telePortCoolTimeBar.activeSelf == false)
+            {
+                teleFrontIMG.fillAmount = 0;
+                telePortCoolTimeBar.SetActive(true);
+            }
+
+            teleFrontIMG.fillAmount = teleportCount / TeleportCoolTime;
+
+        }
+        else
+        {
+            if(telePortCoolTimeBar.activeSelf == true)
+            {
+                telePortCoolTimeBar.SetActive(false);
+            }
         }
     }
 
@@ -241,7 +265,7 @@ public class Movement : MonoBehaviour
 
         if(gm.EnterBossRoom == false)
         {
-            if(SpawnManager.inst.StageLv < 3)
+            if(SpawnManager.inst.StageLv <= 3)
             {
                 if (cheakPos.x < TeleportLimitM_X)
                 {

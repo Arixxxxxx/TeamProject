@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button[] Btn;
     [SerializeField] GameObject enemyList;
     bool isPlayer_Dead;
+    
 
     [Header("# Ingame Cheak & Test Value")]
     [Space]
@@ -68,12 +69,19 @@ public class GameManager : MonoBehaviour
     bool bossMode;
     public bool BossMode { get { return bossMode; } set { bossMode = value; } }
 
+
     [Header("# For MoveStop")]
     [Space]
     [SerializeField] bool moveStop;
     public bool MoveStop { get { return moveStop; } set { moveStop = value; } }
+
+
+    
     private void Awake()
     {
+
+        Application.targetFrameRate = 60;
+
         if(Inst == null)
         {
             Inst = this;
@@ -88,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
         startWaitTime = new WaitForSeconds(Start_GetSkill_WaitSec);
 
         NavMapBake_init();
@@ -115,16 +124,34 @@ public class GameManager : MonoBehaviour
             Invoke("OpeningMSG", 6);
         }
 
-        uiOpen_EveryObecjtStopFuntion();
-        UiOpen_Cheaker();
+        
         StartGameGetLVUP();
         
 
         FieldEnemy = spawnCount - killCount;
 
-     
+      
+
     }
-    
+
+    /// <summary>
+    /// Timescale Changer / include = Character MoveStop
+    /// </summary>
+    /// <param name="value"></param>
+    public void F_TimeSclaeController(bool value)
+    {
+
+        if (value && Time.timeScale == 1) 
+        {
+            Time.timeScale = 0;
+            MoveStop = true;
+        }
+        else if(!value && Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+            MoveStop = false;
+        }
+    }
     private void OpeningMSG()
     {
         GameUIManager.Inst.F_SetMSGUI(0,true);
@@ -157,7 +184,7 @@ public class GameManager : MonoBehaviour
         return Player.transform.position;
     }
 
-
+    
 
     /// <summary>
     /// 글로벌 라이트 조절
@@ -258,42 +285,7 @@ public class GameManager : MonoBehaviour
         killCount++;
     }
 
-    private void uiOpen_EveryObecjtStopFuntion()
-    {
-        if(uiOpen_EveryObecjtStop == true && Time.timeScale == 1)
-        {
-            Time.timeScale = 0;
-        }
-        else if (uiOpen_EveryObecjtStop == false && Time.timeScale == 0)
-        {
-            Time.timeScale = 1;
-        }
-    }
 
-    private void UiOpen_Cheaker()
-    {
-        if (GameStop_Ui_Window[0].gameObject.activeSelf == true && uiOpen_EveryObecjtStop == false)
-         {
-            uiOpen_EveryObecjtStop = true;
-        }
-        else if(GameStop_Ui_Window[0].gameObject.activeSelf == false && uiOpen_EveryObecjtStop == true)
-        {
-            uiOpen_EveryObecjtStop = false;
-        }
-        if (GameStop_Ui_Window[1].gameObject.activeSelf == true && uiOpen_EveryObecjtStop == false)
-        {
-            if (GameStop_Ui_Window[2].activeSelf == true)
-            {
-                GameStop_Ui_Window[2].SetActive(false);
-            }
-            
-            uiOpen_EveryObecjtStop = true;
-        }
-        else if (GameStop_Ui_Window[1].gameObject.activeSelf == false && uiOpen_EveryObecjtStop == true)
-        {
-            uiOpen_EveryObecjtStop = false;
-        }
-    }
   
     /// <summary>
     /// 스킬선택 이후 프리펩 삭제
@@ -385,6 +377,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 1:
+                
                 GameUIManager.Inst.SkillEffectStop = true;
                 MoveStop = true;
                 GameUIManager.Inst.F_GameUIActive(false);
@@ -397,7 +390,10 @@ public class GameManager : MonoBehaviour
                 EnterBossRoom = true;
                 PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
                 PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
-                GlobalLightController.Inst.F_LightControl(4); // 조명 컨트롤
+
+                F_ActiveBomb(); // 타면서 남아잇는 몬스터 전부 삭제시켜줌
+
+                GlobalLightController.Inst.F_LightControl(3); // 조명 컨트롤
 
                 // 이동
 
@@ -416,7 +412,7 @@ public class GameManager : MonoBehaviour
                 GameUIManager.Inst.SkillEffectStop = false;
                 // 보스팝업에 필요한 함수들 호출
                 GameUIManager.Inst.F_GameUIActive(true);
-                CameraManager.inst.F_CameraDirectZoomOut(11); // 카메라 줌아웃
+                CameraManager.inst.F_CameraDirectZoomOut(12); // 카메라 줌아웃
                 GameUIManager.Inst.F_BossHpBarActive(true); // 보스 에이치바
                 BossBattleStart = true;
                 //보스전투시작 호출
@@ -429,5 +425,22 @@ public class GameManager : MonoBehaviour
 
        
         waitCorutine = false;
+    }
+
+
+    public void PlayerHP_Recovery()
+    {
+        player_stats_sc.F_CurrentHPFull();
+    }
+
+  public void PlayerRespawn_Mujuk()
+    {
+        player_stats_sc.F_RespawnMujuk();
+    }
+
+
+    public Player_Stats F_GetPlayerStats_Script()
+    {
+        return player_stats_sc;
     }
 }

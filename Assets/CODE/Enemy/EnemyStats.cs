@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyStats : MonoBehaviour
@@ -33,7 +34,8 @@ public class EnemyStats : MonoBehaviour
     Animator anim;
     Animator Hp_Bar_anim;
 
-
+    NavMeshAgent navMesh;
+    float tempNavColliderRadius;
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class EnemyStats : MonoBehaviour
         nav = GetComponent<Enemy_Nav_Movement>();
         anim = GetComponent<Animator>();
         Hp_Bar_anim = transform.Find("HPBar").GetComponent<Animator>();
+        navMesh = GetComponent<NavMeshAgent>();
     }
     void Start()
     {
@@ -85,6 +88,7 @@ public class EnemyStats : MonoBehaviour
 
             if (CurHP <= 0)
             {
+                
                 anim.SetTrigger("Dead");
                 enemy_Dead = true;
                 anim.SetBool("Attack", false);
@@ -127,7 +131,6 @@ public class EnemyStats : MonoBehaviour
 
     private void ReSponeEnemy_Init()
     {
-        
         Hp_Bar.SetActive(true);
         boxCollider.enabled = true;
         CurHP = MaxHP;

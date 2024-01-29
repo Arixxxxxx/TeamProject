@@ -9,8 +9,9 @@ public class Magnet : MonoBehaviour
     {
         Magnet, HP_Potion, Bomb
     }
+    
+    
     public ItemType type;
-
     BoxCollider2D boxColl; // È¹µæ¿ë
     CircleCollider2D circleColl; //¿¬Ãâ¿ë
 
@@ -63,7 +64,10 @@ public class Magnet : MonoBehaviour
     void Start()
     {
         
+        player_stats_sc = GameManager.Inst.F_GetPlayerStats_Script();
     }
+
+    
     private void FixedUpdate()
     {
         ActionMoving(); 
@@ -222,7 +226,7 @@ public class Magnet : MonoBehaviour
 
                 case ItemType.HP_Potion:
                     boxColl.enabled = false;
-                    Debug.Log("11");
+                    
                     player_stats_sc.F_Use_HP_Potion(25);
                     PoolManager.Inst.F_ReturnItem(gameObject, 1);
                     break;

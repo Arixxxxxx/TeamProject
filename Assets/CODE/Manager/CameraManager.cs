@@ -88,7 +88,7 @@ public class CameraManager : MonoBehaviour
     /// Ä«¸Ş¶ó ÁÜ¾Æ¿ôÇÔ¼ö
     /// </summary>
     /// <param name="value"></param>
-    public void F_CameraZoomOut(int value)
+    public void F_CameraZoomOut(int value) // 
     {
         float sumValue = playerCam.m_Lens.OrthographicSize + camZoomValue[value];
 
@@ -162,6 +162,7 @@ public class CameraManager : MonoBehaviour
     IEnumerator MoveCam(Transform target, float Zoomvalue)
     {
         dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
+        
         targetPos = target.transform.position - playerCam.transform.position;
         targetPos.Normalize();
 
@@ -169,7 +170,7 @@ public class CameraManager : MonoBehaviour
         {
             dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
 
-            playerCam.transform.position += new Vector3(targetPos.x, targetPos.y, 0) * Time.deltaTime * 7;
+            playerCam.transform.position += new Vector3(targetPos.x, targetPos.y, 0) * Time.deltaTime * 7f;
 
             if (playerCam.m_Lens.OrthographicSize >= Zoomvalue)
             {

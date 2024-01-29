@@ -37,7 +37,6 @@ public class OptionWindow_Controller : MonoBehaviour
         SeletWindowList = Ui_Parent_Obj.transform.Find("IngameSelectWindow").gameObject;
 
         //메인스크린 버튼 초기화
-        OptionOpenBtn = MainCanvas.transform.Find("Option_OpenBtn").GetComponent<Button>();
         OptionWindow = SeletWindowList.transform.Find("OptionWindow").gameObject;
 
         // 1번창 (인게임 햄버거모양 누르면 나오는 옵션창)
@@ -108,23 +107,17 @@ public class OptionWindow_Controller : MonoBehaviour
             if (OptionWindow.gameObject.activeSelf == false)
             {
                 OptionWindow.gameObject.SetActive(true);
+                GameManager.Inst.F_TimeSclaeController(true);
             }
             else
             {
                 OptionWindow.gameObject.SetActive(false);
+                GameManager.Inst.F_TimeSclaeController(false);
             }
         }
     }
     private void Btn_Init()
     {
-        //인게임 일시정지 버튼
-        OptionOpenBtn.onClick.AddListener(() => 
-        {
-            if(Window_0.gameObject.activeSelf == false) 
-            {
-                Window_0.gameObject.SetActive(true);
-            }
-        });
 
         // 열린옵션창 버튼
         MainWindow_0_Btn_0.onClick.AddListener(() => {
@@ -132,6 +125,7 @@ public class OptionWindow_Controller : MonoBehaviour
             if (Window_0.gameObject.activeSelf == true)
             {
                 Window_0.gameObject.SetActive(false);
+                GameManager.Inst.F_TimeSclaeController(false);
             }
         });
 

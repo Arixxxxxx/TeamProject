@@ -86,7 +86,7 @@ public class SpawnManager : MonoBehaviour
 
 
         // 스폰
-        if (spawnstart && gm.MainGameStart)
+        if (spawnstart && gm.MainGameStart && stageLv < 3)
         {
             Spawn_AType();
             Spawn_BType();
@@ -136,11 +136,6 @@ public class SpawnManager : MonoBehaviour
     public void F_StageLvUp()
     {
         stageLv++;
-
-        if (stageLv < 2)
-        {
-            CameraManager.inst.F_CameraZoomOut(stageLv);
-        }
     }
 
     int timeListValue = 0;
@@ -190,11 +185,13 @@ public class SpawnManager : MonoBehaviour
     private void Spawn_AType()
     {
 
-
-
         count[0] += Time.deltaTime;
-        spawnTImeA = spawnData[playerAreaNum].interval[0] - lvCounUpData[Spawn_Level].IntervalDown; // 젠 시간 가져옴
-
+        
+        if(playerAreaNum <= 3)
+        {
+            spawnTImeA = spawnData[playerAreaNum].interval[0] - lvCounUpData[Spawn_Level].IntervalDown;     
+        }
+        
         if (count[0] > spawnTImeA)
         {
 
@@ -264,7 +261,11 @@ public class SpawnManager : MonoBehaviour
     {
 
         count[1] += Time.deltaTime;
-        spawnTImeB = spawnData[playerAreaNum].interval[1] - lvCounUpData[Spawn_Level].IntervalDown;
+
+        if(playerAreaNum <= 3) // 예외처리 추가
+        {
+            spawnTImeB = spawnData[playerAreaNum].interval[1] - lvCounUpData[Spawn_Level].IntervalDown;
+        }
 
         if (count[1] > spawnTImeB)
         {
@@ -382,7 +383,7 @@ public class SpawnManager : MonoBehaviour
     public void F_spawnstartActiveOff()
     {
         spawnstart =false;
-    }
+    }   
 }
 
 [System.Serializable]

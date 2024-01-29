@@ -28,22 +28,11 @@ public class GlobalLightController : MonoBehaviour
     }
     void Start()
     {
-        globalLight.intensity = stageLightValue[0];
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.O)) 
-        {
-            F_LightControl(1);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            F_LightControl(3);
-        }
-    }
-
+    
+   
     /// <summary>
     /// 조명 오르 내리기 (매개변수 = 스테이지 번호 )
     /// </summary>

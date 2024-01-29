@@ -20,7 +20,10 @@ public class Player_Stats : MonoBehaviour
     [SerializeField] float LevelUp_Plus_Hp;
     [Header("# Hp Info")]
     [Space]
-    [SerializeField] bool player_On_Hit;
+    [SerializeField] bool player_On_Hit; // 무적판정 변수
+    public bool Player_On_Hit {  get { return player_On_Hit; }set { player_On_Hit = value; } }
+
+
     [SerializeField] float noDMG_Time;
     [SerializeField] Color noDMG_Color;
     int Passive_2_Lv;
@@ -30,9 +33,11 @@ public class Player_Stats : MonoBehaviour
     SpriteRenderer sr;
     ParticleSystem getItemPs;
     ParticleSystem useHpPoition;
+    Animator anim;
     
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         getItemPs = transform.Find("PS/GetEXP").GetComponent<ParticleSystem>();
         useHpPoition = transform.Find("PS/HP_Potion_Particle").GetComponent<ParticleSystem>();
@@ -115,12 +120,15 @@ public class Player_Stats : MonoBehaviour
 
        
     }
+
+    bool doRespawning;
     public void F_Player_On_Hit(float DMG)
     {
         if(player_On_Hit == true) { return; }
 
         if (Player_CurHP > 0)
         {
+            anim.SetTrigger("Hit");
             player_On_Hit = true;
             Player_CurHP -= DMG;
             UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG,0);
@@ -129,12 +137,22 @@ public class Player_Stats : MonoBehaviour
             if (Player_CurHP <= 0)
             {
                 GameManager.Inst.IsPlayer_Dead = true;
-                //죽음 애니메이션
+
+                if(GameUIManager.Inst.Respawning == false)
+                {
+                    GameUIManager.Inst.Respawning = true;
+                    GameUIManager.Inst.F_CallRespawn_Counter_UI();
+                }
+                
+                
+
 
             }
         }
     }
 
+
+    
     private void Player_OnHit_False()
     {
         player_On_Hit = false;
@@ -202,5 +220,22 @@ public class Player_Stats : MonoBehaviour
     {
         return Player_Cur_Lv;
     }
- 
+
+    public void F_CurrentHPFull()
+    {
+        Player_CurHP = Player_MaxHP;
+        // 애니메이션 복귀
+    }
+
+    public void F_RespawnMujuk()
+    {
+        StartCoroutine(Mujuk());
+    }
+
+    IEnumerator Mujuk()
+    {
+        player_On_Hit = true;
+        yield return new WaitForSeconds(3);
+        player_On_Hit = false;
+    }
 }

@@ -121,6 +121,9 @@ public class LvUp_Ui_Manager : MonoBehaviour
         {
             LvupWindow.SetActive(true);
         }
+
+        GameManager.Inst.F_TimeSclaeController(true);
+
     }
 
     /// <summary>

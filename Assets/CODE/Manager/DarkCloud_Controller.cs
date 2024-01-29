@@ -20,8 +20,9 @@ public class DarkCloud_Controller : MonoBehaviour
     [SerializeField] float checkDistance1;
     [SerializeField] float checkDistance2;
     float stageTime;
-    float timeOutSpeed;
-    float addSpeed;
+    float[] timeOutSpeed = new float[3];
+    float[] addSpeed = new float[3];
+
     GameManager gm;
     SpawnManager sm;
 
@@ -103,25 +104,29 @@ public class DarkCloud_Controller : MonoBehaviour
         cloudSpeed = dis / movetime; // 나눔
     }
 
-   
+
 
     /// <summary>
-    ///  type  0 = TimeOutSpeed / type 1 = addSpeed
+    /// int type, int aeraNumber, float value
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="value"></param>
-    public void F_darkCloudeSpeedUp(int type, float value)
+    /// <param name="type"> 0 = timeOutSpeed / 1 = addSpeed</param>
+    /// <param name="aeraNumber"> AreaNumber </param>
+    /// <param name="value"> AddSpeed value</param>
+    public void F_darkCloudeSpeedUp(int type, int aeraNumber, float value)
     {
         if(type == 0)
         {
-            timeOutSpeed = value;
+            timeOutSpeed[aeraNumber] = value;
         }
         else if(type == 1)
         {
-            addSpeed = value;
+            addSpeed[aeraNumber] = value;
         }
         
     }
+
+
+
     [SerializeField]  bool Pattern0, Pattern1, Pattern2;
     //어둠구름 움직임
     private void DarkCloudeMove()
@@ -132,23 +137,23 @@ public class DarkCloud_Controller : MonoBehaviour
         checkDistance0 = darkCloud.position.x - stopPoint0.position.x;
         checkDistance1 = darkCloud.position.x - stopPoint1.position.x;
         checkDistance2 = darkCloud.position.x - stopPoint2.position.x;
-
-        float sumSpeed = cloudSpeed + timeOutSpeed + addSpeed;
+         // TimeOutSpeed = 시간이 다되엇을때 캐릭터를 우측으로 밀어내는용도
+         // addSpeed = 다음 스테이지로 넘어갔을떄 이전스테이지로 못넘어가게 빨리 덮는용도
+        float sumSpeed0 = cloudSpeed + timeOutSpeed[0] + addSpeed[0];
+        float sumSpeed1 = cloudSpeed + timeOutSpeed[1] + addSpeed[1];
+        float sumSpeed2 = cloudSpeed + timeOutSpeed[2] + addSpeed[2];
                                         //0.6 + 1.1 +  2.4
 
         if(Pattern0 == true) // 1스테이지 어둠구름이동
         {
             if (checkDistance0 < -1 && cloudMoveStart == true)
             {
-                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed * Time.deltaTime));
+                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed0 * Time.deltaTime));
             }
             else if (checkDistance0 > -1 && cloudMoveStart == true)
             {
-                addSpeed = 0;
-                timeOutSpeed = 0;
                 Pattern1 = true;
                 Pattern0 = false;
-
 
                 //Invoke("Pattern1Active", dealyTime);
                 
@@ -159,13 +164,11 @@ public class DarkCloud_Controller : MonoBehaviour
         {
             if (checkDistance1 < -1 && cloudMoveStart == true)
             {
-                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed * Time.deltaTime));
+                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed1 * Time.deltaTime));
             }
             else if (checkDistance1 > -1 && cloudMoveStart == true)
             {
                 Pattern1 = false;
-                timeOutSpeed = 0;
-                addSpeed = 0;
             }
         }
     
@@ -174,7 +177,7 @@ public class DarkCloud_Controller : MonoBehaviour
         {
             if (checkDistance2 < -1 && cloudMoveStart == true)
             {
-                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed * Time.deltaTime));
+                darkCloud.MovePosition(darkCloud.position + Vector2.right * (sumSpeed2 * Time.deltaTime));
             }
             else if (stageLv == 3 && checkDistance2 > -1 && cloudMoveStart == true)
             {

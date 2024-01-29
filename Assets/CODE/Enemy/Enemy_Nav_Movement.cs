@@ -39,10 +39,13 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
     private void OnEnable()
     {
+     
+
         if (isEnemyDead)
         {
+            nav.enabled = true;
             isEnemyDead = false;
-            nav.isStopped = false;
+            //nav.isStopped = false;
         }
     }
     // Update is called once per frame
@@ -51,12 +54,17 @@ public class Enemy_Nav_Movement : MonoBehaviour
         if(isEnemyDead) 
         {
             
-            if(nav.isStopped == false)
+            if(nav.enabled == true)
             {
-                nav.isStopped = true;
+                nav.enabled = false;
             }
+            //if(nav.isStopped == false)
+            //{
+            //    nav.isStopped = true;
+            //}
             return;
         }
+
 
         PlayerAndMeDistance();
         Attack();
@@ -75,7 +83,7 @@ public class Enemy_Nav_Movement : MonoBehaviour
 
     private void Attack()
     {
-        if(isEnemyDead) { return; }
+        if(isEnemyDead || GameManager.Inst.IsPlayer_Dead) { return; }
 
         if(Dis < AttackDis && attackSC.F_Get_Bool_isAttack_() == false)
         {
@@ -101,7 +109,7 @@ public class Enemy_Nav_Movement : MonoBehaviour
     private void MoveEnemy()
     {
         navTargetVec = GameManager.Inst.F_Get_PlayerObj();
-
+        if (GameManager.Inst.IsPlayer_Dead) { return; }
         if (anim.GetBool("Attack") == true)
         {
             nav.speed = 0;

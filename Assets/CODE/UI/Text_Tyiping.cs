@@ -7,6 +7,7 @@ public class Text_Tyiping : MonoBehaviour
 {
     TMP_Text mainText;
     [SerializeField] float Speed;
+    [SerializeField] float addSpeed;
     [SerializeField] int index;
     [SerializeField] Color textColor;
     private void Awake()
@@ -26,7 +27,7 @@ public class Text_Tyiping : MonoBehaviour
         Insert_Word();
     }
 
-
+    float sumSpeed;
     private void Insert_Word()
     {
         if (mainText.text == GetText)
@@ -37,8 +38,10 @@ public class Text_Tyiping : MonoBehaviour
 
         mainText.text += GetText[index];
         index++;
+        
+        sumSpeed = Speed + addSpeed;
 
-        Invoke("Insert_Word", 1 / Speed);
+        Invoke("Insert_Word", 1 / sumSpeed);
     }
 
     private void End_Text()
@@ -68,6 +71,18 @@ public class Text_Tyiping : MonoBehaviour
             {
                 gameObject.SetActive(false);
             }
+        }
+    }
+
+    public void F_SetAddSpeed(bool value)
+    {
+        if (value)
+        {
+            addSpeed = 40;
+        }
+        else
+        {
+            addSpeed = 0;
         }
     }
 }

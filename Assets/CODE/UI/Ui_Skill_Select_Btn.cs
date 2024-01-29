@@ -202,7 +202,9 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         GameManager.Inst.F_Lvup_Slot_Reset();
         
         cardUpDown = false;
+        GameManager.Inst.F_TimeSclaeController(false);
         SkillWindow.gameObject.SetActive(false);
+        
     }
     
 

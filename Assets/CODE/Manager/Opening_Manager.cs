@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore;
 using UnityEngine.UI;
 
 
@@ -31,7 +32,14 @@ public class Opening_Manager : MonoBehaviour
     [SerializeField] Animator photoFrameAnim;
     [SerializeField] Image frameIMG;
     [SerializeField][Multiline] string[] textBox;
+    [SerializeField] Image fastInfo;
     [SerializeField] Sprite[] introSprite;
+    // # Intro Story Telling (How To Play)")]
+    [SerializeField] GameObject howToPlay_MainObj;
+    [SerializeField] GameObject howToPlay_Action0;
+    [SerializeField] GameObject howToPlay_Action1;
+
+
     [Header("# Action Time Value Setting")]
     [Space]
    
@@ -51,13 +59,17 @@ public class Opening_Manager : MonoBehaviour
         {
             Destroy(this);
         }
-       
+
+        howToPlay_MainObj = transform.Find("Action2/Canvas/HowToPlay").gameObject;
+        howToPlay_Action0 = howToPlay_MainObj.transform.Find("FirstPage").gameObject;
+        howToPlay_Action1 = howToPlay_MainObj.transform.Find("SecPage").gameObject;
+
         //mainUiCanvas.gameObject.SetActive(false);
 
     }
     void Start()
     {
-
+        
         testBtn.SetActive(false);
         gm = GameManager.Inst;
         cm = CameraManager.inst;
@@ -67,10 +79,23 @@ public class Opening_Manager : MonoBehaviour
         GameManager.Inst.MoveStop = true;
 
 
-
-
         StartOpening();
         GameUIManager.Inst.F_GameUIActive(false);
+    }
+
+    private void Update()
+    {
+        howToPlayWindowsController();
+
+        if(inputText == true && Input.GetKeyDown(KeyCode.Space))
+        {
+            maintext.F_SetAddSpeed(true);
+        }
+
+        if (inputText == true && Input.GetKeyUp(KeyCode.Space))
+        {
+            maintext.F_SetAddSpeed(false);
+        }
     }
 
     bool Action0, Action1, Action2;
@@ -89,6 +114,7 @@ public class Opening_Manager : MonoBehaviour
         
     }
     public bool nextOk;
+    public bool inputText;
     IEnumerator IntroStoryAction0()
     {
         //photoFrameAnim.SetTrigger("FadeIn");
@@ -96,9 +122,12 @@ public class Opening_Manager : MonoBehaviour
         photoFrameAnim.SetTrigger("FadeOn"); // 박스 스프라이트 연출
         nextOk = true;
         yield return new WaitForSeconds(1.5f);
+        fastInfo.gameObject.SetActive(true); // Spacebar Fast 인포 켜주기
         //backgroundPs[0].gameObject.SetActive(true); // 파티클 취소(24/01.26)
         //backgroundPs[1].gameObject.SetActive(true);// 파티클 취소(24/01.26)
         maintext.F_Set_TalkBox_Main_Text(textBox[0]); // 첫번째 오프닝스토리 문구 넣어주기
+        inputText = true;
+
         yield return null;
 
         while(nextOk == true) //끝날때까지 기다리기 
@@ -126,6 +155,8 @@ public class Opening_Manager : MonoBehaviour
         {
             yield return null;
         }
+        inputText = false;
+        fastInfo.gameObject.SetActive(false); // Spacebar Fast 인포 켜주기
         yield return new WaitForSeconds(2f);// 글 다나왓으면 2초 대기
         photoFrameAnim.SetTrigger("FadeOff2"); // 이미지 페이드아웃
         
@@ -147,10 +178,12 @@ public class Opening_Manager : MonoBehaviour
 
         yield return new WaitForSeconds(CuttonFadeOffTime);
         bgAnim.SetTrigger("Off"); // 검은화면 제거
-        for (int i = 0; i < backgroundPs.Length; i++)
-        {
-            backgroundPs[i].gameObject.SetActive(false);
-        }
+
+        //for (int i = 0; i < backgroundPs.Length; i++) // 배경파티클 미사용
+        //{
+        //    backgroundPs[i].gameObject.SetActive(false);
+        //}
+
         yield return new WaitForSeconds(Action1_0_DelayTime);
         bgAnim.transform.parent.gameObject.SetActive(false);  //  검은화면 Enable false
 
@@ -171,9 +204,7 @@ public class Opening_Manager : MonoBehaviour
     IEnumerator Action2_Start()
     {
         GameManager.Inst.MoveStop = false; // 캐릭터 움직이게 해줌
-        /*mainUiCanvas.gameObject.SetActive(true);*/ // 게임 UI 켜줌
-        
-
+ 
         yield return new WaitForSeconds(Action2_DelayTime);
 
         Action2_0.gameObject.SetActive(true); // WASD 조작부 설명 UI 켜줌
@@ -192,12 +223,64 @@ public class Opening_Manager : MonoBehaviour
 
         Action2_1.SetTrigger("Out"); // 아웃
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //
         Action2_1.gameObject.SetActive(false); // 꺼줌
-        GameUIManager.Inst.F_GameUIActive(true);
 
-        yield return new WaitForSeconds(1f);
-        GameManager.Inst.MainGameStart = true;
+        // 게임설명
+        howtoPlayEnd = true; // 설명체크 불리언 변수
+        GameManager.Inst.F_TimeSclaeController(true);  // 시간 멈춤
+
+        howToPlay_MainObj.SetActive(true); //  설명창 오픈
+        if(howToPlay_Action0.activeSelf == false)
+        {
+            howToPlay_Action0.SetActive(true);
+        }
+
+        while(howtoPlayEnd == true) //끝날때까지 대기
+        {
+            yield return null;
+        }
+        
+        yield return new WaitForSeconds(1f); 
+
+        GameUIManager.Inst.F_GameUIActive(true); // UI켜주고
+
+        yield return new WaitForSeconds(1.5f);
+        GameManager.Inst.MainGameStart = true; // 게임시작
     }
 
+    bool howtoPlayEnd;
+    bool howtoPlayWaittime;
+    float count;
+    private void howToPlayWindowsController()
+    {
+        if(howToPlay_MainObj.activeSelf == false) { return; }
+
+        if(howToPlay_Action0.activeSelf == true && Input.GetKeyDown(KeyCode.Space) && howtoPlayWaittime == false)
+        {
+            howtoPlayWaittime = true;
+            howToPlay_Action0.SetActive(false);
+            howToPlay_Action1.SetActive(true);
+        }
+
+        if (howtoPlayWaittime) // 딜레이 걸어주는 bool 변수
+        {
+            count += Time.fixedUnscaledDeltaTime; // 언스케일델타타임
+
+            if(count > 1)
+            {
+                count = 0;
+                howtoPlayWaittime = false;
+            }
+        }
+
+        if (howToPlay_Action1.activeSelf == true && Input.GetKeyDown(KeyCode.Space) && howtoPlayWaittime == false) // 바로 입력 안되게 딜레이 줌
+        {
+            howToPlay_Action1.SetActive(false);
+            howToPlay_MainObj.SetActive(false);
+            GameManager.Inst.F_TimeSclaeController(false);
+            howtoPlayEnd = false;
+        }
+
+    }
 }
