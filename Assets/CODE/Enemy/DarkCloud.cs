@@ -32,7 +32,7 @@ public class DarkCloud : MonoBehaviour
             if(count > attackInterval)
             {
                 count = 0;
-                sc.F_Player_On_Hit(DMG);
+                sc.F_Player_In_DarkCloud(DMG);
                 GameUIManager.Inst.F_SetDarkCloudWindow_OnOff(true);
             }
         }

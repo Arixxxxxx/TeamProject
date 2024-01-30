@@ -29,7 +29,7 @@ public class Boss_Status : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        Mujuk_Effect = transform.Find("Skill/Mujeok").gameObject;
+        Mujuk_Effect = transform.Find("Skill/Shield").gameObject;
     }
     void Start()
     {
@@ -129,8 +129,5 @@ public class Boss_Status : MonoBehaviour
         }
     }
 
-    public void F_Set_isShield_OnOff(bool value)
-    {
-        isShield = value;
-    }
+
 }

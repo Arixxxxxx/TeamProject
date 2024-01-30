@@ -143,16 +143,41 @@ public class Player_Stats : MonoBehaviour
                     GameUIManager.Inst.Respawning = true;
                     GameUIManager.Inst.F_CallRespawn_Counter_UI();
                 }
-                
-                
-
-
             }
         }
     }
 
+    bool onDMG_DarkCloud;
+    public void F_Player_In_DarkCloud(float DMG)
+    {
+        if (onDMG_DarkCloud == true) { return; }
 
-    
+        if (Player_CurHP > 0)
+        {
+            anim.SetTrigger("Hit");
+            onDMG_DarkCloud = true;
+            Player_CurHP -= DMG;
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG, 0);
+            Invoke("onDMG_DarkCloud_False", noDMG_Time);
+
+            if (Player_CurHP <= 0)
+            {
+                GameManager.Inst.IsPlayer_Dead = true;
+
+                if (GameUIManager.Inst.Respawning == false)
+                {
+                    GameUIManager.Inst.Respawning = true;
+                    GameUIManager.Inst.F_CallRespawn_Counter_UI();
+                }
+            }
+        }
+    }
+
+    private void onDMG_DarkCloud_False()
+    {
+        onDMG_DarkCloud = false;
+    }
+
     private void Player_OnHit_False()
     {
         player_On_Hit = false;
