@@ -88,6 +88,13 @@ public class BossSkill_Pool : MonoBehaviour
             obj.gameObject.SetActive (false);
         }
 
+        if(roomNum == 1)
+        {
+           obj.transform.GetChild(0).position = Vector3.zero;
+           obj.transform.GetChild(0).eulerAngles = Vector3.zero;
+
+        }
+
         obj.transform.position = Vector3.zero;
         skillQueue[roomNum].Enqueue(obj);
     }

@@ -33,14 +33,15 @@ public class BossBulletMove : MonoBehaviour
 
         }
     }
-    private void OnEnable()
+
+    private void OnDisable()
     {
-        if(ReturnWait == true) // Init √ ±‚»≠
-        {
-            ReturnWait = false;
-            ballStart = false;
-        }
+        ballStart = false;
+        ReturnWait = false;
+        returnCount = 0;
+        count = 0;
     }
+    
     void Start()
     {
 
@@ -80,7 +81,7 @@ public class BossBulletMove : MonoBehaviour
             {
                 ReturnWait = true;
                 returnCount = 0;
-                BossSkill_Pool.inst.F_ReturnSkillEfeect(gameObject, 1);
+                BossSkill_Pool.inst.F_ReturnSkillEfeect(transform.parent.gameObject, 1);
             }
         }
        
@@ -101,8 +102,6 @@ public class BossBulletMove : MonoBehaviour
     }
     private void BallMove()
     {
-    
-
         if (type == BulettPartType.Ball && ballStart == true)
         {
             rb.MovePosition(rb.position + (Vector2)transform.up * Time.deltaTime * moveSpeed);

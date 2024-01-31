@@ -33,15 +33,22 @@ public class Boss_BattleSystem : MonoBehaviour
     //[Space]
     List<Vector3> BulletStartPosList = new List<Vector3>();
     List<Vector3> BulletStartRotList = new List<Vector3>();
-    [SerializeField] Transform[] BulletTransformRef = new Transform[8];
+    [SerializeField] Transform[] BulletTransformRef0 = new Transform[8];
+    [SerializeField] Transform[] BulletTransformRef1 = new Transform[8];
+    List<Transform> spinMuzzle = new List<Transform>();
 
-
+    Transform Bosscenter;
+  
     private void Awake()
     {
         anim = GetComponent<Animator>();
         Shield = transform.Find("Skill/Shield").gameObject;
         ballPs = transform.Find("bossball/Ps").GetComponent<ParticleSystem>();
-        BulletTransformRef = transform.parent.Find("RandomPos/BallPos").GetComponentsInChildren<Transform>().Skip(1).ToArray();
+        BulletTransformRef0 = transform.parent.Find("RandomPos/BallPos0").GetComponentsInChildren<Transform>().Skip(1).ToArray();
+        BulletTransformRef1 = transform.parent.Find("RandomPos/BallPos1").GetComponentsInChildren<Transform>().Skip(1).ToArray();
+        Bosscenter = transform.Find("Center").GetComponent<Transform>();
+
+
 
         if (thinkTime == 0)
         {
@@ -101,8 +108,10 @@ public class Boss_BattleSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            StartCoroutine(BulletAttack(0));
+            StartCoroutine(CastingSkill(2));
         }
+
+       
     }
 
 
@@ -114,11 +123,11 @@ public class Boss_BattleSystem : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    int selectPattern;
+    int selectPattern; 
     IEnumerator Think() // 패턴 공격 시작
     {
         Shield.gameObject.SetActive(true);
-        selectPattern = Random.Range(0, 2); // 나중에 4로변경해줘야함
+        selectPattern = Random.Range(0, 3); // 나중에 4로변경해줘야함
 
         yield return ThinkTime;
 
@@ -160,7 +169,7 @@ public class Boss_BattleSystem : MonoBehaviour
                 ballPs.Stop();
                 break;
 
-            case 1: // 벼락
+            case 1: // 바닥
                 attackEnd = true;
                 StartCoroutine(GroundPatternActionStart(2));
                 yield return new WaitForSeconds(4);
@@ -185,9 +194,11 @@ public class Boss_BattleSystem : MonoBehaviour
 
             case 2: // 구슬공격
                 attackEnd = true;
-                StartCoroutine(BulletAttack(0)); 
-                
-
+                StartCoroutine(BulletAttack(0));
+                yield return new WaitForSeconds(6f);
+                StartCoroutine(BulletAttack(1));
+                yield return new WaitForSeconds(7f);
+                StartCoroutine(BulletAttack(2));
 
                 while (attackEnd)
                 {
@@ -202,6 +213,10 @@ public class Boss_BattleSystem : MonoBehaviour
         }
     }
 
+    float randomDir;
+    int patternNum;
+
+    float rotationZ;
     IEnumerator BulletAttack(int PatternNum)
     {
         yield return null;
@@ -209,29 +224,133 @@ public class Boss_BattleSystem : MonoBehaviour
         {
             case 0: // 전체
 
-                for(int i = 0; i < BulletTransformRef.Length; i++)
+                int count = BulletTransformRef0.Length;
+                for(int j= 0; j < 5; j++)
                 {
-                    GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
-                    obj.transform.position = BulletTransformRef[i].transform.position;
-                    obj.transform.eulerAngles = BulletTransformRef[i].transform.eulerAngles;
-                    obj.SetActive(true);
+                    for (int i = 0; i < count; i++)
+                    {
+                        GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
 
-                    yield return null;
+                        switch (patternNum) // 2개의 배열 포지션으로 발사함
+                        {
+                            case 0:
+                                obj.transform.GetChild(0).position = BulletTransformRef0[i].transform.position;
+                                obj.transform.GetChild(0).eulerAngles = BulletTransformRef0[i].transform.eulerAngles;
+                                break;
+
+                                case 1:
+                                obj.transform.GetChild(0).position = BulletTransformRef1[i].transform.position;
+                                obj.transform.GetChild(0).eulerAngles = BulletTransformRef1[i].transform.eulerAngles;
+                                break;
+
+                        }
+                        randomDir = 0;
+                        obj.SetActive(true);
+                        
+                        yield return null;
+                    }
+
+                    if(patternNum == 0) // 정방향 사이방향 패턴갈라주는 부분
+                    {
+                        patternNum++;
+                    }
+                    else if(patternNum == 1)
+                    {
+                        patternNum = 0;
+                    }
+                    
+                    yield return new WaitForSeconds(1);
                 }
-
+                patternNum = 0;
                 break;
 
             case 1: // 한바퀴
 
+                for (int i = 0; i < 2; i++)
+                {
+
+                    for (int j = 0; j < 24; j++) // 360 나누기 32 
+                    {
+                        GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
+                        obj.transform.GetChild(0).position = Bosscenter.transform.position;
+                        obj.transform.GetChild(0).eulerAngles = new Vector3(0,0, rotationZ);
+                        obj.transform.GetChild(0).Translate(Vector3.up * 4f, Space.Self);
+                        obj.SetActive(true);
+                        
+
+                        rotationZ += 15;
+                        yield return new WaitForSeconds(0.15f);
+                    }
+                    rotationZ = 0;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+
+
+                //int totalCount = BulletTransformRef0.Length;
+
+                //for (int i = 0; i < totalCount; i++)
+                //{
+                //    spinMuzzle.Add(BulletTransformRef0[i]);
+                //    spinMuzzle.Add(BulletTransformRef1[i]);
+                //}
+
+                //for (int i = 0; i < 6; i++)
+                //{
+                //    int bulletCount = spinMuzzle.Count;
+
+                //    for (int j = 0; j < bulletCount; j++)
+                //    {
+                //        GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
+                //        obj.transform.GetChild(0).position = spinMuzzle[j].transform.position;
+                //        obj.transform.GetChild(0).eulerAngles = spinMuzzle[j].transform.eulerAngles;
+                //        obj.SetActive(true);
+                //        yield return new WaitForSeconds(0.1f);
+                //    }
+                //    yield return new WaitForSeconds(0.1f);
+                //}
+
+                //spinMuzzle.Clear();
+
                 break; 
 
-                    case 2: // 역바퀴
 
-                break;
 
-            case 3: // 랜덤
 
-                break; ;
+            case 2: // 랜덤
+
+                int totalCount0 = BulletTransformRef0.Length;
+
+                for (int i = 0; i < totalCount0; i++)
+                {
+                    spinMuzzle.Add(BulletTransformRef0[i]);
+                    spinMuzzle.Add(BulletTransformRef1[i]);
+                }
+
+                spinMuzzle.Sort((x, y) => Random.Range(-spinMuzzle.Count, spinMuzzle.Count));
+                spinMuzzle.Sort((x, y) => Random.Range(-spinMuzzle.Count, spinMuzzle.Count));
+
+                for (int i = 0; i < 6; i++)
+                {
+
+                    int bulletCount = spinMuzzle.Count;
+                    spinMuzzle.Sort((x, y) => Random.Range(-spinMuzzle.Count, spinMuzzle.Count));
+
+                    for (int j = 0; j < bulletCount; j++)
+                    {
+                        GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
+                        obj.transform.GetChild(0).position = spinMuzzle[j].transform.position;
+                        obj.transform.GetChild(0).eulerAngles = spinMuzzle[j].transform.eulerAngles;
+                        obj.SetActive(true);
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                spinMuzzle.Clear();
+                yield return new WaitForSeconds(1.5f);
+                attackEnd = false;
+                break; 
         }
     }
 
@@ -286,6 +405,7 @@ public class Boss_BattleSystem : MonoBehaviour
     IEnumerator CastingLightning()
     {
         castingCounting++;
+
 
         for (int Index = 0; Index < SiteTrs.Length; Index++) // A,B,C,D 구역 [4회 만큼]  초기화
         {

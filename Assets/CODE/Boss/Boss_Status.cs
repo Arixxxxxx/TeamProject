@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 
@@ -22,14 +23,18 @@ public class Boss_Status : MonoBehaviour
 
 
     Animator anim;
+    Light2D animLight;
     TMP_Text Hp_Bar_Text;
     Transform Boss_HP_Bar_Object;
     Image Boss_Front_IMG, Boss_Middle_IMG;
+    SpriteRenderer sr;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         Mujuk_Effect = transform.Find("Skill/Shield").gameObject;
+        animLight = GetComponent<Light2D>();
+        sr = GetComponent<SpriteRenderer>();    
     }
     void Start()
     {
@@ -45,9 +50,13 @@ public class Boss_Status : MonoBehaviour
     {
         Boss_Hp_UiBar_Updater();
         Shiled_Cheaker();
-
+        LightAnimationUpdater();
     }
 
+    private void LightAnimationUpdater()
+    {
+        animLight.lightCookieSprite = sr.sprite;
+    }
     private void Shiled_Cheaker()
     {
         if(Mujuk_Effect.activeSelf == true)
