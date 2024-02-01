@@ -204,6 +204,7 @@ public class Movement : MonoBehaviour
     {
         if (InputSpaceBar == true && doTeleport == false && CheakMoveFloat > 0)
         {
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0);
             StartCoroutine(Player_Input_Spacebar_TelePort());
         }
 
@@ -259,6 +260,7 @@ public class Movement : MonoBehaviour
     {
         doTeleport = true;
         //anim.SetTrigger("Tel"); // 애니메이션
+      
         GameManager.Inst.TelePort(0); // 파티클로 변경 24/01/19
         yield return TelePortDealys;
         Vector2 cheakPos = rb.position + moveVec * TeleportDistance;

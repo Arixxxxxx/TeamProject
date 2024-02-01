@@ -21,7 +21,7 @@ public class Boss_Status : MonoBehaviour
     [SerializeField] float FillAmountSpeed;
     [SerializeField] float dmgFontY_Add;
 
-
+    GameObject posCenter;
     Animator anim;
     Light2D animLight;
     TMP_Text Hp_Bar_Text;
@@ -34,7 +34,8 @@ public class Boss_Status : MonoBehaviour
         anim = GetComponent<Animator>();
         Mujuk_Effect = transform.Find("Skill/Shield").gameObject;
         animLight = GetComponent<Light2D>();
-        sr = GetComponent<SpriteRenderer>();    
+        sr = GetComponent<SpriteRenderer>();
+        posCenter = transform.Find("Center").gameObject;
     }
     void Start()
     {
@@ -68,49 +69,70 @@ public class Boss_Status : MonoBehaviour
             isShield = false;
         }
     }
+    bool isdmgFontCoolTime;
+
+    private void isdmgFontCoolTimeOff()
+    {
+        isdmgFontCoolTime = false;
+    }
     public void F_Enemy_On_Hit(float DMG, bool Cri)
     {
-        if(isShield == true) 
+        if (isShield == true && isdmgFontCoolTime == false) // 보호막중일시 무적
         {
+            isdmgFontCoolTime = true;
             GameObject obj_font = PoolManager.Inst.F_GetObj(2);
             obj_font.GetComponent<Dmg_Font>().F_text_Init("흡수");
-            obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
+            obj_font.transform.position = posCenter.transform.position + new Vector3(0, dmgFontY_Add, 0);
             obj_font.gameObject.SetActive(true);
-
             StartCoroutine(DMG_Font_Animation(obj_font));
-            return; 
-        
-        }
+            Invoke("isdmgFontCoolTimeOff", 0.5f);
 
-        if (boss_CurHP > 0)
+            return;
+
+        }
+        else if (isShield == false)
         {
-            float Dmgs = DMG;
-
-            if (Cri == true)
+            if (boss_CurHP > 0)
             {
-                Dmgs = DMG * 2;
-                anim.SetTrigger("hit");
-            }
+                float Dmgs = DMG;
 
-            GameObject obj_font = PoolManager.Inst.F_GetObj(2);
-            obj_font.GetComponent<Dmg_Font>().F_text_Init(Dmgs, Cri);
-            obj_font.transform.position = transform.position + new Vector3(0, dmgFontY_Add, 0);
-            obj_font.gameObject.SetActive(true);
+                if (Cri == true)
+                {
+                    Dmgs = DMG * 2;
+                }
 
-            StartCoroutine(DMG_Font_Animation(obj_font));
+                GameObject obj_font = PoolManager.Inst.F_GetObj(2);
+                obj_font.GetComponent<Dmg_Font>().F_text_Init(Dmgs, Cri);
 
-            boss_CurHP -= Dmgs;
+                switch (Cri)
+                {
+                    case true:
+                        obj_font.transform.position = posCenter.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f) + dmgFontY_Add, 0);
+                        break;
 
-            //Hp_Bar_anim.SetTrigger("hit");
+                    case false:
+                        obj_font.transform.position = posCenter.transform.position + new Vector3(0, dmgFontY_Add, 0);
+                        break;
+                }
 
-            if (boss_CurHP <= 0)
-            {
-                //anim.SetTrigger("Dead"); 
+                obj_font.gameObject.SetActive(true);
 
-                isDead = true;
-                
+                StartCoroutine(DMG_Font_Animation(obj_font));
+
+                boss_CurHP -= Dmgs;
+
+                //Hp_Bar_anim.SetTrigger("hit");
+
+                if (boss_CurHP <= 0)
+                {
+                    //anim.SetTrigger("Dead"); 
+
+                    isDead = true;
+
+                }
             }
         }
+       
     }
 
     WaitForSeconds DMG_Font_Dealy = new WaitForSeconds(0.15f);

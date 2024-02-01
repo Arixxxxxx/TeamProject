@@ -17,7 +17,7 @@ public class Skill_UI_Icon : MonoBehaviour
     void Start()
     {
         Lv_text = GetComponentInChildren<TMP_Text>();
-        sc = Hub.Inst.player_skill_system_sc;   
+        sc = Player_Skill_System.Inst;   
     }
 
     private void Update()

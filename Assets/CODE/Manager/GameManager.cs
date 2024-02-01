@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     NavMeshSurface nav_Surface;
     [Header("# Insert Object in Hiearachy")]
     [Space]
-    [SerializeField] GameObject Player;
-    [SerializeField] Player_Stats player_stats_sc;
+    [SerializeField] GameObject playerParent;
+    GameObject Player; // 프리펩 위치 참조 변수(타겟포인트임)
+    Player_Stats player_stats_sc;
     [SerializeField] Light2D globalLight;
-    [SerializeField] GameObject playerLight;
     [SerializeField] float light_Change_Speed;
     [SerializeField] GameObject[] GameStop_Ui_Window;
     [SerializeField] GameObject[] moveStop_Ui_Windows;
@@ -33,8 +33,7 @@ public class GameManager : MonoBehaviour
     WaitForSeconds startWaitTime;
     [Space]
     [SerializeField] bool uiOpen_EveryObecjtStop;
-    [Space] int plyaer_Area_Value;
-
+    
     [Header("# Battle Count")]
     [Space]
     [SerializeField] int killCount;
@@ -54,8 +53,7 @@ public class GameManager : MonoBehaviour
     int sceneNumber;
     [Header("# Boss Room Set Cheking")]
     [Space]
-    [SerializeField]  GameObject PlayerGroup;
-    // 보스이동시 필요한 변수들
+        // 보스이동시 필요한 변수들
     [SerializeField] SpriteRenderer[] playerAndDragon;
     [SerializeField] ParticleSystem telePortPs;
     [SerializeField] float Action0_Dleay;
@@ -94,6 +92,12 @@ public class GameManager : MonoBehaviour
        
     }
 
+    private void OnEnable()
+    {
+        Player = playerParent.transform.Find("Player_W/TargetPoint").gameObject;
+        player_stats_sc = playerParent.transform.Find("Player_W").GetComponent<Player_Stats>();
+
+    }
     void Start()
     {
         
@@ -104,7 +108,7 @@ public class GameManager : MonoBehaviour
 
         //순간이동 변수들
         playerAndDragon = new SpriteRenderer[2];
-        playerAndDragon[0] = PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>();
+        playerAndDragon[0] = playerParent.transform.Find("Player_W").GetComponent<SpriteRenderer>();
         playerAndDragon[1] = playerAndDragon[0].transform.Find("Dragon").GetComponent<SpriteRenderer>();
         telePortPs = playerAndDragon[0].transform.Find("PS/Teleport").GetComponent<ParticleSystem>();
 
@@ -185,46 +189,6 @@ public class GameManager : MonoBehaviour
     }
 
     
-
-    /// <summary>
-    /// 글로벌 라이트 조절
-    /// </summary>
-    /// <param name="Value"> ture 불켜기 // false 불끄기</param>
-    public void F_Light_On_Off(bool Value)
-    {
-        StartCoroutine(Light_ON(Value));
-    }
-
-    IEnumerator Light_ON(bool Value)
-    {
-        playerLight.SetActive(!Value);
-
-        switch (Value) 
-        {
-            case true:
-
-                while (globalLight.intensity <= 1)
-                {
-                    globalLight.intensity += Time.deltaTime * light_Change_Speed;
-                    yield return null;
-                }
-                globalLight.intensity = 1;
-
-             
-                 
-                break;
-
-                case false:
-                while (globalLight.intensity >= 0.1f)
-                {
-                    globalLight.intensity -= Time.deltaTime * light_Change_Speed;
-                    yield return null;
-                }
-
-                globalLight.intensity = 0.1f;
-                break;
-        }
-    }
 
     public Player_Stats F_Get_PlayerSc()
     {
@@ -388,8 +352,8 @@ public class GameManager : MonoBehaviour
 
                 // 플레이어 위치이동
                 EnterBossRoom = true;
-                PlayerGroup.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
-                PlayerGroup.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
+                playerParent.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
+                playerParent.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
 
                 F_ActiveBomb(); // 타면서 남아잇는 몬스터 전부 삭제시켜줌
 

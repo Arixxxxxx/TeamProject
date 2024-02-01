@@ -186,7 +186,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.2f); // 모든 연출 후 해당 시간 이후 종료
 
-        skill = Hub.Inst.player_skill_system_sc;
+        skill = Player_Skill_System.Inst;
         skill.F_Skill_LvUp((int)skilltype);
 
         SkillWindow = transform.parent.parent.parent.gameObject;

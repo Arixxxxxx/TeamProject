@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss_BattleSystem : MonoBehaviour
@@ -101,19 +100,12 @@ public class Boss_BattleSystem : MonoBehaviour
     void Update()
     {
         returnUpdate();
+
         if (bossBattleStart == true && once == false)
         {
             once = true;
             StartAttack();
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            StartAttack();
-            //StartCoroutine(CastingSkill(nextLv));
-        }
-
         
     }
 
@@ -175,6 +167,7 @@ public class Boss_BattleSystem : MonoBehaviour
         
         if(nextLv < 4) //기본 패턴
         {
+            spinLaser_Sc.F_SetSpeedValue(20.5f);  //기본값으로 설정
             StartCoroutine(CastingSkill(nextLv)); // 순차적
         }
         else if(nextLv == 4)
@@ -188,7 +181,7 @@ public class Boss_BattleSystem : MonoBehaviour
         {
             togetherCasting = true;
 
-            spinLaser_Sc.F_SetSpeedValue(15f);
+            spinLaser_Sc.F_SetSpeedValue(13f); // 2개 패턴이라 레이저 속도 늦춰줌
             PlaySkill[1]  = StartCoroutine(CastingSkill(1)); // 바닥
             PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저 
         }
@@ -198,6 +191,8 @@ public class Boss_BattleSystem : MonoBehaviour
 
             PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저
             PlaySkill[2] = StartCoroutine(CastingSkill(2)); // 구슬
+            
+            nextLv = 0; // 모든패턴 다 수행시 맨처음으로 돌아감
         }
 
 
@@ -305,7 +300,7 @@ public class Boss_BattleSystem : MonoBehaviour
             case 3: // Spin Laser Pattern
                 PatternEnd3 = true;
                 
-                StartCoroutine(SpinLyaerAction());
+                StartCoroutine(SpinLaserAction());
 
                 yield return null;
                 
@@ -316,8 +311,9 @@ public class Boss_BattleSystem : MonoBehaviour
                 }
 
                 
-                togetherCastingOff();
-                if (togetherCasting) { StopCoroutine(PlaySkill[3]); }
+                togetherCastingOff(); // 전부 다 꺼져잇는지 한번더 확인
+
+                if (togetherCasting) { StopCoroutine(PlaySkill[3]); } // 무언가 돌고있다면 해당코루틴은 종료
 
                 while (togetherCasting)
                 {
@@ -333,7 +329,7 @@ public class Boss_BattleSystem : MonoBehaviour
     }
     
     // 3번 레이저 스킬 실행
-    IEnumerator SpinLyaerAction()
+    IEnumerator SpinLaserAction()
     {
         spinLaser_Sc.F_ActionPattern(0);
         yield return new WaitForSeconds(2f);

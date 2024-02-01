@@ -61,7 +61,7 @@ public class Player_Skill_System : MonoBehaviour
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
     Movement charMove_Sc;
-    
+    Player_Stats player_stats_sc;
 
     int[] Skill_Lv = new int[10];
 
@@ -96,6 +96,7 @@ public class Player_Skill_System : MonoBehaviour
     }
     void Start()
     {
+        player_stats_sc = GameManager.Inst.F_Get_PlayerSc();
         charMove_Sc = GetComponent<Movement>();
     }
 
@@ -443,8 +444,7 @@ public class Player_Skill_System : MonoBehaviour
 
             if (Passive_1_Lv > 0)
             {
-                Player_Stats sc =  Hub.Inst.Player_Status_sc;
-                sc.F_Set_Add_Hp_Passiveskill(Passive_1_UpValue[Passive_1_Lv - 1]);
+                player_stats_sc.F_Set_Add_Hp_Passiveskill(Passive_1_UpValue[Passive_1_Lv - 1]);
                     
             }
         }
@@ -467,8 +467,7 @@ public class Player_Skill_System : MonoBehaviour
 
             if (Passive_2_Lv > 0)
             {
-                Player_Stats sc = Hub.Inst.Player_Status_sc;
-                sc.F_HpRecoveryPassive_LvUp(Passive_2_Time[Passive_2_Lv-1], Passive_2_Hp[Passive_2_Lv-1]);
+                player_stats_sc.F_HpRecoveryPassive_LvUp(Passive_2_Time[Passive_2_Lv-1], Passive_2_Hp[Passive_2_Lv-1]);
             }
         }
     }

@@ -81,6 +81,8 @@ public class Opening_Manager : MonoBehaviour
 
         StartOpening();
         GameUIManager.Inst.F_GameUIActive(false);
+
+        SoundManager.inst.F_Bgm_Player(0);
     }
 
     private void Update()
@@ -165,6 +167,7 @@ public class Opening_Manager : MonoBehaviour
 
        
           Action0 = false; // 다음 연출 시작
+        SoundManager.inst.F_Bgm_Player(1);
     }
 
     IEnumerator CuttonFade()

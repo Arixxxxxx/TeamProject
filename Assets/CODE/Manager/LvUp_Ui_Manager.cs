@@ -42,8 +42,8 @@ public class LvUp_Ui_Manager : MonoBehaviour
     }
     void Start()
     {
-        status = Hub.Inst.Player_Status_sc;
-        Skill_sc = Hub.Inst.player_skill_system_sc;
+        status = GameManager.Inst.F_Get_PlayerSc();
+        Skill_sc = Player_Skill_System.Inst;
         SkillMaxLv = Skill_sc.skill_Max_Lvl;
     }
 

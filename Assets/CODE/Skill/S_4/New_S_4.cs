@@ -32,7 +32,7 @@ public class New_S_4 : MonoBehaviour
     }
     void Start()
     {
-        skill = Hub.Inst.player_skill_system_sc;
+        skill = Player_Skill_System.Inst;
     }
 
     private void OnEnable()
