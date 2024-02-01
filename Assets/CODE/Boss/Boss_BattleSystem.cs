@@ -123,19 +123,46 @@ public class Boss_BattleSystem : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    int selectPattern; 
+    int selectPattern;
+    int nextLv;
     IEnumerator Think() // 패턴 공격 시작
     {
         Shield.gameObject.SetActive(true);
         selectPattern = Random.Range(0, 3); // 나중에 4로변경해줘야함
+     
 
-        yield return ThinkTime;
+        yield return new WaitForSeconds(1.5f);
 
+        if(nextLv > 2)
+        {
+            nextLv = 0;
+        }
+
+        switch (nextLv)  //selectPattern= 랜덤
+        {
+            case 0:
+                GameUIManager.Inst.F_SetMSGUI(2, false);
+                break;
+
+            case 1:
+                GameUIManager.Inst.F_SetMSGUI(3, false);
+                break;
+
+            case 2:
+                GameUIManager.Inst.F_SetMSGUI(4, false);
+                break;
+
+            case 3:
+                //GameUIManager.Inst.F_SetMSGUI(5, false);
+                break;
+        }
         anim.SetTrigger("Attack");
 
         yield return ThinkTime;
         
-        StartCoroutine(CastingSkill(selectPattern));
+        //StartCoroutine(CastingSkill(selectPattern)); // 랜덤
+        StartCoroutine(CastingSkill(nextLv)); // 순차적
+
     }
 
     List<Transform> selectSitePos = new List<Transform>();
@@ -458,6 +485,7 @@ public class Boss_BattleSystem : MonoBehaviour
 
         anim.SetTrigger("Idle");
         ballPs.Play();
+        nextLv++;
         StartCoroutine(Think()); // 최초로 돌아감
     }
 

@@ -234,6 +234,18 @@ public class GameUIManager : MonoBehaviour
                 textValue = "감히 여기까지 쫓아오다니.. 너를 처단해주겠다..";
                 break;
 
+            case 2:
+                textValue = "하늘에서 번개 떨어집니다";
+                break;
+
+            case 3:
+                textValue = "바닥 조심하세요";
+                break;
+
+            case 4:
+                textValue = "구슬공격할꺼에요";
+                break;
+
         }
 
         msgtext.text = textValue;

@@ -6,7 +6,7 @@ public class AttackCollider : MonoBehaviour
 {
     public enum WhoAreYou
     {
-        Player, Enemy_Melee, Skel_Arrow, PosionBadak , Orc_Stone
+        Player, Enemy_Melee, Skel_Arrow, PosionBadak , Orc_Stone, BossSkill
     }
     [SerializeField] float myDMG;
     [Header("# 꼭 체크 확인하세요")]
@@ -16,10 +16,12 @@ public class AttackCollider : MonoBehaviour
     EnemyStats enemySC;
     Animator anim;
     Enemy_Arrow enemy_Arrow;
-
+    Player_Stats player_sc;
 
     private void Start()
     {
+        player_sc = GameManager.Inst.F_GetPlayerStats_Script();
+
         switch (type)
         {
             case WhoAreYou.PosionBadak:
@@ -47,9 +49,9 @@ public class AttackCollider : MonoBehaviour
     {
 
 
-        if (collision.CompareTag("Player") && collision.GetComponent<Player_Stats>() != null)
+        if (collision.CompareTag("Player") && collision.gameObject.name != "Dragon")
         {
-            collision.GetComponent<Player_Stats>().F_Player_On_Hit(myDMG);
+            player_sc.F_Player_On_Hit(myDMG);
 
             switch
                 (type)
