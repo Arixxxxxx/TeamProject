@@ -14,6 +14,8 @@ public class Boss_BattleSystem : MonoBehaviour
     GameObject Shield;
     Animator anim;
     ParticleSystem ballPs;
+    BossSpinLaser spinLaser_Sc;
+
 
     // 공격 변수들
     WaitForSeconds ThinkTime; // 공격구상 대기시간
@@ -47,7 +49,7 @@ public class Boss_BattleSystem : MonoBehaviour
         BulletTransformRef0 = transform.parent.Find("RandomPos/BallPos0").GetComponentsInChildren<Transform>().Skip(1).ToArray();
         BulletTransformRef1 = transform.parent.Find("RandomPos/BallPos1").GetComponentsInChildren<Transform>().Skip(1).ToArray();
         Bosscenter = transform.Find("Center").GetComponent<Transform>();
-
+        spinLaser_Sc = transform.Find("Skill/SpinLaser").GetComponent<BossSpinLaser>();
 
 
         if (thinkTime == 0)
@@ -108,13 +110,21 @@ public class Boss_BattleSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            StartCoroutine(CastingSkill(2));
+            StartAttack();
+            //StartCoroutine(CastingSkill(nextLv));
         }
 
-       
+        
     }
 
 
+    private void togetherCastingOff()
+    {
+        if(togetherCasting == true && !PatternEnd3 && !PatternEnd2 && !PatternEnd1 && !PatternEnd0)
+        {
+            togetherCasting = false;
+        }
+    }
 
     // 활동공격 시작 함수
     private void StartAttack()
@@ -124,19 +134,22 @@ public class Boss_BattleSystem : MonoBehaviour
     }
 
     int selectPattern;
-    int nextLv;
+    [SerializeField] int nextLv;
+    [SerializeField] bool PatternEnd0, PatternEnd1, PatternEnd2, PatternEnd3;
+    [SerializeField] bool togetherCasting;
+    Coroutine[] PlaySkill = new Coroutine[4];
     IEnumerator Think() // 패턴 공격 시작
     {
         Shield.gameObject.SetActive(true);
-        selectPattern = Random.Range(0, 3); // 나중에 4로변경해줘야함
+        selectPattern = Random.Range(0, 4); // 나중에 4로변경해줘야함
      
 
         yield return new WaitForSeconds(1.5f);
 
-        if(nextLv > 2)
-        {
-            nextLv = 0;
-        }
+        //if(nextLv > 3) // 한바퀴 돌게해줌
+        //{
+        //    nextLv = 0;
+        //}
 
         switch (nextLv)  //selectPattern= 랜덤
         {
@@ -160,14 +173,39 @@ public class Boss_BattleSystem : MonoBehaviour
 
         yield return ThinkTime;
         
-        //StartCoroutine(CastingSkill(selectPattern)); // 랜덤
-        StartCoroutine(CastingSkill(nextLv)); // 순차적
+        if(nextLv < 4) //기본 패턴
+        {
+            StartCoroutine(CastingSkill(nextLv)); // 순차적
+        }
+        else if(nextLv == 4)
+        {
+            togetherCasting = true;
+
+            PlaySkill[0] = StartCoroutine(CastingSkill(0)); // 번개
+            PlaySkill[1] = StartCoroutine(CastingSkill(1)); // 바닥 // 2구슬 // 레이저
+        }
+        else if (nextLv == 5)
+        {
+            togetherCasting = true;
+
+            spinLaser_Sc.F_SetSpeedValue(15f);
+            PlaySkill[1]  = StartCoroutine(CastingSkill(1)); // 바닥
+            PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저 
+        }
+        else if (nextLv == 6)
+        {
+            togetherCasting = true;
+
+            PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저
+            PlaySkill[2] = StartCoroutine(CastingSkill(2)); // 구슬
+        }
+
 
     }
 
     List<Transform> selectSitePos = new List<Transform>();
 
-    bool attackEnd;
+    [SerializeField] bool attackEnd;
     IEnumerator CastingSkill(int value)
     {
         yield return null;
@@ -175,8 +213,8 @@ public class Boss_BattleSystem : MonoBehaviour
         switch (value)
         {
             case 0: // 벼락
-
-                attackEnd = true;
+                PatternEnd0 = true;
+                
                 StartCoroutine(CastingLightning());
                 yield return new WaitForSeconds(4);
                 StartCoroutine(CastingLightning());
@@ -186,7 +224,16 @@ public class Boss_BattleSystem : MonoBehaviour
 
 
 
-                while (attackEnd)
+                while (PatternEnd0)
+                {
+                    yield return null;
+                }
+                
+                togetherCastingOff();
+
+                if(togetherCasting) { StopCoroutine(PlaySkill[0]); }
+
+                while (togetherCasting)
                 {
                     yield return null;
                 }
@@ -197,7 +244,8 @@ public class Boss_BattleSystem : MonoBehaviour
                 break;
 
             case 1: // 바닥
-                attackEnd = true;
+                PatternEnd1 = true;
+                
                 StartCoroutine(GroundPatternActionStart(2));
                 yield return new WaitForSeconds(4);
                 StartCoroutine(GroundPatternActionStart(1));
@@ -209,7 +257,15 @@ public class Boss_BattleSystem : MonoBehaviour
                 StartCoroutine(GroundPatternActionStart(1));
                 
 
-                while (attackEnd)
+                while (PatternEnd1)
+                {
+                    yield return null;
+                }
+                
+                togetherCastingOff();
+                if (togetherCasting) { StopCoroutine(PlaySkill[1]); }
+
+                while (togetherCasting)
                 {
                     yield return null;
                 }
@@ -220,14 +276,23 @@ public class Boss_BattleSystem : MonoBehaviour
                 break;
 
             case 2: // 구슬공격
-                attackEnd = true;
+                PatternEnd2 = true;
+                
                 StartCoroutine(BulletAttack(0));
                 yield return new WaitForSeconds(6f);
                 StartCoroutine(BulletAttack(1));
                 yield return new WaitForSeconds(7f);
                 StartCoroutine(BulletAttack(2));
 
-                while (attackEnd)
+                while (PatternEnd2)
+                {
+                    yield return null;
+                }
+                
+                togetherCastingOff();
+                if (togetherCasting) { StopCoroutine(PlaySkill[2]); }
+
+                while (togetherCasting)
                 {
                     yield return null;
                 }
@@ -237,13 +302,78 @@ public class Boss_BattleSystem : MonoBehaviour
                 ballPs.Stop();
                 break;
 
+            case 3: // Spin Laser Pattern
+                PatternEnd3 = true;
+                
+                StartCoroutine(SpinLyaerAction());
+
+                yield return null;
+                
+
+                while (PatternEnd3)
+                {
+                    yield return null;
+                }
+
+                
+                togetherCastingOff();
+                if (togetherCasting) { StopCoroutine(PlaySkill[3]); }
+
+                while (togetherCasting)
+                {
+                    yield return null;
+                }
+
+                StartCoroutine(BossTired()); // 공격끝 
+                anim.SetTrigger("Rest");
+                ballPs.Stop();
+                break;
+                
         }
     }
+    
+    // 3번 레이저 스킬 실행
+    IEnumerator SpinLyaerAction()
+    {
+        spinLaser_Sc.F_ActionPattern(0);
+        yield return new WaitForSeconds(2f);
+        spinLaser_Sc.F_ActionPattern(1);
+        yield return new WaitForSeconds(3);  // 1,2번 레이저 켜줌
 
+        float RandomValue = Random.Range(2.5f, 3.5f);
+        yield return new WaitForSeconds(RandomValue); // 역회전
+
+        spinLaser_Sc.F_PatternReverse();
+
+        RandomValue = Random.Range(2.5f, 3.5f);
+        yield return new WaitForSeconds(RandomValue); // 역회전
+
+        spinLaser_Sc.F_PatternReverse();
+
+        RandomValue = Random.Range(2.5f, 3.5f);
+        yield return new WaitForSeconds(RandomValue); // 역회전
+
+        spinLaser_Sc.F_PatternReverse();
+
+        RandomValue = Random.Range(2.5f, 3.5f);
+        yield return new WaitForSeconds(RandomValue); // 역회전
+
+        spinLaser_Sc.F_PatternReverse();
+
+        yield return new WaitForSeconds(3);  // 1,2번 레이저 켜줌
+        spinLaser_Sc.F_ActionEnd();
+        yield return new WaitForSeconds(1.5f);
+
+        PatternEnd3 = false;
+
+
+    }
     float randomDir;
     int patternNum;
 
     float rotationZ;
+
+    // 2번 구슬공격
     IEnumerator BulletAttack(int PatternNum)
     {
         yield return null;
@@ -312,37 +442,7 @@ public class Boss_BattleSystem : MonoBehaviour
                     yield return new WaitForSeconds(0.1f);
                 }
 
-
-
-                //int totalCount = BulletTransformRef0.Length;
-
-                //for (int i = 0; i < totalCount; i++)
-                //{
-                //    spinMuzzle.Add(BulletTransformRef0[i]);
-                //    spinMuzzle.Add(BulletTransformRef1[i]);
-                //}
-
-                //for (int i = 0; i < 6; i++)
-                //{
-                //    int bulletCount = spinMuzzle.Count;
-
-                //    for (int j = 0; j < bulletCount; j++)
-                //    {
-                //        GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
-                //        obj.transform.GetChild(0).position = spinMuzzle[j].transform.position;
-                //        obj.transform.GetChild(0).eulerAngles = spinMuzzle[j].transform.eulerAngles;
-                //        obj.SetActive(true);
-                //        yield return new WaitForSeconds(0.1f);
-                //    }
-                //    yield return new WaitForSeconds(0.1f);
-                //}
-
-                //spinMuzzle.Clear();
-
                 break; 
-
-
-
 
             case 2: // 랜덤
 
@@ -376,16 +476,21 @@ public class Boss_BattleSystem : MonoBehaviour
 
                 spinMuzzle.Clear();
                 yield return new WaitForSeconds(1.5f);
-                attackEnd = false;
+                PatternEnd2 = false;
+
+
                 break; 
         }
     }
 
     List<int> GroundPattern = new List<int>();
     List<int> deletePattern = new List<int>();
+
+
+    // 1번 바닥 공격
     IEnumerator GroundPatternActionStart(int value)
     {
-        castingCounting++;
+        castingCounting1++;
 
         for (int i = 0; i < groundPatternAr.Length; i++) // 공격패턴가능한 숫자 만들기
         {
@@ -420,15 +525,19 @@ public class Boss_BattleSystem : MonoBehaviour
 
         GroundPattern.Clear();
 
-        if (castingCounting == 5)
+        if (castingCounting1 == 5)
         {
             yield return new WaitForSeconds(4);
-            castingCounting = 0;
-            attackEnd = false;
+            castingCounting1 = 0;
+            PatternEnd1 = false;
+
         }
     }
 
+
+    // 0번 번개공격
     [SerializeField] int castingCounting;
+    [SerializeField] int castingCounting1;
     IEnumerator CastingLightning()
     {
         castingCounting++;
@@ -468,7 +577,8 @@ public class Boss_BattleSystem : MonoBehaviour
         if (castingCounting == 3) // 횟수 초기화
         {
             yield return new WaitForSeconds(2.5f);
-            attackEnd = false;
+            PatternEnd0 = false;
+
             castingCounting = 0;
         }
     }

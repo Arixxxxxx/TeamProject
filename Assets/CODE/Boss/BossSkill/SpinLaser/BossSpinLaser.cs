@@ -47,8 +47,16 @@ public class BossSpinLaser : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            left = !left;
+           
         }
+    }
+
+    /// <summary>
+    /// 방향 역회전시전
+    /// </summary>
+    public void F_PatternReverse()
+    {
+         left = !left;
     }
 
     bool left;
@@ -75,11 +83,10 @@ public class BossSpinLaser : MonoBehaviour
         }
     }
 
-    private void TotalTimeCheck()
+    public void F_SetSpeedValue(float Value)
     {
-
+        Speed = Value;
     }
-
 
     bool patternActionOk; // 2개다 켜진거 확인하는 변수
 
@@ -106,6 +113,19 @@ public class BossSpinLaser : MonoBehaviour
                 }
                 patternActionOk = true;
                 break;
+        }
+    }
+
+    public void F_ActionEnd()
+    {
+        for (int i = 0; i < playOne.Length; i++)
+        {
+            playOne[i].F_ActionEnd();
+        }
+
+        for (int i = 0; i < playTwo.Length; i++)
+        {
+            playTwo[i].F_ActionEnd();
         }
     }
 }

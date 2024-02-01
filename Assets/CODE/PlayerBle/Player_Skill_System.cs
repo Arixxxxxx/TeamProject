@@ -61,6 +61,7 @@ public class Player_Skill_System : MonoBehaviour
     Transform Skill_Start_Point;
     Skill_Ui_UpdaterSystem _updaterSystem;
     Movement charMove_Sc;
+    
 
     int[] Skill_Lv = new int[10];
 
@@ -91,6 +92,7 @@ public class Player_Skill_System : MonoBehaviour
         Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
         S_3_StartPos = transform.Find("Skill_LIst/S_3").GetComponent<Transform>();
         skillGroup = transform.Find("Skill_LIst").gameObject;
+
     }
     void Start()
     {

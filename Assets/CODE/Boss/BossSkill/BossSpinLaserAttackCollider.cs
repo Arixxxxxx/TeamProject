@@ -37,10 +37,7 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.B)) 
-        {
-            F_ActionEnd();
-        }
+      
     }
 
 
@@ -54,6 +51,8 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     {
         StartCoroutine(ActionPlay());
     }
+
+   
 
     IEnumerator ActionPlay()
     {
