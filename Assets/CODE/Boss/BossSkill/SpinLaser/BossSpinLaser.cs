@@ -15,16 +15,22 @@ public class BossSpinLaser : MonoBehaviour
     [Space]
     [SerializeField] float Speed;
 
+    // 역회전 필요한것들
+    // 총 시간 , 랜덤변수 담을 List, 
+    // 함수 : 총시간 체크해주는 함수
+    // 랜덤변수 생성 -> left값 조절
+
     private void Awake()
     {
         playOne = transform.Find("PatternOne").GetComponentsInChildren<BossSpinLaserAttackCollider>();
+        playTwo = transform.Find("PatternTwo").GetComponentsInChildren<BossSpinLaserAttackCollider>();
     }
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         RotationSpinAction();
@@ -33,8 +39,19 @@ public class BossSpinLaser : MonoBehaviour
         {
             F_ActionPattern(0);
         }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            F_ActionPattern(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            left = !left;
+        }
     }
 
+    bool left;
   
     private void RotationSpinAction()
     {
@@ -42,9 +59,29 @@ public class BossSpinLaser : MonoBehaviour
         
         else
         {
-            transform.Rotate(Vector3.back * Time.deltaTime * Speed)  ;
+
+            switch (left)
+            {
+                case false:
+                    transform.Rotate(Vector3.back * Time.deltaTime * Speed);
+                    break;
+
+                case true:
+                    transform.Rotate(-Vector3.back * Time.deltaTime * Speed);
+                    break;
+
+            }
+            
         }
     }
+
+    private void TotalTimeCheck()
+    {
+
+    }
+
+
+    bool patternActionOk; // 2개다 켜진거 확인하는 변수
 
     public void F_ActionPattern(int value)
     {
@@ -56,6 +93,18 @@ public class BossSpinLaser : MonoBehaviour
                 {
                     playOne[i].F_ActionStart();
                 }
+                break;
+        }
+
+        switch (value)
+        {
+            case 1:
+
+                for (int i = 0; i < playTwo.Length; i++)
+                {
+                    playTwo[i].F_ActionStart();
+                }
+                patternActionOk = true;
                 break;
         }
     }

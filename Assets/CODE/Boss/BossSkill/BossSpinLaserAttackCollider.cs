@@ -52,8 +52,15 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
 
     public void F_ActionStart() // ½ÃÀÛÇÔ¼ö [ »óÀ§ ÄÁÆ®·Ñ·¯¿¡¼­ Å°°í ²ø¼öÀÕÀ½]
     {
+        StartCoroutine(ActionPlay());
+    }
+
+    IEnumerator ActionPlay()
+    {
         anim.SetTrigger("Play");
+        yield return new WaitForSeconds(2.5f);
         boxCollider.enabled = true;
+
     }
 
     public void F_ActionEnd() // ¿£µåÇÔ¼ö
@@ -65,13 +72,17 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     {
         float TempEmissionRate = ps.emissionRate; // ÇöÀç ·¹ÀÌÆ®°ª º¹»ç
 
+       
+
         while (ps.emissionRate > 0)  // Àç»ýÁßÀÎ ·¹ÀÌÆ®°ª ³·ÃçÁÜ
         {
-            ps.emissionRate -= Time.deltaTime * 150;
+            ps.emissionRate -= Time.deltaTime * 160;
             yield return null;
         }
 
         boxCollider.enabled = false; // ÄÝ¶óÀÌ´õ ²¨ÁÜ
+
+        parent_Sc.SpinStart = false;
 
         while (ps.particleCount > 0) // ´Ù ³·­Ÿ´Âµ¥ Àç»ýÁßÀÎ ÆÄÆ¼Å¬ÀÌ ÀÕ´Ù¸é ±â´Ù¸²
         {
@@ -79,7 +90,7 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
         }
 
         ps.Stop(); // Á¤Áö
-
+        
         ps.emissionRate = TempEmissionRate; // ±âÁ¸°ª º¹¿ø
     }
 
