@@ -36,7 +36,7 @@ public class SpawnManager : MonoBehaviour
     int EnemyA_SpawnTrs;
     int EnemyB_SpawnTrs;
 
-
+    GameObject PlayerParent;
     [SerializeField] EnemySpawnPointSc[] spawn_PointTrs; // 스폰포인트 리스트
 
     // 지역에따른 몬스터 스폰유형, 간격, 카운트
@@ -62,7 +62,8 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-
+        PlayerParent = GameObject.Find("---- [ PlayerBle_Object]").gameObject;
+        spawn_PointTrs = PlayerParent.transform.Find("Player_W/Spawn_Point").GetComponentsInChildren<EnemySpawnPointSc>();
         gm = GameManager.Inst;
         pm = PoolManager.Inst;
         TimeSc = transform.parent.GetComponentInChildren<UnitFrame_Updater>();
