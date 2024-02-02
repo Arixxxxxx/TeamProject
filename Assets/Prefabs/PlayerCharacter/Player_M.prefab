@@ -6313,6 +6313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82044b9440a834741833940729f65b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Number: 1
   Player_Cur_Lv: 1
   Player_Max_Lv: 40
   Cur_Exp: 0

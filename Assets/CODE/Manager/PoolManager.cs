@@ -110,13 +110,17 @@ public class PoolManager : MonoBehaviour
 
         //플레이어 생성
         PlayerPrefabsTrs = GameObject.Find("---- [ PlayerBle_Object]").GetComponent<Transform>();
-        playerNum = (int)DataManager.inst.CurrentCharacter;
-        GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs);
-        player.name = "Player_W";
-        GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>());
-        player.transform.position = new Vector2(-33, 3.4f);
-        Input_SkillPrefabs(playerNum);
+
+        InitCharacter();
+
         GameManager.Inst.IsActionReady = true;
+        //playerNum = (int)DataManager.inst.CurrentCharacter;
+        //GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs);
+        //player.name = "Player_W";
+        //GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>());
+        //player.transform.position = new Vector2(-33, 3.4f);
+        //Input_SkillPrefabs(playerNum);
+        //GameManager.Inst.IsActionReady = true;
 
 
         enemyList = transform.Find("Enemy").GetComponent<Transform>();
@@ -141,7 +145,9 @@ public class PoolManager : MonoBehaviour
         // 아이템
         Item_Trs = transform.Find("Items").GetComponent<Transform>();
 
-
+    }
+    void Start()
+    {
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 풀링 초기생성 ////   Enemy
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,11 +319,6 @@ public class PoolManager : MonoBehaviour
             Bomb.gameObject.SetActive(false);
             Items_3_Que.Enqueue(Bomb);
         }
-
-    }
-    void Start()
-    {
-
     }
 
     void Update()
@@ -794,6 +795,29 @@ public class PoolManager : MonoBehaviour
 
 
         }
+    }
+
+
+    private void InitCharacter()
+    {
+        if (PlayerPrefabsTrs.childCount == 0) //없을때
+        {
+            playerNum = (int)DataManager.inst.CurrentCharacter; // 셀렉트신에서 받아온 넘버 초기화
+            GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs); // 플레이어캐릭터 생성
+            player.name = "Player_W"; // 이름 변경
+            GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>()); // 스크립트 활용할수있게 넣어줌
+            player.transform.position = new Vector2(-33, 3.4f); // 위치 초기화
+            Input_SkillPrefabs(playerNum); // 해당 캐릭터에 맞게 스킬셋 설정
+
+        }
+        else if(PlayerPrefabsTrs.childCount == 1) // 미리놓고 테스트할때
+        {
+            Player_Stats sc = PlayerPrefabsTrs.transform.Find("Player_W").GetComponent<Player_Stats>();
+            playerNum = (int)sc.Number;
+            GameManager.Inst.F_Set_PlayerStatsSc(sc);
+        }
+
+       
     }
 }
 

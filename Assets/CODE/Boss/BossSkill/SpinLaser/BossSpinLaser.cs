@@ -35,20 +35,6 @@ public class BossSpinLaser : MonoBehaviour
     {
         RotationSpinAction();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            F_ActionPattern(0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            F_ActionPattern(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-           
-        }
     }
 
     /// <summary>

@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
-    
+    public enum CharNum
+    {
+        Female, Male
+    }
+    public CharNum Number;
+
     [Header("# Player Input Stats Field  ==>   ¿¹Áø")]
     [Space]
     [Header("# Level Up Info")]

@@ -11,6 +11,8 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     ParticleSystem ps;
     Animator anim;
     BossSpinLaser parent_Sc;
+    WaitForSeconds m_25Sec = new WaitForSeconds(2.5f);
+    WaitForSeconds m_1Sec = new WaitForSeconds(1f);
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -31,13 +33,14 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     // 종료함수 파티클  이미션값 줄이고 현재 출력파티클 0되면 종료
     void Start()
     {
+        
         playerSc = GameManager.Inst.F_Get_PlayerSc();
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+    
     }
 
 
@@ -53,13 +56,16 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     }
 
    
+   
 
     IEnumerator ActionPlay()
     {
         anim.SetTrigger("Play");
-        yield return new WaitForSeconds(2.5f);
+        yield return m_25Sec;
+        anim.SetTrigger("Action");
+        yield return m_1Sec;
         boxCollider.enabled = true;
-
+        ps.gameObject.SetActive(true);
     }
 
     public void F_ActionEnd() // 엔드함수
@@ -71,11 +77,12 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     {
         float TempEmissionRate = ps.emissionRate; // 현재 레이트값 복사
 
-       
+        anim.SetTrigger("Close");
+
 
         while (ps.emissionRate > 0)  // 재생중인 레이트값 낮춰줌
         {
-            ps.emissionRate -= Time.deltaTime * 160;
+            ps.emissionRate -= Time.deltaTime * 180;
             yield return null;
         }
 
@@ -98,6 +105,11 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     public void A_ParticlePlay() // 애니메이션 함수
     {
         ps.Play();
+        Invoke("SpinStartInvoke", 3f);
+    }
+
+    private void SpinStartInvoke()
+    {
         parent_Sc.SpinStart = true;
     }
 

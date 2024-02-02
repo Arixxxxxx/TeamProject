@@ -106,7 +106,10 @@ public class Boss_BattleSystem : MonoBehaviour
             once = true;
             StartAttack();
         }
-        
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            StartCoroutine(CastingSkill(3));
+        }
     }
 
 
@@ -334,7 +337,7 @@ public class Boss_BattleSystem : MonoBehaviour
         spinLaser_Sc.F_ActionPattern(0);
         yield return new WaitForSeconds(2f);
         spinLaser_Sc.F_ActionPattern(1);
-        yield return new WaitForSeconds(3);  // 1,2번 레이저 켜줌
+        yield return new WaitForSeconds(5);  // 1,2번 레이저 켜줌
 
         float RandomValue = Random.Range(2.5f, 3.5f);
         yield return new WaitForSeconds(RandomValue); // 역회전
