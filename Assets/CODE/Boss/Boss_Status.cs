@@ -28,7 +28,8 @@ public class Boss_Status : MonoBehaviour
     Transform Boss_HP_Bar_Object;
     Image Boss_Front_IMG, Boss_Middle_IMG;
     SpriteRenderer sr;
-
+    Boss_BattleSystem bs_sc;
+    
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -36,6 +37,7 @@ public class Boss_Status : MonoBehaviour
         animLight = GetComponent<Light2D>();
         sr = GetComponent<SpriteRenderer>();
         posCenter = transform.Find("Center").gameObject;
+        bs_sc = GetComponent<Boss_BattleSystem>();
     }
     void Start()
     {
@@ -60,14 +62,22 @@ public class Boss_Status : MonoBehaviour
     }
     private void Shiled_Cheaker()
     {
-        if(Mujuk_Effect.activeSelf == true)
-        {
-            isShield = true;
-        }
-        else
+        if(GameManager.Inst.BossDead == true)
         {
             isShield = false;
         }
+        else
+        {
+            if (Mujuk_Effect.activeSelf == true)
+            {
+                isShield = true;
+            }
+            else
+            {
+                isShield = false;
+            }
+        }
+       
     }
     bool isdmgFontCoolTime;
 
@@ -77,6 +87,8 @@ public class Boss_Status : MonoBehaviour
     }
     public void F_Enemy_On_Hit(float DMG, bool Cri)
     {
+        if (isDead == true) { return; }
+
         if (isShield == true && isdmgFontCoolTime == false) // 보호막중일시 무적
         {
             isdmgFontCoolTime = true;
@@ -125,10 +137,13 @@ public class Boss_Status : MonoBehaviour
 
                 if (boss_CurHP <= 0)
                 {
-                    //anim.SetTrigger("Dead"); 
-
+                    GameUIManager.Inst.F_BossHpBarActive(false); // 보스 HP Bar off
+                    bs_sc.F_Boss_StopAllCorutine(); // 실행중인 코루틴 다 정지
+                    anim.SetTrigger("Dead");
                     isDead = true;
-
+                    GameManager.Inst.BossDead = true;
+                    
+                    // 연출  이후 애니메이터
                 }
             }
         }
@@ -146,6 +161,8 @@ public class Boss_Status : MonoBehaviour
     private void Boss_Hp_UiBar_Updater()
     {
         if(Boss_HP_Bar_Object.gameObject.activeSelf == false) { return; }
+
+        if(boss_CurHP < 0) { boss_CurHP = 0; }
 
         Hp_Bar_Text.text = $" [정예] 마녀    {boss_CurHP} / {boss_MaxHP}";
 

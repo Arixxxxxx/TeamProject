@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Inst;
     
+
     NavMeshSurface nav_Surface;
     [Header("# Insert Object in Hiearachy")]
     [Space]
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button[] Btn;
     [SerializeField] GameObject enemyList;
     bool isPlayer_Dead;
-    
+    bool isActionReady;
+    public bool IsActionReady {  get { return isActionReady; } set { isActionReady = value; } }
 
     [Header("# Ingame Cheak & Test Value")]
     [Space]
@@ -65,7 +67,10 @@ public class GameManager : MonoBehaviour
     public bool BossBattleStart { get { return boosBattleStart; } set { boosBattleStart = value; } }
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
     bool bossMode;
-    public bool BossMode { get { return bossMode; } set { bossMode = value; } }
+    public bool BossMode { get { return bossMode; } set { bossMode = value; } } 
+
+    bool bossDead;
+    public bool BossDead { get { return bossDead; } set { bossDead = value; } }
 
 
     [Header("# For MoveStop")]
@@ -92,11 +97,11 @@ public class GameManager : MonoBehaviour
        
     }
 
-    private void OnEnable()
-    {
-        Player = playerParent.transform.Find("Player_W/TargetPoint").gameObject;
-        player_stats_sc = playerParent.transform.Find("Player_W").GetComponent<Player_Stats>();
 
+    public void F_Set_PlayerStatsSc(Player_Stats value)
+    {
+        player_stats_sc = value;
+        Player = playerParent.transform.Find("Player_W/TargetPoint").gameObject;
     }
     void Start()
     {
@@ -391,7 +396,10 @@ public class GameManager : MonoBehaviour
         waitCorutine = false;
     }
 
-
+    public Transform F_GetPalyerTargetPoint()
+    {
+        return Player.transform;
+    }
     public void PlayerHP_Recovery()
     {
         player_stats_sc.F_CurrentHPFull();
@@ -406,5 +414,10 @@ public class GameManager : MonoBehaviour
     public Player_Stats F_GetPlayerStats_Script()
     {
         return player_stats_sc;
+    }
+
+    public void F_PlayerTransformMove(Vector3 Pos)
+    {
+        player_stats_sc.gameObject.transform.position = Pos;
     }
 }

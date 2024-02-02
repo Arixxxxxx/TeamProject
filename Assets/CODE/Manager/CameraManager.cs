@@ -43,7 +43,7 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         gm = GameManager.Inst;
-
+        playerCam.Follow = GameManager.Inst.F_GetPalyerTargetPoint();
     }
 
     // Update is called once per frame
@@ -162,19 +162,20 @@ public class CameraManager : MonoBehaviour
     IEnumerator MoveCam(Transform target, float Zoomvalue)
     {
         dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
-        
+        //dis = target.transform.position.x - playerCam.transform.position.x;
+
         targetPos = target.transform.position - playerCam.transform.position;
         targetPos.Normalize();
 
-        while (dis > 0.05f)
+        while (dis > 0.3f)
         {
             dis = Vector2.Distance(target.transform.position, playerCam.transform.position);
 
-            playerCam.transform.position += new Vector3(targetPos.x, targetPos.y, 0) * Time.deltaTime * 7f;
+            playerCam.transform.position += new Vector3(targetPos.x, targetPos.y, 0) * Time.deltaTime * 6f;
 
             if (playerCam.m_Lens.OrthographicSize >= Zoomvalue)
             {
-                playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 4.5f;
+                playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 3.33f;
             }
 
             yield return null;
@@ -182,10 +183,19 @@ public class CameraManager : MonoBehaviour
             //F_CameraZoomIn(Zoomvalue);
         }
 
-        playerCam.Follow = target;
+        
+
+        playerCam.Follow = GameManager.Inst.F_GetPalyerTargetPoint();
         playerCam.m_Lens.OrthographicSize = Zoomvalue;
 
         Opening_Manager.inst.F_Action2Start(); // 액션 2 시작 (조작 설명)
 
     }
+
+    public void F_DirectAction()
+    {
+        playerCam.Follow = GameManager.Inst.F_GetPalyerTargetPoint();
+        playerCam.m_Lens.OrthographicSize = 9.5f;
+    }
+     
 }

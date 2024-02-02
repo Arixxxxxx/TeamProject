@@ -6,6 +6,11 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager Inst;
 
+    [SerializeField] GameObject[] PlayerPrefabs;
+    Transform PlayerPrefabsTrs;
+
+
+
     [Header("# Insert Prefab Enemy Obj")]
     [Space]
     [SerializeField] GameObject[] EnemyObj; // 
@@ -86,6 +91,11 @@ public class PoolManager : MonoBehaviour
     Queue<GameObject> Skill_4_Que = new Queue<GameObject>();
             
     Transform ArrowTrs, CoinTrs, FontTrs;
+    int playerNum;
+    [SerializeField] SkillPrefabsPlayerSet[] skillPrefabs;
+
+    int playerID; //0 여자 , 1남자
+    public int PlayerID { set { playerID = value; } }
 
     private void Awake()
     {
@@ -97,6 +107,16 @@ public class PoolManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        //플레이어 생성
+        PlayerPrefabsTrs = GameObject.Find("---- [ PlayerBle_Object]").GetComponent<Transform>();
+        playerNum = (int)DataManager.inst.CurrentCharacter;
+        GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs);
+        player.name = "Player_W";
+        GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>());
+        player.transform.position = new Vector2(-33, 3.4f);
+        Input_SkillPrefabs(playerNum);
+        GameManager.Inst.IsActionReady = true;
 
 
         enemyList = transform.Find("Enemy").GetComponent<Transform>();
@@ -392,6 +412,18 @@ public class PoolManager : MonoBehaviour
     }
 
 
+    private void Input_SkillPrefabs(int value)
+    {
+        if(value == 1)
+        {
+            for(int i = 0; i< skillPrefabs[value].SkillPrefabs.Length-1; i++) 
+            {
+                PlayerBullet[i] = skillPrefabs[value].SkillPrefabs[i];
+            }
+        }
+
+        Player_Skill_System.Inst.F_SkillobjChange(skillPrefabs[value].SkillPrefabs[5]);
+    }
     /// <summary>
     /// Enmey_return_Que
     /// </summary> 오크/버섯/스켈/슬라임/오그레인저/트리
@@ -763,4 +795,10 @@ public class PoolManager : MonoBehaviour
 
         }
     }
+}
+
+[System.Serializable]
+public class SkillPrefabsPlayerSet
+{
+    public GameObject[] SkillPrefabs;
 }

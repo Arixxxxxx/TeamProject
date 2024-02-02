@@ -611,4 +611,9 @@ public class Boss_BattleSystem : MonoBehaviour
         }
     }
 
+
+    public void F_Boss_StopAllCorutine()
+    {
+        StopAllCoroutines();
+    }
 }

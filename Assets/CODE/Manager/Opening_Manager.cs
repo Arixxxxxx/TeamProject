@@ -21,7 +21,6 @@ public class Opening_Manager : MonoBehaviour
 
     [Header("# Insert Obj for Opening")]
     [Space]
-    [SerializeField] GameObject cameraTarget;
     [SerializeField] Transform camtransform; // 카메라 시작위치
     [SerializeField] GameObject mainUiCanvas;
     [SerializeField] ParticleSystem[] backgroundPs;
@@ -49,6 +48,7 @@ public class Opening_Manager : MonoBehaviour
     Animator bgAnim;
     GameManager gm;
     CameraManager cm;
+    Transform playerStartPos;
     private void Awake()
     {
        if(inst == null)
@@ -60,7 +60,11 @@ public class Opening_Manager : MonoBehaviour
             Destroy(this);
         }
 
-        howToPlay_MainObj = transform.Find("Action2/Canvas/HowToPlay").gameObject;
+        playerStartPos = transform.Find("PlayerStartPos").GetComponent<Transform>();
+       
+
+
+         howToPlay_MainObj = transform.Find("Action2/Canvas/HowToPlay").gameObject;
         howToPlay_Action0 = howToPlay_MainObj.transform.Find("FirstPage").gameObject;
         howToPlay_Action1 = howToPlay_MainObj.transform.Find("SecPage").gameObject;
 
@@ -73,7 +77,7 @@ public class Opening_Manager : MonoBehaviour
         testBtn.SetActive(false);
         gm = GameManager.Inst;
         cm = CameraManager.inst;
-
+        GameManager.Inst.F_PlayerTransformMove(playerStartPos.position); // 플레이어 위치 초기화
         cutton = transform.Find("Canvas/Cutton").GetComponent<Image>();
         bgAnim = cutton.GetComponent<Animator>();
         GameManager.Inst.MoveStop = true;
@@ -177,7 +181,7 @@ public class Opening_Manager : MonoBehaviour
             yield return null;
         }
 
-        cm.F_OP_CamTargetSetting(cameraTarget.transform, 27, false, camtransform); // 카메라 위치 및 앵글값 초기화
+        cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 25, false, camtransform); // 카메라 위치 및 앵글값 초기화
 
         yield return new WaitForSeconds(CuttonFadeOffTime);
         bgAnim.SetTrigger("Off"); // 검은화면 제거
@@ -188,12 +192,21 @@ public class Opening_Manager : MonoBehaviour
         //}
 
         yield return new WaitForSeconds(Action1_0_DelayTime);
+
+        //bgAnim.SetTrigger("On");  // 페이드아웃 후 캐릭터 집중 연출
+        //yield return new WaitForSeconds(1);
+        //cm.F_DirectAction();
+        //yield return new WaitForSeconds(0.5f);
+        //bgAnim.SetTrigger("Off");
+        //yield return new WaitForSeconds(2.1f);
+        
         bgAnim.transform.parent.gameObject.SetActive(false);  //  검은화면 Enable false
-
+        //F_Action2Start();
         // Action 1 시작 (추후에 함수 실행 위치 이동)
-        cm.F_OP_CamTargetSetting(cameraTarget.transform, 9.5f, true, camtransform); // fade in + Camera 이동 연출
 
-       
+        cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 9.5f, true, camtransform); // fade in + Camera 이동 연출
+
+
     }
     
 

@@ -1,22 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Device;
 using UnityEngine.UI;
 
 public class Skill_Ui_UpdaterSystem : MonoBehaviour
 {
     [Header("# Insert Object in Inspecter")]
     [Space]
+    GameObject ScreeUI;
     [SerializeField] Transform activeSkill_Ui_Trs;
     [SerializeField] Transform passiveSkill_Ui_Trs;
     [SerializeField] GameObject UI_icon_Prefab;
     [SerializeField] Sprite[] icon_Img;
     [SerializeField] Sprite[] Passive_icon_Img;
     [SerializeField] Sprite[] Icon_Case;
-
+    
+    private void Awake()
+    {
+        ScreeUI = GameObject.Find("---- [ Screen UI ]").gameObject;
+        activeSkill_Ui_Trs = ScreeUI.transform. Find("Main_Canvas/Active_Skill_Icon_Group").GetComponent<Transform>();
+        passiveSkill_Ui_Trs = ScreeUI.transform. Find("Main_Canvas/Passive_Skill_Icon_Group").GetComponent<Transform>();
+        
+    }
     void Start()
     {
-
+    
     }
 
     // Update is called once per frame

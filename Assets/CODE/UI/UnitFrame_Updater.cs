@@ -74,7 +74,11 @@ public class UnitFrame_Updater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerInfo_Updater();
+        if(GameManager.Inst.IsActionReady == true) 
+        {
+            PlayerInfo_Updater();
+        }
+        
         Image_FillAmount_Updater();
         BattleTime_Updater();
         KillCount_Updater();

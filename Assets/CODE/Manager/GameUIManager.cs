@@ -292,4 +292,6 @@ public class GameUIManager : MonoBehaviour
     {
         deadCon.F_ActiveDeadCounter();
     }
+    
+  
 }

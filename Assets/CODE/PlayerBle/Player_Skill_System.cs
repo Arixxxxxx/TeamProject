@@ -88,6 +88,7 @@ public class Player_Skill_System : MonoBehaviour
             Destroy(this);
         }
 
+        skill_Obj[2] = transform.Find("Skill_LIst/S_2").gameObject;
         _updaterSystem = GetComponent<Skill_Ui_UpdaterSystem>();
         Skill_Start_Point = transform.Find("Skill_Start_Point").GetComponent<Transform>();
         S_3_StartPos = transform.Find("Skill_LIst/S_3").GetComponent<Transform>();
@@ -766,6 +767,11 @@ public class Player_Skill_System : MonoBehaviour
         skill4value[2] = Skill_4_Value[Skill_4_Level-1].range;
 
         return skill4value;
+    }
+
+    public void F_SkillobjChange(GameObject obj)
+    {
+        skill_Obj[0] = obj;
     }
 }
 
