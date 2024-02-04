@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Dust1
   m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
-  m_Parent: {fileID: 2100000, guid: 76c6126eadf594735b7e30360d634404, type: 2}
+  m_Parent: {fileID: 2100000, guid: 7a86a1031b9d74148885cc8c562a7ba5, type: 2}
   m_ModifiedSerializedProperties: 22
   m_ValidKeywords:
   - _EMISSION
@@ -56,5 +56,5 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 0.68235296, b: 0.5686275, a: 1}
     - _Color: {r: 1, g: 0.68235296, b: 0.5686274, a: 1}
-    - _EmissionColor: {r: 1, g: 0.035189465, b: 0, a: 1}
+    - _EmissionColor: {r: 11.313707, g: 1.1778171, b: 0, a: 1}
   m_BuildTextureStacks: []

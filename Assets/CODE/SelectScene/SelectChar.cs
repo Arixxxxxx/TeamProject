@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,55 +8,77 @@ using UnityEngine.UI;
 
 public class SelectChar : MonoBehaviour
 {
-    public CharacterNum Character;
-    [SerializeField] GameObject Btn;
-    Button startBtn; 
 
-    SpriteRenderer sr;
-    int num;
     
+    public CharacterNum Character;
+    SceletSceneManager sm;
+    [SerializeField] int CheakMouse;
+    bool choiseStart;
+    bool choiseEnd;
+    
+    ParticleSystem ps;
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        sm = transform.GetComponentInParent<SceletSceneManager>();
+        ps = transform.parent.Find("Ps").GetComponent<ParticleSystem>();
+
     }
     void Start()
     {
-        startBtn = Btn.GetComponent<Button>();
-        startBtn.onClick.AddListener(() => { SceneManager.LoadScene(2); });
+        Invoke("choiseStartOk", 2f);
+    }
+    bool cheakBool;
+
+    private void choiseStartOk()
+    {
+        choiseStart = true;
     }
     private void Update()
     {
-        num = DataManager.inst.curNum;
-
-        switch (Character) 
+        if(realClick == false)
         {
-            case CharacterNum.Female:
-                if(num == 0)
-                {
-                    sr.color = Color.white;
-                }
-                else if(num == 1) 
-                {
-                    sr.color = new Color(1, 1, 1, 0.2f);
-                }
-                break;
-
-            case CharacterNum.Male:
-                if (num == 1)
-                {
-                    sr.color = Color.white;
-                }
-                else if (num == 0)
-                {
-                    sr.color = new Color(1, 1, 1, 0.2f);
-                }
-                break;
+            if (CheakMouse == 1 && choiseEnd == false && cheakBool == false)
+            {
+                cheakBool = true;
+                sm.OnMouseAction((int)Character, true);
+                ps.gameObject.SetActive(true);
+            }
+            else if (CheakMouse == 0 && choiseEnd == false && cheakBool == true)
+            {
+                cheakBool = false;
+                sm.OnMouseAction((int)Character, false);
+                ps.gameObject.SetActive(false);
+            }
         }
+        
     }
 
+
+    private void OnMouseEnter()
+    {
+        CheakMouse = 1;
+        
+    }
+    private void OnMouseOver()
+    {
+        if(CheakMouse != 1)
+        {
+            CheakMouse = 1;
+        }
+
+    }
+    private void OnMouseExit()
+    {
+        CheakMouse = 0;
+    }
+    bool realClick;
     private void OnMouseUpAsButton()
     {
+        if(choiseStart == false) { return; }
+
+        realClick = true;
         DataManager.inst.CurrentCharacter = Character;
-        Btn.SetActive(true);
+        sm.SelectAction((int)Character);
+
     }
 }

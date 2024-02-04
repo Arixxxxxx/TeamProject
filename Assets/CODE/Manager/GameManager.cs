@@ -1,15 +1,18 @@
 using NavMeshPlus.Components;
 using System.Collections;
+
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Inst;
-    
+
+   
 
     NavMeshSurface nav_Surface;
     [Header("# Insert Object in Hiearachy")]
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]  bool enterBossRoom;
     [SerializeField]  bool boosBattleStart;
+
+   
     public bool BossBattleStart { get { return boosBattleStart; } set { boosBattleStart = value; } }
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
     bool bossMode;
@@ -77,6 +82,9 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] bool moveStop;
     public bool MoveStop { get { return moveStop; } set { moveStop = value; } }
+
+   
+
 
 
     
@@ -97,7 +105,7 @@ public class GameManager : MonoBehaviour
        
     }
 
-
+    
     public void F_Set_PlayerStatsSc(Player_Stats value)
     {
         player_stats_sc = value;
