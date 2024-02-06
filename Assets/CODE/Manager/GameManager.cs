@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] GameObject playerParent;
     GameObject Player; // 프리펩 위치 참조 변수(타겟포인트임)
+    GameObject PlayerObj; //
     Player_Stats player_stats_sc;
     [SerializeField] Light2D globalLight;
     [SerializeField] float light_Change_Speed;
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
     public void F_Set_PlayerStatsSc(Player_Stats value)
     {
         player_stats_sc = value;
+        PlayerObj = playerParent.transform.Find("Player_W").gameObject;
         Player = playerParent.transform.Find("Player_W/TargetPoint").gameObject;
     }
     void Start()
@@ -427,5 +429,15 @@ public class GameManager : MonoBehaviour
     public void F_PlayerTransformMove(Vector3 Pos)
     {
         player_stats_sc.gameObject.transform.position = Pos;
+    }
+
+    public void F_PlayerObjPositionMove(Transform trs)
+    {
+        PlayerObj.transform.position = trs.position;
+    }
+
+    public void F_NextScene(int value)
+    {
+        SceneManager.LoadScene(value);
     }
 }

@@ -105,7 +105,7 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
     public void A_ParticlePlay() // 애니메이션 함수
     {
         ps.Play();
-        Invoke("SpinStartInvoke", 3f);
+        Invoke("SpinStartInvoke", 2f);
     }
 
     private void SpinStartInvoke()

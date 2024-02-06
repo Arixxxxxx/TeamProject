@@ -251,8 +251,13 @@ public class Boss_BattleSystem : MonoBehaviour
                 StartCoroutine(GroundPatternActionStart(2));
                 yield return new WaitForSeconds(4);
                 StartCoroutine(GroundPatternActionStart(1));
-                yield return new WaitForSeconds(4);
-                StartCoroutine(GroundPatternActionStart(1));
+
+                if(togetherCasting == false) // 합동공격이면 타이밍관계로 일찍꺼줌
+                {
+                    yield return new WaitForSeconds(4);
+                    StartCoroutine(GroundPatternActionStart(1));
+                }
+                
                 
 
                 while (PatternEnd1)
@@ -335,9 +340,8 @@ public class Boss_BattleSystem : MonoBehaviour
     IEnumerator SpinLaserAction()
     {
         spinLaser_Sc.F_ActionPattern(0);
-        yield return new WaitForSeconds(2f);
         spinLaser_Sc.F_ActionPattern(1);
-        yield return new WaitForSeconds(5);  // 1,2번 레이저 켜줌
+        yield return new WaitForSeconds(5); 
 
         float RandomValue = Random.Range(2.5f, 3.5f);
         yield return new WaitForSeconds(RandomValue); // 역회전
@@ -524,12 +528,17 @@ public class Boss_BattleSystem : MonoBehaviour
 
         GroundPattern.Clear();
 
-        if (castingCounting1 == 5)
+        if (castingCounting1 == 5 && togetherCasting == false)
         {
             yield return new WaitForSeconds(4);
             castingCounting1 = 0;
             PatternEnd1 = false;
-
+        }
+        else if(castingCounting1 == 4 && togetherCasting == true)
+        {
+            yield return new WaitForSeconds(4);
+            castingCounting1 = 0;
+            PatternEnd1 = false;
         }
     }
 

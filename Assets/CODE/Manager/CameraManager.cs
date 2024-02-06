@@ -26,6 +26,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float[] camZoomValue;
     [SerializeField] float zoomOutSpeed;
     GameManager gm;
+    Transform endingPos;
     int stageLv;
     
     private void Awake()
@@ -39,6 +40,8 @@ public class CameraManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        endingPos = transform.Find("Ending_CamPosition").GetComponent<Transform>();
     }
     void Start()
     {
@@ -198,4 +201,20 @@ public class CameraManager : MonoBehaviour
         playerCam.m_Lens.OrthographicSize = 9.5f;
     }
      
+
+    // 엔딩 보스 플레이어 사이 연출함수
+    public void F_EndingCamera() 
+    {
+        StartCoroutine(EndingCorutine());
+    }
+
+    IEnumerator EndingCorutine()
+    {
+        playerCam.Follow = null;
+        playerCam.m_Lens.OrthographicSize = 10;
+        yield return null;
+        Vector3 movePos = endingPos.position;
+        movePos.z = -10;
+        playerCam.transform.position = movePos; // 옴기고
+    }
 }

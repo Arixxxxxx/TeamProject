@@ -54,7 +54,7 @@ public class Cutton_Controller : MonoBehaviour
 
 
     /// <summary>
-    /// 알파값 0~1 -> 1 ~0 함수
+    /// 페이드 온/오프 커튼 // 매개변수 -> 전환사이속도
     /// </summary>
     /// <param name="value"></param>
     public void F_FadeCuttonActive(float value)
@@ -73,5 +73,14 @@ public class Cutton_Controller : MonoBehaviour
         yield return fadeoff;
 
         anim.SetTrigger("Off");
+    }
+
+    /// <summary>
+    /// 천천히 페이드아웃 
+    /// </summary>
+    public void EndCutton()
+    {
+
+        anim.SetTrigger("End");
     }
 }

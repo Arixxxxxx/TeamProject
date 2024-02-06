@@ -29,7 +29,7 @@ public class Boss_Status : MonoBehaviour
     Image Boss_Front_IMG, Boss_Middle_IMG;
     SpriteRenderer sr;
     Boss_BattleSystem bs_sc;
-    
+    Transform endingPlayerPosTrs;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -38,6 +38,7 @@ public class Boss_Status : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         posCenter = transform.Find("Center").gameObject;
         bs_sc = GetComponent<Boss_BattleSystem>();
+        endingPlayerPosTrs = transform.Find("EndingPos").GetComponent<Transform>();
     }
     void Start()
     {
@@ -139,15 +140,45 @@ public class Boss_Status : MonoBehaviour
                 {
                     GameUIManager.Inst.F_BossHpBarActive(false); // 보스 HP Bar off
                     bs_sc.F_Boss_StopAllCorutine(); // 실행중인 코루틴 다 정지
-                    anim.SetTrigger("Dead");
+                    
                     isDead = true;
                     GameManager.Inst.BossDead = true;
-                    
+
                     // 연출  이후 애니메이터
+
+                    StartCoroutine(BossEnd());
+                    
                 }
             }
         }
        
+    }
+
+    IEnumerator BossEnd()
+    {
+        yield return null;
+        GameUIManager.Inst.F_BossHpBarActive(false); // 보스 에이치바
+        GameUIManager.Inst.F_GameUIActive(false); // UI꺼줌
+        GameUIManager.Inst.SkillEffectStop = true; // 스킬정지
+        GameManager.Inst.MoveStop = true; // 이동정지
+        yield return new WaitForSeconds(1.5f);
+        Cutton_Controller.inst.F_FadeCuttonActive(1.5f); // 페이드아웃
+        yield return new WaitForSeconds(1f);
+        
+        anim.SetTrigger("Dead"); // 힘들어함
+        GameManager.Inst.F_PlayerTransformMove(endingPlayerPosTrs.position); // 플레이어 위치이동
+        CameraManager.inst.F_EndingCamera(); // 카메라 위치이동 (타겟 null 처리)
+        
+        yield return new WaitForSeconds(1); 
+
+        GameUIManager.Inst.F_SetMSGUI(5,false);    // 메시지
+        yield return new WaitForSeconds(5);
+        anim.SetTrigger("Dead1");
+        yield return new WaitForSeconds(4.5f);
+        Cutton_Controller.inst.EndCutton();
+
+        yield return new WaitForSeconds(10f);
+        GameManager.Inst.F_NextScene(3);// 엔딩씬이동
     }
 
     WaitForSeconds DMG_Font_Dealy = new WaitForSeconds(0.15f);

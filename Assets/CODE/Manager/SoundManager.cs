@@ -87,14 +87,14 @@ public class SoundManager : MonoBehaviour
         }
 
         audios.clip = BgmList[BgmIndexNum];
-        
+
         yield return null;
 
         audios.Play();
 
-        while (audios.volume < 1 ) 
+        while (audios.volume < 1)
         {
-            audios.volume += Time.deltaTime * 0.25f; 
+            audios.volume += Time.deltaTime * 0.25f;
             yield return null;
         }
     }
@@ -128,4 +128,18 @@ public class SoundManager : MonoBehaviour
         audioClipQueue.Enqueue(obj);
     }
 
+
+    public void F_BgmEnd()
+    {
+        StartCoroutine(EndBGM());
+    }
+
+    IEnumerator EndBGM()
+    {
+        while (audios.volume > 0) // 볼륨페이드
+        {
+            audios.volume -= Time.deltaTime * 0.2f;
+            yield return null;
+        }
+    }
 }

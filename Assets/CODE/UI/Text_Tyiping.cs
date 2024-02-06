@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Text_Tyiping : MonoBehaviour
 {
@@ -10,9 +12,13 @@ public class Text_Tyiping : MonoBehaviour
     [SerializeField] float addSpeed;
     [SerializeField] int index;
     [SerializeField] Color textColor;
+
+    int sceneNum;
     private void Awake()
     {
         mainText = GetComponent<TMP_Text>();
+        sceneNum = SceneManager.sceneCountInBuildSettings;
+        Debug.Log(sceneNum);
     }
 
     string GetText;
@@ -47,7 +53,17 @@ public class Text_Tyiping : MonoBehaviour
     private void End_Text()
     {
         index = 0;
-        Opening_Manager.inst.nextOk = false;
+        
+        if(sceneNum == 1)
+        {
+            Opening_Manager.inst.nextOk = false;
+        }
+        else if(sceneNum == 4)
+        {
+            EndingDirector.inst.NextOk = false;
+           
+        }
+        
     }
 
     public void F_TextEmpty()

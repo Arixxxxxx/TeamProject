@@ -59,6 +59,8 @@ public class Opening_Manager : MonoBehaviour
         {
             Destroy(this);
         }
+        cutton = transform.Find("Canvas/Cutton").GetComponent<Image>();
+        cutton.gameObject.SetActive(true);
 
         playerStartPos = transform.Find("PlayerStartPos").GetComponent<Transform>();
        
@@ -78,7 +80,7 @@ public class Opening_Manager : MonoBehaviour
         gm = GameManager.Inst;
         cm = CameraManager.inst;
         GameManager.Inst.F_PlayerTransformMove(playerStartPos.position); // 플레이어 위치 초기화
-        cutton = transform.Find("Canvas/Cutton").GetComponent<Image>();
+        
         bgAnim = cutton.GetComponent<Animator>();
         GameManager.Inst.MoveStop = true;
 

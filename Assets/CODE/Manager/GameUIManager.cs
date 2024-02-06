@@ -246,6 +246,10 @@ public class GameUIManager : MonoBehaviour
                 textValue = "구슬공격할꺼에요";
                 break;
 
+            case 5:
+                textValue = "그동안 즐거웠습니다. 안녕히계세요";
+                break;
+
         }
 
         msgtext.text = textValue;
