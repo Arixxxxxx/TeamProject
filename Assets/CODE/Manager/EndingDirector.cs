@@ -129,8 +129,9 @@ public class EndingDirector : MonoBehaviour
         frameAnim.SetTrigger("Off"); // 첫번째 그림 페이드
 
         yield return sec05Wait[3];
-        SoundManager.inst.F_Bgm_Player(1, 0.7f);
-        yield return sec05Wait[3];
+        SoundManager.inst.F_Bgm_Player(1, 0.3f);
+        yield return sec05Wait[6];
+        
         ImageFrame.gameObject.SetActive(false);
         text_sc.gameObject.SetActive(false);
 
@@ -149,23 +150,18 @@ public class EndingDirector : MonoBehaviour
 
         for (int i = 0; i < creditIMG.Length; i++)
         {
-            int IMGCount = 0;
 
-            creditIMGFrame.sprite = creditIMG[IMGCount]; // 0번째
+            creditIMGFrame.sprite = creditIMG[i]; 
             creditAnim.SetTrigger("On");
             yield return sec05Wait[7];
             yield return sec05Wait[1];
             creditAnim.SetTrigger("Off");
             yield return sec05Wait[7];
             yield return sec05Wait[1];
-            IMGCount++;
 
-            if(IMGCount == creditIMG.Length-1)
+            if (i == 4)
             {
-                Debug.Log("진입");
                 yield return sec05Wait[6];
-                yield return sec05Wait[6];
-
                 endScene = true;
             }
         }
