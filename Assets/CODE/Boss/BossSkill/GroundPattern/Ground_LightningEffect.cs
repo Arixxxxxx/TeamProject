@@ -87,4 +87,9 @@ public class Ground_LightningEffect : MonoBehaviour
             valueDown = false;
         }
     }
+
+    public void A_Shake()
+    {
+        CameraManager.inst.F_ShakeCamOnlyGroundPattern(0.8f);
+    }
 }

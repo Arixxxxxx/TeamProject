@@ -11,6 +11,8 @@ public class CameraManager : MonoBehaviour
     Camera mainCam;
     [SerializeField] CinemachineVirtualCamera playerCam;
     public CinemachineVirtualCamera PlayerCam { get { return playerCam; } }
+    CinemachineBasicMultiChannelPerlin camNose;
+
 
     [SerializeField] float pos_Minusx;
     [SerializeField] float pos_PlusX;
@@ -28,11 +30,11 @@ public class CameraManager : MonoBehaviour
     GameManager gm;
     Transform endingPos;
     int stageLv;
-    
+
     private void Awake()
     {
         mainCam = Camera.main;
-        if(inst == null)
+        if (inst == null)
         {
             inst = this;
         }
@@ -42,6 +44,7 @@ public class CameraManager : MonoBehaviour
         }
 
         endingPos = transform.Find("Ending_CamPosition").GetComponent<Transform>();
+        camNose = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
     void Start()
     {
@@ -58,13 +61,13 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        playerCamsLimitPos(); 
+        playerCamsLimitPos();
     }
 
     //카메라 포지션 제한
     private void playerCamsLimitPos()
     {
-      if(gm.EnterBossRoom == false)
+        if (gm.EnterBossRoom == false)
         {
             Vector3 campos = playerCam.transform.position;
             campos.x = Mathf.Clamp(campos.x, pos_Minusx, pos_PlusX);
@@ -73,7 +76,7 @@ public class CameraManager : MonoBehaviour
             mainCam.transform.position = campos;
             playerCam.transform.position = campos;
         }
-      else if(gm.EnterBossRoom == true) 
+        else if (gm.EnterBossRoom == true)
         {
             Vector3 campos = playerCam.transform.position;
             campos.x = Mathf.Clamp(campos.x, boss_Minusx, boss_PlusX);
@@ -82,9 +85,9 @@ public class CameraManager : MonoBehaviour
             mainCam.transform.position = campos;
             playerCam.transform.position = campos;
         }
-            
-       
-     
+
+
+
     }
 
     /// <summary>
@@ -95,7 +98,7 @@ public class CameraManager : MonoBehaviour
     {
         float sumValue = playerCam.m_Lens.OrthographicSize + camZoomValue[value];
 
-       StartCoroutine(ZoomOut(sumValue));
+        StartCoroutine(ZoomOut(sumValue));
     }
 
     public void F_CameraDirectZoomOut(float Value)
@@ -123,7 +126,7 @@ public class CameraManager : MonoBehaviour
     float duration = 300f;
     IEnumerator ZoomIn(float sumValue)
     {
-        while (playerCam.m_Lens.OrthographicSize> sumValue)
+        while (playerCam.m_Lens.OrthographicSize > sumValue)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration); // 0에서 1 사이로 정규화
@@ -147,7 +150,7 @@ public class CameraManager : MonoBehaviour
     /// <param name="camPositon"></param>
     public void F_OP_CamTargetSetting(Transform target, float Zoomvalue, bool value, Transform camPositon)
     {
-        if(value == true)
+        if (value == true)
         {
             StartCoroutine(MoveCam(target, Zoomvalue));
         }
@@ -186,7 +189,7 @@ public class CameraManager : MonoBehaviour
             //F_CameraZoomIn(Zoomvalue);
         }
 
-        
+
 
         playerCam.Follow = GameManager.Inst.F_GetPalyerTargetPoint();
         playerCam.m_Lens.OrthographicSize = Zoomvalue;
@@ -200,10 +203,10 @@ public class CameraManager : MonoBehaviour
         playerCam.Follow = GameManager.Inst.F_GetPalyerTargetPoint();
         playerCam.m_Lens.OrthographicSize = 9.5f;
     }
-     
+
 
     // 엔딩 보스 플레이어 사이 연출함수
-    public void F_EndingCamera() 
+    public void F_EndingCamera()
     {
         StartCoroutine(EndingCorutine());
     }
@@ -216,5 +219,148 @@ public class CameraManager : MonoBehaviour
         Vector3 movePos = endingPos.position;
         movePos.z = -10;
         playerCam.transform.position = movePos; // 옴기고
+    }
+
+    float shakeCount;
+    public void F_PlayerOnHitCamShake()
+    {
+        StopCoroutine(ShakeCam());
+        StartCoroutine(ShakeCam());
+    }
+    [SerializeField] float shakeTime;
+    IEnumerator ShakeCam()
+    {
+        camNose.m_AmplitudeGain = 6.5f;
+        camNose.m_FrequencyGain = 0.15f;
+
+        while (shakeCount < shakeTime)
+        {
+            shakeCount += Time.deltaTime;
+
+            yield return null;
+        }
+
+        shakeCount = 0;
+
+        while (camNose.m_AmplitudeGain > 0) // 부드럽게 쉐이크 꺼지기위함
+        {
+            camNose.m_AmplitudeGain -= Time.deltaTime * 10;
+            yield return null;
+        }
+
+        camNose.m_AmplitudeGain = 0;
+        camNose.m_FrequencyGain = 0;
+
+    }
+    bool doShake;
+
+    /// <summary>
+    /// 지속시간에 의한 쉐이크 
+    /// </summary>
+    /// <param name="duration"></param>
+    ///
+    [SerializeField] int cheakCount;
+    public void F_ShakeCamForBossSkillEffect(float duration)
+    {
+        StartCoroutine(ShakeCamForBossSkillEffectCorutine(duration));
+    }
+
+    IEnumerator ShakeCamForBossSkillEffectCorutine(float duration)
+    {
+
+        camNose.m_AmplitudeGain = 8;
+        camNose.m_FrequencyGain = 0.125f;
+
+
+        while (shakeCount < duration)
+        {
+            shakeCount += Time.deltaTime;
+
+            yield return null;
+        }
+
+        shakeCount = 0;
+
+
+
+        while (camNose.m_AmplitudeGain > 0) // 부드럽게 쉐이크 꺼지기위함
+        {
+            camNose.m_AmplitudeGain -= Time.deltaTime * 10;
+            yield return null;
+        }
+
+        camNose.m_AmplitudeGain = 0;
+        camNose.m_FrequencyGain = 0;
+
+    }
+    /// <summary>
+    /// On/Off 쉐이크
+    /// </summary>
+    /// <param name="duration"></param>
+    /// 
+
+    public void F_ShakeCamOnOff(bool value)
+    {
+        if (value)
+        {
+            camNose.m_AmplitudeGain = 8;
+            camNose.m_FrequencyGain = 0.125f;
+        }
+        else
+        {
+            StartCoroutine(ShakeOff());
+        }
+    }
+
+
+    IEnumerator ShakeOff()
+    {
+
+        while (camNose.m_AmplitudeGain > 0) // 부드럽게 쉐이크 꺼지기위함
+        {
+            camNose.m_AmplitudeGain -= Time.deltaTime * 10;
+            yield return null;
+        }
+
+        camNose.m_AmplitudeGain = 0;
+        camNose.m_FrequencyGain = 0;
+
+    }
+   
+    public void F_ShakeCamOnlyGroundPattern(float duration)
+    {
+        if (doShake) { return; }
+        doShake = true;
+        StartCoroutine(ActionShake(duration));
+    }
+
+    IEnumerator ActionShake(float duration)
+    {
+
+        camNose.m_AmplitudeGain = 8;
+        camNose.m_FrequencyGain = 0.125f;
+
+
+        while (shakeCount < duration)
+        {
+            shakeCount += Time.deltaTime;
+
+            yield return null;
+        }
+
+        shakeCount = 0;
+
+
+
+        while (camNose.m_AmplitudeGain > 0) // 부드럽게 쉐이크 꺼지기위함
+        {
+            camNose.m_AmplitudeGain -= Time.deltaTime * 10;
+            yield return null;
+        }
+
+        camNose.m_AmplitudeGain = 0;
+        camNose.m_FrequencyGain = 0;
+
+        doShake = false;
     }
 }

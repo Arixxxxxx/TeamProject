@@ -54,7 +54,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void F_Bgm_Player(int BgmIndexNum)
+    public void F_Bgm_Player(int BgmIndexNum, float FadeSpeed)
     {
         bool isHaveClip;
 
@@ -67,17 +67,17 @@ public class SoundManager : MonoBehaviour
             isHaveClip = true;
         }
 
-        StartCoroutine(BgmChanger(isHaveClip, BgmIndexNum));
+        StartCoroutine(BgmChanger(isHaveClip, BgmIndexNum, FadeSpeed));
 
     }
 
-    IEnumerator BgmChanger(bool value, int BgmIndexNum)
+    IEnumerator BgmChanger(bool value, int BgmIndexNum, float FadeSpeed)
     {
         if (value)
         {
             while (audios.volume > 0) // 볼륨페이드
             {
-                audios.volume -= Time.deltaTime * 0.25f;
+                audios.volume -= Time.deltaTime * FadeSpeed;
                 yield return null;
             }
         }

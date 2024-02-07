@@ -41,6 +41,8 @@ public class GameUIManager : MonoBehaviour
     Animator bombEffectAnim;
     GameObject HideObj0, HideObj1, HideObj2;
     [SerializeField] GameObject[] HideObj;
+    [SerializeField] Sprite[] faceSprite;
+    Image faceIMG;
     bool skillEffectStop;
     public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
 
@@ -63,7 +65,7 @@ public class GameUIManager : MonoBehaviour
         HideObj0 = UI.transform.Find("BattleTime").gameObject;
         HideObj1 = UI.transform.Find("Count_Info").gameObject;
         HideObj2 = UI.transform.Find("UnitFrame").gameObject;
-
+        faceIMG = HideObj2.transform.Find("Face").GetComponent<Image>();
         deadCon = GetComponent<Dead_Counter_Contoller>();
     }
     void Start()
@@ -297,5 +299,9 @@ public class GameUIManager : MonoBehaviour
         deadCon.F_ActiveDeadCounter();
     }
     
+    public void F_UnitFrameFaceChanger(int value)
+    {
+        faceIMG.sprite = faceSprite[value];
+    }
   
 }

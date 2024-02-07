@@ -114,13 +114,7 @@ public class PoolManager : MonoBehaviour
         InitCharacter();
 
         GameManager.Inst.IsActionReady = true;
-        //playerNum = (int)DataManager.inst.CurrentCharacter;
-        //GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs);
-        //player.name = "Player_W";
-        //GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>());
-        //player.transform.position = new Vector2(-33, 3.4f);
-        //Input_SkillPrefabs(playerNum);
-        //GameManager.Inst.IsActionReady = true;
+       
 
 
         enemyList = transform.Find("Enemy").GetComponent<Transform>();
@@ -805,6 +799,7 @@ public class PoolManager : MonoBehaviour
             playerNum = (int)DataManager.inst.CurrentCharacter; // 셀렉트신에서 받아온 넘버 초기화
             GameObject player = Instantiate(PlayerPrefabs[playerNum], PlayerPrefabsTrs); // 플레이어캐릭터 생성
             player.name = "Player_W"; // 이름 변경
+            GameUIManager.Inst.F_UnitFrameFaceChanger(playerNum); // 유닛프레임 초상화 설정
             GameManager.Inst.F_Set_PlayerStatsSc(player.GetComponent<Player_Stats>()); // 스크립트 활용할수있게 넣어줌
             player.transform.position = new Vector2(-33, 3.4f); // 위치 초기화
             Input_SkillPrefabs(playerNum); // 해당 캐릭터에 맞게 스킬셋 설정

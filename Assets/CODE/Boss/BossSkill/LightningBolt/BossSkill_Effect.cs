@@ -133,6 +133,11 @@ public class BossSkill_Effect : MonoBehaviour
         }
     }
 
+    public void A_Shake()
+    {
+        CameraManager.inst.F_ShakeCamForBossSkillEffect(1.3f);
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && onceAttack == false && collision.GetComponent<Player_Stats>() != null) 

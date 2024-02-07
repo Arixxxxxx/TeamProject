@@ -39,7 +39,8 @@ public class Boss_BattleSystem : MonoBehaviour
     List<Transform> spinMuzzle = new List<Transform>();
 
     Transform Bosscenter;
-  
+    GameObject groundPatternObj;
+    GameObject spinLaserObj;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -48,8 +49,12 @@ public class Boss_BattleSystem : MonoBehaviour
         BulletTransformRef0 = transform.parent.Find("RandomPos/BallPos0").GetComponentsInChildren<Transform>().Skip(1).ToArray();
         BulletTransformRef1 = transform.parent.Find("RandomPos/BallPos1").GetComponentsInChildren<Transform>().Skip(1).ToArray();
         Bosscenter = transform.Find("Center").GetComponent<Transform>();
+
+       
         spinLaser_Sc = transform.Find("Skill/SpinLaser").GetComponent<BossSpinLaser>();
 
+        spinLaserObj = spinLaser_Sc.gameObject;
+       groundPatternObj = transform.Find("Skill/GroundPattern").gameObject;
 
         if (thinkTime == 0)
         {
@@ -243,7 +248,7 @@ public class Boss_BattleSystem : MonoBehaviour
 
             case 1: // 바닥
                 PatternEnd1 = true;
-                
+                groundPatternObj.gameObject.SetActive(true);
                 StartCoroutine(GroundPatternActionStart(2));
                 yield return new WaitForSeconds(4);
                 StartCoroutine(GroundPatternActionStart(1));
@@ -257,8 +262,11 @@ public class Boss_BattleSystem : MonoBehaviour
                     yield return new WaitForSeconds(4);
                     StartCoroutine(GroundPatternActionStart(1));
                 }
-                
-                
+
+                yield return new WaitForSeconds(5);
+
+                groundPatternObj.gameObject.SetActive(false);
+
 
                 while (PatternEnd1)
                 {
@@ -339,6 +347,8 @@ public class Boss_BattleSystem : MonoBehaviour
     // 3번 레이저 스킬 실행
     IEnumerator SpinLaserAction()
     {
+        spinLaserObj.gameObject.SetActive(true);
+
         spinLaser_Sc.F_ActionPattern(0);
         spinLaser_Sc.F_ActionPattern(1);
         yield return new WaitForSeconds(5); 
@@ -365,8 +375,9 @@ public class Boss_BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(3);  // 1,2번 레이저 켜줌
         spinLaser_Sc.F_ActionEnd();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
 
+        spinLaserObj.gameObject.SetActive(false);
         PatternEnd3 = false;
 
 

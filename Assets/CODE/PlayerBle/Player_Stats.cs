@@ -133,6 +133,7 @@ public class Player_Stats : MonoBehaviour
 
         if (Player_CurHP > 0)
         {
+            CameraManager.inst.F_PlayerOnHitCamShake(); // 카메라 쉐이크
             anim.SetTrigger("Hit");
             player_On_Hit = true;
             Player_CurHP -= DMG;

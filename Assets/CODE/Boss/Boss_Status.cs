@@ -177,7 +177,7 @@ public class Boss_Status : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         Cutton_Controller.inst.EndCutton();
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         GameManager.Inst.F_NextScene(3);// 엔딩씬이동
     }
 

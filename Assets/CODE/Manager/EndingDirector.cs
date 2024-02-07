@@ -83,7 +83,7 @@ public class EndingDirector : MonoBehaviour
     IEnumerator EndingActionStart()
     {
         frameAnim.SetTrigger("On");
-
+        SoundManager.inst.F_Bgm_Player(0,0.5f);
         yield return null;
         yield return sec05Wait[3]; 
         text_sc.F_Set_TalkBox_Main_Text(storyData[0]);
@@ -128,7 +128,9 @@ public class EndingDirector : MonoBehaviour
         text_sc.F_HideText(3f); // 텍스트 지우면서 하이드
         frameAnim.SetTrigger("Off"); // 첫번째 그림 페이드
 
-        yield return sec05Wait[6];
+        yield return sec05Wait[3];
+        SoundManager.inst.F_Bgm_Player(1, 0.7f);
+        yield return sec05Wait[3];
         ImageFrame.gameObject.SetActive(false);
         text_sc.gameObject.SetActive(false);
 
@@ -136,8 +138,8 @@ public class EndingDirector : MonoBehaviour
         credit.SetActive(true);
         creditWorld.SetActive(true);
 
+
         
-        SoundManager.inst.F_Bgm_Player(0);
         yield return sec05Wait[5];
 
         textUpStrat = true; // 텍스트 위로 출력 시작
