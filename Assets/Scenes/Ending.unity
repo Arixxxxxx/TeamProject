@@ -11326,7 +11326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69866bdbdd58d554382449546e525d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endingStorySprite: {fileID: 21300000, guid: 9fb6fa86baf69484baf7562a12f184a6, type: 3}
+  endingStorySprite: {fileID: 21300000, guid: dea7aac2d5df4a540bb45da5c5b5f4b3, type: 3}
   creditIMG:
   - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
   - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
@@ -11349,6 +11349,7 @@ MonoBehaviour:
   credit: {fileID: 125615167}
   creditWorld: {fileID: 1477853280}
   textUpSpeed: 60
+  endScene: 0
 --- !u!1 &884760385
 GameObject:
   m_ObjectHideFlags: 0

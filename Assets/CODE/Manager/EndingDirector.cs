@@ -159,6 +159,15 @@ public class EndingDirector : MonoBehaviour
             yield return sec05Wait[7];
             yield return sec05Wait[1];
             IMGCount++;
+
+            if(IMGCount == creditIMG.Length-1)
+            {
+                Debug.Log("¡¯¿‘");
+                yield return sec05Wait[6];
+                yield return sec05Wait[6];
+
+                endScene = true;
+            }
         }
        
         while(endScene == false)
@@ -182,7 +191,7 @@ public class EndingDirector : MonoBehaviour
     [Space]
     [SerializeField] float textUpSpeed;
 
-    bool endScene;
+    [SerializeField] bool endScene;
     void Update()
     {
         if (textUpStrat)

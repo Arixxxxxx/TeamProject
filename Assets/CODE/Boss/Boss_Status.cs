@@ -195,7 +195,7 @@ public class Boss_Status : MonoBehaviour
 
         if(boss_CurHP < 0) { boss_CurHP = 0; }
 
-        Hp_Bar_Text.text = $" [Á¤¿¹] ¸¶³à    {boss_CurHP} / {boss_MaxHP}";
+        Hp_Bar_Text.text = $" {boss_CurHP} / {boss_MaxHP}";
 
         Boss_Front_IMG.fillAmount = boss_CurHP / boss_MaxHP;
         if (Boss_Front_IMG.fillAmount < Boss_Middle_IMG.fillAmount)
