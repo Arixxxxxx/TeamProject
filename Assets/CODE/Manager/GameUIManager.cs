@@ -233,24 +233,46 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case 1:
-                textValue = "감히 여기까지 쫓아오다니.. 너를 처단해주겠다..";
+                textValue = "감히 내게 맞서다니... 사라져라.."; // 전투시작
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(0);
                 break;
 
             case 2:
-                textValue = "하늘에서 번개 떨어집니다";
+                textValue = "하늘에서 벼락이 내리칠 것이다.."; //벼락
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(1);
                 break;
 
             case 3:
-                textValue = "바닥 조심하세요";
+                textValue = "어디 한 번 재주껏 피해보아라.."; // 바닥
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(2);
                 break;
 
             case 4:
-                textValue = "구슬공격할꺼에요";
+                textValue = "살고 싶다면 발버둥 쳐보아라.."; // 구슬
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(3);
                 break;
 
             case 5:
-                textValue = "그동안 즐거웠습니다. 안녕히계세요";
+                textValue = " 꼴사납게 도망치게 될 것이다.."; // 레이저
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(4);
                 break;
+
+
+            case 6:
+                textValue = "절망이 몰려들것이다.. 하찮은것.."; // 합동
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(5);
+                break;
+
+            case 7:
+                textValue = "고작 저런 힘에 패하다니... 분하다.."; // 사망
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(6);
+                break;
+
+            case 8:
+                textValue = "더.. 이상 유지할수가.."; // 사망
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(7);
+                break;
+                
 
         }
 

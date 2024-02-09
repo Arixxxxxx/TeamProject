@@ -62,21 +62,21 @@ public class SoundPreFabs : MonoBehaviour
     }
 
 
-    public void F_EndSound()
+    public void F_EndSound(float Speed)
     {
         if(audios.isPlaying) 
         {
-            StartCoroutine(EndSound());
+            StartCoroutine(EndSound(Speed));
         }
     }
 
-    IEnumerator EndSound()
+    IEnumerator EndSound(float Speed)
     {
         yield return null;
 
         while (audios.volume > 0)
         {
-            audios.volume -= Time.deltaTime;
+            audios.volume -= Time.deltaTime * Speed;
             yield return null;
         }
 

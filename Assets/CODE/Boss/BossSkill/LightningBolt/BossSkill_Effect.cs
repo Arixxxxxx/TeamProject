@@ -120,6 +120,7 @@ public class BossSkill_Effect : MonoBehaviour
     }
 
 
+
     // 번개 애니메이션 조명
     private void SpriteRenderUpdater()
     {
@@ -137,6 +138,8 @@ public class BossSkill_Effect : MonoBehaviour
     {
         CameraManager.inst.F_ShakeCamForBossSkillEffect(1.3f);
     }
+
+   
 
     private void OnTriggerStay2D(Collider2D collision)
     {

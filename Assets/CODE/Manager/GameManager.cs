@@ -385,9 +385,9 @@ public class GameManager : MonoBehaviour
                 playerAndDragon[0].enabled = true;
                 playerAndDragon[1].gameObject.SetActive(true);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(true);
-                
+                yield return new WaitForSeconds(1.5f);
                 GameUIManager.Inst.F_SetMSGUI(1, false);
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(4f);
                 
                 MoveStop = false; // ½ºÅ¸Æ®
                 GameUIManager.Inst.SkillEffectStop = false;

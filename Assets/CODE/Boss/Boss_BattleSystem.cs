@@ -155,6 +155,7 @@ public class Boss_BattleSystem : MonoBehaviour
         {
             case 0:
                 GameUIManager.Inst.F_SetMSGUI(2, false);
+                //음성
                 break;
 
             case 1:
@@ -166,7 +167,7 @@ public class Boss_BattleSystem : MonoBehaviour
                 break;
 
             case 3:
-                //GameUIManager.Inst.F_SetMSGUI(5, false);
+                GameUIManager.Inst.F_SetMSGUI(5, false);
                 break;
         }
         anim.SetTrigger("Attack");
@@ -181,14 +182,14 @@ public class Boss_BattleSystem : MonoBehaviour
         else if(nextLv == 4)
         {
             togetherCasting = true;
-
+            GameUIManager.Inst.F_SetMSGUI(6, false);
             PlaySkill[0] = StartCoroutine(CastingSkill(0)); // 번개
             PlaySkill[1] = StartCoroutine(CastingSkill(1)); // 바닥 // 2구슬 // 레이저
         }
         else if (nextLv == 5)
         {
             togetherCasting = true;
-
+            GameUIManager.Inst.F_SetMSGUI(6, false);
             spinLaser_Sc.F_SetSpeedValue(13f); // 2개 패턴이라 레이저 속도 늦춰줌
             PlaySkill[1]  = StartCoroutine(CastingSkill(1)); // 바닥
             PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저 
@@ -196,7 +197,7 @@ public class Boss_BattleSystem : MonoBehaviour
         else if (nextLv == 6)
         {
             togetherCasting = true;
-
+            GameUIManager.Inst.F_SetMSGUI(6, false);
             PlaySkill[3] = StartCoroutine(CastingSkill(3)); // 레이저
             PlaySkill[2] = StartCoroutine(CastingSkill(2)); // 구슬
             
@@ -219,10 +220,13 @@ public class Boss_BattleSystem : MonoBehaviour
                 PatternEnd0 = true;
                 
                 StartCoroutine(CastingLightning());
+                StartCoroutine(LightningSFXOn());
                 yield return new WaitForSeconds(4);
                 StartCoroutine(CastingLightning());
+                StartCoroutine(LightningSFXOn());
                 yield return new WaitForSeconds(4);
                 StartCoroutine(CastingLightning());
+                StartCoroutine(LightningSFXOn());
                 yield return new WaitForSeconds(1.5f);
 
 
@@ -344,6 +348,7 @@ public class Boss_BattleSystem : MonoBehaviour
         }
     }
     
+    
     // 3번 레이저 스킬 실행
     IEnumerator SpinLaserAction()
     {
@@ -351,7 +356,9 @@ public class Boss_BattleSystem : MonoBehaviour
 
         spinLaser_Sc.F_ActionPattern(0);
         spinLaser_Sc.F_ActionPattern(1);
-        yield return new WaitForSeconds(5); 
+        yield return new WaitForSeconds(2.5f);
+        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_BossSkillSFX(3);
+        yield return new WaitForSeconds(2.5f); 
 
         float RandomValue = Random.Range(2.5f, 3.5f);
         yield return new WaitForSeconds(RandomValue); // 역회전
@@ -375,7 +382,8 @@ public class Boss_BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(3);  // 1,2번 레이저 켜줌
         spinLaser_Sc.F_ActionEnd();
-        yield return new WaitForSeconds(3f);
+        sc.F_EndSound(0.5f);
+        yield return new WaitForSeconds(5f);
 
         spinLaserObj.gameObject.SetActive(false);
         PatternEnd3 = false;
@@ -398,6 +406,8 @@ public class Boss_BattleSystem : MonoBehaviour
                 int count = BulletTransformRef0.Length;
                 for(int j= 0; j < 5; j++)
                 {
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_BossSkillSFX(2);
+
                     for (int i = 0; i < count; i++)
                     {
                         GameObject obj = BossSkill_Pool.inst.F_GetSkillObj(1);
@@ -417,7 +427,6 @@ public class Boss_BattleSystem : MonoBehaviour
                         }
                         randomDir = 0;
                         obj.SetActive(true);
-                        
                         yield return null;
                     }
 
@@ -436,7 +445,7 @@ public class Boss_BattleSystem : MonoBehaviour
                 break;
 
             case 1: // 한바퀴
-
+                StartCoroutine(BulletSound());
                 for (int i = 0; i < 2; i++)
                 {
 
@@ -499,7 +508,14 @@ public class Boss_BattleSystem : MonoBehaviour
 
     List<int> GroundPattern = new List<int>();
     List<int> deletePattern = new List<int>();
-
+    IEnumerator BulletSound()
+    {
+        for (int i = 0; i < 62; i++)
+        {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_BossSkillSFX(2);
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
 
     // 1번 바닥 공격
     IEnumerator GroundPatternActionStart(int value)
@@ -535,7 +551,10 @@ public class Boss_BattleSystem : MonoBehaviour
             {
                 groundPatternAr[i].F_StartAction();
             }
+
         }
+        yield return new WaitForSeconds(2);
+        SoundManager.inst.F_Get_ControllSoundPreFabs_BossSkillSFX(1);
 
         GroundPattern.Clear();
 
@@ -602,6 +621,16 @@ public class Boss_BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator LightningSFXOn()
+    {
+        yield return new WaitForSeconds(2.9f);
+
+        for (int i = 0; i < 7; i++)
+        {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_BossSkillSFX(1);
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
 
     IEnumerator BossTired()
     {
@@ -609,6 +638,7 @@ public class Boss_BattleSystem : MonoBehaviour
 
         Shield.SetActive(false);
         // 공격가능 애니메이션 실행
+        GameUIManager.Inst.F_SetMSGUI(8, false);
         yield return TiredTime;
         // 공격가능 기본 아이들 애니메이션 실행
 

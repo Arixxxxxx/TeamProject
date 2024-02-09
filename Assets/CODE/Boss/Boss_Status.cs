@@ -169,11 +169,12 @@ public class Boss_Status : MonoBehaviour
         GameManager.Inst.F_PlayerTransformMove(endingPlayerPosTrs.position); // 플레이어 위치이동
         CameraManager.inst.F_EndingCamera(); // 카메라 위치이동 (타겟 null 처리)
         
-        yield return new WaitForSeconds(1); 
+        yield return new WaitForSeconds(1.5f); 
 
-        GameUIManager.Inst.F_SetMSGUI(5,false);    // 메시지
-        yield return new WaitForSeconds(5);
+        GameUIManager.Inst.F_SetMSGUI(7,false);    // 사망 보스 메시지
+        yield return new WaitForSeconds(6);
         anim.SetTrigger("Dead1");
+        SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(8);
         yield return new WaitForSeconds(4.5f);
         Cutton_Controller.inst.EndCutton();
 

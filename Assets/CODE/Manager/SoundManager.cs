@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> BgmList;
     [SerializeField] List<AudioClip> SfxList;
     [SerializeField] List<AudioClip> EtcSoundList;
+    [SerializeField] List<AudioClip> bossAudio;
+    [SerializeField] List<AudioClip> bossSkillSFX;
 
 
 
@@ -35,7 +37,7 @@ public class SoundManager : MonoBehaviour
         dynamicTrs = transform.Find("Dynamic").GetComponent<Transform>();
         audios = GetComponent<AudioSource>();
 
-        soundPrefabs_Init(10);
+        soundPrefabs_Init(20);
 
 
 
@@ -130,6 +132,38 @@ public class SoundManager : MonoBehaviour
         obj.gameObject.SetActive(true);
         SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
         sc.F_SetClipAndPlay(EtcSoundList[value]);
+
+        return sc;
+
+    }
+
+    public SoundPreFabs F_Get_ControllSoundPreFabs_BossSFX(int value)
+    {
+        if (audioClipQueue.Count <= 1)
+        {
+            soundPrefabs_Init(1);
+        }
+
+        GameObject obj = audioClipQueue.Dequeue();
+        obj.gameObject.SetActive(true);
+        SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
+        sc.F_SetClipAndPlay(bossAudio[value]);
+
+        return sc;
+
+    }
+
+    public SoundPreFabs F_Get_ControllSoundPreFabs_BossSkillSFX(int value)
+    {
+        if (audioClipQueue.Count == 0)
+        {
+            soundPrefabs_Init(1);
+        }
+
+        GameObject obj = audioClipQueue.Dequeue();
+        obj.gameObject.SetActive(true);
+        SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
+        sc.F_SetClipAndPlay(bossSkillSFX[value]);
 
         return sc;
 
