@@ -75,7 +75,7 @@ public class SceletSceneManager : MonoBehaviour
    IEnumerator NextScene(int value)
     {
         anim[value].SetTrigger("Select");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(2f);
         cutton.SetTrigger("On");
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene(2);

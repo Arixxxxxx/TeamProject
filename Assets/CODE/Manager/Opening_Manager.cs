@@ -89,6 +89,7 @@ public class Opening_Manager : MonoBehaviour
         GameUIManager.Inst.F_GameUIActive(false);
 
         SoundManager.inst.F_Bgm_Player(0,0.25f);
+        SoundManager.inst.F_SetLoop(true);
     }
 
     private void Update()
@@ -134,6 +135,12 @@ public class Opening_Manager : MonoBehaviour
         //backgroundPs[0].gameObject.SetActive(true); // 파티클 취소(24/01.26)
         //backgroundPs[1].gameObject.SetActive(true);// 파티클 취소(24/01.26)
         maintext.F_Set_TalkBox_Main_Text(textBox[0]); // 첫번째 오프닝스토리 문구 넣어주기
+
+        //
+        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        sc.F_SetVolume(0.7f);
+        sc.F_SetSoundLoop(true);
+        
         inputText = true;
 
         yield return null;
@@ -142,6 +149,8 @@ public class Opening_Manager : MonoBehaviour
         {
             yield return null; 
         }
+        sc.F_QuickEndSound();
+
         yield return new WaitForSeconds(2f); // 글 다나왓으면 2초 대기
         photoFrameAnim.SetTrigger("FadeOff"); // 첫번째 그림 페이드 아웃
         yield return new WaitForSeconds(0.5f);
@@ -156,13 +165,18 @@ public class Opening_Manager : MonoBehaviour
         nextOk = true; // 메세지 출력 끝났다면
         yield return new WaitForSeconds(1f);
         maintext.F_Set_TalkBox_Main_Text(textBox[1]); // 두번쨰 오프닝스토리 문구 넣어주기
-      
+
+        //
+        SoundPreFabs sc1 = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        sc1.F_SetVolume(0.7f);
+        sc1.F_SetSoundLoop(true);
         yield return null;
 
         while (nextOk == true) // 메시지 출력동안 대기
         {
             yield return null;
         }
+        sc1.F_QuickEndSound(); // 사운드 종료
         inputText = false;
         fastInfo.gameObject.SetActive(false); // Spacebar Fast 인포 켜주기
         yield return new WaitForSeconds(2f);// 글 다나왓으면 2초 대기
@@ -173,7 +187,8 @@ public class Opening_Manager : MonoBehaviour
 
        
           Action0 = false; // 다음 연출 시작
-        SoundManager.inst.F_Bgm_Player(1,0.25f);
+        
+        
     }
 
     IEnumerator CuttonFade()
@@ -186,26 +201,12 @@ public class Opening_Manager : MonoBehaviour
         cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 25, false, camtransform); // 카메라 위치 및 앵글값 초기화
 
         yield return new WaitForSeconds(CuttonFadeOffTime);
+    
         bgAnim.SetTrigger("Off"); // 검은화면 제거
-
-        //for (int i = 0; i < backgroundPs.Length; i++) // 배경파티클 미사용
-        //{
-        //    backgroundPs[i].gameObject.SetActive(false);
-        //}
-
+    
         yield return new WaitForSeconds(Action1_0_DelayTime);
-
-        //bgAnim.SetTrigger("On");  // 페이드아웃 후 캐릭터 집중 연출
-        //yield return new WaitForSeconds(1);
-        //cm.F_DirectAction();
-        //yield return new WaitForSeconds(0.5f);
-        //bgAnim.SetTrigger("Off");
-        //yield return new WaitForSeconds(2.1f);
-        
+               
         bgAnim.transform.parent.gameObject.SetActive(false);  //  검은화면 Enable false
-        //F_Action2Start();
-        // Action 1 시작 (추후에 함수 실행 위치 이동)
-
         cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 9.5f, true, camtransform); // fade in + Camera 이동 연출
 
 
@@ -259,12 +260,13 @@ public class Opening_Manager : MonoBehaviour
             yield return null;
         }
         
-        yield return new WaitForSeconds(1f); 
-
+        yield return new WaitForSeconds(1f);
+        SoundManager.inst.F_Bgm_Player(1, 0.5f);
         GameUIManager.Inst.F_GameUIActive(true); // UI켜주고
 
         yield return new WaitForSeconds(1.5f);
         GameManager.Inst.MainGameStart = true; // 게임시작
+        
     }
 
     bool howtoPlayEnd;

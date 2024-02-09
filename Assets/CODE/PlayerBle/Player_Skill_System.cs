@@ -490,8 +490,7 @@ public class Player_Skill_System : MonoBehaviour
 
             if (Passive_3_Lv > 0)
             {
-                Movement sc = Hub.Inst.Movement_sc;
-                sc.F_Set_Add_TelePortDistance(Passive_3_Tel_Distance_AddValue[Passive_3_Lv - 1]);
+                charMove_Sc.F_Set_Add_TelePortDistance(Passive_3_Tel_Distance_AddValue[Passive_3_Lv - 1]);
             }
         }
     }

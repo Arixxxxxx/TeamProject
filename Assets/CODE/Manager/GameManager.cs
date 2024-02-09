@@ -362,6 +362,7 @@ public class GameManager : MonoBehaviour
                 GameUIManager.Inst.F_GameUIActive(false);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(false);
                 yield return new WaitForSeconds(0.3f);
+                SoundManager.inst.F_Bgm_Player(5, 0.25f);
                 Cutton_Controller.inst.F_FadeCuttonActive(1.8f);
                 yield return new WaitForSeconds(1f);
 
@@ -369,6 +370,7 @@ public class GameManager : MonoBehaviour
                 EnterBossRoom = true;
                 playerParent.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
                 playerParent.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
+                 // 배경음변경
 
                 F_ActiveBomb(); // 타면서 남아잇는 몬스터 전부 삭제시켜줌
 

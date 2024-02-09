@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Text_Tyiping : MonoBehaviour
 {
+    
     TMP_Text mainText;
     [SerializeField] float Speed;
     [SerializeField] float addSpeed;
@@ -17,7 +18,7 @@ public class Text_Tyiping : MonoBehaviour
     private void Awake()
     {
         mainText = GetComponent<TMP_Text>();
-        sceneNum = SceneManager.sceneCountInBuildSettings;
+        sceneNum = SceneManager.GetActiveScene().buildIndex;
         Debug.Log(sceneNum);
     }
 
@@ -53,12 +54,13 @@ public class Text_Tyiping : MonoBehaviour
     private void End_Text()
     {
         index = 0;
-        
+
+
         if(sceneNum == 1)
         {
             Opening_Manager.inst.nextOk = false;
         }
-        else if(sceneNum == 4)
+        else if(sceneNum == 3)
         {
             EndingDirector.inst.NextOk = false;
            

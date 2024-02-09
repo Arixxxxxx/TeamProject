@@ -63,6 +63,26 @@ public class Stage_Trigger : MonoBehaviour
     {
         DarkCloud_Controller.inst.F_darkCloudeSpeedUp(1, (int)number, 2.4f);
         GlobalLightController.Inst.F_LightControl((int)number);
+
+        switch(number)
+        {
+            case DoorNumber.First:
+
+                SoundManager.inst.F_Bgm_Player(2, 2f);
+
+                break;
+
+            case DoorNumber.Sec:
+
+                SoundManager.inst.F_Bgm_Player(3, 2f);
+                break;
+
+            case DoorNumber.Boss:
+
+                SoundManager.inst.F_Bgm_Player(4, 2f);
+                break;
+
+        }
     }
 
  

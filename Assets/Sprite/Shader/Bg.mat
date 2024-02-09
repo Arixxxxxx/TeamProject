@@ -44,7 +44,7 @@ Material:
     - _Scale: 4.5
     - _Speed: 0
     m_Colors:
-    - _Direction: {r: 0.006, g: 0.03, b: 0, a: 0}
+    - _Direction: {r: 0.003, g: 0.015, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1365379128556904080
 MonoBehaviour:

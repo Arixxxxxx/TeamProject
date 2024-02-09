@@ -20,6 +20,7 @@ public class OpeningManager : MonoBehaviour
     float InitSec = 0.5f;
 
     bool thisSceneEnd;
+    public bool ThisSceneEnd { get { return thisSceneEnd; }  set { thisSceneEnd = value; } }
     private void Awake()
     {
         cuttonAnim = GameObject.Find("UI_Canvas/Cutton").GetComponent<Animator>();
@@ -30,7 +31,7 @@ public class OpeningManager : MonoBehaviour
         mainBtn[0] = actionScene[1].transform.Find("StartBtn/Button").GetComponent<Button>();
         mainBtn[1] = actionScene[1].transform.Find("ExitBtn/Button").GetComponent<Button>();
 
-        mainBtn[0].onClick.AddListener(() => { if (thisSceneEnd == true) { return; } StartCoroutine(NextScene()); });
+        mainBtn[0].onClick.AddListener(() => { StartCoroutine(NextScene()); });
         mainBtn[1].onClick.AddListener(() => { Application.Quit(); });
 
         for (int i = 0; i < waitSec05.Length; i++)
@@ -59,11 +60,15 @@ public class OpeningManager : MonoBehaviour
     IEnumerator Action()
     {
         yield return waitSec05[1];
+        SoundManager.inst.F_Bgm_Player(0, 1f);
+        yield return waitSec05[1];
         cuttonAnim.SetTrigger("Off");
+        
         yield return waitSec05[4];
         yield return waitSec05[2];
 
         cuttonAnim.SetTrigger("On"); // 페이드가려줌
+        SoundManager.inst.F_Bgm_Player(1, 0.6f);
         yield return waitSec05[3];
 
         actionScene[0].gameObject.SetActive(false); // 화면 바꿔줌
@@ -89,10 +94,17 @@ public class OpeningManager : MonoBehaviour
 
     IEnumerator NextScene()
     {
-        // 버튼 클릭효과만들기
-        cuttonAnim.SetFloat("OnSpeed", 0.7f);
-        cuttonAnim.SetTrigger("On"); // 페이드가려줌
-        yield return waitSec05[4];
-        SceneManager.LoadScene(1);
+        if (thisSceneEnd == false)
+        {
+            thisSceneEnd = true;
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1);
+            cuttonAnim.SetFloat("OnSpeed", 0.7f);
+            cuttonAnim.SetTrigger("On"); // 페이드가려줌
+            SoundManager.inst.F_BgmEnd();
+            yield return waitSec05[4];
+            yield return waitSec05[4];
+            SceneManager.LoadScene(1);
+        }
+        
     }
 }

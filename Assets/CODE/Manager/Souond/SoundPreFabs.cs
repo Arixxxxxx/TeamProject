@@ -41,4 +41,54 @@ public class SoundPreFabs : MonoBehaviour
 
         SoundManager.inst.F_ReturnSoundPreFabs(gameObject);
     }
+
+
+    public void F_SetSoundLoop(bool Value)
+    {
+        audios.loop = Value;
+    }
+    public void F_QuickEndSound()
+    {
+        if (audios.isPlaying)
+        {
+            audios.Stop();
+            audios.clip = null;
+            audios.loop = false;
+            audios.volume = 1;
+
+            SoundManager.inst.F_ReturnSoundPreFabs(gameObject);
+
+        }
+    }
+
+
+    public void F_EndSound()
+    {
+        if(audios.isPlaying) 
+        {
+            StartCoroutine(EndSound());
+        }
+    }
+
+    IEnumerator EndSound()
+    {
+        yield return null;
+
+        while (audios.volume > 0)
+        {
+            audios.volume -= Time.deltaTime;
+            yield return null;
+        }
+
+        audios.clip = null;
+        audios.loop = false;
+        audios.volume = 1;
+
+        SoundManager.inst.F_ReturnSoundPreFabs(gameObject);
+    }
+
+    public void F_SetVolume(float value)
+    {
+        audios.volume = value;
+    }
 }

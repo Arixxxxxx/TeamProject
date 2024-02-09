@@ -60,7 +60,7 @@ public class OptionWindow_Controller : MonoBehaviour
         selectWindow = MainCanvas.transform.Find("SelectBtn").gameObject;
         optionText = selectWindow.transform.Find("Bg/Text").GetComponent<TMP_Text>();
         yesBtn = selectWindow.transform.Find("Bg/Yes").GetComponent <Button>();
-        yesBtn = selectWindow.transform.Find("Bg/Yes").GetComponent <Button>();
+        noBtn = selectWindow.transform.Find("Bg/No").GetComponent <Button>();
         
         backLight = selectWindow.transform.Find("Bg/Light2").gameObject;
 

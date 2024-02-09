@@ -434,11 +434,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.05845177, y: -0.20134568}
+  m_Offset: {x: 0.09, y: -0.20134568}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.1333334, y: 2.1333334}
+    oldSize: {x: 2.1333334, y: 2.1354167}
     newSize: {x: 2.1333334, y: 2.1333334}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -503,7 +503,7 @@ MonoBehaviour:
   CurHP: 40
   MaxHP: 40
   Exp: 30
-  Enemy_Dead: 0
+  enemy_Dead: 0
   FillAmountSpeed: 0.8
   dmgFontY_Add: 0.8
 --- !u!114 &9122064047882607623

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SoundManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SoundManager : MonoBehaviour
     AudioSource audios;
     [SerializeField] List<AudioClip> BgmList;
     [SerializeField] List<AudioClip> SfxList;
+    [SerializeField] List<AudioClip> EtcSoundList;
 
 
 
@@ -117,6 +119,21 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public SoundPreFabs F_Get_ControllSoundPreFabs_PlaySFX(int value)
+    {
+        if (audioClipQueue.Count == 0)
+        {
+            soundPrefabs_Init(1);
+        }
+
+        GameObject obj = audioClipQueue.Dequeue();
+        obj.gameObject.SetActive(true);
+        SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
+        sc.F_SetClipAndPlay(EtcSoundList[value]);
+
+        return sc;
+
+    }
 
     /// <summary>
     /// Return SoundPreFabs
@@ -141,5 +158,10 @@ public class SoundManager : MonoBehaviour
             audios.volume -= Time.deltaTime * 0.2f;
             yield return null;
         }
+    }
+
+    public void F_SetLoop(bool value)
+    {
+        audios.loop = value;
     }
 }

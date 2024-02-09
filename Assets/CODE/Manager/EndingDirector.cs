@@ -87,6 +87,10 @@ public class EndingDirector : MonoBehaviour
         yield return null;
         yield return sec05Wait[3]; 
         text_sc.F_Set_TalkBox_Main_Text(storyData[0]);
+        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        sc.F_SetVolume(0.7f);
+        sc.F_SetSoundLoop(true);
+
         FastInfo.gameObject.SetActive(true);   
         NextOk = true;
 
@@ -96,8 +100,8 @@ public class EndingDirector : MonoBehaviour
         {
             yield return null;
         }
+        sc.F_QuickEndSound();
 
-       
         yield return sec05Wait[1]; // 글 다나왓으면 2초 대기
         text_sc.F_HideText(3f); // 텍스트 지우면서 하이드
 
@@ -111,6 +115,9 @@ public class EndingDirector : MonoBehaviour
 
         yield return sec05Wait[2]; 
         text_sc.F_Set_TalkBox_Main_Text(storyData[1]);
+        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0); // 볼펜소리
+        sc.F_SetVolume(0.7f);
+        sc.F_SetSoundLoop(true);
 
         NextOk = true;
 
@@ -120,7 +127,7 @@ public class EndingDirector : MonoBehaviour
         {
             yield return null;
         }
-
+        sc.F_QuickEndSound();
         FastInfo.gameObject.SetActive(false);
 
         yield return sec05Wait[3]; // 글 다나왓으면 2초 대기
@@ -154,12 +161,12 @@ public class EndingDirector : MonoBehaviour
             creditIMGFrame.sprite = creditIMG[i]; 
             creditAnim.SetTrigger("On");
             yield return sec05Wait[7];
-            yield return sec05Wait[1];
+            yield return sec05Wait[7];
             creditAnim.SetTrigger("Off");
             yield return sec05Wait[7];
             yield return sec05Wait[1];
 
-            if (i == 4)
+            if (i == 3)
             {
                 yield return sec05Wait[6];
                 endScene = true;

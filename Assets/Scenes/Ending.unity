@@ -5389,7 +5389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &125615168
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11249,11 +11249,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endingStorySprite: {fileID: 21300000, guid: dea7aac2d5df4a540bb45da5c5b5f4b3, type: 3}
   creditIMG:
-  - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
-  - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
-  - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
-  - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
-  - {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
+  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
+  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
+  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
+  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
   storyData:
   - "\uB9C8\uB140\uC640\uC758 \uAE30\uB098\uAE34 \uC0AC\uD22C \uB05D\uC5D0 \uC6A9\uC0AC\uB294
     \uB9C8\uB140\uB97C \uC4F0\uB7EC\uD2B8\uB9AC\uB294 \uB370\uC5D0 \uC131\uACF5\uD588\uB2E4.\r\n\uB9C8\uB140\uB294
@@ -16409,8 +16408,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 1
+      scalar: 3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16580,8 +16579,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.07
-      minScalar: 0.05
+      scalar: 0.08
+      minScalar: 0.07
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -17631,8 +17630,8 @@ ParticleSystem:
         m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
-        key0: {r: 0.9290118, g: 1, b: 0, a: 0}
-        key1: {r: 1, g: 0.94000983, b: 0, a: 1}
+        key0: {r: 0.495283, g: 0.93519944, b: 1, a: 0}
+        key1: {r: 0.49411768, g: 0.9333334, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -21454,7 +21453,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7f934b7a192090541aa8dc1dc8c902de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6b174a8395addc40a924831a48404aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21583,15 +21582,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "< Team >  \uC640\uC800\uC528\uB450\uC18C\uB140 \n\n\uC81C\uC791\uD300\uC7A5
-    : \uC774\uB3D9\uC740\n\nProduction : \uC720\uC608\uC9C4\n\nBGM : \uC720\uC608\uC9C4\n\nSFX
+  m_text: "< Team >  \uC640\uC800\uC528\uC640 \uB450\uC18C\uB140\n\n\uC81C\uC791\uD300\uC7A5
+    : \uC774\uB3D9\uC740\n\nProduction : \uC720\uC608\uC9C4\n\nBGM : \uC720\uC608\uC9C4,
+    \uC774\uB3D9\uC740 \n\nSFX : \uC774\uB3D9\uC740\n\n\uCE90\uB9AD\uD130 \uC74C\uC131\uC81C\uC791
     : \uC774\uB3D9\uC740\n\nDesign : \uC11D\uC9C0\uC601\n\nProgramming : \uC774\uB3D9\uC740\n\nParticle
-    & Shader : \uC774\uB3D9\uC740\n\n---------------------\n\n\uAC1C\uBC1C \uAE30\uAC04
-    : 23 / 12 / 02 ~ \n               23 / 02 / 29\n\n\uCD1D : 79\uC77C\n\n---------------------\n\nSpecial
-    Thank\n\n\uC784\uAE30\uD604 / \uCD5C\uC7AC\uC6D0 / \uAE40\uC218\uD604\n\n---------------------\n\n\uCCAB
-    \uD300\uD504\uB85C\uC81D\uD2B8\uAE30\uAC04\uB3D9\uC548\n\n\uB108\uBB34 \uC990\uAC81\uACE0 
-    \uC758\uBBF8\uC788\uB294 \uC2DC\uAC04\uC774\uC600\uC2B5\uB2C8\uB2E4.\n\n\uD50C\uB808\uC774\uD574\uC8FC\uC2E0
-    \uBD84\uB4E4\uAED8 \uAC10\uC0AC\uB4DC\uB9BD\uB2C8\uB2E4.\n\n.\n.\n\n\n\n\n       
+    \uC81C\uC791 : \uC774\uB3D9\uC740, \uC11D\uC9C0\uC601\n\nShader \uC81C\uC791
+    : \uC774\uB3D9\uC740\n\nSkill Effect \uC81C\uC791 : \uC774\uB3D9\uC740\n\n---------------------\n\n\uAC1C\uBC1C
+    \uAE30\uAC04 : 23 / 12 / 02 ~ \n               23 / 02 / 29\n\nTotal  : 79\uC77C\n\n---------------------\n\n<<
+    Special Thanks >>\n\n\uC784\uAE30\uD604 / \uCD5C\uC7AC\uC6D0 / \uAE40\uC218\uD604\n\n---------------------\n\n\uD300\uD504\uB85C\uC81D\uD2B8
+    \uAE30\uAC04\uB3D9\uC548\n\n\uB108\uBB34 \uC990\uAC81\uACE0  \uC758\uBBF8\uC788\uB294
+    \uC2DC\uAC04\uC774\uC600\uC2B5\uB2C8\uB2E4.\n\n\uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\n.\n.\n\n\n\n\n       
     -  E N D -"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1687943d7b0bc449c3171b00a9bb7a, type: 2}
@@ -21737,6 +21737,14 @@ PrefabInstance:
       propertyPath: BgmList.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 0cad3457e9bd94d40aa248d8f6003b9a, type: 3}
+    - target: {fileID: 5035096070507429452, guid: c02d8a354bf6f5e40b3b1c449e319e3d, type: 3}
+      propertyPath: EtcSoundList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035096070507429452, guid: c02d8a354bf6f5e40b3b1c449e319e3d, type: 3}
+      propertyPath: EtcSoundList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d565a343d55f7df4da7482f2c470f892, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22523,7 +22531,7 @@ RectTransform:
   m_GameObject: {fileID: 1945084813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 818866444}
@@ -22531,7 +22539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -413, y: 183}
+  m_AnchoredPosition: {x: -413, y: 166}
   m_SizeDelta: {x: 650, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945084815
@@ -22554,7 +22562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 27d8ee773ea73c04dab93e061048057a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
