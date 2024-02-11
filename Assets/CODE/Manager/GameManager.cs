@@ -346,6 +346,11 @@ public class GameManager : MonoBehaviour
         playerAndDragon[0].enabled = false;
         playerAndDragon[1].gameObject.SetActive(false);
 
+        if (TotorialCountStart)
+        {
+            TutoCount++;
+        }
+
         switch (value) 
         {
             case 0: // 스킬 텔레포트용
@@ -442,4 +447,18 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(value);
     }
+
+    /// <summary>
+    /// 튜토리얼용 참조 변수
+    /// </summary>
+    bool tutorialCountStart;
+    public bool TotorialCountStart { get {  return tutorialCountStart; } set {  tutorialCountStart = value; } }
+
+    int TutoCount;
+   
+    public int GetTutorialTeleportCounter()
+    {
+        return TutoCount;
+    }
+
 }

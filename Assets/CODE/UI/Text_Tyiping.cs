@@ -56,7 +56,7 @@ public class Text_Tyiping : MonoBehaviour
         index = 0;
 
 
-        if(sceneNum == 1)
+        if(sceneNum == 2)
         {
             Opening_Manager.inst.nextOk = false;
         }

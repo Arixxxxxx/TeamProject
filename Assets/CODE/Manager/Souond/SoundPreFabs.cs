@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class SoundPreFabs : MonoBehaviour
 {
+    
+
     AudioSource audios;
+    public bool soundEnd;
+    public bool itMeNarration;
     private void Awake()
     {
         audios = GetComponent<AudioSource>();
@@ -22,12 +26,18 @@ public class SoundPreFabs : MonoBehaviour
 
     public void F_SetClipAndPlay(AudioClip Clips)
     {
+        soundEnd = true;
         audios.clip = Clips;
         StartCoroutine(PlaySound());
     }
 
     IEnumerator PlaySound()
     {
+        if (itMeNarration) // 나레이션 카운터 확인용
+        {
+            GameUIManager.Inst.F_ItMeNarration(true);
+        }
+
         audios.Play();
         
         yield return null;
@@ -37,7 +47,14 @@ public class SoundPreFabs : MonoBehaviour
             yield return null;
         }
 
+        soundEnd = false;
         audios.clip = null;
+
+        if (itMeNarration)
+        {
+            itMeNarration = false;
+            GameUIManager.Inst.F_ItMeNarration(false);
+        }
 
         SoundManager.inst.F_ReturnSoundPreFabs(gameObject);
     }

@@ -33,7 +33,7 @@ public class GameUIManager : MonoBehaviour
     Color aZeroColor = new Color(1, 1, 1, 0);
     Color aColorUP = new Color(0, 0, 0, 0.3f);
     WaitForSeconds infoBarColse;
-    
+
     bool playerInDarkCloud;
     GameObject inDarkCloudWarrningWindow;
     OptionWindow_Controller optionWindow_Con;
@@ -43,6 +43,8 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] GameObject[] HideObj;
     [SerializeField] Sprite[] faceSprite;
     Image faceIMG;
+
+    GameObject voiceIcon;
     bool skillEffectStop;
     public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
 
@@ -52,7 +54,7 @@ public class GameUIManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Inst == null)
+        if (Inst == null)
         {
             Inst = this;
         }
@@ -67,14 +69,16 @@ public class GameUIManager : MonoBehaviour
         HideObj2 = UI.transform.Find("UnitFrame").gameObject;
         faceIMG = HideObj2.transform.Find("Face").GetComponent<Image>();
         deadCon = GetComponent<Dead_Counter_Contoller>();
+        voiceIcon = UI.transform.Find("VoiceIcon").gameObject;
     }
+
     void Start()
     {
         InfoObj = UI.transform.Find("GameInfoMSG").gameObject;
         infoText = InfoObj.GetComponentInChildren<TMP_Text>();
         infoAnim = infoText.GetComponent<Animator>();
         infoBg = InfoObj.transform.Find("Bg").GetComponent<Image>();
-        
+
         inDarkCloudWarrningWindow = UI.transform.Find("WarningMSG").gameObject;
 
         msgUI_Bg = msgUI.transform.GetChild(0).GetComponent<Image>();
@@ -88,7 +92,7 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-  
+        CheakVoiceIcon();
     }
 
     /// <summary>
@@ -98,21 +102,21 @@ public class GameUIManager : MonoBehaviour
     public void F_GameInfoOpen(int value)
     {
         string alramText = string.Empty;
-        
+
         switch (value)
         {
             case 0:
                 infoText.fontSize = 30;
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
-                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 0,2.5f);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 0, 2.5f);
                 break;
 
             case 1:
                 infoText.fontSize = 30;
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
-                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0,1, 2.5f);
+                DarkCloud_Controller.inst.F_darkCloudeSpeedUp(0, 1, 2.5f);
                 break;
 
             case 2:
@@ -132,16 +136,16 @@ public class GameUIManager : MonoBehaviour
                 infoText.fontSize = 38;
                 alramText = "게임이 시작되었습니다.";
 
-               
+
 
                 break;
         }
-        
+
         infoText.text = alramText;
 
-       
 
-        if (InfoObj.gameObject.activeSelf == false) 
+
+        if (InfoObj.gameObject.activeSelf == false)
         {
             InfoObj.gameObject.SetActive(true);
         }
@@ -150,10 +154,10 @@ public class GameUIManager : MonoBehaviour
         StartCoroutine(MsgInfoBar_Action());
     }
 
-    
+
     IEnumerator MsgInfoBar_Action()
     {
-        
+
 
         while (infoText.color.a < 0.95f)
         {
@@ -161,7 +165,7 @@ public class GameUIManager : MonoBehaviour
             infoText.color += aColorUP * Time.deltaTime * 5;
             yield return null;
         }
-        
+
 
         infoAnim.enabled = true;
         yield return new WaitForSeconds(5);
@@ -173,7 +177,7 @@ public class GameUIManager : MonoBehaviour
             infoText.color -= aColorUP * Time.deltaTime * 5;
             yield return null;
         }
-                
+
 
         if (InfoObj.gameObject.activeSelf == true)
         {
@@ -184,16 +188,16 @@ public class GameUIManager : MonoBehaviour
 
     public void F_SetDarkCloudWindow_OnOff(bool value)
     {
-        if (value == true && inDarkCloudWarrningWindow.activeSelf == false) 
+        if (value == true && inDarkCloudWarrningWindow.activeSelf == false)
         {
             inDarkCloudWarrningWindow.SetActive(true);
         }
-        else if(value == false && inDarkCloudWarrningWindow.activeSelf == true)
+        else if (value == false && inDarkCloudWarrningWindow.activeSelf == true)
         {
             inDarkCloudWarrningWindow.SetActive(false);
         }
     }
-     
+
     /// <summary>
     /// 이동화살표
     /// </summary>
@@ -201,7 +205,7 @@ public class GameUIManager : MonoBehaviour
     public void F_SetNextMapArrow(int value)
     {
         MapArrow.F_SetTarget(value);
-        MapArrow.gameObject.SetActive(true);    
+        MapArrow.gameObject.SetActive(true);
     }
 
     public void F_NextMapArrowActiveSec(bool value)
@@ -209,7 +213,7 @@ public class GameUIManager : MonoBehaviour
         MapArrow.gameObject.SetActive(value);
     }
 
-      
+
     public void F_SetMSGUI(int value, bool BValue)
     {
         string textValue = string.Empty;
@@ -272,16 +276,16 @@ public class GameUIManager : MonoBehaviour
                 textValue = "더.. 이상 유지할수가.."; // 사망
                 SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(7);
                 break;
-                
+
 
         }
 
         msgtext.text = textValue;
         msgUI_Bg.gameObject.SetActive(true);
-      
+
 
         msgUI.SetTrigger("On");
-       
+
     }
 
 
@@ -301,13 +305,13 @@ public class GameUIManager : MonoBehaviour
     }
     public void F_GameUIActive(bool value)
     {
-        
+
         HideObj1.gameObject.SetActive(value);
         HideObj2.gameObject.SetActive(value);
         HideObj[0].gameObject.SetActive(value); // 스킬 버프창
         HideObj[1].gameObject.SetActive(value);
         HideObj[2].gameObject.SetActive(value);
-        
+
     }
 
     public void F_BombEffectOn()
@@ -315,15 +319,42 @@ public class GameUIManager : MonoBehaviour
         bombEffectAnim.SetTrigger("Bomb");
     }
 
-    
+
     public void F_CallRespawn_Counter_UI()
     {
         deadCon.F_ActiveDeadCounter();
     }
-    
+
     public void F_UnitFrameFaceChanger(int value)
     {
         faceIMG.sprite = faceSprite[value];
     }
-  
+
+    int NarrationVoiceCount;
+    public void F_ItMeNarration(bool value)
+    {
+        if (value)
+        {
+            NarrationVoiceCount++;
+        }
+        else
+        {
+            if (NarrationVoiceCount > 0)
+            {
+                NarrationVoiceCount--;
+            }
+        }
+
+    }
+    private void CheakVoiceIcon()
+    {
+        if (NarrationVoiceCount > 0 && voiceIcon.activeSelf == false)
+        {
+            voiceIcon.SetActive(true);
+        }
+        else if (NarrationVoiceCount <= 0)
+        {
+            voiceIcon.SetActive(false);
+        }
+    }
 }

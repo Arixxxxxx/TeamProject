@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> EtcSoundList;
     [SerializeField] List<AudioClip> bossAudio;
     [SerializeField] List<AudioClip> bossSkillSFX;
+    [SerializeField] List<AudioClip> InfoNarration;
 
 
 
@@ -169,6 +170,23 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public SoundPreFabs F_Get_ControllSoundPreFabs_InfoNarrtionSFX(int value)
+    {
+        if (audioClipQueue.Count == 0)
+        {
+            soundPrefabs_Init(1);
+        }
+
+        GameObject obj = audioClipQueue.Dequeue();
+        obj.gameObject.SetActive(true);
+        SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
+        sc.itMeNarration = true;
+        sc.F_SetClipAndPlay(InfoNarration[value]);
+
+        return sc;
+
+    }
+
     /// <summary>
     /// Return SoundPreFabs
     /// </summary>
@@ -197,5 +215,41 @@ public class SoundManager : MonoBehaviour
     public void F_SetLoop(bool value)
     {
         audios.loop = value;
+    }
+
+    /// <summary>
+    /// BGM 볼륨 컨트롤러
+    /// </summary>
+    /// <param name="value">볼륨값</param>
+    /// <param name="speed">페이드 스피드</param>
+    public void F_SetBGMVolume(float value, float speed)
+    {
+        StartCoroutine(VolueController(value, speed));
+    }
+
+    IEnumerator VolueController(float value, float speed)
+    {
+        float curVolume = audios.volume;
+
+        if (curVolume < value)
+        {
+            while(audios.volume < 1)
+            {
+                audios.volume += Time.deltaTime * speed;
+                yield return null;
+            }
+
+
+        }
+        else if(curVolume > value)
+        {
+            while(audios.volume > value)
+            {
+                audios.volume -= Time.deltaTime * speed;
+                yield return null;
+            }
+        }
+
+        audios.volume = value;
     }
 }
