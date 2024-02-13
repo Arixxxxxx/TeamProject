@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,26 +17,30 @@ public class OpeningManager : MonoBehaviour
     Button[] mainBtn = new Button[2];
 
     GameObject loginTitle;
+    GameObject signUpObj;
 
     Animator pressAnykeyAnim;
     [SerializeField] TMP_InputField emilInput;
     [SerializeField] TMP_InputField PWInput;
+    [SerializeField] TMP_InputField signEmailInput;
+    [SerializeField] TMP_InputField signPwInput;
 
     WaitForSeconds[] waitSec05 = new WaitForSeconds[5]; // 배열당 0.5초씩 증가
     float InitSec = 0.5f;
 
     bool thisSceneEnd;
-    public bool ThisSceneEnd { get { return thisSceneEnd; }  set { thisSceneEnd = value; } }
+    public bool ThisSceneEnd { get { return thisSceneEnd; } set { thisSceneEnd = value; } }
     private void Awake()
     {
         cuttonAnim = GameObject.Find("UI_Canvas/Cutton").GetComponent<Animator>();
-       
+
         worldCanvas = GameObject.Find("WorldCanvas").gameObject;
         actionScene[0] = GameObject.Find("Action0").gameObject;
         actionScene[1] = worldCanvas.transform.Find("Action1_Main").gameObject;
         mainBtn[0] = actionScene[1].transform.Find("StartBtn/Button").GetComponent<Button>();
         mainBtn[1] = actionScene[1].transform.Find("ExitBtn/Button").GetComponent<Button>();
         loginTitle = actionScene[1].transform.Find("LoginPanner").gameObject;
+        signUpObj = worldCanvas.transform.Find("Action1_Main/SignInPanner").gameObject;
 
         mainBtn[0].onClick.AddListener(() => { StartCoroutine(NextScene()); });
         mainBtn[1].onClick.AddListener(() => { Application.Quit(); });
@@ -53,17 +58,17 @@ public class OpeningManager : MonoBehaviour
     {
         StartCoroutine(Action());
 
-        emilInput.onValueChanged.AddListener(delegate { TabToNext(emilInput, PWInput); });
-        PWInput.onValueChanged.AddListener(delegate { TabToNext(PWInput, emilInput); });
     }
 
     private void Update()
     {
-        if(doPreeAnyKey == true && Input.anyKey)
+        if (doPreeAnyKey == true && Input.anyKey)
         {
             doPreeAnyKey = false;
             pressAnykeyAnim.SetTrigger("Off");
         }
+
+        NextArrowField();
     }
     bool doPreeAnyKey;
     IEnumerator Action()
@@ -72,7 +77,7 @@ public class OpeningManager : MonoBehaviour
         SoundManager.inst.F_Bgm_Player(0, 1f);
         yield return waitSec05[1];
         cuttonAnim.SetTrigger("Off");
-        
+
         yield return waitSec05[4];
         yield return waitSec05[2];
 
@@ -83,14 +88,14 @@ public class OpeningManager : MonoBehaviour
         actionScene[0].gameObject.SetActive(false); // 화면 바꿔줌
         actionScene[1].gameObject.SetActive(true);
         actionSceneBase.gameObject.SetActive(true);
-        
+
         doPreeAnyKey = true;
 
         yield return null;
         cuttonAnim.SetFloat("OffSpeed", 0.8f);
         cuttonAnim.SetTrigger("Off"); // 커튼 내림
-        
-        while(doPreeAnyKey == true)
+
+        while (doPreeAnyKey == true)
         {
             yield return null;
         }
@@ -128,14 +133,51 @@ public class OpeningManager : MonoBehaviour
         }
     }
 
-    private void TabToNext(TMP_InputField currentInputField, TMP_InputField nextInputField)
+    private void NextArrowField()
     {
-        Debug.Log("Tab ");
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log("Tab key is pressed");
-            nextInputField.Select();
-            nextInputField.ActivateInputField();
+            if(EventSystem.current.currentSelectedGameObject != null)
+            {
+                switch (EventSystem.current.currentSelectedGameObject.name)
+                {
+                    case "InputEmail":
+                        TabToNext(PWInput);
+
+                        break;
+
+                    case "InputPW":
+                        TabToNext(emilInput);
+                        break;
+
+                    case "InputField_Email":
+                        TabToNext(signPwInput);
+                        break;
+
+
+                    case "InputField_Passward":
+                        TabToNext(signEmailInput);
+                        break;
+                }
+            }
+           else
+            {
+                if (loginTitle.activeSelf)
+                {
+                    TabToNext(emilInput);
+                }
+                else if (signUpObj.activeSelf)
+                {
+                    TabToNext(signEmailInput);
+                }
+            }
         }
+    }
+
+
+    private void TabToNext(TMP_InputField nextInputField)
+    {
+        nextInputField.Select();
+        nextInputField.ActivateInputField();
     }
 }
