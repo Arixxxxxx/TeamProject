@@ -11967,6 +11967,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionSceneBase: {fileID: 785777385}
+  emilInput: {fileID: 468169974}
+  PWInput: {fileID: 730526291}
 --- !u!114 &1516371912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11981,8 +11983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoginPanner: {fileID: 217093404}
   SignInPanner: {fileID: 1424172520}
-  loginErrorText: {fileID: 0}
-  sinUpErrorText: {fileID: 0}
+  emailField: {fileID: 468169974}
+  passwardField: {fileID: 730526291}
 --- !u!1 &1529031510
 GameObject:
   m_ObjectHideFlags: 0
@@ -12257,8 +12259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoginPanner: {fileID: 217093404}
   SignInPanner: {fileID: 1424172520}
-  loginErrorText: {fileID: 0}
-  sinUpErrorText: {fileID: 0}
+  emailField: {fileID: 0}
+  passwardField: {fileID: 0}
 --- !u!1 &1683629501
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,22 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:524313216007:ios:e83738fad89908b91c96a2",
+        "mobilesdk_app_id": "1:524313216007:android:01f1975595b1a19a1c96a2",
         "android_client_info": {
-          "package_name": "com.warzerc.curse"
+          "package_name": "com.warzerc.curseofw"
         }
       },
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAsIarFc7u2EDPPMDknaobelOr8wtL7ir0"
+          "current_key": "AIzaSyCywrdob0K9m1_Y5VS9ZO17EuccmBt0Cvc"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 0
-        },
         "appinvite_service": {
-          "status": 1
+          "other_platform_oauth_client": []
         }
       }
     }

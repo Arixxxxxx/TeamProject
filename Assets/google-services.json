@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "524313216007",
+    "firebase_url": "https://curse-b2d34-default-rtdb.firebaseio.com",
+    "project_id": "curse-b2d34",
+    "storage_bucket": "curse-b2d34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524313216007:android:01f1975595b1a19a1c96a2",
+        "android_client_info": {
+          "package_name": "com.warzerc.curseofw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCywrdob0K9m1_Y5VS9ZO17EuccmBt0Cvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

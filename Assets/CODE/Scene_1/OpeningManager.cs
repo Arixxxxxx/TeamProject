@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class OpeningManager : MonoBehaviour
     GameObject loginTitle;
 
     Animator pressAnykeyAnim;
+    [SerializeField] TMP_InputField emilInput;
+    [SerializeField] TMP_InputField PWInput;
 
     WaitForSeconds[] waitSec05 = new WaitForSeconds[5]; // 배열당 0.5초씩 증가
     float InitSec = 0.5f;
@@ -49,6 +52,9 @@ public class OpeningManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Action());
+
+        emilInput.onValueChanged.AddListener(delegate { TabToNext(emilInput, PWInput); });
+        PWInput.onValueChanged.AddListener(delegate { TabToNext(PWInput, emilInput); });
     }
 
     private void Update()
@@ -94,9 +100,11 @@ public class OpeningManager : MonoBehaviour
         //
         loginTitle.gameObject.SetActive(true);
 
+        emilInput.Select();
+        emilInput.ActivateInputField();
 
         // 로그인 이후로 변경
-        
+
     }
 
     public void F_GameStartBtnActive()
@@ -118,6 +126,16 @@ public class OpeningManager : MonoBehaviour
             yield return waitSec05[4];
             SceneManager.LoadScene(1);
         }
-        
+    }
+
+    private void TabToNext(TMP_InputField currentInputField, TMP_InputField nextInputField)
+    {
+        Debug.Log("Tab ");
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("Tab key is pressed");
+            nextInputField.Select();
+            nextInputField.ActivateInputField();
+        }
     }
 }

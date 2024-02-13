@@ -16,12 +16,12 @@ public class LogInSystem : MonoBehaviour
     OpeningManager openingManager;
      Button loginBtn;
      Button signInBtn;
-    
+    [SerializeField]
     TMP_InputField emailField;
+    [SerializeField]
     TMP_InputField passwardField;
-    [SerializeField]
+    
     TMP_Text loginErrorText;
-    [SerializeField]
     TMP_Text sinUpErrorText;
     
     TMP_InputField signinEmailField;
@@ -45,6 +45,7 @@ public class LogInSystem : MonoBehaviour
 
         signInBtn = LoginPanner.transform.Find("SignIn/Button").GetComponent<Button>();
         emailField = LoginPanner.transform.Find("InputEmail").GetComponent<TMP_InputField>();
+      
         passwardField = LoginPanner.transform.Find("InputPW").GetComponent<TMP_InputField>();
         loginBtn = LoginPanner.transform.Find("LoginBtn/Button").GetComponent<Button>();
         loginErrorText = LoginPanner.transform.Find("ErrorText").GetComponent<TMP_Text>();
@@ -92,6 +93,7 @@ public class LogInSystem : MonoBehaviour
             }
 
             AuthResult newUser = task.Result;
+
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 SignUpCompletes();
@@ -102,7 +104,7 @@ public class LogInSystem : MonoBehaviour
 
     public void Login()
     {
-        auth.SignInWithEmailAndPasswordAsync(signinEmailField.text, signinPasswardField.text).ContinueWith(task =>
+        auth.SignInWithEmailAndPasswordAsync(emailField.text, passwardField.text).ContinueWith(task =>
         {
             if (task.IsCanceled)
             {
@@ -119,21 +121,26 @@ public class LogInSystem : MonoBehaviour
                 UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
                     LoginFair();
+                    Debug.LogError("Login failed: " + task.Exception.ToString());
                 });
 
                 return;
             }
 
-            if (loginErrorText.gameObject.activeSelf)
-            {
-                loginErrorText.text = string.Empty;
-                loginErrorText.gameObject.SetActive(false);
-            }
+           
 
+            
             AuthResult newUser = task.Result;
 
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                LoginPanner.SetActive(false);
+                
+                if (loginErrorText.gameObject.activeSelf)
+                {
+                    loginErrorText.text = string.Empty;
+                    loginErrorText.gameObject.SetActive(false);
+                }
                 openingManager.F_GameStartBtnActive();
             });
           
