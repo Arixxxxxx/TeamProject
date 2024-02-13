@@ -14,6 +14,8 @@ public class OpeningManager : MonoBehaviour
     GameObject worldCanvas;
     Button[] mainBtn = new Button[2];
 
+    GameObject loginTitle;
+
     Animator pressAnykeyAnim;
 
     WaitForSeconds[] waitSec05 = new WaitForSeconds[5]; // 배열당 0.5초씩 증가
@@ -30,6 +32,7 @@ public class OpeningManager : MonoBehaviour
         actionScene[1] = worldCanvas.transform.Find("Action1_Main").gameObject;
         mainBtn[0] = actionScene[1].transform.Find("StartBtn/Button").GetComponent<Button>();
         mainBtn[1] = actionScene[1].transform.Find("ExitBtn/Button").GetComponent<Button>();
+        loginTitle = actionScene[1].transform.Find("LoginPanner").gameObject;
 
         mainBtn[0].onClick.AddListener(() => { StartCoroutine(NextScene()); });
         mainBtn[1].onClick.AddListener(() => { Application.Quit(); });
@@ -88,8 +91,18 @@ public class OpeningManager : MonoBehaviour
 
         yield return waitSec05[0];
 
-        mainBtn[0].transform.parent.gameObject.SetActive (true);
-        mainBtn[1].transform.parent.gameObject.SetActive (true);
+        //
+        loginTitle.gameObject.SetActive(true);
+
+
+        // 로그인 이후로 변경
+        
+    }
+
+    public void F_GameStartBtnActive()
+    {
+        mainBtn[0].transform.parent.gameObject.SetActive(true);
+        mainBtn[1].transform.parent.gameObject.SetActive(true);
     }
 
     IEnumerator NextScene()
