@@ -238,43 +238,43 @@ public class GameUIManager : MonoBehaviour
 
             case 1:
                 textValue = "감히 내게 맞서다니... 사라져라.."; // 전투시작
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(0);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(0, 0.7f);
                 break;
 
             case 2:
                 textValue = "하늘에서 벼락이 내리칠 것이다.."; //벼락
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(1);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(1, 0.7f);
                 break;
 
             case 3:
                 textValue = "어디 한 번 재주껏 피해보아라.."; // 바닥
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(2);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(2, 0.7f);
                 break;
 
             case 4:
                 textValue = "살고 싶다면 발버둥 쳐보아라.."; // 구슬
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(3);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(3, 0.7f);
                 break;
 
             case 5:
                 textValue = " 꼴사납게 도망치게 될 것이다.."; // 레이저
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(4);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(4, 0.7f);
                 break;
 
 
             case 6:
                 textValue = "절망이 몰려들것이다.. 하찮은것.."; // 합동
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(5);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(5, 0.7f);
                 break;
 
             case 7:
                 textValue = "고작 저런 힘에 패하다니... 분하다.."; // 사망
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(6);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(6, 0.7f);
                 break;
 
             case 8:
                 textValue = "더.. 이상 유지할수가.."; // 사망
-                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(7);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(7, 0.7f);
                 break;
 
 
@@ -295,6 +295,7 @@ public class GameUIManager : MonoBehaviour
     /// <param name="value"> 0 보스방 / 대기 </param>
     public void F_OpenSelectWindow(int value)
     {
+        SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(8, 1);
         optionWindow_Con.F_SetSelectWindowUI_Open(value);
         GameManager.Inst.MoveStop = true;
     }

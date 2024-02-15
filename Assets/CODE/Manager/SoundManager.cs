@@ -18,7 +18,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> bossSkillSFX;
     [SerializeField] List<AudioClip> InfoNarration;
 
-
+    AudioSource fireBaseAuido;
 
 
     Queue<GameObject> audioClipQueue = new Queue<GameObject>();
@@ -38,8 +38,12 @@ public class SoundManager : MonoBehaviour
         dynamicTrs = transform.Find("Dynamic").GetComponent<Transform>();
         audios = GetComponent<AudioSource>();
 
-        soundPrefabs_Init(20);
+        soundPrefabs_Init(40);
 
+        if (transform.childCount == 2)
+        {
+            fireBaseAuido = transform.Find("FireBaseSound").GetComponent<AudioSource>();
+        }
 
 
     }
@@ -59,7 +63,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void F_Bgm_Player(int BgmIndexNum, float FadeSpeed)
+    public void F_Bgm_Player(int BgmIndexNum, float FadeSpeed, float maxVolume)
     {
         bool isHaveClip;
 
@@ -72,11 +76,11 @@ public class SoundManager : MonoBehaviour
             isHaveClip = true;
         }
 
-        StartCoroutine(BgmChanger(isHaveClip, BgmIndexNum, FadeSpeed));
+        StartCoroutine(BgmChanger(isHaveClip, BgmIndexNum, FadeSpeed, maxVolume));
 
     }
 
-    IEnumerator BgmChanger(bool value, int BgmIndexNum, float FadeSpeed)
+    IEnumerator BgmChanger(bool value, int BgmIndexNum, float FadeSpeed, float maxVolume)
     {
         if (value)
         {
@@ -97,11 +101,14 @@ public class SoundManager : MonoBehaviour
 
         audios.Play();
 
-        while (audios.volume < 1)
+        while (audios.volume < maxVolume)
         {
             audios.volume += Time.deltaTime * 0.25f;
             yield return null;
         }
+        
+        audios.volume = maxVolume;
+
     }
 
     /// <summary>
@@ -109,7 +116,7 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="value">Sfx Index Num</param>
     /// <returns></returns>
-    public void F_Get_SoundPreFabs_PlaySFX(int value)
+    public void F_Get_SoundPreFabs_PlaySFX(int value, float volume)
     {
         if (audioClipQueue.Count == 0)
         {
@@ -118,11 +125,11 @@ public class SoundManager : MonoBehaviour
 
         GameObject obj = audioClipQueue.Dequeue();
         obj.gameObject.SetActive(true);
-        obj.GetComponent<SoundPreFabs>().F_SetClipAndPlay(SfxList[value]);
+        obj.GetComponent<SoundPreFabs>().F_SetClipAndPlay(SfxList[value], volume);
 
     }
 
-    public SoundPreFabs F_Get_ControllSoundPreFabs_PlaySFX(int value)
+    public SoundPreFabs F_Get_ControllSoundPreFabs_ETC_PlaySFX(int value, float volume)
     {
         if (audioClipQueue.Count == 0)
         {
@@ -132,13 +139,13 @@ public class SoundManager : MonoBehaviour
         GameObject obj = audioClipQueue.Dequeue();
         obj.gameObject.SetActive(true);
         SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
-        sc.F_SetClipAndPlay(EtcSoundList[value]);
+        sc.F_SetClipAndPlay(EtcSoundList[value], volume);
 
         return sc;
 
     }
 
-    public SoundPreFabs F_Get_ControllSoundPreFabs_BossSFX(int value)
+    public SoundPreFabs F_Get_ControllSoundPreFabs_BossSFX(int value, float volume)
     {
         if (audioClipQueue.Count <= 1)
         {
@@ -148,7 +155,7 @@ public class SoundManager : MonoBehaviour
         GameObject obj = audioClipQueue.Dequeue();
         obj.gameObject.SetActive(true);
         SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
-        sc.F_SetClipAndPlay(bossAudio[value]);
+        sc.F_SetClipAndPlay(bossAudio[value], volume);
 
         return sc;
 
@@ -170,7 +177,7 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public SoundPreFabs F_Get_ControllSoundPreFabs_InfoNarrtionSFX(int value)
+    public SoundPreFabs F_Get_ControllSoundPreFabs_InfoNarrtionSFX(int value, float volume)
     {
         if (audioClipQueue.Count == 0)
         {
@@ -181,7 +188,7 @@ public class SoundManager : MonoBehaviour
         obj.gameObject.SetActive(true);
         SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
         sc.itMeNarration = true;
-        sc.F_SetClipAndPlay(InfoNarration[value]);
+        sc.F_SetClipAndPlay(InfoNarration[value], volume);
 
         return sc;
 
@@ -233,7 +240,7 @@ public class SoundManager : MonoBehaviour
 
         if (curVolume < value)
         {
-            while(audios.volume < 1)
+            while (audios.volume < 1)
             {
                 audios.volume += Time.deltaTime * speed;
                 yield return null;
@@ -241,9 +248,9 @@ public class SoundManager : MonoBehaviour
 
 
         }
-        else if(curVolume > value)
+        else if (curVolume > value)
         {
-            while(audios.volume > value)
+            while (audios.volume > value)
             {
                 audios.volume -= Time.deltaTime * speed;
                 yield return null;
@@ -251,5 +258,17 @@ public class SoundManager : MonoBehaviour
         }
 
         audios.volume = value;
+    }
+
+    public void F_fireBaseSoundActive(bool value)
+    {
+        if (value == true && fireBaseAuido.isPlaying == false)
+        {
+            fireBaseAuido.Play();
+        }
+        else if (value == false && fireBaseAuido.isPlaying == true)
+        {
+            fireBaseAuido.Stop();
+        }
     }
 }

@@ -1,6 +1,5 @@
 using NavMeshPlus.Components;
 using System.Collections;
-
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -29,6 +28,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject enemyList;
     bool isPlayer_Dead;
     bool isActionReady;
+    bool testMode;
+    GameObject opengController;
     public bool IsActionReady {  get { return isActionReady; } set { isActionReady = value; } }
 
     [Header("# Ingame Cheak & Test Value")]
@@ -42,8 +43,13 @@ public class GameManager : MonoBehaviour
     
     [Header("# Battle Count")]
     [Space]
+    [SerializeField] int bossKillCount;
+    [SerializeField] int totalkillCount;
+    [SerializeField] int totalLvUpCount;
+
+
     [SerializeField] int killCount;
-    [SerializeField] int spawnCount;
+    [SerializeField] int lvUpCount;
     [Space]
     [Header("# Dark Cloud Value Setting")]
     [Space]
@@ -51,9 +57,12 @@ public class GameManager : MonoBehaviour
     public bool MainGameStart { get { return mainGameStart; } set { mainGameStart = value; } }
     public bool UiOpen_EveryObecjtStop { get { return uiOpen_EveryObecjtStop; } set { uiOpen_EveryObecjtStop = value; } }
     public bool IsPlayer_Dead { get { return isPlayer_Dead; } set { isPlayer_Dead = value; } }
-    public int KillCount { get { return killCount; } }
-    public int SpawnCount { get { return spawnCount; } set { spawnCount = value; } }
+    public int KillCount { get { return killCount; } set { killCount = value; } }
+    public int BossKillCount { get { return bossKillCount; } set { bossKillCount = value; } }
+    public int TotalLvUpCount { get { return totalLvUpCount; } set {  totalLvUpCount = value; } }
+    public int TotalkillCount { get { return totalkillCount; } set { totalkillCount = value; } }
 
+        
     [SerializeField] int FieldEnemy;
 
     int sceneNumber;
@@ -69,6 +78,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]  bool enterBossRoom;
     [SerializeField]  bool boosBattleStart;
 
+    private UserGameInfo userDataForSeverUpload = new UserGameInfo(0,0,0);
    
     public bool BossBattleStart { get { return boosBattleStart; } set { boosBattleStart = value; } }
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
@@ -84,7 +94,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool moveStop;
     public bool MoveStop { get { return moveStop; } set { moveStop = value; } }
 
-   
+    public bool isRun;
 
 
 
@@ -103,9 +113,16 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-       
+        opengController = transform.parent.Find("OpeningController").gameObject;
+        if(opengController.activeSelf == false)
+        {
+            testMode = true;
+        }
+
     }
 
+
+    
     
     public void F_Set_PlayerStatsSc(Player_Stats value)
     {
@@ -130,7 +147,17 @@ public class GameManager : MonoBehaviour
         teleportDelay = new WaitForSeconds(telDelay);
         bossMapAction0_Delay = new WaitForSeconds(Action0_Dleay);
 
+       
+        if(testMode == false)
+        {
+            // 서버데이터 현재 게임에 초기화
+            UserGameInfo userdata = DataManager.inst.F_GetUserData();
+            BossKillCount = userdata.bossKillCount;
+            TotalkillCount = userdata.totalKillEnemy;
+            TotalLvUpCount = userdata.LevelUpCount;
+        }
         
+
     }
 
     bool once;
@@ -145,14 +172,43 @@ public class GameManager : MonoBehaviour
 
         
         StartGameGetLVUP();
+
+        //30초간격 자동서버 저장기능
+        //if(testMode == false)
+        //{
+        //    AutoUploadData();
+        //}
         
-
-        FieldEnemy = spawnCount - killCount;
-
-      
-
     }
 
+    // 자동 집계
+
+    float counter;
+    [SerializeField] float AutoSeverSaveTime;
+
+    // 게임이 시작되거나 보스가 죽기전 자동 세이브 (서버)
+    private void AutoUploadData()
+    {
+        
+        if (MainGameStart == false || BossDead == true)   { return; }
+
+        counter += Time.deltaTime;
+
+        if(counter > AutoSeverSaveTime)
+        {
+            counter = 0;
+            F_Manual_SaveGame();
+        }
+    }
+
+    public void F_Manual_SaveGame()
+    {
+        userDataForSeverUpload.bossKillCount = BossKillCount;
+        userDataForSeverUpload.totalKillEnemy = TotalkillCount;
+        userDataForSeverUpload.LevelUpCount = TotalLvUpCount;
+        Debug.Log($"{userDataForSeverUpload.bossKillCount} / {userDataForSeverUpload.totalKillEnemy} / {userDataForSeverUpload.LevelUpCount}");
+        DataManager.inst.F_SaveGameAndServerUpload(userDataForSeverUpload);
+    }
     /// <summary>
     /// Timescale Changer / include = Character MoveStop
     /// </summary>
@@ -262,6 +318,13 @@ public class GameManager : MonoBehaviour
     public void F_KillCountUp()
     {
         killCount++;
+        TotalkillCount++;
+    }
+
+    public void LvUpCountUP()
+    {
+        lvUpCount++;
+        TotalLvUpCount++;
     }
 
 
@@ -363,11 +426,13 @@ public class GameManager : MonoBehaviour
             case 1:
                 
                 GameUIManager.Inst.SkillEffectStop = true;
+                SoundManager.inst.F_fireBaseSoundActive(false);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(2,1);
                 MoveStop = true;
                 GameUIManager.Inst.F_GameUIActive(false);
                 playerAndDragon[0].transform.Find("Shadow").gameObject.SetActive(false);
                 yield return new WaitForSeconds(0.3f);
-                SoundManager.inst.F_Bgm_Player(5, 0.25f);
+                SoundManager.inst.F_Bgm_Player(5, 0.25f, 1);
                 Cutton_Controller.inst.F_FadeCuttonActive(1.8f);
                 yield return new WaitForSeconds(1f);
 
@@ -385,6 +450,7 @@ public class GameManager : MonoBehaviour
 
                 yield return new WaitForSeconds(2.1f);
                 telePortPs.gameObject.SetActive(true);
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(2, 1);
                 yield return new WaitForSeconds(0.2f);
                 
                 playerAndDragon[0].enabled = true;

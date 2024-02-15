@@ -66,6 +66,8 @@ public class Item_Box : MonoBehaviour
             openBox = true;
             anim.SetTrigger("Open");
             Invoke("PoolingItem", ItemPoolingDelay);
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(7, 1);
         }
     }
+
 }

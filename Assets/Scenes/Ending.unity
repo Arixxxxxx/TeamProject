@@ -11268,7 +11268,7 @@ MonoBehaviour:
     \uD589\uBCF5\uD55C \uC655\uAD6D\uC744 \uD568\uAED8 \uB9CC\uB4E4\uC5B4 \uB098\uAC14\uB2E4."
   credit: {fileID: 125615167}
   creditWorld: {fileID: 1477853280}
-  textUpSpeed: 60
+  textUpSpeed: 65
   endScene: 0
 --- !u!1 &884760385
 GameObject:
@@ -21582,16 +21582,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "< Team >  \uC640\uC800\uC528\uC640 \uB450\uC18C\uB140\n\n\uC81C\uC791\uD300\uC7A5
-    : \uC774\uB3D9\uC740\n\nProduction : \uC720\uC608\uC9C4\n\nBGM : \uC720\uC608\uC9C4,
-    \uC774\uB3D9\uC740 \n\nSFX : \uC774\uB3D9\uC740\n\n\uCE90\uB9AD\uD130 \uC74C\uC131\uC81C\uC791
-    : \uC774\uB3D9\uC740\n\nDesign : \uC11D\uC9C0\uC601\n\nProgramming : \uC774\uB3D9\uC740\n\nParticle
-    \uC81C\uC791 : \uC774\uB3D9\uC740, \uC11D\uC9C0\uC601\n\nShader \uC81C\uC791
-    : \uC774\uB3D9\uC740\n\nSkill Effect \uC81C\uC791 : \uC774\uB3D9\uC740\n\n---------------------\n\n\uAC1C\uBC1C
-    \uAE30\uAC04 : 23 / 12 / 02 ~ \n               23 / 02 / 29\n\nTotal  : 79\uC77C\n\n---------------------\n\n<<
-    Special Thanks >>\n\n\uC784\uAE30\uD604 / \uCD5C\uC7AC\uC6D0 / \uAE40\uC218\uD604\n\n---------------------\n\n\uD300\uD504\uB85C\uC81D\uD2B8
+  m_text: "< Team >  \uC640\uC800\uC528\uC640 \uB450\uC18C\uB140\n\n\nTeam Leader
+    : \uC774\uB3D9\uC740\n\n\n======= \uAE30\uD68D Part =======\n\n\n\uC2A4\uD1A0\uB9AC,
+    \uAE00 : \uC720\uC608\uC9C4\n\n\uCE90\uB9AD\uD130 \uBC0F \uC2A4\uD14C\uC774\uC9C0 
+    : \uC720\uC608\uC9C4, \uC11D\uC9C0\uC601\n\n\uC2DC\uC2A4\uD15C : \uC774\uB3D9\uC740\n\n\n=======
+    \uC624\uB514\uC624 Part  =======\n\n\nBGM : \uC720\uC608\uC9C4\n\nSFX : \uC774\uB3D9\uC740\n\n\uB098\uB808\uC774\uC158
+    \uBC0F \uC74C\uC131\uC81C\uC791 : \uC774\uB3D9\uC740\n\n\n======= \uB514\uC790\uC778
+    Part  =======\n\n\n\uAC8C\uC784\uC6D0\uD654\uBC0F Art : \uC11D\uC9C0\uC601\n\nParticle
+    \uC81C\uC791 : \uC774\uB3D9\uC740, \uC11D\uC9C0\uC601\n \nShader \uBC0F \uC2A4\uD0AC\uC774\uD399\uD2B8
+    : \uC774\uB3D9\uC740\n\n\n======= \uC2DC\uC2A4\uD15C Part  =======\n\n\nProgramming
+    : \uC774\uB3D9\uC740\n\nCloud Sever : \uC774\uB3D9\uC740\n\n\n========================\n\n\n\uAC1C\uBC1C
+    \uAE30\uAC04 : 23 / 12 / 02 ~ \n                   23 / 02 / 20\n\nTotal  : 69\uC77C\n\n========================\n\n      
+    << Special Thanks >>\n\n       \uC784\uAE30\uD604 / \uCD5C\uC7AC\uC6D0 / \uAE40\uC218\uD604\n\n========================\n\n\uD300\uD504\uB85C\uC81D\uD2B8
     \uAE30\uAC04\uB3D9\uC548\n\n\uB108\uBB34 \uC990\uAC81\uACE0  \uC758\uBBF8\uC788\uB294
-    \uC2DC\uAC04\uC774\uC600\uC2B5\uB2C8\uB2E4.\n\n\uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\n.\n.\n\n\n\n\n       
+    \uC2DC\uAC04\uC774\uC600\uC2B5\uB2C8\uB2E4.\n\n\uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\n.\n.\n\n\n             
     -  E N D -"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1687943d7b0bc449c3171b00a9bb7a, type: 2}

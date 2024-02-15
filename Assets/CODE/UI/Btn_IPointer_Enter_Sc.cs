@@ -18,17 +18,23 @@ public class Btn_IPointer_Enter_Sc : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         Btn = GetComponent<Button>();
     }
-
+    public bool noSfx;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-     
+        if (!noSfx)
+        {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(9, 1);
+        }
+        
+
         switch (type)
         {
             case BtnType.SkillBtn:
 
                 if (Light.gameObject.activeSelf == false && Btn.interactable == true)
                 {
+                    
                     Light.gameObject.SetActive(true);
                 }
 

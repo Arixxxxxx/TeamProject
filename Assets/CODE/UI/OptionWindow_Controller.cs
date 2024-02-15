@@ -117,6 +117,7 @@ public class OptionWindow_Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
             if (OptionWindow.gameObject.activeSelf == false && SoundOption.activeSelf == false)
             {
                 OptionWindow.gameObject.SetActive(true);
@@ -139,6 +140,7 @@ public class OptionWindow_Controller : MonoBehaviour
 
         // 열린옵션창 버튼
         MainOption_Btn[0].onClick.AddListener(() => {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
 
             if (Window_0.gameObject.activeSelf == true)
             {
@@ -149,13 +151,14 @@ public class OptionWindow_Controller : MonoBehaviour
 
         MainOption_Btn[1].onClick.AddListener(() =>
         {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
             OptionWindow.gameObject.SetActive(false);
             SoundOption.gameObject.SetActive(true);
 
         });
 
         BackBtn.onClick.AddListener(() => {
-
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
             OptionWindow.gameObject.SetActive(true);
             SoundOption.gameObject.SetActive(false);
         });

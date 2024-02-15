@@ -28,7 +28,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     [Header(" #  Input_Field => Skill Text")]
     [Space]
     [SerializeField] float ExitTime;
-
+    [SerializeField] Btn_IPointer_Enter_Sc[] btn_sc;
     GameObject SkillWindow;
     TMP_Text skill_Name;
     Image skill_Img;
@@ -153,6 +153,11 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     //카드 선택 연출함수
     private void SelectAction()
     {
+        for(int i = 0;  i < btn_sc.Length; i++)
+        {
+            btn_sc[i].noSfx = true;
+        }
+
         GameManager.Inst.F_Lvup_Btn_OnOff(0); // 모든 버튼 Interactable true
         animSpeed1 = 0; // 애니메이션 float 변수 초기화
         animSpeed = 0; // 애니메이션 float 변수 초기화
@@ -165,7 +170,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         start_IMG[5].fillAmount = 0; // 별이미지 초기화
         start_IMG[5].gameObject.transform.position = start_IMG[Get_Star].transform.position; // 별 이미지 위치이동
         staranim.gameObject.SetActive(true);
-
+        SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(5, 1);
         StartCoroutine(Start_FillAount()); // 코루틴 연출
     }
     [SerializeField] float fillAmountSpeed;
@@ -173,6 +178,7 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
     {
 
         anim.SetBool("on", true);
+        
 
         yield return null;
                  
@@ -194,6 +200,11 @@ public class Ui_Skill_Select_Btn : MonoBehaviour
         anim.SetBool("on", false);
 
         yield return null;
+
+        for (int i = 0; i < btn_sc.Length; i++)
+        {
+            btn_sc[i].noSfx = false;
+        }
 
         NewLight.gameObject.SetActive(false);
         Light2.gameObject.SetActive(false);

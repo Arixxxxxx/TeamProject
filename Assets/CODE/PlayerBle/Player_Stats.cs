@@ -95,7 +95,13 @@ public class Player_Stats : MonoBehaviour
  
     public void F_GetExp_LevelupSystem(float EXP)
     {
-        if(Player_Cur_Lv ==  Player_Max_Lv) { return; }
+        if (Player_Cur_Lv == Player_Max_Lv) { return; }
+        StartCoroutine(LvUP(EXP));
+    }
+
+    IEnumerator LvUP(float EXP)
+    {
+       
         float CashEXP = EXP + Cur_Exp;
         getItemPs.Play();
         // 현재 레벨에 필요한 경험치보다 많이 획득했을 때
@@ -108,6 +114,7 @@ public class Player_Stats : MonoBehaviour
                 Player_Cur_Lv++;
                 Player_MaxHP += LevelUp_Plus_Hp;
                 Origin_MaxHP = Player_MaxHP;
+                yield return null;
             }
 
             // 남은 경험치를 현재 경험치로 설정
@@ -115,6 +122,7 @@ public class Player_Stats : MonoBehaviour
             UnitFrame_Updater.inst.F_ExpFillAmountReset();
 
             Player_CurHP = Player_MaxHP; // 현재 체력 초기화
+            GameManager.Inst.LvUpCountUP(); // 카운트 업
             LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill(); // 레벨업 스킬포인트
         }
         else
@@ -122,8 +130,6 @@ public class Player_Stats : MonoBehaviour
             // 레벨업이 아닌 경우 현재 경험치 갱신
             Cur_Exp = CashEXP;
         }
-
-       
     }
 
     bool doRespawning;

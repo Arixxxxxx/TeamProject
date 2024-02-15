@@ -43,7 +43,12 @@ public class LogInSystem : MonoBehaviour
         CheakFireBaseVision();
 
         openingManager = GetComponent<OpeningManager>();
-        auth = FirebaseAuth.DefaultInstance;
+
+        if(auth == null)
+        {
+            auth = FirebaseAuth.DefaultInstance;
+        }
+        
         if (auth == null)
         {
             Debug.LogError("널");
@@ -168,6 +173,8 @@ public class LogInSystem : MonoBehaviour
 
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                DataManager.inst.F_UserLoginAndPoolServerData(emailField.text); // 서버에서 데이터 가져옴
+
                 LoginPanner.SetActive(false);
 
                 if (loginErrorText.gameObject.activeSelf)

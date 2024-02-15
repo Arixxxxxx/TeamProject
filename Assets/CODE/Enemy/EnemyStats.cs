@@ -68,6 +68,7 @@ public class EnemyStats : MonoBehaviour
     {
         if (CurHP > 0)
         {
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(10, 0.5f);
             float Dmgs = DMG;
 
             if (Cri == true)

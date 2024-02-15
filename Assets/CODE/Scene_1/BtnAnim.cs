@@ -16,10 +16,12 @@ public class BtnAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(openingManager.ThisSceneEnd == true) { return; }
+        if (openingManager.ThisSceneEnd == true) { return; }
 
         anim.SetTrigger("On");
-        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0);
+
+        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 1);
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -31,12 +33,12 @@ public class BtnAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

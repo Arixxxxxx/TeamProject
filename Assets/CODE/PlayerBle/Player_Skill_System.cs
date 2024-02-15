@@ -105,17 +105,20 @@ public class Player_Skill_System : MonoBehaviour
     void Update()
     {
         Input_Cheaker();
-        
+
 
         ActiveSKill_Test_KeyDown();
         Play_Skill_01();
 
-        if(GameUIManager.Inst.SkillEffectStop == false) // 스킬 잠시 중단
+        if (GameUIManager.Inst.SkillEffectStop == false) // 스킬 잠시 중단
         {
             Skill_1_AutoFire();
             Skill_3_AutoFire();
             Skill_4_AutoFire();
-
+            if (Skill_0_Level > 0 || Skill_2_Level > 0)
+            {
+                SoundManager.inst.F_fireBaseSoundActive(true);
+            }
             if (skillGroup.activeSelf == false)
             {
                 skillGroup.SetActive(true);
@@ -145,6 +148,7 @@ public class Player_Skill_System : MonoBehaviour
         if (skill_Slot[0].gameObject.activeSelf == false)
         {
             skill_Slot[0].gameObject.SetActive(true);
+            
         }
 
 
@@ -175,6 +179,7 @@ public class Player_Skill_System : MonoBehaviour
 
     private void Skill_0_Instantiate(float Lv)
     {
+        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1, 1);
         for (int i = 0; i < Skill_0_Value[(int)Lv].count; i++)
         {
             Transform bullet;
@@ -246,6 +251,7 @@ public class Player_Skill_System : MonoBehaviour
             GameObject obj = PoolManager.Inst.F_GetPlayerBullet(0);
             obj.transform.position = Skill_Start_Point.position;
             obj.SetActive(true);
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1);
         }
     }
 
@@ -267,6 +273,8 @@ public class Player_Skill_System : MonoBehaviour
                 if (skill_Obj[2].gameObject.activeSelf == false)
                 {
                     skill_Obj[2].SetActive(true);
+                    SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1, 1);
+                    SoundManager.inst.F_fireBaseSoundActive(true);
                 }
             }
 
@@ -398,6 +406,7 @@ public class Player_Skill_System : MonoBehaviour
 
             obj.transform.position = S_3_StartPos.transform.position;
             obj.SetActive(true);
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(2, 1);
         }
     }
 

@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float CharMove_Speed;
     [SerializeField] float Sprint_Speed;
 
-
+    AudioSource characterRunSound;
     Rigidbody2D rb;
     SpriteRenderer sr;
     Vector2 moveVec;
@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
     Image Sprint_Bar_Ui;
     GameObject Sprint_Bar;
     GameManager gm;
-
+    bool nowSprint;
 
     [SerializeField] float TeleportDealy;
     WaitForSeconds TelePortDealys;
@@ -47,6 +47,8 @@ public class Movement : MonoBehaviour
         Sprint_Bar = transform.Find("Character_Mini_Ui/Sprint_Bar").gameObject;
         telePortCoolTimeBar = transform.Find("Character_Mini_Ui/TelePort_CoolTimeBar").gameObject;
         teleFrontIMG = telePortCoolTimeBar.transform.Find("Front").GetComponent<Image>();
+        characterRunSound = GetComponent<AudioSource>();
+      
     }
     void Start()
     {
@@ -132,9 +134,9 @@ public class Movement : MonoBehaviour
 
         CheakMoveFloat = MoveCheakX + MoveCheakY;
 
-        if (InputLshift && CheakMoveFloat > 0) // 소모
+        if (InputLshift && CheakMoveFloat > 0 && curSpintTime > 0) // 소모
         {
-
+            
             if(Sprint_Bar.gameObject.activeSelf == false)
             {
                 Sprint_Bar.gameObject.SetActive(true);
@@ -171,24 +173,38 @@ public class Movement : MonoBehaviour
     [SerializeField] bool isRun;
     private void Move_Character()
     {
+        gm.isRun = isRun;
         moveVec = moveVec.normalized;
 
         if (InputLshift == true && curSpintTime > 0)
         {
             isRun = true;
+            
+            
         }
         else if (InputLshift == false || curSpintTime <= 0)
         {
             isRun = false;
+            
         }
 
 
         if (isRun)
-        { 
+        {
+            if (characterRunSound.isPlaying == false)
+            {
+                characterRunSound.Play();
+            }
+
             rb.MovePosition(rb.position + moveVec * (CharMove_Speed + Sprint_Speed) * Time.deltaTime);
         }
         else
         {
+            if (characterRunSound.isPlaying == true)
+            {
+                characterRunSound.Stop();
+            }
+            
             rb.MovePosition(rb.position + moveVec * CharMove_Speed * Time.deltaTime);
         }
     }
@@ -204,7 +220,7 @@ public class Movement : MonoBehaviour
     {
         if (InputSpaceBar == true && doTeleport == false && CheakMoveFloat > 0)
         {
-            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0);
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 0.6f);
             StartCoroutine(Player_Input_Spacebar_TelePort());
         }
 

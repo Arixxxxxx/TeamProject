@@ -68,8 +68,12 @@ public class SceletSceneManager : MonoBehaviour
         }
         
     }
+    bool sceletEnd;
     public void SelectAction(int value)
     {
+        if(sceletEnd== true) { return; }
+
+        sceletEnd = true;
         StartCoroutine(NextScene(value));
     }
    IEnumerator NextScene(int value)

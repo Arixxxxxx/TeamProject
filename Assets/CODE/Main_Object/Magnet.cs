@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Magnet : MonoBehaviour
@@ -9,7 +8,6 @@ public class Magnet : MonoBehaviour
     {
         Magnet, HP_Potion, Bomb
     }
-    
     
     public ItemType type;
     BoxCollider2D boxColl; // È¹µæ¿ë
@@ -20,7 +18,6 @@ public class Magnet : MonoBehaviour
     bool action0, action1;
     Vector3 pos;
 
-
     Player_Stats player_stats_sc;
 
     // È¹µæ¿ë º¯¼ö
@@ -28,18 +25,16 @@ public class Magnet : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] float stopRigidbodyDelay;
     [SerializeField] bool stopRigidbody;
-    
- 
 
+    float deafultGravityScale;
     float count;
 
-    
     private void Awake()
     {
         boxColl = GetComponent<BoxCollider2D>();
         circleColl = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        
+        deafultGravityScale = rb.gravityScale;
     }
 
     private void OnEnable()
@@ -49,6 +44,7 @@ public class Magnet : MonoBehaviour
             case ItemType.Magnet:
                 rb.AddForce(new Vector2(2f, 4), ForceMode2D.Impulse);
                 break;
+
                 case ItemType.HP_Potion:
                 rb.AddForce(new Vector2(-2f, 4), ForceMode2D.Impulse);
                 break;
@@ -63,15 +59,12 @@ public class Magnet : MonoBehaviour
     }
     void Start()
     {
-        
         player_stats_sc = GameManager.Inst.F_GetPlayerStats_Script();
     }
-
     
     private void FixedUpdate()
     {
         ActionMoving(); 
-
     }
     // Update is called once per frame
     void Update()
@@ -86,6 +79,8 @@ public class Magnet : MonoBehaviour
         pos = Vector3.zero;
         action0 = false;
         action1 = false;
+        stopRigidbody = false;
+        rb.gravityScale = deafultGravityScale;
     }
 
     bool firstTouch;

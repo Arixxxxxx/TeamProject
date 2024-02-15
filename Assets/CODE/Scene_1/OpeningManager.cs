@@ -74,7 +74,7 @@ public class OpeningManager : MonoBehaviour
     IEnumerator Action()
     {
         yield return waitSec05[1];
-        SoundManager.inst.F_Bgm_Player(0, 1f);
+        SoundManager.inst.F_Bgm_Player(0, 1f, 1);
         yield return waitSec05[1];
         cuttonAnim.SetTrigger("Off");
 
@@ -82,7 +82,7 @@ public class OpeningManager : MonoBehaviour
         yield return waitSec05[2];
 
         cuttonAnim.SetTrigger("On"); // ∆‰¿ÃµÂ∞°∑¡¡‹
-        SoundManager.inst.F_Bgm_Player(1, 0.6f);
+        SoundManager.inst.F_Bgm_Player(1, 0.6f, 0.8f);
         yield return waitSec05[3];
 
         actionScene[0].gameObject.SetActive(false); // »≠∏È πŸ≤„¡‹
@@ -123,7 +123,7 @@ public class OpeningManager : MonoBehaviour
         if (thisSceneEnd == false)
         {
             thisSceneEnd = true;
-            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1);
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1, 1);
             cuttonAnim.SetFloat("OnSpeed", 0.7f);
             cuttonAnim.SetTrigger("On"); // ∆‰¿ÃµÂ∞°∑¡¡‹
             SoundManager.inst.F_BgmEnd();

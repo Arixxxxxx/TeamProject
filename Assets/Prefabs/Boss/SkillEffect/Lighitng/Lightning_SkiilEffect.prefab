@@ -11321,7 +11321,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 4883738504727673821, guid: ba60e09fa6da94a989a90e91b7ba2249, type: 3}
+    - sprite: {fileID: -1053955329, guid: e874a4bda147cd14ba263be04799cdb7, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -24649,7 +24649,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12, y: 0}
+  m_Offset: {x: 0, y: 0.8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -24660,7 +24660,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.7, y: 2.8}
+  m_Size: {x: 3.38, y: 2.54}
   m_EdgeRadius: 0
 --- !u!1 &7245734241398858789
 GameObject:
@@ -31182,7 +31182,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: f76f78e9b66f5744e97bb938b8c2af18, type: 3}
+    - sprite: {fileID: 21300000, guid: 4af16aae3486a47409bb8761fa220a52, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

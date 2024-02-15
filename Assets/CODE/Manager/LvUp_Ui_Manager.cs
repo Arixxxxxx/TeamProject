@@ -58,6 +58,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
 
     public void F_LvUP_SelectSkill()
     {
+        SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(4, 1);
         skill_ID_Value.Clear(); // µÒº≈∑Ø¥œ √ ±‚»≠
         Cheak_List.Clear();
         SkillCount = 0;

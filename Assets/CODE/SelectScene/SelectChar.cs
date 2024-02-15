@@ -14,6 +14,7 @@ public class SelectChar : MonoBehaviour
     [SerializeField] int CheakMouse;
     bool choiseStart;
     bool choiseEnd;
+    [SerializeField] SelectChar other;
 
     ParticleSystem ps;
     private void Awake()
@@ -24,8 +25,8 @@ public class SelectChar : MonoBehaviour
     }
     void Start()
     {
-        Invoke("choiseStartOk", 2f);
-        SoundManager.inst.F_Bgm_Player(0, 1);
+        Invoke("choiseStartOk", 1f);
+        SoundManager.inst.F_Bgm_Player(0, 1, 0.7f);
     }
     bool cheakBool;
 
@@ -42,7 +43,7 @@ public class SelectChar : MonoBehaviour
                 cheakBool = true;
                 sm.OnMouseAction((int)Character, true);
                 ps.gameObject.SetActive(true);
-                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0);
+                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 1);
 
             }
             else if (CheakMouse == 0 && choiseEnd == false && cheakBool == true)
@@ -73,33 +74,41 @@ public class SelectChar : MonoBehaviour
         }
 
     }
+   
     private void OnMouseExit()
     {
         CheakMouse = 0;
     }
-    bool realClick;
+    public bool realClick;
     private void OnMouseUpAsButton()
     {
         if (choiseStart == false) { return; }
 
-        realClick = true;
-        DataManager.inst.CurrentCharacter = Character;
-        sm.SelectAction((int)Character);
-        StartCoroutine(PlaySFX());
+        if(realClick == false)
+        {
+            realClick = true;
+            other.realClick = true;
+
+
+            DataManager.inst.CurrentCharacter = Character;
+            sm.SelectAction((int)Character);
+            StartCoroutine(PlaySFX());
+        }
+        
     }
 
     IEnumerator PlaySFX()
     {
-        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3);
+        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1);
 
         yield return new WaitForSeconds(1f);
         switch ((int)Character)
         {
             case 0:
-                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1);
+                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1, 0.7f);
                 break;
             case 1:
-                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(2);
+                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(2, 0.7f);
                 break;
         }
     }

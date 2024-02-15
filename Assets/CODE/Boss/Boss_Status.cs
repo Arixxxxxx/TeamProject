@@ -138,6 +138,8 @@ public class Boss_Status : MonoBehaviour
 
                 if (boss_CurHP <= 0)
                 {
+                    GameManager.Inst.BossKillCount++;
+                    GameManager.Inst.F_Manual_SaveGame(); // 보스사망시 자동저장
                     GameUIManager.Inst.F_BossHpBarActive(false); // 보스 HP Bar off
                     bs_sc.F_Boss_StopAllCorutine(); // 실행중인 코루틴 다 정지
                     
@@ -162,8 +164,8 @@ public class Boss_Status : MonoBehaviour
         GameUIManager.Inst.SkillEffectStop = true; // 스킬정지
         GameManager.Inst.MoveStop = true; // 이동정지
         yield return new WaitForSeconds(1.5f);
-        Cutton_Controller.inst.F_FadeCuttonActive(1.5f); // 페이드아웃
-        yield return new WaitForSeconds(1f);
+        Cutton_Controller.inst.F_FadeCuttonActive(1f); // 페이드아웃
+        yield return new WaitForSeconds(1.5f);
         
         anim.SetTrigger("Dead"); // 힘들어함
         GameManager.Inst.F_PlayerTransformMove(endingPlayerPosTrs.position); // 플레이어 위치이동
@@ -174,7 +176,7 @@ public class Boss_Status : MonoBehaviour
         GameUIManager.Inst.F_SetMSGUI(7,false);    // 사망 보스 메시지
         yield return new WaitForSeconds(6);
         anim.SetTrigger("Dead1");
-        SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(8);
+        SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(8, 0.7f);
         yield return new WaitForSeconds(4.5f);
         Cutton_Controller.inst.EndCutton();
 

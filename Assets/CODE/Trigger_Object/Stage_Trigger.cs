@@ -68,18 +68,18 @@ public class Stage_Trigger : MonoBehaviour
         {
             case DoorNumber.First:
 
-                SoundManager.inst.F_Bgm_Player(2, 2f);
+                SoundManager.inst.F_Bgm_Player(2, 2f, 0.9f);
 
                 break;
 
             case DoorNumber.Sec:
 
-                SoundManager.inst.F_Bgm_Player(3, 2f);
+                SoundManager.inst.F_Bgm_Player(3, 2f, 0.9f);
                 break;
 
             case DoorNumber.Boss:
 
-                SoundManager.inst.F_Bgm_Player(4, 2f);
+                SoundManager.inst.F_Bgm_Player(4, 2f, 1);
                 break;
 
         }

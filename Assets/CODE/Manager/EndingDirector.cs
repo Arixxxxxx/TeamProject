@@ -83,11 +83,11 @@ public class EndingDirector : MonoBehaviour
     IEnumerator EndingActionStart()
     {
         frameAnim.SetTrigger("On");
-        SoundManager.inst.F_Bgm_Player(0,0.5f);
+        SoundManager.inst.F_Bgm_Player(0,0.5f, 1);
         yield return null;
         yield return sec05Wait[3]; 
         text_sc.F_Set_TalkBox_Main_Text(storyData[0]);
-        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1);
         sc.F_SetVolume(0.7f);
         sc.F_SetSoundLoop(true);
 
@@ -115,7 +115,7 @@ public class EndingDirector : MonoBehaviour
 
         yield return sec05Wait[2]; 
         text_sc.F_Set_TalkBox_Main_Text(storyData[1]);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0); // 볼펜소리
+        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1); // 볼펜소리
         sc.F_SetVolume(0.7f);
         sc.F_SetSoundLoop(true);
 
@@ -136,7 +136,7 @@ public class EndingDirector : MonoBehaviour
         frameAnim.SetTrigger("Off"); // 첫번째 그림 페이드
 
         yield return sec05Wait[3];
-        SoundManager.inst.F_Bgm_Player(1, 0.3f);
+        SoundManager.inst.F_Bgm_Player(1, 0.3f, 1);
         yield return sec05Wait[6];
         
         ImageFrame.gameObject.SetActive(false);
@@ -168,6 +168,8 @@ public class EndingDirector : MonoBehaviour
 
             if (i == 3)
             {
+                yield return sec05Wait[6];
+                yield return sec05Wait[6];
                 yield return sec05Wait[6];
                 endScene = true;
             }

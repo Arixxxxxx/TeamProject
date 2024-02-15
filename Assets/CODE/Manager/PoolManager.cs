@@ -296,7 +296,7 @@ public class PoolManager : MonoBehaviour
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI  및 ETC 
-        for (int i = 0; i < 2; i++) // 자석 및 물약
+        for (int i = 0; i < 3; i++) // 자석 및 물약
         {
             GameObject Obj = Instantiate(Items[0], Item_Trs);
             Obj.transform.position = Vector3.zero;

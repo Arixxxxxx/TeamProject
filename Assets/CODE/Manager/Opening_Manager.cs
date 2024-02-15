@@ -99,7 +99,7 @@ public class Opening_Manager : MonoBehaviour
         StartOpening();
         GameUIManager.Inst.F_GameUIActive(false);
 
-        SoundManager.inst.F_Bgm_Player(0, 0.25f);
+        SoundManager.inst.F_Bgm_Player(0, 0.25f, 1);
         SoundManager.inst.F_SetLoop(true);
     }
 
@@ -121,7 +121,7 @@ public class Opening_Manager : MonoBehaviour
             maintext.F_SetAddSpeed(false);
         }
 
-     
+
     }
 
     bool Action0, Action1, Action2;
@@ -154,7 +154,7 @@ public class Opening_Manager : MonoBehaviour
         maintext.F_Set_TalkBox_Main_Text(textBox[0]); // 첫번째 오프닝스토리 문구 넣어주기
 
         //
-        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1);
         sc.F_SetVolume(0.7f);
         sc.F_SetSoundLoop(true);
 
@@ -185,7 +185,7 @@ public class Opening_Manager : MonoBehaviour
         maintext.F_Set_TalkBox_Main_Text(textBox[1]); // 두번쨰 오프닝스토리 문구 넣어주기
 
         //
-        SoundPreFabs sc1 = SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(0);
+        SoundPreFabs sc1 = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1);
         sc1.F_SetVolume(0.7f);
         sc1.F_SetSoundLoop(true);
         yield return null;
@@ -236,185 +236,198 @@ public class Opening_Manager : MonoBehaviour
     public void F_Action2Start()
     {
         StartCoroutine(Action2_Start());
+      
+        
     }
-
+    SoundPreFabs sc;
     IEnumerator Action2_Start()
     {
-        SoundManager.inst.F_SetBGMVolume(0.4f, 0.5f); // 배경음악 볼륨 낮추기
+        
 
-        yield return new WaitForSeconds(2f);
-        SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(0);
-        ActionInfo[0].gameObject.SetActive(true);
+        if (GameManager.Inst.TotalkillCount == 0) // 최초 실행이라면
+        {
+            SoundManager.inst.F_SetBGMVolume(0.4f, 0.5f); // 배경음악 볼륨 낮추기
+
+            yield return new WaitForSeconds(2f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(0,1);
+            ActionInfo[0].gameObject.SetActive(true);
+            GameManager.Inst.MoveStop = false;
+            ActionInfo[0].SetTrigger("In");
+            yield return new WaitForSeconds(5f);
+
+            ActionInfo[0].SetTrigger("Out"); // 페이드 아웃
+            yield return new WaitForSeconds(2f);
+            ActionInfo[0].gameObject.SetActive(false);
+            yield return null;
+
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(1, 1);
+            yield return new WaitForSeconds(0.5f);
+
+            ActionInfo[1].gameObject.SetActive(true); // WASD 조작부 설명 UI 켜줌
+            GameManager.Inst.MoveStop = false; // 캐릭터 움직이게 해줌
+            ActionInfo[1].SetTrigger("In"); // 페이드인 출력
+
+            // Tutorial  Phase  1 => WASD
+
+            tutorialBarAnim.gameObject.SetActive(true);
+            tutorialBarAnim.SetTrigger("Open");
+            tutorialAction[0] = true;
+
+            yield return null;
+
+            while (tutorialAction[0])
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            ActionInfo[1].SetTrigger("Out"); // 페이드 아웃
+            tutorialBarAnim.SetTrigger("Close");
+            yield return new WaitForSeconds(2f);
+            ActionInfo[1].gameObject.SetActive(false);
+            tutorialBarAnim.gameObject.SetActive(false);
+
+            //
+
+            yield return new WaitForSeconds(2f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2, 1);
+
+            yield return null;
+
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
+
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(3, 1);
+            yield return new WaitForSeconds(0.5f);
+
+            ActionInfo[2].gameObject.SetActive(true);// 쉬프트, 스페이스바 설명 UI 켜줌
+            ActionInfo[2].SetTrigger("In"); // 페이드인 출력
+
+
+            // Tutorial  Phase  2 => Sprint
+
+            tutorialBar.value = 0;
+            curMoveTime = 0;
+            tutorialBarAnim.gameObject.SetActive(true);
+            tutorialBarAnim.SetTrigger("Open");
+            tutorialAction[1] = true;
+
+            yield return null;
+
+            while (tutorialAction[1])
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+            ActionInfo[2].SetTrigger("Out"); // 아웃
+            tutorialBarAnim.SetTrigger("Close");
+            yield return new WaitForSeconds(2f);
+            ActionInfo[2].gameObject.SetActive(false); // 꺼줌
+            tutorialBarAnim.gameObject.SetActive(false);
+
+            //
+            tutorialBar.value = 0;
+            curMoveTime = 0;
+
+
+            yield return new WaitForSeconds(1f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2, 1);
+            yield return null;
+
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
+
+            // 순간이동 튜토리얼
+            yield return new WaitForSeconds(0.5f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(4,1);
+            yield return new WaitForSeconds(0.5f);
+
+            ActionInfo[3].gameObject.SetActive(true);// 스페이스바 설명 UI 켜줌
+            ActionInfo[3].SetTrigger("In"); // 페이드인 출력
+                                            //여기 
+
+            tutorialAction[2] = true;
+
+            yield return null;
+
+            while (tutorialAction[2])
+            {
+                yield return null;
+            }
+            //
+
+            yield return new WaitForSeconds(1f);
+            ActionInfo[3].SetTrigger("Out"); // 아웃
+            yield return new WaitForSeconds(2f); //
+            ActionInfo[3].gameObject.SetActive(false); // 꺼줌
+            yield return new WaitForSeconds(1f);
+            // 순간이동 튜토리얼 종료
+
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2, 1);
+            yield return null;
+
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(5, 1);
+            yield return null;
+
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
+
+            howtoPlayEnd = true; // 설명체크 불리언 변수
+            GameManager.Inst.F_TimeSclaeController(true);  // 시간 멈춤
+
+            howToPlay_MainObj.SetActive(true); //  설명창 오픈
+            if (howToPlay_Action0.activeSelf == false)
+            {
+                howToPlay_Action0.SetActive(true);
+            }
+
+            while (howtoPlayEnd == true) //끝날때까지 대기
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1.5f);
+            sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(6, 1);
+            yield return null;
+
+        }
+
+
+        // 바로시작
         GameManager.Inst.MoveStop = false;
-        ActionInfo[0].SetTrigger("In");
-        yield return new WaitForSeconds(5f);
-
-        ActionInfo[0].SetTrigger("Out"); // 페이드 아웃
-        yield return new WaitForSeconds(2f);
-        ActionInfo[0].gameObject.SetActive(false);
-        yield return null;
-
-        while (sc.soundEnd)
-        {
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(1);
-        yield return new WaitForSeconds(0.5f);
-
-        ActionInfo[1].gameObject.SetActive(true); // WASD 조작부 설명 UI 켜줌
-        GameManager.Inst.MoveStop = false; // 캐릭터 움직이게 해줌
-        ActionInfo[1].SetTrigger("In"); // 페이드인 출력
-
-        // Tutorial  Phase  1 => WASD
-
-        tutorialBarAnim.gameObject.SetActive(true);
-        tutorialBarAnim.SetTrigger("Open");
-        tutorialAction[0] = true;
-
-        yield return null;
-
-        while (tutorialAction[0])
-        {
-            yield return null;
-        }
-
         yield return new WaitForSeconds(1f);
-
-        ActionInfo[1].SetTrigger("Out"); // 페이드 아웃
-        tutorialBarAnim.SetTrigger("Close");
-        yield return new WaitForSeconds(2f);
-        ActionInfo[1].gameObject.SetActive(false);
-        tutorialBarAnim.gameObject.SetActive(false);
-
-        //
-
-        yield return new WaitForSeconds(2f);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2);
-
-        yield return null;
-
-        while (sc.soundEnd)
-        {
-            yield return null;
-        }
-
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(3);
-        yield return new WaitForSeconds(0.5f);
-
-        ActionInfo[2].gameObject.SetActive(true);// 쉬프트, 스페이스바 설명 UI 켜줌
-        ActionInfo[2].SetTrigger("In"); // 페이드인 출력
-
-
-        // Tutorial  Phase  2 => Sprint
-
-        tutorialBar.value = 0;
-        curMoveTime = 0;
-        tutorialBarAnim.gameObject.SetActive(true);
-        tutorialBarAnim.SetTrigger("Open");
-        tutorialAction[1] = true;
-
-        yield return null;
-
-        while (tutorialAction[1])
-        {
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(1f);
-        ActionInfo[2].SetTrigger("Out"); // 아웃
-        tutorialBarAnim.SetTrigger("Close");
-        yield return new WaitForSeconds(2f);
-        ActionInfo[2].gameObject.SetActive(false); // 꺼줌
-        tutorialBarAnim.gameObject.SetActive(false);
-
-        //
-        tutorialBar.value = 0;
-        curMoveTime = 0;
-
-
-        yield return new WaitForSeconds(1f);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2);
-        yield return null;
-
-        while (sc.soundEnd)
-        {
-            yield return null;
-        }
-
-        // 순간이동 튜토리얼
-        yield return new WaitForSeconds(0.5f);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(4);
-        yield return new WaitForSeconds(0.5f);
-
-        ActionInfo[3].gameObject.SetActive(true);// 스페이스바 설명 UI 켜줌
-        ActionInfo[3].SetTrigger("In"); // 페이드인 출력
-                                        //여기 
-
-        tutorialAction[2] = true;
-
-        yield return null;
-
-        while (tutorialAction[2])
-        {
-            yield return null;
-        }
-        //
-
-        yield return new WaitForSeconds(1f);
-        ActionInfo[3].SetTrigger("Out"); // 아웃
-        yield return new WaitForSeconds(2f); //
-        ActionInfo[3].gameObject.SetActive(false); // 꺼줌
-        yield return new WaitForSeconds(1f);
-        // 순간이동 튜토리얼 종료
-
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(2);
-        yield return null;
-
-        while (sc.soundEnd)
-        {
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(5);
-        yield return null;
-
-        while (sc.soundEnd)
-        {
-            yield return null;
-        }
-
-        howtoPlayEnd = true; // 설명체크 불리언 변수
-        GameManager.Inst.F_TimeSclaeController(true);  // 시간 멈춤
-
-        howToPlay_MainObj.SetActive(true); //  설명창 오픈
-        if (howToPlay_Action0.activeSelf == false)
-        {
-            howToPlay_Action0.SetActive(true);
-        }
-
-        while (howtoPlayEnd == true) //끝날때까지 대기
-        {
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(1.5f);
-        sc = SoundManager.inst.F_Get_ControllSoundPreFabs_InfoNarrtionSFX(6);
-        yield return null;
-
-
-
-        yield return new WaitForSeconds(1f);
-        SoundManager.inst.F_Bgm_Player(1, 0.5f);
+        SoundManager.inst.F_Bgm_Player(1, 0.5f, 0.9f);
         GameUIManager.Inst.F_GameUIActive(true); // UI켜주고
 
-        while (sc.soundEnd)
+        if(sc != null)
         {
-            yield return null;
+            while (sc.soundEnd)
+            {
+                yield return null;
+            }
         }
+        
 
         yield return new WaitForSeconds(1.5f);
         GameManager.Inst.MainGameStart = true; // 게임시작
@@ -467,6 +480,11 @@ public class Opening_Manager : MonoBehaviour
             else
             {
                 curMoveTime -= Time.deltaTime * 0.5f;
+
+                if (curMoveTime <= 0)
+                {
+                    curMoveTime = 0;
+                }
             }
 
             if (tutorialBar.value < 1)
@@ -488,19 +506,19 @@ public class Opening_Manager : MonoBehaviour
     {
         if (tutorialAction[1])
         {
-            float CheakX = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
-            float CheakY = Mathf.Abs(Input.GetAxisRaw("Vertical"));
-            float CheakValue = CheakX + CheakY;
-            Debug.Log($"{CheakValue} // 진입");
-            if (CheakValue > 0 && Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift))
+            //float CheakX = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
+            //float CheakY = Mathf.Abs(Input.GetAxisRaw("Vertical"));
+            //float CheakValue = CheakX + CheakY;
+
+            //if (CheakValue > 0 && Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    curMoveTime += Time.deltaTime * 1.2f;
+            //}
+
+            if (GameManager.Inst.isRun)
             {
                 curMoveTime += Time.deltaTime * 1.2f;
             }
-            else if (CheakValue == 0)
-            {
-                curMoveTime -= Time.deltaTime * 0.3f;
-            }
-
 
             if (tutorialBar.value < 1)
             {
@@ -543,11 +561,11 @@ public class Opening_Manager : MonoBehaviour
     IEnumerator Sucsess(int value)
     {
         suseccPs[value].gameObject.SetActive(true);
-        SoundManager.inst.F_Get_ControllSoundPreFabs_PlaySFX(1);
+        SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(1, 1);
         yield return new WaitForSeconds(1);
         suseccPs[value].gameObject.SetActive(false);
     }
-    
+
 
 
 }

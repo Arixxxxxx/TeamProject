@@ -24,6 +24,7 @@ public class SoundPreFabs : MonoBehaviour
         
     }
 
+    
     public void F_SetClipAndPlay(AudioClip Clips)
     {
         soundEnd = true;
@@ -56,8 +57,27 @@ public class SoundPreFabs : MonoBehaviour
             GameUIManager.Inst.F_ItMeNarration(false);
         }
 
+        if(audios.volume < 1)
+        {
+            audios.volume = 1;
+        }
+
         SoundManager.inst.F_ReturnSoundPreFabs(gameObject);
     }
+
+    public void F_SetClipAndPlay(AudioClip Clips, float targetVolume)
+    {
+        soundEnd = true;
+        audios.clip = Clips;
+        audios.volume = targetVolume;
+        StartCoroutine(PlaySound());
+    }
+
+   
+
+
+
+
 
 
     public void F_SetSoundLoop(bool Value)

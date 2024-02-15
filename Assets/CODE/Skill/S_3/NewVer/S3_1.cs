@@ -26,6 +26,8 @@ public class S3_1 : MonoBehaviour
     {
         Init();
     }
+
+    
     bool stoneup;
     void Update()
     {
@@ -45,6 +47,7 @@ public class S3_1 : MonoBehaviour
             GameObject obj = PoolManager.Inst.F_GetPlayerBullet(1);
             obj.transform.position = transform.position + new Vector3(-0.5f,-0.2f);
             obj.gameObject.SetActive(true);
+            //SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(4);
         }
 
         StoneUP();

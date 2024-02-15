@@ -16,7 +16,7 @@ public class LoginBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
 
         anim.SetTrigger("On");
-        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0);
+        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 1);
     }
 
     public void OnPointerExit(PointerEventData eventData)

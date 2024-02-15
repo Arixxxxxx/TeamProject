@@ -1,22 +1,22 @@
 {
   "project_info": {
-    "project_number": "524313216007",
-    "firebase_url": "https://curse-b2d34-default-rtdb.firebaseio.com",
-    "project_id": "curse-b2d34",
-    "storage_bucket": "curse-b2d34.appspot.com"
+    "project_number": "380390985009",
+    "firebase_url": "https://teamproject-2c7aa-default-rtdb.firebaseio.com",
+    "project_id": "teamproject-2c7aa",
+    "storage_bucket": "teamproject-2c7aa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:524313216007:android:01f1975595b1a19a1c96a2",
+        "mobilesdk_app_id": "1:380390985009:android:3391e13f1732e117faf410",
         "android_client_info": {
-          "package_name": "com.warzerc.curseofw"
+          "package_name": "com.WazerC.CurseW"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCywrdob0K9m1_Y5VS9ZO17EuccmBt0Cvc"
+          "current_key": "AIzaSyAD9KZYVdUiJp8jgE-ZyZkiB-k_dQ7ndhw"
         }
       ],
       "services": {
