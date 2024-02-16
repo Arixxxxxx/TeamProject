@@ -7,6 +7,7 @@ using TMPro;
 using PimDeWitte.UnityMainThreadDispatcher;
 using UnityEngine.EventSystems;
 using Firebase.Extensions;
+using Firebase;
 
 
 public class LogInSystem : MonoBehaviour
@@ -14,6 +15,7 @@ public class LogInSystem : MonoBehaviour
     [SerializeField] GameObject LoginPanner;
     [SerializeField] GameObject SignInPanner;
 
+    FirebaseApp app;
     OpeningManager openingManager;
     Button loginBtn;
     Button signUpBtn;
@@ -33,6 +35,7 @@ public class LogInSystem : MonoBehaviour
 
     Button createBtn;
     Button backBtn;
+    Button exitBtn;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -40,19 +43,11 @@ public class LogInSystem : MonoBehaviour
 
     private void Awake()
     {
-        CheakFireBaseVision();
-
+      
+       
         openingManager = GetComponent<OpeningManager>();
 
-        if(auth == null)
-        {
-            auth = FirebaseAuth.DefaultInstance;
-        }
-        
-        if (auth == null)
-        {
-            Debug.LogError("³Î");
-        }
+       
 
         signUpBtn = LoginPanner.transform.Find("SignIn/Button").GetComponent<Button>();
         signUpBtnAnim = signUpBtn.transform.parent.GetComponent<Animator>();
@@ -62,9 +57,12 @@ public class LogInSystem : MonoBehaviour
         passwardField = LoginPanner.transform.Find("InputPW").GetComponent<TMP_InputField>();
         loginBtn = LoginPanner.transform.Find("LoginBtn/Button").GetComponent<Button>();
         loginErrorText = LoginPanner.transform.Find("ErrorText").GetComponent<TMP_Text>();
-
+        exitBtn = LoginPanner.transform.Find("ExitBtn/Button").GetComponent<Button>();
+        exitBtn.onClick.AddListener(() => { Application.Quit(); });
 
         backBtn = SignInPanner.transform.Find("BackBtn/Button").GetComponent<Button>();
+        
+
         signinEmailField = SignInPanner.transform.Find("InputField_Email").GetComponent<TMP_InputField>();
         signinPasswardField = SignInPanner.transform.Find("InputField_Passward").GetComponent<TMP_InputField>();
         createBtn = SignInPanner.transform.Find("CreateBtn/Button").GetComponent<Button>();
@@ -74,8 +72,11 @@ public class LogInSystem : MonoBehaviour
     }
     void Start()
     {
+        FirebaseInit();
+
         signUpBtn.onClick.AddListener(() =>
         {
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1);
             emailField.text = string.Empty;
             passwardField.text = string.Empty;
             signUpBtnAnim.SetTrigger("Off");
@@ -88,6 +89,7 @@ public class LogInSystem : MonoBehaviour
 
         backBtn.onClick.AddListener(() =>
         {
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1);
             signinEmailField.text = string.Empty;
             signinPasswardField.text = string.Empty;
 
@@ -100,8 +102,8 @@ public class LogInSystem : MonoBehaviour
 
 
 
-        loginBtn.onClick.AddListener(() => { Login(); });
-        createBtn.onClick.AddListener(() => { CreateID(); });
+        loginBtn.onClick.AddListener(() => { SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1); Login(); });
+        createBtn.onClick.AddListener(() => { SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1); CreateID(); });
     }
 
     private void Update()
@@ -183,7 +185,7 @@ public class LogInSystem : MonoBehaviour
                     loginErrorText.gameObject.SetActive(false);
                 }
                 openingManager.F_GameStartBtnActive();
-                
+
             });
 
         });
@@ -238,7 +240,7 @@ public class LogInSystem : MonoBehaviour
 
     private void InputFieldEnterKey()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && EventSystem.current.currentSelectedGameObject != null)
         {
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
@@ -254,26 +256,18 @@ public class LogInSystem : MonoBehaviour
         }
     }
 
-    private void CheakFireBaseVision()
+    private void FirebaseInit()
     {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
-            var dependencyStatus = task.Result;
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                var app = Firebase.FirebaseApp.DefaultInstance;
+        //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        //{
+        //    app = FirebaseApp.DefaultInstance;
 
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
-            }
-            else
-            {
-                UnityEngine.Debug.LogError(System.String.Format(
-                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
-            }
-        });
+        //});
+
+        auth = FirebaseAuth.DefaultInstance;
     }
+
+  
     public void LogOut()
     {
         auth.SignOut();

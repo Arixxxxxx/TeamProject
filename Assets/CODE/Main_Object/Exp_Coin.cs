@@ -190,7 +190,11 @@ public class Exp_Coin : MonoBehaviour
         {
             if (type == ItemType.ExpCoin)
             {
-                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(6, 1);
+                if(magnet == false)
+                {
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(6, 1);
+                }
+
                 boxColl.enabled = false;
                 if(player_stats_sc == null)
                 {

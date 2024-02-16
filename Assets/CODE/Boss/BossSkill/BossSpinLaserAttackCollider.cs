@@ -96,8 +96,8 @@ public class BossSpinLaserAttackCollider : MonoBehaviour
         }
 
         ps.Stop(); // 정지
-        
         ps.emissionRate = TempEmissionRate; // 기존값 복원
+        ps.gameObject.SetActive(false);
     }
 
 

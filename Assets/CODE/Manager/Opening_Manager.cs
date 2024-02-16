@@ -225,7 +225,7 @@ public class Opening_Manager : MonoBehaviour
         yield return new WaitForSeconds(Action1_0_DelayTime);
 
         bgAnim.transform.parent.gameObject.SetActive(false);  //  검은화면 Enable false
-        cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 9.5f, true, camtransform); // fade in + Camera 이동 연출
+        cm.F_OP_CamTargetSetting(GameManager.Inst.F_GetPalyerTargetPoint(), 11f, true, camtransform); // fade in + Camera 이동 연출
 
 
     }

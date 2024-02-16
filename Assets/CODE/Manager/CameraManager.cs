@@ -181,7 +181,7 @@ public class CameraManager : MonoBehaviour
 
             if (playerCam.m_Lens.OrthographicSize >= Zoomvalue)
             {
-                playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 3.33f;
+                playerCam.m_Lens.OrthographicSize -= Time.deltaTime * 2.9f;
             }
 
             yield return null;

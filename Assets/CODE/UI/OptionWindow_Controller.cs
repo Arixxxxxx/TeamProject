@@ -10,10 +10,12 @@ public class OptionWindow_Controller : MonoBehaviour
     [Header("# Insert Main UI GameOBJ")]
     [Space]
     [SerializeField] GameObject Ui_Parent_Obj;
+    [SerializeField] GameObject LvUp_Obj;
         
     GameObject MainCanvas;
     GameObject SeletWindowList;
     GameObject Window_0;
+    
 
     //인게임 스크린UI 버튼들
      Button OptionOpenBtn;
@@ -123,6 +125,8 @@ public class OptionWindow_Controller : MonoBehaviour
 
     private void ActiveEscKeyOption()
     {
+        if(LvUp_Obj.activeSelf == true) { return; }
+
         if (Input.GetKeyDown(KeyCode.Escape) && AchiveWindow.activeSelf == false && BattleWindow.activeSelf == false)
         {
             SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);

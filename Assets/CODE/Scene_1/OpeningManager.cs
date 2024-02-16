@@ -39,6 +39,7 @@ public class OpeningManager : MonoBehaviour
         actionScene[1] = worldCanvas.transform.Find("Action1_Main").gameObject;
         mainBtn[0] = actionScene[1].transform.Find("StartBtn/Button").GetComponent<Button>();
         mainBtn[1] = actionScene[1].transform.Find("ExitBtn/Button").GetComponent<Button>();
+        
         loginTitle = actionScene[1].transform.Find("LoginPanner").gameObject;
         signUpObj = worldCanvas.transform.Find("Action1_Main/SignInPanner").gameObject;
 
@@ -66,6 +67,7 @@ public class OpeningManager : MonoBehaviour
         {
             doPreeAnyKey = false;
             pressAnykeyAnim.SetTrigger("Off");
+            SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(2, 1);
         }
 
         NextArrowField();

@@ -230,7 +230,7 @@ public class AchievManager : MonoBehaviour
                 {
                     case 0:
                         fillBar[value].fillAmount = (float)countValue[value] / 1;
-                        textbar[value].text = $"{countValue[value]} / 3 (진행중)";
+                        textbar[value].text = $"{countValue[value]} / 1 (진행중)";
                         break;
 
                     case 1:
@@ -280,7 +280,7 @@ public class AchievManager : MonoBehaviour
         completeObj.gameObject.SetActive(true);
         completeObj.SetTrigger("Play");
         SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(13, 1);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(6f);
         completeObj.SetTrigger("End");
         yield return new WaitForSeconds(2f);
         completeObj.gameObject.SetActive(false);

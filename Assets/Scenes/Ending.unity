@@ -11250,9 +11250,6 @@ MonoBehaviour:
   endingStorySprite: {fileID: 21300000, guid: dea7aac2d5df4a540bb45da5c5b5f4b3, type: 3}
   creditIMG:
   - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
-  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
-  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
-  - {fileID: 21300000, guid: 3abd3adad28b6ce42a80f7ede923064e, type: 3}
   storyData:
   - "\uB9C8\uB140\uC640\uC758 \uAE30\uB098\uAE34 \uC0AC\uD22C \uB05D\uC5D0 \uC6A9\uC0AC\uB294
     \uB9C8\uB140\uB97C \uC4F0\uB7EC\uD2B8\uB9AC\uB294 \uB370\uC5D0 \uC131\uACF5\uD588\uB2E4.\r\n\uB9C8\uB140\uB294
@@ -21585,14 +21582,15 @@ MonoBehaviour:
   m_text: "< Team >  \uC640\uC800\uC528\uC640 \uB450\uC18C\uB140\n\n\nTeam Leader
     : \uC774\uB3D9\uC740\n\n\n======= \uAE30\uD68D Part =======\n\n\n\uC2A4\uD1A0\uB9AC,
     \uAE00 : \uC720\uC608\uC9C4\n\n\uCE90\uB9AD\uD130 \uBC0F \uC2A4\uD14C\uC774\uC9C0 
-    : \uC720\uC608\uC9C4, \uC11D\uC9C0\uC601\n\n\uC2DC\uC2A4\uD15C : \uC774\uB3D9\uC740\n\n\n=======
-    \uC624\uB514\uC624 Part  =======\n\n\nBGM : \uC720\uC608\uC9C4\n\nSFX : \uC774\uB3D9\uC740\n\n\uB098\uB808\uC774\uC158
-    \uBC0F \uC74C\uC131\uC81C\uC791 : \uC774\uB3D9\uC740\n\n\n======= \uB514\uC790\uC778
-    Part  =======\n\n\n\uAC8C\uC784\uC6D0\uD654\uBC0F Art : \uC11D\uC9C0\uC601\n\nParticle
-    \uC81C\uC791 : \uC774\uB3D9\uC740, \uC11D\uC9C0\uC601\n \nShader \uBC0F \uC2A4\uD0AC\uC774\uD399\uD2B8
-    : \uC774\uB3D9\uC740\n\n\n======= \uC2DC\uC2A4\uD15C Part  =======\n\n\nProgramming
-    : \uC774\uB3D9\uC740\n\nCloud Sever : \uC774\uB3D9\uC740\n\n\n========================\n\n\n\uAC1C\uBC1C
-    \uAE30\uAC04 : 23 / 12 / 02 ~ \n                   23 / 02 / 20\n\nTotal  : 69\uC77C\n\n========================\n\n      
+    : \uC720\uC608\uC9C4, \uC11D\uC9C0\uC601\n\n\uC2DC\uC2A4\uD15C \uAE30\uD68D :
+    \uC774\uB3D9\uC740\n\n\n======= \uC624\uB514\uC624 Part  =======\n\n\nBGM : \uC720\uC608\uC9C4\n\nSFX
+    : \uC774\uB3D9\uC740\n\n\uB098\uB808\uC774\uC158 \uBC0F \uC74C\uC131\uC81C\uC791
+    : \uC774\uB3D9\uC740\n\n\n======= \uB514\uC790\uC778 Part  =======\n\n\n\uAC8C\uC784\uC6D0\uD654\uBC0F
+    Art : \uC11D\uC9C0\uC601\n\nParticle \uC81C\uC791 : \uC774\uB3D9\uC740, \uC11D\uC9C0\uC601\n
+    \nShader \uBC0F \uC2A4\uD0AC\uC774\uD399\uD2B8 : \uC774\uB3D9\uC740\n\n\n=======
+    \uC2DC\uC2A4\uD15C Part  =======\n\n\nProgramming : \uC774\uB3D9\uC740\n\nCloud
+    Sever : \uC774\uB3D9\uC740\n\n\n========================\n\n\n\uAC1C\uBC1C \uAE30\uAC04
+    : 23 / 12 / 02 ~ \n                   23 / 02 / 20\n\nTotal  : 69\uC77C\n\n========================\n\n      
     << Special Thanks >>\n\n       \uC784\uAE30\uD604 / \uCD5C\uC7AC\uC6D0 / \uAE40\uC218\uD604\n\n========================\n\n\uD300\uD504\uB85C\uC81D\uD2B8
     \uAE30\uAC04\uB3D9\uC548\n\n\uB108\uBB34 \uC990\uAC81\uACE0  \uC758\uBBF8\uC788\uB294
     \uC2DC\uAC04\uC774\uC600\uC2B5\uB2C8\uB2E4.\n\n\uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\n.\n.\n\n\n             

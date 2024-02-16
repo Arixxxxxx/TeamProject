@@ -12,7 +12,7 @@ public class Player_Skill_System : MonoBehaviour
     [Space]
     [SerializeField] Transform[] skill_Slot;
     [SerializeField] GameObject[] skill_Obj;
-
+    [SerializeField] bool testMode;
 
     [Header("# Input Skill Spec  ==>  # 예진 ")]
     [Space]
@@ -106,8 +106,11 @@ public class Player_Skill_System : MonoBehaviour
     {
         Input_Cheaker();
 
-
-        ActiveSKill_Test_KeyDown();
+        if(testMode == true)
+        {
+            ActiveSKill_Test_KeyDown();
+        }
+        
         Play_Skill_01();
 
         if (GameUIManager.Inst.SkillEffectStop == false) // 스킬 잠시 중단

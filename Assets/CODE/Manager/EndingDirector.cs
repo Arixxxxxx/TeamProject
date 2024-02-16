@@ -28,20 +28,20 @@ public class EndingDirector : MonoBehaviour
     [SerializeField] GameObject credit;
     Animator creditAnim;
     TMP_Text crreditText;
-    
+
     [SerializeField] GameObject creditWorld;
     Animator Cutton;
     Image creditIMGFrame;
 
-    WaitForSeconds[] sec05Wait= new WaitForSeconds[8];
-    
+    WaitForSeconds[] sec05Wait = new WaitForSeconds[8];
+
     float secondTime;
     bool nextOk;
-    public bool NextOk {  get { return nextOk; } set { nextOk = value; } }
+    public bool NextOk { get { return nextOk; } set { nextOk = value; } }
 
     private void Awake()
     {
-        if(inst == null)
+        if (inst == null)
         {
             inst = this;
         }
@@ -50,14 +50,14 @@ public class EndingDirector : MonoBehaviour
             Destroy(this);
         }
 
-        for(int i = 0; i < sec05Wait.Length; i++)
+        for (int i = 0; i < sec05Wait.Length; i++)
         {
             secondTime += 0.5f;
             sec05Wait[i] = new WaitForSeconds(secondTime);
         }
 
         UI_Canvse = GameObject.Find("UI_Canvas").gameObject;
-        
+
         Cutton = UI_Canvse.transform.Find("Cutton(B)").GetComponent<Animator>();
         Cutton.gameObject.SetActive(false);
 
@@ -83,15 +83,15 @@ public class EndingDirector : MonoBehaviour
     IEnumerator EndingActionStart()
     {
         frameAnim.SetTrigger("On");
-        SoundManager.inst.F_Bgm_Player(0,0.5f, 1);
+        SoundManager.inst.F_Bgm_Player(0, 0.5f, 1);
         yield return null;
-        yield return sec05Wait[3]; 
+        yield return sec05Wait[3];
         text_sc.F_Set_TalkBox_Main_Text(storyData[0]);
         SoundPreFabs sc = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1);
         sc.F_SetVolume(0.7f);
         sc.F_SetSoundLoop(true);
 
-        FastInfo.gameObject.SetActive(true);   
+        FastInfo.gameObject.SetActive(true);
         NextOk = true;
 
         yield return null;
@@ -109,11 +109,11 @@ public class EndingDirector : MonoBehaviour
         yield return sec05Wait[1];
 
         ImageFrame.sprite = endingStorySprite; // 사진변경
-        
+
         frameAnim.SetTrigger("On");
 
 
-        yield return sec05Wait[2]; 
+        yield return sec05Wait[2];
         text_sc.F_Set_TalkBox_Main_Text(storyData[1]);
         sc = SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(0, 1); // 볼펜소리
         sc.F_SetVolume(0.7f);
@@ -138,7 +138,7 @@ public class EndingDirector : MonoBehaviour
         yield return sec05Wait[3];
         SoundManager.inst.F_Bgm_Player(1, 0.3f, 1);
         yield return sec05Wait[6];
-        
+
         ImageFrame.gameObject.SetActive(false);
         text_sc.gameObject.SetActive(false);
 
@@ -147,38 +147,22 @@ public class EndingDirector : MonoBehaviour
         creditWorld.SetActive(true);
 
 
-        
+
         yield return sec05Wait[5];
 
         textUpStrat = true; // 텍스트 위로 출력 시작
 
-        yield return sec05Wait[2];
-        
+        yield return sec05Wait[0];
 
-        for (int i = 0; i < creditIMG.Length; i++)
-        {
 
-            creditIMGFrame.sprite = creditIMG[i]; 
-            creditAnim.SetTrigger("On");
-            yield return sec05Wait[7];
-            yield return sec05Wait[7];
-            creditAnim.SetTrigger("Off");
-            yield return sec05Wait[7];
-            yield return sec05Wait[1];
 
-            if (i == 3)
-            {
-                yield return sec05Wait[6];
-                yield return sec05Wait[6];
-                yield return sec05Wait[6];
-                endScene = true;
-            }
-        }
-       
-        while(endScene == false)
-        {
-            yield return null;
-        }
+        creditIMGFrame.sprite = creditIMG[0];
+        creditAnim.SetTrigger("On");
+        yield return new WaitForSeconds(60);
+        creditAnim.SetTrigger("Off");
+        yield return sec05Wait[7];
+        yield return sec05Wait[1];
+
 
         Cutton.SetTrigger("On");
         yield return sec05Wait[7];
@@ -213,10 +197,10 @@ public class EndingDirector : MonoBehaviour
             text_sc.F_SetAddSpeed(false);
         }
 
-      if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             endScene = true;
-        }  
+        }
     }
 
 }

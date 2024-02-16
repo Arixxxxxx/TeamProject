@@ -17,16 +17,16 @@ public class Player_Stats : MonoBehaviour
     [SerializeField] int Player_Max_Lv;
     [SerializeField] float Cur_Exp;
     [SerializeField] float[] NextLv_Need_Exp;
-    
+
     [Header("# Hp Info")]
     [Space]
     [SerializeField] float Player_CurHP;
-    [SerializeField] float Player_MaxHP; 
+    [SerializeField] float Player_MaxHP;
     [SerializeField] float LevelUp_Plus_Hp;
     [Header("# Hp Info")]
     [Space]
     [SerializeField] bool player_On_Hit; // 무적판정 변수
-    public bool Player_On_Hit {  get { return player_On_Hit; }set { player_On_Hit = value; } }
+    public bool Player_On_Hit { get { return player_On_Hit; } set { player_On_Hit = value; } }
 
 
     [SerializeField] float noDMG_Time;
@@ -39,7 +39,7 @@ public class Player_Stats : MonoBehaviour
     ParticleSystem getItemPs;
     ParticleSystem useHpPoition;
     Animator anim;
-    
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -50,7 +50,7 @@ public class Player_Stats : MonoBehaviour
     void Start()
     {
         Origin_MaxHP = Player_MaxHP;
-        
+
     }
 
     // Update is called once per frame
@@ -73,7 +73,7 @@ public class Player_Stats : MonoBehaviour
     public void F_HpRecoveryPassive_LvUp(float Time, float Hp)
     {
         Passive_2_Lv++;
-        ReceveryDealyTime =  Time;
+        ReceveryDealyTime = Time;
         ReceveryHp = Hp;
     }
 
@@ -86,70 +86,68 @@ public class Player_Stats : MonoBehaviour
         if (RecoveryCount > ReceveryDealyTime)
         {
             RecoveryCount = 0;
-            Player_CurHP += ReceveryHp;
+
+            if (Player_MaxHP > Player_CurHP)
+            {
+                Player_CurHP += ReceveryHp;
+            }
         }
     }
 
 
-  
- 
+
+
     public void F_GetExp_LevelupSystem(float EXP)
     {
         if (Player_Cur_Lv == Player_Max_Lv) { return; }
-        StartCoroutine(LvUP(EXP));
-    }
 
-    IEnumerator LvUP(float EXP)
-    {
-       
         float CashEXP = EXP + Cur_Exp;
+
         getItemPs.Play();
         // 현재 레벨에 필요한 경험치보다 많이 획득했을 때
         if (CashEXP >= NextLv_Need_Exp[Player_Cur_Lv - 1])
         {
-            // 레벨업 처리
-            while (CashEXP >= NextLv_Need_Exp[Player_Cur_Lv - 1])
-            {
-                CashEXP -= NextLv_Need_Exp[Player_Cur_Lv - 1];
-                Player_Cur_Lv++;
-                Player_MaxHP += LevelUp_Plus_Hp;
-                Origin_MaxHP = Player_MaxHP;
-                yield return null;
-            }
+
+            CashEXP -= NextLv_Need_Exp[Player_Cur_Lv - 1]; // 필요경험치 차감
+            Player_Cur_Lv++; 
+            Player_MaxHP += LevelUp_Plus_Hp;
+            Origin_MaxHP = Player_MaxHP;
+
 
             // 남은 경험치를 현재 경험치로 설정
             Cur_Exp = CashEXP;
             UnitFrame_Updater.inst.F_ExpFillAmountReset();
-
             Player_CurHP = Player_MaxHP; // 현재 체력 초기화
             GameManager.Inst.LvUpCountUP(); // 카운트 업
             LvUp_Ui_Manager.Inst.F_LvUP_SelectSkill(); // 레벨업 스킬포인트
         }
-        else
+        else if(CashEXP < NextLv_Need_Exp[Player_Cur_Lv - 1])
         {
-            // 레벨업이 아닌 경우 현재 경험치 갱신
             Cur_Exp = CashEXP;
         }
+
     }
 
     bool doRespawning;
     public void F_Player_On_Hit(float DMG)
     {
-        if(player_On_Hit == true) { return; }
+        if (player_On_Hit == true) { return; }
 
         if (Player_CurHP > 0)
         {
+            On_HitAndDeadSound(0); // 피격사운드 호출
             CameraManager.inst.F_PlayerOnHitCamShake(); // 카메라 쉐이크
             anim.SetTrigger("Hit");
             player_On_Hit = true;
             Player_CurHP -= DMG;
-            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG,0);
+            UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG, 0);
             Invoke("Player_OnHit_False", noDMG_Time);
 
             if (Player_CurHP <= 0 && GameManager.Inst.IsPlayer_Dead == false)
             {
                 GameManager.Inst.IsPlayer_Dead = true;
                 GameManager.Inst.F_PlayerDeadUp(); // 죽음 증가량올려줌
+                On_HitAndDeadSound(1); // 사망사운드 호출
 
                 if (GameUIManager.Inst.Respawning == false)
                 {
@@ -221,14 +219,14 @@ public class Player_Stats : MonoBehaviour
         OutPut_PlayerInfo[2] = Player_Cur_Lv;
         OutPut_PlayerInfo[3] = Cur_Exp;
 
-        if(value == 4)
+        if (value == 4)
         {
             return NextLv_Need_Exp[Player_Cur_Lv - 1];
         }
 
         return OutPut_PlayerInfo[value];
     }
-     
+
     /// <summary>
     /// HP 회복포션 사용 함수
     /// </summary>
@@ -239,7 +237,7 @@ public class Player_Stats : MonoBehaviour
         float HPRecovery = Player_MaxHP * mathfPercentValue; // 회복템으로 회복가능한 양 먼저 산출
         float CanRecoveryHP = Player_MaxHP - Player_CurHP; // 현재 회복가능한 양도 체크
 
-        if(HPRecovery > CanRecoveryHP) // 회복해야할 양보다 포션양이 더 크다면
+        if (HPRecovery > CanRecoveryHP) // 회복해야할 양보다 포션양이 더 크다면
         {
             Player_CurHP = Player_MaxHP; // 풀피만들어줌
             UnitFrame_Updater.inst.F_Set_Unitframe_DMG(CanRecoveryHP, 1);
@@ -251,7 +249,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         useHpPoition.gameObject.SetActive(true);
-        
+
         // 파티클 재생
     }
     public int F_Get_Player_LV()
@@ -275,5 +273,40 @@ public class Player_Stats : MonoBehaviour
         player_On_Hit = true;
         yield return new WaitForSeconds(3);
         player_On_Hit = false;
+    }
+
+    /// <summary>
+    /// 0 Onhit / 1 Dead Sfx
+    /// </summary>
+    /// <param name="value"></param>
+    private void On_HitAndDeadSound(int value)
+    {
+        if (value == 0)
+        {
+            switch (Number)
+            {
+                case CharNum.Female:
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(16, 0.5f);
+                    break;
+
+                case CharNum.Male:
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(17, 0.5f);
+                    break;
+            }
+        }
+        else if (value == 1)
+        {
+            switch (Number)
+            {
+                case CharNum.Female:
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(18, 0.6f);
+                    break;
+
+                case CharNum.Male:
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(19, 0.6f);
+                    break;
+            }
+        }
+
     }
 }

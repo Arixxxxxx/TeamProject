@@ -5730,31 +5730,31 @@ MonoBehaviour:
   Cur_Exp: 0
   NextLv_Need_Exp:
   - 100
-  - 100
+  - 300
   - 500
+  - 750
   - 1000
+  - 1250
   - 1500
+  - 1750
   - 2000
+  - 2100
+  - 2200
   - 2300
-  - 2600
+  - 2400
+  - 2500
+  - 2500
+  - 2500
+  - 2500
+  - 2500
+  - 2500
+  - 2500
+  - 2500
   - 3000
-  - 3500
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
-  - 4000
+  - 3000
+  - 3000
+  - 3000
+  - 3000
   - 4000
   - 4000
   - 4000
@@ -5783,7 +5783,7 @@ MonoBehaviour:
   - 4000
   Player_CurHP: 300
   Player_MaxHP: 300
-  LevelUp_Plus_Hp: 50
+  LevelUp_Plus_Hp: 20
   player_On_Hit: 0
   noDMG_Time: 1
   noDMG_Color: {r: 1, g: 1, b: 1, a: 0.5529412}
@@ -5799,8 +5799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d2f9e7abb8806458e5d59d643bf76a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharMove_Speed: 5
-  Sprint_Speed: 2
+  CharMove_Speed: 5.3
+  Sprint_Speed: 2.2
   TeleportDealy: 0.3
   TeleportLimitP_X:
   - 37.96
@@ -5808,9 +5808,9 @@ MonoBehaviour:
   - 227
   - 227
   bossPortalWayTelePortLimit:
-  - 0
+  - 260.8
   - 5
-  - 230
+  - 0
   - 1.66
   TeleportLimitM_X: -55
   TeleportLimitP_Y: 36.5
@@ -5846,6 +5846,7 @@ MonoBehaviour:
   - {fileID: 1723929575661354573, guid: 9e0cb77acca77f34bb0d96f46b5b5db5, type: 3}
   - {fileID: 208962751904112493, guid: 2696d1a34e6238f43b184a233cc51de1, type: 3}
   - {fileID: 3020208757756490057}
+  testMode: 0
   Skill_Max_Lvl: 5
   critical_Value: 20
   Skill_0_Level: 0
@@ -5882,31 +5883,31 @@ MonoBehaviour:
     duration: 0
   Skill_1_Level: 0
   Skill_1_Value:
-  - dmg: 10
+  - dmg: 15
     count: 0
     speed: 0
     range: 0
     cooltime: 0.4
     duration: 0
-  - dmg: 15
+  - dmg: 20
     count: 0
     speed: 0
     range: 0
     cooltime: 0.35
     duration: 0
-  - dmg: 20
+  - dmg: 25
     count: 0
     speed: 0
     range: 0
     cooltime: 0.3
     duration: 0
-  - dmg: 25
+  - dmg: 30
     count: 0
     speed: 0
     range: 0
     cooltime: 0.25
     duration: 0
-  - dmg: 30
+  - dmg: 35
     count: 0
     speed: 0
     range: 0
@@ -5914,24 +5915,6 @@ MonoBehaviour:
     duration: 0
   Skill_2_Level: 0
   Skill_2_Value:
-  - dmg: 2
-    count: 0
-    speed: 0
-    range: 0
-    cooltime: 0.2
-    duration: 0
-  - dmg: 3
-    count: 0
-    speed: 0
-    range: 0
-    cooltime: 0.2
-    duration: 0
-  - dmg: 4
-    count: 0
-    speed: 0
-    range: 0
-    cooltime: 0.2
-    duration: 0
   - dmg: 5
     count: 0
     speed: 0
@@ -5944,33 +5927,51 @@ MonoBehaviour:
     range: 0
     cooltime: 0.2
     duration: 0
+  - dmg: 7
+    count: 0
+    speed: 0
+    range: 0
+    cooltime: 0.2
+    duration: 0
+  - dmg: 8
+    count: 0
+    speed: 0
+    range: 0
+    cooltime: 0.2
+    duration: 0
+  - dmg: 9
+    count: 0
+    speed: 0
+    range: 0
+    cooltime: 0.2
+    duration: 0
   Skill_3_Level: 0
   Skill_3_Value:
-  - dmg: 20
+  - dmg: 25
     count: 0
     speed: 0
     range: 0
     cooltime: 0.4
     duration: 0
-  - dmg: 25
+  - dmg: 30
     count: 0
     speed: 0
     range: 0
     cooltime: 0.35
     duration: 0
-  - dmg: 30
+  - dmg: 35
     count: 0
     speed: 0
     range: 0
     cooltime: 0.3
     duration: 0
-  - dmg: 35
+  - dmg: 40
     count: 0
     speed: 0
     range: 0
     cooltime: 0.28
     duration: 0
-  - dmg: 40
+  - dmg: 45
     count: 0
     speed: 0
     range: 0
@@ -5984,7 +5985,7 @@ MonoBehaviour:
     range: 0.8
     cooltime: 1
     duration: 3
-  - dmg: 20
+  - dmg: 23
     count: 0
     speed: 14
     range: 0.8
@@ -6002,7 +6003,7 @@ MonoBehaviour:
     range: 0.8
     cooltime: 0.7
     duration: 3
-  - dmg: 5
+  - dmg: 35
     count: 0
     speed: 20
     range: 0.8

@@ -43,7 +43,7 @@ public class SelectChar : MonoBehaviour
                 cheakBool = true;
                 sm.OnMouseAction((int)Character, true);
                 ps.gameObject.SetActive(true);
-                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 1);
+                SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(0, 0.5f);
 
             }
             else if (CheakMouse == 0 && choiseEnd == false && cheakBool == true)
@@ -99,7 +99,7 @@ public class SelectChar : MonoBehaviour
 
     IEnumerator PlaySFX()
     {
-        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 1);
+        SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(3, 0.6f);
 
         yield return new WaitForSeconds(1f);
         switch ((int)Character)

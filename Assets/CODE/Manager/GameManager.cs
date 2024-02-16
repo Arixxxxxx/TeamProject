@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         StartGameGetLVUP();
 
         //60초간격 자동서버 저장기능
-        if (testMode == false)
+        if (testMode == false && EnterBossRoom == false)
         {
             AutoUploadData();
         }
@@ -459,7 +459,11 @@ public class GameManager : MonoBehaviour
                 // 플레이어 위치이동
                 EnterBossRoom = true;
                 playerParent.transform.Find("Player_W").gameObject.transform.position = tellPoint[0].transform.position;
-                playerParent.transform.Find("Player_W").GetComponent<SpriteRenderer>().flipX = false;
+
+                for (int i = 1; i <playerAndDragon.Length; i++) // 플레이어 및 드레곤 우측방향 고정
+                {
+                    playerAndDragon[i].flipX = false;
+                }
                  // 배경음변경
 
                 F_ActiveBomb(); // 타면서 남아잇는 몬스터 전부 삭제시켜줌

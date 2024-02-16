@@ -54,7 +54,7 @@ public class Stage_Trigger : MonoBehaviour
             else if(number == DoorNumber.First)// 스테이지 1~2구간
             {
                 
-                CameraManager.inst.F_CameraDirectZoomOut(11f);
+                CameraManager.inst.F_CameraDirectZoomOut(11.8f);
             }
         }
     }

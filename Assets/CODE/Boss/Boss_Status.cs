@@ -132,7 +132,7 @@ public class Boss_Status : MonoBehaviour
 
                 StartCoroutine(DMG_Font_Animation(obj_font));
 
-                boss_CurHP -= Dmgs;
+                boss_CurHP -= (int)Dmgs;
 
                 //Hp_Bar_anim.SetTrigger("hit");
 
@@ -164,8 +164,8 @@ public class Boss_Status : MonoBehaviour
         GameUIManager.Inst.SkillEffectStop = true; // 스킬정지
         GameManager.Inst.MoveStop = true; // 이동정지
         yield return new WaitForSeconds(1.5f);
-        Cutton_Controller.inst.F_FadeCuttonActive(1f); // 페이드아웃
-        yield return new WaitForSeconds(1.5f);
+        Cutton_Controller.inst.F_FadeCuttonActive(1.5f); // 페이드아웃
+        yield return new WaitForSeconds(2f);
         
         anim.SetTrigger("Dead"); // 힘들어함
         GameManager.Inst.F_PlayerTransformMove(endingPlayerPosTrs.position); // 플레이어 위치이동
