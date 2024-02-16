@@ -417,7 +417,7 @@ public class Opening_Manager : MonoBehaviour
         // 바로시작
         GameManager.Inst.MoveStop = false;
         yield return new WaitForSeconds(1f);
-        SoundManager.inst.F_Bgm_Player(1, 0.5f, 0.9f);
+        SoundManager.inst.F_Bgm_Player(1, 0.5f, 0.7f);
         GameUIManager.Inst.F_GameUIActive(true); // UI켜주고
 
         if(sc != null)
@@ -506,15 +506,6 @@ public class Opening_Manager : MonoBehaviour
     {
         if (tutorialAction[1])
         {
-            //float CheakX = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
-            //float CheakY = Mathf.Abs(Input.GetAxisRaw("Vertical"));
-            //float CheakValue = CheakX + CheakY;
-
-            //if (CheakValue > 0 && Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift))
-            //{
-            //    curMoveTime += Time.deltaTime * 1.2f;
-            //}
-
             if (GameManager.Inst.isRun)
             {
                 curMoveTime += Time.deltaTime * 1.2f;

@@ -23,7 +23,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
     Transform Slot;
     Player_Skill_System Skill_sc;
     Player_Stats status;
-
+    AudioSource playerRunAudio;
     int SkillMaxLv;
     int PlayerLv;
 
@@ -45,6 +45,7 @@ public class LvUp_Ui_Manager : MonoBehaviour
         status = GameManager.Inst.F_Get_PlayerSc();
         Skill_sc = Player_Skill_System.Inst;
         SkillMaxLv = Skill_sc.skill_Max_Lvl;
+        playerRunAudio = status.transform.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,6 +59,8 @@ public class LvUp_Ui_Manager : MonoBehaviour
 
     public void F_LvUP_SelectSkill()
     {
+        F_PlayerRunSounStop(); // »§Ω√ ∂Ÿ∞Ì¿’¥Ÿ∏È º“∏Æ¡æ∑·
+
         SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(4, 1);
         skill_ID_Value.Clear(); // µÒº≈∑Ø¥œ √ ±‚»≠
         Cheak_List.Clear();
@@ -195,5 +198,13 @@ public class LvUp_Ui_Manager : MonoBehaviour
         }
 
         return result;
+    }
+
+    public void F_PlayerRunSounStop()
+    {
+        if (playerRunAudio.isPlaying)
+        {
+            playerRunAudio.Stop();
+        }
     }
 }

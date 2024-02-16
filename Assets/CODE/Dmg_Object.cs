@@ -78,11 +78,11 @@ public class Dmg_Object : MonoBehaviour
 
                     if (dice < critical_Value)
                     {
-                        sc.F_Enemy_On_Hit(DMG, true);
+                        sc.F_Enemy_On_Hit(DMG, true, true);
                     }
                     else
                     {
-                        sc.F_Enemy_On_Hit(DMG, false);
+                        sc.F_Enemy_On_Hit(DMG, false, true);
                     }
                 }
             }
@@ -167,23 +167,29 @@ public class Dmg_Object : MonoBehaviour
         // ÂÌ¸÷
         if (collision.CompareTag("Enemy") && collision.GetComponent<EnemyStats>() != null && type != SkillType.Skill_2)
         {
-            
+            if(DMG == 0)
+            {
+                Dmg_Updater();
+            }
             dice = Random.Range(0, 100);
 
             if (dice < critical_Value)
             {
-                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, true);
+                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, true, false);
             }
             else
             {
-                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, false);
+                collision.GetComponent<EnemyStats>().F_Enemy_On_Hit(DMG, false, false);
             }
         }
 
         //º¸½º
         if (collision.CompareTag("Enemy") && collision.GetComponent<Boss_Status>() != null && type != SkillType.Skill_2)
         {
-            
+            if (DMG == 0)
+            {
+                Dmg_Updater();
+            }
             dice = Random.Range(0, 100);
 
             if (dice < critical_Value)

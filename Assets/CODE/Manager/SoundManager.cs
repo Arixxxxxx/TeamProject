@@ -156,6 +156,7 @@ public class SoundManager : MonoBehaviour
         obj.gameObject.SetActive(true);
         SoundPreFabs sc = obj.GetComponent<SoundPreFabs>();
         sc.F_SetClipAndPlay(bossAudio[value], volume);
+        sc.itMeNarration = true;
 
         return sc;
 

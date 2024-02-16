@@ -213,6 +213,7 @@ public class Magnet : MonoBehaviour
             }
 
             boxColl.enabled = false;
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(15, 0.7f);
             switch (type)
             {
                 case ItemType.Magnet:
@@ -227,9 +228,11 @@ public class Magnet : MonoBehaviour
                     break;
 
                 case ItemType.Bomb:
+                    SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(11, 0.8f);
                     GameManager.Inst.F_ActiveBomb();
                     PoolManager.Inst.F_ReturnItem(gameObject, 2);
                     GameUIManager.Inst.F_BombEffectOn();
+                    
                     break;
             }
         }

@@ -168,6 +168,10 @@ public class UnitFrame_Updater : MonoBehaviour
         }
     }
 
+    public int F_GetBattleTime()
+    {
+        return (int)timecheck;
+    }
     /// <summary>
     /// 유닛프레임 숫자출력
     /// </summary>

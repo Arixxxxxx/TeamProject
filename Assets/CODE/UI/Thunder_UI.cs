@@ -52,6 +52,7 @@ public class Thunder_UI : MonoBehaviour
             {
                 count = 0;
                 anim.SetTrigger("Go");
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(12, 0.8f);
                 once = false;
             }
         }

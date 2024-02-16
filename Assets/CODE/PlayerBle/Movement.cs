@@ -48,7 +48,9 @@ public class Movement : MonoBehaviour
         telePortCoolTimeBar = transform.Find("Character_Mini_Ui/TelePort_CoolTimeBar").gameObject;
         teleFrontIMG = telePortCoolTimeBar.transform.Find("Front").GetComponent<Image>();
         characterRunSound = GetComponent<AudioSource>();
-      
+        characterRunSound.volume = 0.5f;
+
+
     }
     void Start()
     {
@@ -127,6 +129,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float curSpintTime;
     [SerializeField] float maxSpintTime;
     float Origin_maxSpintTime;
+    [SerializeField] bool needRest;
     private void Sprint_Time_Updater()
     {
         MoveCheakX = Mathf.Abs(moveVec.x);
@@ -134,36 +137,41 @@ public class Movement : MonoBehaviour
 
         CheakMoveFloat = MoveCheakX + MoveCheakY;
 
-        if (InputLshift && CheakMoveFloat > 0 && curSpintTime > 0) // 소모
+        if (InputLshift && CheakMoveFloat > 0 && curSpintTime > 0 && needRest == false) // 소모
         {
-            
-            if(Sprint_Bar.gameObject.activeSelf == false)
+
+            if (Sprint_Bar.gameObject.activeSelf == false)
             {
                 Sprint_Bar.gameObject.SetActive(true);
             }
-           
+
             Sprint_Bar_Ui.fillAmount = curSpintTime / maxSpintTime;
 
             if (curSpintTime > 0)
             {
                 curSpintTime -= Time.deltaTime;
             }
-            else if (curSpintTime <= 0)
+            
+            if (curSpintTime <= 0)
             {
+                needRest = true;
                 curSpintTime = 0;
             }
         }
-        else // 회복
+        else if (needRest == true || InputLshift == false)// 회복
         {
             curSpintTime += Time.deltaTime;
             Sprint_Bar_Ui.fillAmount = curSpintTime / maxSpintTime;
+            
 
             if (curSpintTime > maxSpintTime)
             {
                 curSpintTime = maxSpintTime;
+                
 
                 if(Sprint_Bar.gameObject.activeSelf == true)
                 {
+                    needRest = false;
                     Sprint_Bar.gameObject.SetActive(false);
                 }
             }
@@ -171,23 +179,22 @@ public class Movement : MonoBehaviour
     }
 
     [SerializeField] bool isRun;
+
     private void Move_Character()
     {
-        gm.isRun = isRun;
+      
         moveVec = moveVec.normalized;
 
-        if (InputLshift == true && curSpintTime > 0)
+        if (InputLshift == true && curSpintTime > 0 && needRest == false)
         {
             isRun = true;
-            
-            
         }
-        else if (InputLshift == false || curSpintTime <= 0)
+        if (InputLshift == false || curSpintTime <= 0 || needRest == true)
         {
             isRun = false;
-            
         }
 
+        gm.isRun = isRun;
 
         if (isRun)
         {

@@ -34,6 +34,10 @@ public class OptionWindow_Controller : MonoBehaviour
     //옵션 설정 변수
     Slider[] OptionSlider = new Slider[3];
     Button BackBtn;
+
+    GameObject AchiveWindow; // 업적창
+    GameObject BattleWindow; // 기록창
+    
     void Start()
     {
         // 기본 UI ref 참조용 초기화
@@ -63,6 +67,10 @@ public class OptionWindow_Controller : MonoBehaviour
         noBtn = selectWindow.transform.Find("Bg/No").GetComponent <Button>();
         
         backLight = selectWindow.transform.Find("Bg/Light2").gameObject;
+
+        AchiveWindow = MainCanvas.transform.Find("AchievWindow").gameObject;
+        BattleWindow = MainCanvas.transform.Find("BattaleStatsWindow").gameObject;
+        
 
         Btn_Init();
     }
@@ -115,7 +123,7 @@ public class OptionWindow_Controller : MonoBehaviour
 
     private void ActiveEscKeyOption()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && AchiveWindow.activeSelf == false && BattleWindow.activeSelf == false)
         {
             SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
             if (OptionWindow.gameObject.activeSelf == false && SoundOption.activeSelf == false)
@@ -133,6 +141,21 @@ public class OptionWindow_Controller : MonoBehaviour
                 OptionWindow.gameObject.SetActive(true);
                 SoundOption.gameObject.SetActive(false);
             }
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && AchiveWindow.activeSelf == true)
+        {
+            AchievManager.inst.BtnLock(true);
+            AchiveWindow.SetActive(false);
+            GameManager.Inst.F_TimeSclaeController(false);
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && BattleWindow.activeSelf == true)
+        {
+            AchievManager.inst.BtnLock(true);
+            BattleWindow.SetActive(false);
+            GameManager.Inst.F_TimeSclaeController(false);
+            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(3, 1);
         }
     }
     private void Btn_Init()

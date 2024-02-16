@@ -1,0 +1,518 @@
+fileFormatVersion: 2
+guid: 67a2aa12a688a33478eb7c7bb32f6bb5
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ach_ui_png_1_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 27
+        width: 909
+        height: 1050
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b06dd681ec7dc1d438080c412f390839
+      internalID: 1443689860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_1
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 799
+        width: 292
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd3d28aa33770a46b7323651c8eb7a3
+      internalID: -490146303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_2
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 901
+        width: 292
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd8680ce478f5c4894adc0dd4ade919
+      internalID: 1264415069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_3
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 817
+        width: 216
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22a7ffcea412ac14da0256bf4144368d
+      internalID: -1662578067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_4
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 729
+        width: 216
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0bef311c24ec4942bec03ca06d81a67
+      internalID: 1534645306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_21
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 917
+        width: 216
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 510e859d46cca21439d2540f327da35b
+      internalID: -143122727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_60
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 707
+        width: 229
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 791f5c282015afc48ab2188dd4029ce6
+      internalID: -928326444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_64
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 431
+        width: 800
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc66506de20a0746abaa7f3698b19b1
+      internalID: 1094815306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_65
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 238
+        width: 164
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d938e2ce93c2df42a4fb3763108b03a
+      internalID: 1142597213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_68
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 146
+        width: 546
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19208040d29a6ce4f9e4b1fae5292ddd
+      internalID: -1845550531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_69
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 86
+        width: 543
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3c3758db4b6d914a815546fd426ee44
+      internalID: -1291944342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_70
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 34
+        width: 544
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebfa9e490f4f1b44f9af37c23624fa05
+      internalID: 1197423918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_5
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 228
+        width: 164
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d323eb950a8c56b4db39af914ba60302
+      internalID: -652577949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ach_ui_png_1_6
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 235
+        width: 164
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e0d5d198846bdf4d8e4e0032c7e8d2e
+      internalID: 320689904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ach_ui_png_1_0: 1443689860
+      ach_ui_png_1_1: -490146303
+      ach_ui_png_1_10: -1770834499
+      ach_ui_png_1_11: 481984247
+      ach_ui_png_1_12: 288633576
+      ach_ui_png_1_13: 1402144774
+      ach_ui_png_1_14: -1157796622
+      ach_ui_png_1_15: -1011495125
+      ach_ui_png_1_16: -172410190
+      ach_ui_png_1_17: -1074552027
+      ach_ui_png_1_18: 1296313567
+      ach_ui_png_1_19: 1517602784
+      ach_ui_png_1_2: 1264415069
+      ach_ui_png_1_20: -896207801
+      ach_ui_png_1_21: -143122727
+      ach_ui_png_1_22: -858105884
+      ach_ui_png_1_23: -1988000467
+      ach_ui_png_1_24: -165748299
+      ach_ui_png_1_25: 1537096699
+      ach_ui_png_1_26: -1987428030
+      ach_ui_png_1_27: -1990091325
+      ach_ui_png_1_28: -767394442
+      ach_ui_png_1_29: 700159512
+      ach_ui_png_1_3: -1662578067
+      ach_ui_png_1_30: -496657716
+      ach_ui_png_1_31: 310527626
+      ach_ui_png_1_32: -252023837
+      ach_ui_png_1_33: 556632155
+      ach_ui_png_1_34: 178760203
+      ach_ui_png_1_35: -630228799
+      ach_ui_png_1_36: -902179394
+      ach_ui_png_1_37: -1601898998
+      ach_ui_png_1_38: 1361165611
+      ach_ui_png_1_39: 396929433
+      ach_ui_png_1_4: 1534645306
+      ach_ui_png_1_40: 4890121
+      ach_ui_png_1_41: -1100796096
+      ach_ui_png_1_42: -668034259
+      ach_ui_png_1_43: 2111104686
+      ach_ui_png_1_44: 1728596810
+      ach_ui_png_1_45: 1514561550
+      ach_ui_png_1_46: 634353859
+      ach_ui_png_1_47: -266049100
+      ach_ui_png_1_48: -905388213
+      ach_ui_png_1_49: 989159091
+      ach_ui_png_1_5: -652577949
+      ach_ui_png_1_50: 691278039
+      ach_ui_png_1_51: 674922113
+      ach_ui_png_1_52: 1319846732
+      ach_ui_png_1_53: -2093112298
+      ach_ui_png_1_54: 1912114501
+      ach_ui_png_1_55: -1847987187
+      ach_ui_png_1_56: -2138201334
+      ach_ui_png_1_57: 2052223419
+      ach_ui_png_1_58: -109349483
+      ach_ui_png_1_59: 153023101
+      ach_ui_png_1_6: 320689904
+      ach_ui_png_1_60: -928326444
+      ach_ui_png_1_61: -916404691
+      ach_ui_png_1_62: 1492265930
+      ach_ui_png_1_63: 1641672204
+      ach_ui_png_1_64: 1094815306
+      ach_ui_png_1_65: 1142597213
+      ach_ui_png_1_66: 1066065641
+      ach_ui_png_1_67: 553016452
+      ach_ui_png_1_68: -1845550531
+      ach_ui_png_1_69: -1291944342
+      ach_ui_png_1_7: 1787005381
+      ach_ui_png_1_70: 1197423918
+      ach_ui_png_1_8: -70140214
+      ach_ui_png_1_9: -1811472853
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

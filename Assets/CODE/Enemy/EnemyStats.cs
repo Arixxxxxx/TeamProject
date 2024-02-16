@@ -64,11 +64,15 @@ public class EnemyStats : MonoBehaviour
         HpBar_Ui_Updater();
     }
     [SerializeField] float dmgFontY_Add;
-    public void F_Enemy_On_Hit(float DMG, bool Cri)
+    public void F_Enemy_On_Hit(float DMG, bool Cri, bool isBome)
     {
         if (CurHP > 0)
         {
-            SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(10, 0.5f);
+            if (!isBome)
+            {
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(10, 0.3f);
+            }
+
             float Dmgs = DMG;
 
             if (Cri == true)

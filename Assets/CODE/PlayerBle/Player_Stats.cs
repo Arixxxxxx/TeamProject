@@ -146,11 +146,12 @@ public class Player_Stats : MonoBehaviour
             UnitFrame_Updater.inst.F_Set_Unitframe_DMG(DMG,0);
             Invoke("Player_OnHit_False", noDMG_Time);
 
-            if (Player_CurHP <= 0)
+            if (Player_CurHP <= 0 && GameManager.Inst.IsPlayer_Dead == false)
             {
                 GameManager.Inst.IsPlayer_Dead = true;
+                GameManager.Inst.F_PlayerDeadUp(); // Á×À½ Áõ°¡·®¿Ã·ÁÁÜ
 
-                if(GameUIManager.Inst.Respawning == false)
+                if (GameUIManager.Inst.Respawning == false)
                 {
                     GameUIManager.Inst.Respawning = true;
                     GameUIManager.Inst.F_CallRespawn_Counter_UI();

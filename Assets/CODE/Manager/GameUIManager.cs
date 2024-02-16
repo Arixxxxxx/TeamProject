@@ -44,6 +44,8 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] Sprite[] faceSprite;
     Image faceIMG;
 
+    GameObject saveIconObj;
+
     GameObject voiceIcon;
     bool skillEffectStop;
     public bool SkillEffectStop { get { return skillEffectStop; } set { skillEffectStop = value; } }
@@ -70,6 +72,7 @@ public class GameUIManager : MonoBehaviour
         faceIMG = HideObj2.transform.Find("Face").GetComponent<Image>();
         deadCon = GetComponent<Dead_Counter_Contoller>();
         voiceIcon = UI.transform.Find("VoiceIcon").gameObject;
+        saveIconObj = UI.transform.Find("SaveIcon").gameObject;
     }
 
     void Start()
@@ -102,10 +105,11 @@ public class GameUIManager : MonoBehaviour
     public void F_GameInfoOpen(int value)
     {
         string alramText = string.Empty;
-
+       
         switch (value)
         {
             case 0:
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(14, 0.8f);
                 infoText.fontSize = 30;
                 alramText = "<b>< 교회 ></b> 로 가는 길이 열렸습니다.\n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
@@ -113,6 +117,7 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case 1:
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(14, 0.8f);
                 infoText.fontSize = 30;
                 alramText = "<b>< 숲 ></b> 으로 가는 길이 열렸습니다. \n 맵 우측으로 이동하세요!";
                 F_NextMapArrowActiveSec(true);
@@ -120,6 +125,7 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case 2:
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(14, 0.8f);
                 infoText.fontSize = 30;
                 alramText = "< 어두운 숲 > 으로 향하는 길이 열렸습니다. \n 포탈로 이동해주세요!";
                 DarkCloud_Controller.inst.F_Pattern2Active(true); // 어둠구름 이동
@@ -233,6 +239,7 @@ public class GameUIManager : MonoBehaviour
         switch (value)
         {
             case 0:
+                SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(14, 0.8f);
                 textValue = "서쪽에서부터 어둠의 기운이 몰려옵니다. 마녀를 찾아 무찔러야 합니다.";
                 break;
 
@@ -273,7 +280,7 @@ public class GameUIManager : MonoBehaviour
                 break;
 
             case 8:
-                textValue = "더.. 이상 유지할수가.."; // 사망
+                textValue = "더 이상.. 유지할수가.."; // 사망
                 SoundManager.inst.F_Get_ControllSoundPreFabs_BossSFX(7, 0.7f);
                 break;
 
@@ -312,6 +319,8 @@ public class GameUIManager : MonoBehaviour
         HideObj[0].gameObject.SetActive(value); // 스킬 버프창
         HideObj[1].gameObject.SetActive(value);
         HideObj[2].gameObject.SetActive(value);
+        HideObj[3].gameObject.SetActive(value);
+        HideObj[4].gameObject.SetActive(value);
 
     }
 
@@ -358,4 +367,27 @@ public class GameUIManager : MonoBehaviour
             voiceIcon.SetActive(false);
         }
     }
+
+    public Transform F_GetMainCanvasTRS()
+    {
+        return UI.transform;
+    }
+
+    /// <summary>
+    /// 세이브 아이콘 3초 팝업
+    /// </summary>
+    public void F_SaveIconPopup()
+    {
+        StopCoroutine(PopupIcon());
+        StartCoroutine(PopupIcon());
+    }
+
+    WaitForSeconds threesec = new WaitForSeconds(5);
+    IEnumerator PopupIcon()
+    {
+        saveIconObj.SetActive(true);
+        yield return threesec;
+        saveIconObj.SetActive(false);
+    }
+
 }

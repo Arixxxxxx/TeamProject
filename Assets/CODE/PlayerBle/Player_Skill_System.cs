@@ -115,10 +115,12 @@ public class Player_Skill_System : MonoBehaviour
             Skill_1_AutoFire();
             Skill_3_AutoFire();
             Skill_4_AutoFire();
-            if (Skill_0_Level > 0 || Skill_2_Level > 0)
-            {
-                SoundManager.inst.F_fireBaseSoundActive(true);
-            }
+            
+            //if (Skill_0_Level > 0 || Skill_2_Level > 0) // 지글지글 소리 중단
+            //{
+            //    SoundManager.inst.F_fireBaseSoundActive(true);
+            //}
+
             if (skillGroup.activeSelf == false)
             {
                 skillGroup.SetActive(true);
@@ -274,7 +276,7 @@ public class Player_Skill_System : MonoBehaviour
                 {
                     skill_Obj[2].SetActive(true);
                     SoundManager.inst.F_Get_SoundPreFabs_PlaySFX(1, 1);
-                    SoundManager.inst.F_fireBaseSoundActive(true);
+                    //SoundManager.inst.F_fireBaseSoundActive(true); 지글지글 소리 중단
                 }
             }
 

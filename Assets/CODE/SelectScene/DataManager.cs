@@ -14,15 +14,19 @@ public enum CharacterNum
 [Serializable]
 public class UserGameInfo
 {
+    public int battleTime; // 총 전투시간(초)
     public int bossKillCount; // 보스킬 카운터
     public int totalKillEnemy; // 토탈 에너미 카운터
     public int LevelUpCount; // 토탈 레벨업 카운터
+    public int playerDeadCount; // 플레이어 사망
 
-    public UserGameInfo(int bossKillCount, int totalKillEnemy, int LevelUpCount) // 생성자
+    public UserGameInfo(int battleTime, int bossKillCount, int totalKillEnemy, int LevelUpCount, int playerDeadCount) // 생성자
     {
+        this.battleTime = battleTime;
         this.bossKillCount = bossKillCount;
         this.totalKillEnemy = totalKillEnemy;
         this.LevelUpCount = LevelUpCount;
+        this.playerDeadCount = playerDeadCount;
     }
 }
 public class DataManager : MonoBehaviour
@@ -61,7 +65,7 @@ public class DataManager : MonoBehaviour
  
     public void F_NewUserSet(string UserEmail)
     {
-        UserGameInfo user = new UserGameInfo(0,0,0);
+        UserGameInfo user = new UserGameInfo(0,0,0,0,0);
         string json = JsonUtility.ToJson(user); // Json파일 변환
         UserEmail = UserEmail.Replace(".", ""); // .을 서버에서 인식을 못함
         dataRef.Child("User_Email_List").Child(UserEmail).SetRawJsonValueAsync(json);
@@ -106,5 +110,15 @@ public class DataManager : MonoBehaviour
     public UserGameInfo F_GetUserData()
     {
         return curruntPlayUserInfo;
+    }
+
+    /// <summary>
+    /// 유저이메일에서 앞부분만 가져오는 함수
+    /// </summary>
+    /// <returns></returns>
+    public string F_GetUserID()
+    {
+        string[] result = userEmail.Split("@");
+        return result[0];
     }
 }

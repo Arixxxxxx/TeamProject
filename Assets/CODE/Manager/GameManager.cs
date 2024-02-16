@@ -43,10 +43,15 @@ public class GameManager : MonoBehaviour
     
     [Header("# Battle Count")]
     [Space]
+    [SerializeField] int battleTime;
     [SerializeField] int bossKillCount;
     [SerializeField] int totalkillCount;
     [SerializeField] int totalLvUpCount;
-
+    [SerializeField] int playerDeadCount;
+    
+    // 내부 정보용
+    public int TotalBattleTime;
+    public int TotalPlayerDead;
 
     [SerializeField] int killCount;
     [SerializeField] int lvUpCount;
@@ -78,7 +83,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]  bool enterBossRoom;
     [SerializeField]  bool boosBattleStart;
 
-    private UserGameInfo userDataForSeverUpload = new UserGameInfo(0,0,0);
+    private UserGameInfo userDataForSeverUpload = new UserGameInfo(0,0,0,0,0);
    
     public bool BossBattleStart { get { return boosBattleStart; } set { boosBattleStart = value; } }
     public bool EnterBossRoom { get { return enterBossRoom; } set { enterBossRoom = value; } }
@@ -152,14 +157,18 @@ public class GameManager : MonoBehaviour
         {
             // 서버데이터 현재 게임에 초기화
             UserGameInfo userdata = DataManager.inst.F_GetUserData();
+
+            TotalBattleTime = userdata.battleTime;
             BossKillCount = userdata.bossKillCount;
             TotalkillCount = userdata.totalKillEnemy;
             TotalLvUpCount = userdata.LevelUpCount;
+            TotalPlayerDead = userdata.playerDeadCount;
         }
         
 
     }
 
+    
     bool once;
     void Update()
     {
@@ -170,15 +179,17 @@ public class GameManager : MonoBehaviour
             Invoke("OpeningMSG", 6);
         }
 
-        
+        battleTime = UnitFrame_Updater.inst.F_GetBattleTime();
+
+
         StartGameGetLVUP();
 
-        //30초간격 자동서버 저장기능
-        //if(testMode == false)
-        //{
-        //    AutoUploadData();
-        //}
-        
+        //60초간격 자동서버 저장기능
+        if (testMode == false)
+        {
+            AutoUploadData();
+        }
+
     }
 
     // 자동 집계
@@ -203,9 +214,18 @@ public class GameManager : MonoBehaviour
 
     public void F_Manual_SaveGame()
     {
+        GameUIManager.Inst.F_SaveIconPopup();
+
+        TotalBattleTime += battleTime;
+        TotalPlayerDead += playerDeadCount;
+
+        userDataForSeverUpload.battleTime = TotalBattleTime;
         userDataForSeverUpload.bossKillCount = BossKillCount;
         userDataForSeverUpload.totalKillEnemy = TotalkillCount;
         userDataForSeverUpload.LevelUpCount = TotalLvUpCount;
+        userDataForSeverUpload.playerDeadCount = TotalPlayerDead;
+
+        Debug.Log($"{userDataForSeverUpload.battleTime} / {userDataForSeverUpload.playerDeadCount}");
         Debug.Log($"{userDataForSeverUpload.bossKillCount} / {userDataForSeverUpload.totalKillEnemy} / {userDataForSeverUpload.LevelUpCount}");
         DataManager.inst.F_SaveGameAndServerUpload(userDataForSeverUpload);
     }
@@ -377,7 +397,7 @@ public class GameManager : MonoBehaviour
         {
             if (group[i].gameObject.activeSelf == true)
             {
-                group[i].F_Enemy_On_Hit(1000, true);
+                group[i].F_Enemy_On_Hit(1000, true, true);
             }
         }
     }
@@ -426,7 +446,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 
                 GameUIManager.Inst.SkillEffectStop = true;
-                SoundManager.inst.F_fireBaseSoundActive(false);
+                LvUp_Ui_Manager.Inst.F_PlayerRunSounStop(); // 혹시 뛰고잇다면 소리종료
                 SoundManager.inst.F_Get_ControllSoundPreFabs_ETC_PlaySFX(2,1);
                 MoveStop = true;
                 GameUIManager.Inst.F_GameUIActive(false);
@@ -527,4 +547,22 @@ public class GameManager : MonoBehaviour
         return TutoCount;
     }
 
+    /// <summary>
+    /// 유저 데이터 받아가는 함수
+    /// </summary>
+    /// <returns></returns>
+    public int[] F_GetUserGameCountData()
+    {
+        int[] Result_value = new int[3];
+
+        Result_value[0] = BossKillCount;
+        Result_value[1] = TotalkillCount;
+        Result_value[2] = TotalLvUpCount;
+
+        return Result_value;
+    }
+    public void F_PlayerDeadUp()
+    {
+        playerDeadCount++;
+    }
 }

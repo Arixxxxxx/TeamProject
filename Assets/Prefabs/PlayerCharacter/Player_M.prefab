@@ -6398,7 +6398,7 @@ MonoBehaviour:
   - 227
   - 227
   bossPortalWayTelePortLimit:
-  - 260.8
+  - 0
   - 5
   - 230
   - 1.66
@@ -6412,6 +6412,7 @@ MonoBehaviour:
   - 57
   curSpintTime: 0
   maxSpintTime: 2
+  needRest: 0
   isRun: 0
   TeleportDistance: 5
   Origin_TeleportDistance: 0
@@ -6693,7 +6694,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 80d37a1c08a894a4584d5e8d7d1edc6d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: af804ee19667b7f4f83a246db8b94550, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
